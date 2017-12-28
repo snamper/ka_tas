@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="147.402px" height="175.748px" viewBox="-2.701 -1.374 147.402 175.748"
+	 enable-background="new -2.701 -1.374 147.402 175.748" xml:space="preserve">
+<g>
+	<animate attributeName="stroke-dashoffset" from="560" to="0" dur="1.5s" repeatCount="indefinite" />
+	<path fill="none" style="stroke:#4b3887;stroke-dasharray:560;stroke-width:6" d="M32.887,4.295h67.548C100.983,4.536,140,43.891,140,46.6v93.261c0,15.93-12.96,28.844-28.949,28.844H32.887
+		c-15.987,0-28.95-12.914-28.95-28.844V33.139C3.937,17.21,16.9,4.295,32.887,4.295z"/>
+</g>
+<g>
+	<path fill="none" style="stroke:#4b3887;stroke-width:6" d="M45.853,43h54.204c8.162,0,14.781,6.716,14.781,15v57c0,8.284-6.619,15-14.781,15H45.853
+		c-8.165,0-14.783-6.716-14.783-15V58C31.07,49.716,37.688,43,45.853,43z"/>
+</g>
+<g>
+	<animate attributeName="stroke-dasharray" from="0" to="54" dur="1s" repeatCount="indefinite" />
+	<line fill="none" style="stroke:#4b3887;stroke-width:6" x1="60.635" y1="113" x2="60.635" y2="59"/>
+	<line fill="none" style="stroke:#4b3887;stroke-width:6" x1="84.287" y1="113" x2="84.287" y2="59"/>
+	<line fill="none" style="stroke:#4b3887;stroke-width:6" x1="52.503" y1="100.5" x2="60.884" y2="100.5"/>
+	<line fill="none" style="stroke:#4b3887;stroke-width:6" x1="85.273" y1="71.5" x2="93.654" y2="71.5"/>
+</g>
+</svg>

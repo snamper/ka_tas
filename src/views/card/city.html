@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>选择城市</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<section class="select-city">
+		<header><input type="text" class="icon-search" name="query" m-model="searchQuery" m-on:input="filteredData" placeholder="输入城市中文名" maxlength="20"></header>
+		<section>
+			<div m-if="isShowCitySearch">
+				<dl>
+					<dt>当前选择</dt>
+					<dd class="active"><a href="javascript:void(0)" class="icon-location" m-on:click="selectCity(location.cityCode,location.cityName)">{{location.cityName}}</a></dd>
+					<dd v-if="location.cityName!='全国'"><a href="javascript:void(0)" m-on:click="selectCity(100,'全国')">全国</a></dd>
+				</dl>
+				<dl>
+					<dt>热门城市</dt>
+					<dd m-for="todos in cityData.hotCity"><a href="javascript:void(0)" m-on:click="selectCity(todos.cityCode,todos.cityName)">{{todos.cityName}}</a></dd>
+				</dl>
+				<dl>
+					<dt>其它城市</dt>
+					<dd m-for="todos in filteredData().city"><a href="javascript:void(0)" m-on:click="selectCity(todos.cityCode,todos.cityName)">{{todos.cityName}}</a></dd>
+				</dl>
+			</div>
+			<dl m-if="!isShowCitySearch">
+				<dd m-for="todos in filteredData()"><a href="javascript:void(0)" m-on:click="selectCity(todos.cityCode,todos.cityName)">{{todos.cityName}}</a></dd>
+			</dl>
+		</section>
+	</section>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

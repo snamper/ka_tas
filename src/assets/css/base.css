@@ -1,0 +1,216 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+a {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent
+}
+
+em,
+i {
+    font-style: normal
+}
+
+ol,
+ul {
+    list-style: none
+}
+
+img {
+    -webkit-touch-callout: none
+}
+
+html {
+    font-size: 625%;
+    -webkit-font-smoothing: antialiased;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none
+}
+
+body {
+    max-width: 960px;
+    min-width: 300px;
+    margin: auto;
+    width: 100%;
+    font-family: Helvetica Neue, sans-serif;
+    background: #F6F7F9;
+    font-size: .13rem;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    -webkit-font-smoothing: antialiased;
+}
+#app{
+    font-size: .13rem;
+    transition: opacity ease 1.5s;
+    -webkit-transition: opacity ease 1.5s;
+}
+input,
+textarea {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+.red {
+    color: #ED3A26!important
+}
+.green {
+    color: #10CD6E!important;
+    /*2ecc71*/
+}
+.yellow {
+    color: #FF6503!important
+}
+.purple {
+    color: #4b3887!important
+}
+.grey{
+    color: #656565!important
+}
+.black{
+    color: #212121!important
+}
+.clr:after {
+    content: '';
+    display: table;
+    clear: both
+}
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+.f-scroll {
+    overflow-y: scroll;
+}
+.f-tal{
+    text-align: left !important;
+}
+
+/*layer-loading*/
+.m-loading-ka{
+    width: 0.6rem;
+    height: 0.6rem;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    background-color: hsla(0, 0%, 100%, 0.5);
+    
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    background-image: url(../img/loading.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.3rem;
+}
+
+/*时间轴*/
+.m-time-axis{
+    padding-top: 0.1rem;
+    display: table;
+    text-align: center;
+    width: 100%;
+}
+.m-time-axis>li{
+    width: 20%;
+    display: table-cell;
+    vertical-align: middle;
+}
+.m-time-axis-sub{padding-bottom: 0.1rem;}
+.m-time-axis-sub>li{ float: left;width: 20%;text-align: center;}
+.m-time-axis>li>.title{
+    color:#CACACA;font-size: 0.12rem;
+}
+.m-time-axis-sub>li>.sub-line{position: relative;}
+.m-time-axis-sub>li>.sub-line>b{
+    display: inline-block;
+    width:5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color:#CACACA;
+    vertical-align: middle;
+}
+.m-time-axis-sub>li>.sub-line>span{
+    position: absolute;
+    margin-top: 1px;
+    top: 50%;
+    left: 50%;
+    width:80%;
+    margin-left: 0.1rem;
+    border-top:1px solid transparent;
+    border-color:#CACACA;
+}
+.m-time-axis-sub .set-w-5{width: 0% !important;}
+.m-time-axis>.passed>.title{color: #000;}
+.m-time-axis-sub>.passed>.sub-line>b{background-color:#000 !important;}
+.m-time-axis-sub>.passed>.sub-line>span{border-color:#000 !important;}
+.m-time-axis>.active>.title{color: #EC7402;}
+.m-time-axis-sub>.active>.sub-line>b{background-color:#EC7402 !important;}
+.m-time-axis-sub>.active>.sub-line>span{border-color:#EC7402 !important;/*#6c71c4*/}
+
+@media screen and (max-width: 340px){
+    .m-time-axis>li>.title{font-size: 0.1rem;}
+    .m-time-axis-sub>li>.sub-line>span{
+        width: 75%;
+    }
+}
+@media screen and (min-width: 540px){
+    .m-time-axis>li>.title{font-size: 0.13rem;}
+    .m-time-axis-sub>li>.sub-line>span{
+        width: 85%;
+    }
+}
+
+.m-all-tag{
+    background-color: #fff;
+    margin-bottom: 0.15rem;
+}
+.m-all-tag>.tag{
+    margin-left: 0.2rem;
+    margin-bottom: 0.1rem;
+    padding:0.1rem 0;
+    padding-right: 0.1rem;
+    border-bottom: 1px solid #EEEFF2;
+}
+.m-order-info{
+    background-color: #fff;
+    padding: 5px 0;
+}
+.m-order-info>li{
+    margin: 0.1rem;
+}
+.m-order-info>.double-border{
+    margin:0 0.1rem;
+    border-top: 2px solid #EEEFF2;
+    height: 6px;
+    border-bottom:1px solid #EEEFF2;
+}
+.m-order-info>.font-big{
+    font-size: 0.16rem;
+}
+.m-order-info>li>.left{
+    margin-right: 5px;
+}
+.m-order-info>li>.right{
+    text-align: right;
+}
+.m-order-info>.border{
+     border-bottom:1px solid #EEEFF2;
+     padding-bottom: 0.1rem;
+}
+.m-order-info>li>a{
+    color: #656565;
+    border:1px solid #929293;
+    border-radius: 2px;
+    font-size: 0.12rem;
+    padding: 2px 5px;
+    margin-left:0.1rem;
+}

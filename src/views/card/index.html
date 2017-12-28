@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>号板</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<section class="f-mb-20">
+		<div class="m-msg yellow">您当前有一项未完成的操作，查看详情>></div>
+		<div class="m-search">
+			<div class="m-hd">
+				<b>随心搜</b>
+				<i class="u-icon-location"></i>
+				<span class="text">全国</span>
+			</div>
+			<div class="m-sch">
+				<input type="search" placeholder="输入您的生日或幸运数字试试运气" maxlength="11">
+				<span class="u-icon-cancel" m-show="inputValue.length"></span>
+				<span class="u-icon-search"></span>
+			</div>
+		</div>
+	</section>
+	<section m-show="off.showLabel">
+		<ul class="m-hot-label">
+			<li>您是我的唯一</li>
+			<li>您是我的唯一1</li>
+			<li>您是我的唯一2</li>
+			<li>您是我的唯一3</li>
+		</ul>
+		<span class="btn-more">展开<i class="u-icon-more"></i></span>
+	</section>
+	<section>
+		<div class="m-search-label">
+			
+		</div>
+		<ul class="m-card-ul">
+			<li>
+				<span class="number">171 0829 4423</span>
+				<span class="city">（北京）</span>
+				<i class="u-icon-pretty"></i>
+			</li>
+			<li>
+				<span class="number">171 0829 4423</span>
+				<span class="city">（北京）</span>
+				<i class="u-icon-pretty"></i>
+			</li>
+		</ul>
+	</section>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

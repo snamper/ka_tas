@@ -1,0 +1,139 @@
+@charset "utf-8";
+.u-icon-location{background-image: url(../img/icon_location.png);}
+.u-icon-cancel{background-image: url(../img/cancel.png);}
+.u-icon-search{background-image: url(../img/icon_search.png);}
+.u-icon-more{background-image: url(../img/openmore.png);}
+.u-icon-pretty{background-image: url(../img/sprite_icons.png);}
+
+#app{
+	margin:0.1rem;
+}
+.f-mb-20{
+	margin-bottom:0.2rem;
+}
+/*-----------搜索----------*/
+.m-msg{
+	margin:0 5px;
+}
+.m-search{
+	
+}
+.m-hd{
+	margin:0 5px;
+	margin-bottom:0.2rem;
+}
+.m-hd>b{
+	font-size: 0.24rem;
+	margin-right: 0.1rem;
+}
+.m-hd>.u-icon-location{
+	padding: 2px 12px;
+	background-repeat: no-repeat;
+	background-size:0.2rem;
+	background-position: center;
+}
+.m-hd>.text{
+	font-size: 0.14rem;
+	color: #515151
+}
+.m-sch{
+	position: relative;
+}
+.m-sch>input{
+	display: block;
+	width: 100%;
+	font-size: 0.14rem;
+    height: 0.45rem;
+    line-height:normal;
+    padding-left: 0.15rem;
+    border:1px solid transparent;
+    border-color: #515151;
+    border-radius: 7px;
+}
+.m-sch>input::-webkit-search-cancel-button {
+	display: none;
+}
+.m-sch>input::-webkit-input-placeholder { 
+  line-height: 1.5em;
+}
+.m-sch>input:-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-sch>input::-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-sch>input:-ms-input-placeholder {
+  line-height: 1.5em;
+}
+.m-sch>span{
+	position: absolute;
+	top: 0;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: center;
+	width:0.45rem;
+	height: 0.45rem;
+}
+.m-sch>.u-icon-cancel{
+	background-size:0.25rem;
+	right: 0.45rem;
+}
+.m-sch>.u-icon-search{
+	background-size:0.3rem;
+	right: 0;
+}
+/*-----------热门标签----------*/
+.m-hot-label{
+	
+}
+.m-hot-label>li{
+	display: inline-block;
+	padding: 10px;
+	border-radius: 7px;
+	background-color: #fff;
+	box-shadow: 0 0 3px rgba(0,0,0,0.1);
+	margin-left: 0.1rem;
+	margin-bottom:0.1rem;
+}
+.btn-more{
+	display: inline-block;
+	padding: 10px;
+	border-radius: 7px;
+	background-color: #fff;
+	box-shadow: 0 0 3px rgba(0,0,0,0.1);
+	margin-left: 0.1rem;
+}
+.btn-more>.u-icon-more{
+	padding: 4px 10px;
+	background-repeat: no-repeat;
+	background-size:0.13rem;
+	background-position: center;
+}
+/*-----------号码----------*/
+.m-card-ul{
+	
+}
+.m-card-ul>li{
+	background-color: #fff;
+	box-shadow: 0 0 3px rgba(0,0,0,0.1);
+	border-radius: 7px;
+	margin-bottom: 0.15rem;
+	height: 0.4rem;
+	line-height: 0.4rem;
+	text-align: center;
+}
+.m-card-ul .number{
+	font-size: 0.18rem;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+.m-card-ul .city{
+	
+}
+.m-card-ul .u-icon-pretty{
+	margin-left: 0.2rem;
+	padding: 4px 10px;
+	background-repeat: no-repeat;
+	background-size:0.17rem;
+	background-position: center;
+}
