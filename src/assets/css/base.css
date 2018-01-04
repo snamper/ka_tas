@@ -66,17 +66,63 @@ textarea {
     /*2ecc71*/
 }
 .yellow {
-    color: #FF6503!important
+    color: #ffc333!important
 }
 .purple {
     color: #4b3887!important
 }
 .grey{
-    color: #656565!important
+    color: #757575!important
 }
 .black{
     color: #212121!important
 }
+/*按钮*/
+.btn{
+    width: 85%;
+    margin:auto;
+    text-align: center;
+    border:1px solid transparent;
+    margin-top: 0.3rem;
+    padding: 0.1rem 0;
+    border-radius: 7px;
+    transition: all .05s ease-out;
+    -webkit-transition: all .05s ease-in-out;
+}
+.btnScale:active {
+    transform: scale(.92);
+    -moz-transform: scale(.92);
+    -webkit-transform: scale(.92)
+}
+.btny{
+    border-color: #ffc333!important;
+    color: #ffc333;
+}
+.btny:active{
+    background-color: #ffc333;
+    color: #fff
+}
+
+.btnp{
+    border-color: #4b3887!important;
+    color: #4b3887;
+}
+.btnp:active{
+    background-color: #4b3887;
+    color: #fff
+}
+
+.btnDefault{
+    color: #ACA9A9;
+    background-color: #FFF;
+    border-color: #CECECE
+}
+.btnDefault:active{
+    color: #ACA9A9;
+    background-color: #ececec;
+    border-color: #CECECE
+}
+
 .clr:after {
     content: '';
     display: table;
@@ -85,7 +131,6 @@ textarea {
 .fl {
     float: left
 }
-
 .fr {
     float: right
 }
@@ -95,7 +140,14 @@ textarea {
 .f-tal{
     text-align: left !important;
 }
-
+.u-mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
 /*layer-loading*/
 .m-loading-ka{
     width: 0.6rem;
@@ -152,9 +204,9 @@ textarea {
 .m-time-axis>.passed>.title{color: #000;}
 .m-time-axis-sub>.passed>.sub-line>b{background-color:#000 !important;}
 .m-time-axis-sub>.passed>.sub-line>span{border-color:#000 !important;}
-.m-time-axis>.active>.title{color: #EC7402;}
-.m-time-axis-sub>.active>.sub-line>b{background-color:#EC7402 !important;}
-.m-time-axis-sub>.active>.sub-line>span{border-color:#EC7402 !important;/*#6c71c4*/}
+.m-time-axis>.active>.title{color: #ffc333;}
+.m-time-axis-sub>.active>.sub-line>b{background-color:#ffc333 !important;}
+.m-time-axis-sub>.active>.sub-line>span{border-color:#ffc333 !important;/*#6c71c4*/}
 
 @media screen and (max-width: 340px){
     .m-time-axis>li>.title{font-size: 0.1rem;}
@@ -193,7 +245,7 @@ textarea {
     height: 6px;
     border-bottom:1px solid #EEEFF2;
 }
-.m-order-info>.font-big{
+.m-order-info .font-big{
     font-size: 0.16rem;
 }
 .m-order-info>li>.left{
@@ -206,7 +258,7 @@ textarea {
      border-bottom:1px solid #EEEFF2;
      padding-bottom: 0.1rem;
 }
-.m-order-info>li>a{
+.m-order-info>li>.f-btn{
     color: #656565;
     border:1px solid #929293;
     border-radius: 2px;

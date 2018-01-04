@@ -26,7 +26,7 @@ export default{
         Moon.prototype.getUrlParam=function(e) {//获取地址栏参数
             var t = new RegExp("(^|&)" + e + "=([^&]*)(&|$)"),
                 n = window.location.search.substr(1).match(t);
-            return null != n ? unescape(n[2]) : null
+            return null != n ? n[2] : null
         },
         Moon.prototype.phoneFormat=function(n){//添加号码格式
             if(!n)return '--';
@@ -37,12 +37,37 @@ export default{
             return w;
         },
         Moon.prototype.mathCentToYuan=function(value){
-            return parseInt(value)/100;
+            return (parseFloat(value)/100).toFixed(2);
         },
-        Moon.prototype.filterLevel=function(level){//翻译号码等级
-            var levelArr=['','特级，','','','','','',''];
-            return levelArr[parseInt(level)];
+        /**
+         * 存储localStorage
+         */
+        Moon.prototype.setStore = (name, content) => {
+            if (!name) return;
+            if (typeof content !== 'string') {
+                content = JSON.stringify(content);
+            }
+            window.localStorage.setItem(name, content);
         },
+        /**
+         * 获取localStorage
+         */
+        Moon.prototype.getStore = name => {
+            if (!name) return;
+            let content=window.localStorage.getItem(name);
+            return content?JSON.parse(content):'';
+        },
+        /**
+         * 删除localStorage
+         */
+        Moon.prototype.removeStore = name => {
+            if (!name) return;
+            window.localStorage.removeItem(name);
+        },
+        // Moon.prototype.filterLevel=function(level){//翻译号码等级
+        //     var levelArr=['','特级，','','','','','',''];
+        //     return levelArr[parseInt(level)];
+        // },
         Moon.prototype.AJAX=function(url,data,success,load,other){//http
             // data数据格式
             // {
@@ -96,7 +121,7 @@ export default{
                 }
             }
             
-            postData.userId=data.userInfo.userId;
+            postData.iccid=data.userInfo.iccid;
             postData.applicationID=data.userInfo.applicationID;
             postData.token=data.userInfo.token;
             postData.timestamp=data.userInfo.timestamp;

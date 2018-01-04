@@ -4,10 +4,9 @@ require('../../assets/css/city.css');
 Jsborya.ready(function(){
 
 
-var app=new Moon({
+var vm=new Moon({
 	el:'#app',
 	data:{
-		title:'',
 		searchQuery:'',//地址搜索key
 		isShowCitySearch:true,//城市搜索开关
 		location:{
@@ -21,26 +20,20 @@ var app=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			var data=this.getUrlParam('data');
 			if(data){
-				data=JSON.parse(BASE64.decode(data));
+				data=JSON.parse(decodeURI(data));
 				this.set('location.cityName',data.cityName);
 				this.set('location.cityCode',data.cityCode);
-				this.set('title',data.title);
 			}
 		}
 	},
 	methods:{
 		selectCity:function(code,name){//选择城市
-			
-			var vm=this,back=vm.getUrlParam('back'),url;
-			var data={"cityCode":code,"cityName":name};
-			data=BASE64.encode(JSON.stringify(data));
-			back=='more' ? url=back+".html?data="+data+"&type=city&more="+vm.getUrlParam('more')+"" : url=back+".html?data="+data+"&type=city";
+			var data=JSON.stringify({"cityCode":code,"cityName":name});
 			Jsborya.pageBack({
-				url:url,
+				url:'index.html?data='+encodeURI(data),
 				isLoad:true,
 				cityCode:code,
 				cityName:name,
-				depiction:vm.get('title'),
 			});
 		},
 		filteredData:function () {

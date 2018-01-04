@@ -61,7 +61,7 @@
 				name:'getUserInfo',
 				data:'',
 				callback:function(str){
-					cb(str);
+					cb(JSON.parse(decodeURI(str)));
 				}
 			});
 		},
@@ -78,25 +78,25 @@
 		},
 		pageJump:function(json){//页面跳转
 			json.url.indexOf("http")===-1 ? json.url=URL+json.url : void 0;
-			//window.location.href=json.url;
-			callHandler({
-				name:'pageJump',
-				data:json,
-				callback:function(str){
-					console.log('jump');
-				}
-			});
+			window.location.href=json.url;
+			// callHandler({
+			// 	name:'pageJump',
+			// 	data:json,
+			// 	callback:function(str){
+			// 		console.log('jump');
+			// 	}
+			// });
 		},
 		pageBack:function(json){//页面返回
 			json.url=URL+json.url;
-			//window.location.href=json.url;
-			callHandler({
-				name:'pageBack',
-				data:json,
-				callback:function(str){
-					console.log('back');
-				}
-			});
+			window.location.href=json.url;
+			// callHandler({
+			// 	name:'pageBack',
+			// 	data:json,
+			// 	callback:function(str){
+			// 		console.log('back');
+			// 	}
+			// });
 		},
 		updateVersion:function(json){//app弹出版本更新
 			callHandler({
@@ -112,7 +112,7 @@
 				name:'dialog',
 				data:json,
 				callback:function(str){
-					json.yes ? json.yes(str) : console.log('dialog');
+					json.yes ? json.yes(JSON.parse(decodeURI(str))) : console.log('dialog');
 				}
 			});
 		},
@@ -121,65 +121,65 @@
 				name:'takePhotos',
 				data:json,
 				callback:function(str){
-					json.complete(str);
+					json.complete(JSON.parse(decodeURI(str)));
 				}
 			});
 		},
 		faceVerification:function(json){//活体识别
-			// json.complete(encodeURI(JSON.stringify({
+			// json.complete({
 			// 	'status':'1',
 			// 	'livingId':'20150710',
-			// })));
+			// });
 			callHandler({
 				name:'faceVerification',
 				data:json,
 				callback:function(str){
-					json.complete(str);
+					json.complete(JSON.parse(decodeURI(str)));
 				}
 			});
 		},
 		readCardICCID:function(cb){//读取ICCID
 			// setTimeout(function(){
-			// 	cb(encodeURI(JSON.stringify({
+			// 	cb({
 			// 		'status':'1',
 			// 		'iccid':'231456487894232',
-			// 	})));
+			// 	});
 			// },3000)
 			callHandler({
 				name:'readCardICCID',
 				data:'',
 				callback:function(str){
-					cb(str);
+					cb(JSON.parse(decodeURI(str)));
 				}
 			});
 		},
 		readCardIMSI:function(cb){//读取IMSI
 			// setTimeout(function(){
-			// 	cb(BASE64.encode(JSON.stringify({
+			// 	cb({
 			// 		'status':'1',
 			// 		'imsi':'',
-			// 	})));
+			// 	});
 			// },3000)
 			
 			callHandler({
 				name:'readCardIMSI',
 				data:'',
 				callback:function(str){
-					cb(str);
+					cb(JSON.parse(decodeURI(str)));
 				}
 			});
 		},
 		callWriteCard:function(json){//写卡
 			// setTimeout(function(){
-			// 	json.complete(BASE64.encode(JSON.stringify({
+			// 	json.complete({
 			// 		'status':'1',
-			// 	})));
+			// 	});
 			// },3000)
 			callHandler({
 				name:'callWriteCard',
 				data:json,
 				callback:function(str){
-					json.complete(str);
+					json.complete(JSON.parse(decodeURI(str)));
 				}
 			});
 		},

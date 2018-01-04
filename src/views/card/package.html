@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>套餐选择</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+body{
+	padding-bottom: 0.3rem;
+}
+.m-all-tag{
+	margin-top: 0.2rem;
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<ul class="m-time-axis clr">
+		<li class="active">
+			<div class="title">1.选号选套餐</div>
+		</li>
+		<li>
+			<div class="title">2.实名认证</div>
+		</li>
+		<li>
+			<div class="title">3.订单审核</div>
+		</li>
+		<li>
+			<div class="title">4.开卡申请</div>
+		</li>
+		<li>
+			<div class="title">5.开卡受理</div>
+		</li>
+	</ul>
+	<ol class="m-time-axis-sub clr">
+		<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+	</ol>
+	
+	<ul class="m-order-info clr">
+		<li>
+			<span class="left grey">所选号码:</span>
+			<b class="purple">{{ phoneFormat(orderInfo.phone) }}</b>({{orderInfo.cityName}}<b class="yellow" m-show="orderInfo.pretty==1">,靓号</b>)</li>
+		<li class="double-border"></li>
+		<li m-show="selectPackage.packageCode" m-on:click="jumpToPackageDetails" class="border">
+			<span class="left grey">所选套餐:</span>
+			<span>{{ selectPackage.name }}</span>
+			<i class="fr u-icon-right"></i>
+		</li>
+		
+		<li>
+			<span class="left grey">号码占用费</span>
+			<span class="fr right">￥{{ mathCentToYuan(orderInfo.phoneMoney) }}</span>
+		</li>
+		<li m-show="selectPackage.packageCode" class="border">
+			<span class="left grey">含预存话费</span>
+			<span class="fr right">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
+		</li>
+		<li m-show="selectPackage.packageCode">
+			<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>
+		</li>
+	</ul>
+	<section m-show="!selectPackage.packageCode" class="m-all-tag">
+		<div class="tag">套餐选择</div>
+		<ul class="m-recommend-ul clr" id="bagUl">
+			<li m-for="todo,index in recommendList" m-on:click="jumpToPackageList(todo.type)">{{ todo.name }}</li>
+		</ul>
+	</section>
+	<section m-show="selectPackage.packageCode" class="m-btn-double clr">
+		<div class="btn fl btnp" m-on:click="changePackage">更换套餐</div>
+		<div class="btn fl btny" m-on:click="savePackage">保存套餐</div>
+	</section>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>套餐列表</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+body{
+	padding-bottom: 0.3rem;
+	background-color: #fff !important;
+}
+#packageList{
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 1rem;
+	height: 100%;
+	background-color:#F0F2F5;
+}
+.m-package-ul{
+	
+}
+.m-package-ul>li{
+	text-align:center;
+	border-bottom: 1px solid #dcdcdc;
+	padding:0.15rem 0;
+	position: relative;
+}
+.m-package-ul>li>b{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 3px;
+	height: 100%;
+	background-color:#4b3887;
+}
+.m-package-ul>.active{
+	background-color: #fff;
+	border-bottom: none;
+}
+.m-package-ul>.active>b{
+	display: inline-block;
+}
+#packageInfo{
+	margin-left:1rem;
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<div id="packageList" class="f-scroll">
+		<ul class="m-package-ul">
+			<li
+				m-for="todo,index in packageList"
+				m-literal:class="{active:off.select==index}"
+				m-literal:title="index"
+				m-on:click="shiftPackage"><b></b>{{ todo.title }}</li>
+		</ul>
+	</div>
+	<div id="packageInfo">
+		<section class="m-all-tag" style="padding:0.1rem 0">
+			<!-- <div class="tag"><b class="purple">{{ packageList[off.select].title }}</b></div> -->
+			<div class="details f-scroll">
+				<div class="details-header">套餐标准</div>
+				<table>
+					<tbody>
+						<tr>
+							<td>月费（元）</td>
+							<td colspan="2">{{packageList[off.select].packInfo.info.monthlyFee}}</td>
+						</tr>
+						<tr>
+							<td rowspan="5">套餐包含</td>
+							<td>低消</td>
+							<td>{{packageList[off.select].packInfo.info.lowConsumption}}</td>
+						</tr>
+						<tr>
+							<td>国内流量（MB）</td>
+							<td>{{packageList[off.select].packInfo.info.flow}}</td>
+						</tr>
+						<tr>
+							<td>国内语音拨打（分钟）</td>
+							<td>{{packageList[off.select].packInfo.info.voiceDialing}}</td>
+						</tr>
+						<tr>
+							<td>国内短信（条）</td>
+							<td>{{packageList[off.select].packInfo.info.message}}</td>
+						</tr>
+						<tr>
+							<td>国内语音接听</td>
+							<td>{{packageList[off.select].packInfo.info.answer}}</td>
+						</tr>
+						<tr>
+							<td>套餐外价格</td>
+							<td colspan="2">{{packageList[off.select].packInfo.info.beyondFee}}</td>
+						</tr>
+						<tr>
+							<td>来电显示</td>
+							<td colspan="2">{{packageList[off.select].packInfo.info.callerID}}</td>
+						</tr>
+						<tr>
+							<td>语音月底是否清零</td>
+							<td colspan="2">{{packageList[off.select].packInfo.info.voiceZero}}</td>
+						</tr>
+						<tr>
+							<td>流量是否月底清零</td>
+							<td colspan="2">{{packageList[off.select].packInfo.info.flowZero}}</td>
+						</tr>
+						<tr>
+							<td>备注</td>
+							<td colspan="2">{{packageList[off.select].packInfo.info.remarks}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="details-header">资费说明</div>
+				<div class="details-content" m-html="packageList[off.select].packInfo.feeDescribe"></div>
+			</div>
+		</section>
+		<section class="m-all-tag">
+			<div class="tag">可选包</div>
+			<ul class="m-col-double clr" id="selPackageUl">
+				<li
+					m-for="todo,index in packageList[off.select].packInfo.selPackage"
+					m-literal:class="{active:todo.init==1,active2:todo.init==2}"
+					m-literal:title="index"
+					m-on:click="shiftSelPackage">{{ todo.title }}</li>
+			</ul>
+		</section>
+		<section class="m-all-tag">
+			<div class="tag">预存话费</div>
+			<ul class="m-col-double clr">
+				<li
+					m-for="todo,index in packageList[off.select].packInfo.prestoreMoneyList"
+					m-literal:class="{active:todo.init==1,active2:todo.init==2}"
+					m-literal:title="index"
+					m-on:click="shiftPrestore">{{ todo.prestoreMoney }}</li>
+			</ul>
+		</section>
+		<div m-on:click="makeSure" class="btn btny">确定</div>
+	</div>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

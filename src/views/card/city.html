@@ -22,7 +22,7 @@
 				<dl>
 					<dt>当前选择</dt>
 					<dd class="active"><a href="javascript:void(0)" class="icon-location" m-on:click="selectCity(location.cityCode,location.cityName)">{{location.cityName}}</a></dd>
-					<dd v-if="location.cityName!='全国'"><a href="javascript:void(0)" m-on:click="selectCity(100,'全国')">全国</a></dd>
+					<dd m-if="location.cityName!='全国'"><a href="javascript:void(0)" m-on:click="selectCity(100,'全国')">全国</a></dd>
 				</dl>
 				<dl>
 					<dt>热门城市</dt>
