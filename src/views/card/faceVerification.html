@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>活体识别</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+
+</style>
+</head>
+<body style="padding-bottom: 0.3rem;">
+	<div id="app" m-mask>
+		<section m-show="!off.isFace">
+			<div class="m-verification-box">
+				<div class="inner">
+					<img src="../../assets/img/icon_shibie.png">
+				</div>
+			</div>
+		</section>
+		<div class="tipsBox">
+			<section class="m-verification-box" m-if="!off.isFace">
+				<div>
+					<p class="f-w">通过人脸拍摄验证身份</p>
+					<p class="grey">请遵守以下要求，以便顺利通过验证</p>
+				</div>
+				<p class="o-tips grey f-tal">1.脸部装扮与身份证照片尽量一致<br>2.确保光线充足<br>3.验证时请将正脸正对屏幕，然后跟随提示完成脸部动作</p>
+				<div>
+					<div href="javascript:void(0)" m-on:click="toFaceVerification" class="btn bgp btnScale">开始识别</div>
+					<div href="javascript:void(0)" m-on:click="jumpToPrev" class="btn btny">上一步</div>
+				</div>
+			</section>
+			<section m-show="off.isFace">
+				<div class="m-verification-box">
+					<div class="inner">
+						<img src="../../assets/img/icon_shibie.png">
+						<div m-show="off.isPass" class="u-icon-success"></div>
+					</div>
+					<div>
+						<p class="f-w red" m-show="!off.isPass">人脸识别失败</p>
+						<p class="f-w green" m-show="off.isPass">人脸识别通过验证</p>
+						<p class="btn-aside"><a href="javascript:void(0)" m-show="!off.isPass" m-on:click="toFaceVerification" class="btn btn-p">重新识别</a></p>
+						<p class="grey">与证件照片<span class="yellow">{{faceConfirmInfo.similarity}}%</span>相似度</p>
+					</div>
+				</div>
+				<ul class="m-order-info clr grey">
+					<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
+					<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
+					<li>
+						<span class="left">所选号码:</span>
+						<b class="purple">{{ phoneFormat(orderInfo.phone) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+						<span>[{{orderInfo.cityName}}]</span>
+					</li>
+					<li class="double-border"></li>
+					<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(orderInfo.cardMoney)}}</span></li>
+					<li class="border">
+						<span class="left">+含预存话费</span>
+						<span class="fr right">￥{{mathCentToYuan(orderInfo.prestoreMoney)}}</span>
+					</li>
+					<li><span class="fr right black">总价:<b class="red font-big">￥{{orderInfo.totalMoney}}</b></span></li>
+				</ul>
+
+				<ul class="m-pay-choose">
+					<li class="m-form-radio">
+						<label class="clr">
+							<label for="payType" class="text u-icon-wechat"></label>
+							<span class="radio fr"><input type="radio" name="off.payType" value="2" m-model="off.payType"><span></span></span>
+						</label>
+					</li>
+					<li class="m-form-radio">
+						<label class="clr">
+							<label for="payType" class="text u-icon-alipay"></label>
+							<span class="radio fr"><input type="radio" name="off.payType" value="3" m-model="off.payType"><span></span></span>
+						</label>
+					</li>
+				</ul>
+				<div m-show="off.isPass">
+					<div href="javascript:void(0)" m-on:click="pay" class="btn btng">
+						<span m-show="!off.load">去支付</span>
+						<span m-show="off.load==1">正在支付，请稍候<span class="pay-load">
+							<b class="f1"></b>
+							<b class="f2"></b>
+							<b></b>
+						</span></span>
+						<span m-show="off.load==2">获取支付结果中<span class="pay-load">
+							<b class="f1"></b>
+							<b class="f2"></b>
+							<b></b>
+						</span></span>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<iframe id="payIframe" frameborder="0"></iframe>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

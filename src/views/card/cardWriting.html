@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>写卡卡</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+</style>
+</head>
+<body style="padding-bottom: 0.3rem;">
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.选号选套餐</div>
+			</li>
+			<li>
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.订单审核</div>
+			</li>
+			<li class="active">
+				<div class="title">4.开卡申请</div>
+			</li>
+			<li>
+				<div class="title">5.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<ul class="m-order-info clr grey">
+			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
+			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
+			<li>
+				<span class="left">所选号码:</span>
+				<b class="purple">{{ phoneFormat(orderInfo.phone) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<span>[{{orderInfo.cityName}}]</span>
+			</li>
+		</ul>
+		<section>
+			<div class="device-box">
+				<div class="state">
+					<div>设备状态：<span class="green" m-show="deviceStatus==1">连接正常</span><span class="red" m-show="deviceStatus==2">连接失败</span><span class="red" m-show="deviceStatus==3">未连接</span><span class="red" m-show="deviceStatus==4">未插卡</span><span m-show="!deviceStatus">--</span>
+					</div>
+				</div>
+				<div class="bg">
+					<img style="width: 70%" src="../../assets/img/phone_sim.png">
+				</div>
+				<div class="tips">*请把号卡插入设备侧面卡槽中<br/>然后点击“提交开卡申请”</div>
+			</div>
+		</section>
+		<section class="m-all-tag">
+			<div class="tag clr">
+				<span class="fl">读取ICCID</span>
+				<div class="fr" m-show="!off.isJump">
+					<div class="m-scan" m-show="off.readLoad">
+						<span class="top-left"></span>
+						<span class="top-right"></span>
+						<span class="bottom-left"></span>
+						<span class="bottom-right"></span>
+						<b class="line"></b>
+					</div>
+					<a class="btn-line" m-show="!off.readLoad" m-on:click="readCardICCID">重新读取</a>
+				</div>
+			</div>
+			<ul class="m-order-info">
+				<li class="set"><span class="left">ICCID:</span>{{iccid}}</li>
+				<li class="set" m-show="imsiSubstr"><span class="left">IMSI:</span>{{imsiSubstr}}</li>
+			</ul>
+		</section>
+		<div class="m-msg">
+			<b class="red" m-show="off.msg">{{off.msg}}</b>
+		</div>
+		<div m-on:click="submitOrder" m-show="off.submitLoad" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">
+			<i m-show="off.submitLoad==1">提交开卡申请</i>
+			<i m-show="off.submitLoad==2">开卡申请中，请稍后</i>
+			<b m-show="off.submitLoad==2"></b>
+		</div>
+		<div m-show="off.getLoad" class="btn btny">
+			<span>
+				<i m-show="off.getLoad==1">获取IMSI中</i>
+				<i m-show="off.getLoad==2">写卡中，请稍后</i>
+				<span class="pay-load">
+					<b class="f1"></b>
+					<b class="f2"></b>
+					<b></b>
+				</span>
+			</span>
+		</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<script src="https://unpkg.com/smartphoto@1.0.1/js/smartphoto.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/smartphoto@1.0.1/css/smartphoto.min.css">
+<title>受理单</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+body{
+	padding-bottom:0.3rem;
+}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<section id="slider-box">
+			<div class="m-slider-box" m-show="sheetImg.length">
+				<div class="m-slider-wrapper o-sheet">
+					<a class="slider" m-for="todo in sheetImg" m-literal:href="todo.imageName"><img class="imgItem" m-literal:src="todo.imageName" alt=""></a>
+				</div>
+				<div class="m-slider-pagination">
+					
+				</div>
+			</div>
+			<div style="background-color: #fff;height:100%;" m-show="!sheetImg.length"></div>
+		</section>
+		<div href="javascript:void(0)" m-on:click="submitSheet" class="btny btn">提交受理单</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

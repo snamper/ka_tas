@@ -94,6 +94,14 @@ textarea {
     -moz-transform: scale(.92);
     -webkit-transform: scale(.92)
 }
+.bgp {
+    background: #4b3887;
+    color: #fff;
+}
+.bgg {
+    background: #10CD6E;
+    color: #fff;
+}
 .btny{
     border-color: #ffc333!important;
     color: #ffc333;
@@ -148,6 +156,8 @@ textarea {
     height: 100%;
     background-color: rgba(0,0,0,0.5);
 }
+/*icon*/
+.u-icon-pretty{background-image: url(../img/sprite_icons.png);}
 /*layer-loading*/
 .m-loading-ka{
     width: 0.6rem;
@@ -247,6 +257,12 @@ textarea {
 }
 .m-order-info .font-big{
     font-size: 0.16rem;
+}
+.m-order-info .u-icon-pretty{
+    padding:0.1rem 0.12rem;
+    background-size: 0.2rem;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .m-order-info>li>.left{
     margin-right: 5px;

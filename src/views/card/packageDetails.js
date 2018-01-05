@@ -45,12 +45,27 @@ var vm=new Moon({
 	hooks: {
 	    init: function() {
 			vm=this;
+			Jsborya.setHeader({
+				title:'套餐详情',
+				frontColor:'#ffffff',
+				backgroundColor:'#4b3887',
+				left:{
+					icon:'back_white',
+					value:'',
+					callback:''
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			var code=vm.getUrlParam('code');
 			var phoneLevel=vm.getUrlParam('phoneLevel');
 			if(code&&phoneLevel){
-				Jsborya.getUserInfo(function(userInfo){
+				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 					vm.callMethod('getPackageInfo',[code,phoneLevel]);
 				});

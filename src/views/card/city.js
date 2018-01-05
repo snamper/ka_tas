@@ -17,10 +17,25 @@ var vm=new Moon({
 	},
 	hooks:{
 		init:function(){
+			Jsborya.setHeader({
+				title:'选择城市',
+				frontColor:'#ffffff',
+				backgroundColor:'#4b3887',
+				left:{
+					icon:'back_white',
+					value:'',
+					callback:''
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			var data=this.getUrlParam('data');
 			if(data){
-				data=JSON.parse(decodeURI(data));
+				data=JSON.parse(BASE64.decode(data));
 				this.set('location.cityName',data.cityName);
 				this.set('location.cityCode',data.cityCode);
 			}
@@ -30,7 +45,7 @@ var vm=new Moon({
 		selectCity:function(code,name){//选择城市
 			var data=JSON.stringify({"cityCode":code,"cityName":name});
 			Jsborya.pageBack({
-				url:'index.html?data='+encodeURI(data),
+				url:'index.html?data='+BASE64.encode(data),
 				isLoad:true,
 				cityCode:code,
 				cityName:name,

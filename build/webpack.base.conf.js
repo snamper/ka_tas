@@ -64,6 +64,15 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:5].[ext]')
         }
+      },
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            // attrs: false
+          }
+        }
       }
     ]
   },

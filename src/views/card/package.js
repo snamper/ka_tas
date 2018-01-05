@@ -8,10 +8,10 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-
+			load:0
 		},
 		totalPrice:0,//价格计算
-		orderInfo:{
+		cardInfo:{
 			phone:'00000000000',
 			cityName:'未知',
 			cityCode:'100',
@@ -30,26 +30,41 @@ var vm=new Moon({
 	},
 	hooks: {
 	    init: function() {
-	    	this.setStore('orderInfo',{phone:'17152689940',cityName:'成都',cityCode:'120',pretty:'1',phoneMoney:200,phoneLevel:0});
-	    	//this.removeStore('orderInfo');
+	    	//this.setStore('CARD_INFO',{});
+	    	//this.removeStore('CARD_INFO');
 	    	//this.setStore('selectPackage',{name:'联通无限流量套餐',packageCode:'1002',selPackCode:'1254',prestore:'320',});
 	    	//this.removeStore('selectPackage');
 	    	vm=this;
+	    	Jsborya.setHeader({
+				title:'选择套餐',
+				frontColor:'#ffffff',
+				backgroundColor:'#4b3887',
+				left:{
+					icon:'back_white',
+					value:'',
+					callback:''
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
 	    	Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=this.getStore('orderInfo'),
+			let cardInfo=this.getStore('CARD_INFO'),
 				selectPackage=this.getStore('selectPackage');
-			if(orderInfo){
-				vm.set('orderInfo',orderInfo);
+			if(cardInfo){
+				vm.set('cardInfo',cardInfo);
 				if(selectPackage){
 					vm.set('selectPackage',selectPackage);
-					vm.set('totalPrice',(parseFloat(orderInfo.phoneMoney)/100+parseFloat(selectPackage.prestore)/100).toFixed(2));
+					vm.set('totalPrice',(parseFloat(cardInfo.phoneMoney)/100+parseFloat(selectPackage.prestore)/100).toFixed(2));
 				}
-				Jsborya.getUserInfo(function(userInfo){
+				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 				});
 			}else{
-				alert('页面URL参数错误');
+				alert('本地号卡信息错误');
 			}
 	    },
 	},
@@ -57,32 +72,129 @@ var vm=new Moon({
 		changePackage:function(){
 			vm.callMethod('jumpToPackageList',['all']);
 		},
-		savePackage:function(){
+		readCardICCID:function(){
+			vm.set("off.load",1);
+			Jsborya.readCardIMSI(function(data){
+				if(data.status==1){
+					if(data.imsi=='FFFFFFFFFFFFFFF')data.imsi='';
+					vm.callMethod("getOrderInfo",[data.imsi,data.smsp]);
+				}else{
+					vm.callMethod("filterConnectStatus",[data.status]);
+				}
+			});
+		},
+		filterConnectStatus:function(status){
+			if(status==2){
+				alert("读取失败");
+			}else if(status==3){
+				layer.open({
+	                content:"未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽",
+	                btn:['确定'],
+	                title:'未检测到插卡'
+	            });
+			}else{
+				alert("异常错误");
+				return false;
+			}
+		},
+		getOrderInfo:function(imsi,smsp){//获取订单信息
 			const json={
 	  			params:{
-	  				phoneNum:vm.get('orderInfo').phone,
+	  				imsi:imsi||'',
+	  				smsp:smsp||'',
+	  			},
+	  			userInfo:vm.get('userInfo')
+	  		};
+			vm.AJAX('../../w/source/iccidCheck',json,function(data){
+				vm.set("off.load",false);
+				if(data.data.status==1){
+					vm.callMethod('savePackage');
+				}else if(data.data.status==2){
+					layer.open({
+						title:'提示',
+                        content:'您有未完成的订单，请先【完成】或【放弃订单】',
+                        btn:['查看订单','放弃订单'],
+                        yes:function(){
+                        	vm.setStore('ORDER_INFO',{//订单信息
+								"sysOrderId":data.data.orderInfo.sysOrderId,
+								"createTime":data.data.orderInfo.createTime,
+								"phone": data.data.orderInfo.phoneNum,
+						        "numberLevel":data.data.orderInfo.numberLevel,
+						        "cityName":data.data.orderInfo.cityName,
+								"totalMoney":data.data.orderInfo.totalMoney,//总价格
+								"cardMoney":data.data.orderInfo.cardMoney,//号码占用费
+								"prestoreMoney":data.data.orderInfo.prestoreMoney,//预存价格
+								"similarity":data.data.orderInfo.similarity,
+								"limitSimilarity":data.data.orderInfo.limitSimilarity
+						    });
+						    Jsborya.pageJump({
+				                url:'orderDetails.html',
+				                stepCode:999
+				            });
+                        },
+                        no:function(){
+                        	layer.closeAll();
+                        	vm.orderCancel(vm.get('userInfo'),data.data.orderInfo.sysOrderId);
+                        },
+                    });
+				}else if(data.data.status==3){
+					layer.open({
+                        content:'当前卡已开卡成功，不能重复进行开卡操作',
+                        btn:['确定'],
+                        title:'提示'
+                    });
+				}else if(data.data.status==4){
+					layer.open({
+                        content:'当前卡为无效卡，请使用有效的号卡进行操作',
+                        btn:['确定'],
+                        title:'提示'
+                    });
+				}
+			});
+		},
+		savePackage:function(){
+			vm.set("off.load",2);
+			const cardInfo=vm.get('cardInfo');
+			const json={
+	  			params:{
+	  				phoneNum:cardInfo.phone,
 	  				packageCode:vm.get('selectPackage').packageCode,
 	  				selPackCode:vm.get('selectPackage').selPackCode,
-	  				prestore:vm.get('selectPackage').prestore,
+	  				prestoreMoney:vm.get('selectPackage').prestore,
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
 			vm.AJAX('../../w/source/orderCreate',json,function(data){
+				vm.set("off.load",false);
+				vm.setStore('ORDER_INFO',{//订单信息
+					"sysOrderId":data.data.sysOrderId,
+					"createTime":data.data.createTime,
+					"phone": cardInfo.phone,
+			        "numberLevel":cardInfo.phoneLevel,
+			        "cityName":cardInfo.cityName,
+					"totalMoney":vm.get('totalPrice'),//总价格
+					"cardMoney":cardInfo.phoneMoney,//号码占用费
+					"prestoreMoney":vm.get('selectPackage').prestore,//预存价格
+					"similarity":'',
+					"limitSimilarity":''
+			    });
 				Jsborya.pageJump({
-					url:'upload.html',
+					url:'certification.html',
 					stepCode:999
 				});
+			},false,function(){
+				vm.set("off.load",2);
 			});
 		},
-		jumpToPackageList:function(type){
+		jumpToPackageList:function(type,name){
 			Jsborya.pageJump({
-				url:'packageList.html?type='+type,
+				url:'packageList.html?type='+BASE64.encode(JSON.stringify({val:type,name:name})),
 				stepCode:999
 			});
 		},
 		jumpToPackageDetails:function(){
 			Jsborya.pageJump({
-				url:'packageDetails.html?code='+vm.get('selectPackage').packageCode+'&phoneLevel='+vm.get('orderInfo').phoneLevel,
+				url:'packageDetails.html?code='+vm.get('selectPackage').packageCode+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
 				stepCode:999
 			});
 		},

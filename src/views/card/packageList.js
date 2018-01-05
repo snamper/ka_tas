@@ -50,7 +50,7 @@ var vm=new Moon({
             }
         }],
 		userInfo:'',//用户信息
-		orderInfo:{
+		cardInfo:{
 			phone:'00000000000',
 			cityName:'未知',
 			cityCode:'100',
@@ -64,22 +64,41 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let type=vm.getUrlParam('type');
+			let type=vm.getUrlParam('type'),title='套餐列表';
+			
 			if(type){
-				vm.set('type',type);
-				let orderInfo=this.getStore('orderInfo');
-				if(orderInfo){
-					vm.set('orderInfo',orderInfo);
-					Jsborya.getUserInfo(function(userInfo){
+				type=JSON.parse(BASE64.decode(type));
+				title=type.name;
+				vm.set('type',type.val);
+
+				let cardInfo=this.getStore('CARD_INFO');
+				if(cardInfo){
+					vm.set('cardInfo',cardInfo);
+					Jsborya.getGuestInfo(function(userInfo){
 						vm.set('userInfo',userInfo);
 						vm.callMethod('getPackageList');
 					});
 				}else{
-					alert('本地订单信息丢失');
+					alert('本地号卡信息丢失');
 				}
 			}else{
 				alert('页面URL参数错误');
 			}
+			Jsborya.setHeader({
+				title:title,
+				frontColor:'#ffffff',
+				backgroundColor:'#4b3887',
+				left:{
+					icon:'back_white',
+					value:'',
+					callback:''
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
 	    },
 	},
 	methods:{
@@ -87,8 +106,8 @@ var vm=new Moon({
 			const json={
 	  			params:{
 	  				type:vm.get('type'),
-	  				cityCode:vm.get('orderInfo').cityCode,
-	  				phoneNumber:vm.get('orderInfo').phone
+	  				cityCode:vm.get('cardInfo').cityCode,
+	  				phoneNumber:vm.get('cardInfo').phone
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};

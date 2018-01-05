@@ -12,7 +12,8 @@ var vm=new Moon({
 			openMoreLable:false,//展开标签
 			showMoreLabel:false,//更多标签
 			showNoMore:false,//暂无更多
-			showPullLoad:false//上拉加载
+			showPullLoad:false,//上拉加载
+			showOrderMsg:false//是否有订单
 		},
 		inputValue:'',//搜索框value
 		selectLabel:'',//选择的标签
@@ -20,7 +21,7 @@ var vm=new Moon({
 		page:1,
 		pageSize:10,//显示条数
 		userInfo:'',//用户信息
-		hotLabel:[{type:'',name:'顺顺利利'},{type:'',name:'顺顺利利2'},{type:'',name:'顺顺利利3'}],//标签数据
+		hotLabel:[{type:'1166',name:'一举成名'},{type:'3322',name:'德望兼备'},{type:'5588',name:'富贵自来'},{type:'2266',name:'天时地利'},{type:'2288',name:'荣华富贵'},{type:'6111',name:'大吉大利晚上吃鸡'},{type:'9944',name:'旭日升天'},{type:'3344',name:'生生世世'},{type:'5201314',name:'我爱你一生一世'},{type:'1314920',name:'一生一世就爱你'},{type:'520',name:'我爱你'},{type:'6699',name:'顺顺利利'},{type:'3399',name:'长长久久'},{type:'20110',name:'爱你一亿年'},{type:'1314',name:'一生一世'}],//标签数据
 		orderInfo:{status:'1'},//订单信息
 		cardData:{
 			ytDbOneCount:'-1',
@@ -31,17 +32,18 @@ var vm=new Moon({
 	    init: function() {
 			vm=this;
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
+
 			const window_h=document.documentElement.clientHeight;
 			document.getElementById("cardBox").style.height=window_h-173+'px';
 
 			const data=vm.getUrlParam('data');
 			if(data){
-				vm.set('selectCity',JSON.parse(decodeURI(data)));
+				vm.set('selectCity',JSON.parse(BASE64.decode(data)));
 			}
-
-			Jsborya.getUserInfo(function(userInfo){
+			vm.removeStore('ORDER_INFO');
+			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
-				vm.callMethod('getOrderInfo');
+				vm.callMethod('readCardICCID');
 			});
 	    }
 	},
@@ -49,7 +51,7 @@ var vm=new Moon({
 		cityClick:function(){//城市切换
 			let selectCity=JSON.stringify(vm.get('selectCity'));
 			Jsborya.pageJump({
-                url:'city.html?data='+encodeURI(selectCity),
+                url:'city.html?data='+BASE64.encode(selectCity),
                 stepCode:'999'
             });
 		},
@@ -75,7 +77,7 @@ var vm=new Moon({
 			vm.set('inputValue','');
 		},
 		labelClick:function(e){//标签点击
-			vm.set('selectLabel',{name:vm.get('hotLabel')[e.target.title].name});
+			vm.set('selectLabel',{name:vm.get('hotLabel')[e.target.title].name,type:vm.get('hotLabel')[e.target.title].type});
 			const dom_searchInput=document.getElementById("searchInput");
 			dom_searchInput.style.paddingLeft=30+e.target.offsetWidth+'px';
 			dom_searchInput.setAttribute('placeholder','');
@@ -110,25 +112,65 @@ var vm=new Moon({
 			let off=vm.get('off').showMoreLabel;
 			vm.set('off.showMoreLabel',!off);
 		},
-		showOrderDetails:function(){
+		toOrderDetails:function(){
 			Jsborya.pageJump({
-                url:'orderDetails.html?iccid='+vm.get('userInfo').iccid,
+                url:'orderDetails.html',
+                stepCode:999
+            });
+		},
+		toPackage:function(index){
+			let phoneData=vm.get('cardData').list[parseInt(index)];
+			vm.setStore('CARD_INFO',{
+				phone:phoneData.phoneNum,
+				cityName:phoneData.cityName,
+				cityCode:phoneData.cityCode,
+				pretty:phoneData.pretty,
+				phoneMoney:phoneData.cardMoney,
+				phoneLevel:phoneData.numberLevel
+			});
+			Jsborya.pageJump({
+                url:'package.html',
                 stepCode:'999'
             });
 		},
-		getOrderInfo:function(){//获取订单信息
+		readCardICCID:function(){
+			Jsborya.readCardIMSI(function(data){
+				if(data.status==1){
+					if(data.imsi=='FFFFFFFFFFFFFFF')data.imsi='';
+					vm.callMethod("getOrderInfo",[data.imsi,data.smsp]);
+				}
+			});
+		},
+		getOrderInfo:function(imsi,smsp){//获取订单信息
 			const json={
-	  			params:'',
+	  			params:{
+	  				imsi:imsi||'',
+	  				smsp:smsp||'',
+	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
 			vm.AJAX('../../w/source/iccidCheck',json,function(data){
-				vm.set('orderInfo',data.data);
+				if(data.data.status==2){
+					vm.set('off.showOrderMsg',true);
+					vm.setStore('ORDER_INFO',{//订单信息
+						"sysOrderId":data.data.orderInfo.sysOrderId,
+						"createTime":data.data.orderInfo.createTime,
+						"phone": data.data.orderInfo.phoneNum,
+				        "numberLevel":data.data.orderInfo.numberLevel,
+				        "cityName":data.data.orderInfo.cityName,
+						"totalMoney":data.data.orderInfo.totalMoney,//总价格
+						"cardMoney":data.data.orderInfo.cardMoney,//号码占用费
+						"prestoreMoney":data.data.orderInfo.prestoreMoney,//预存价格
+						"similarity":data.data.orderInfo.similarity,
+						"limitSimilarity":data.data.orderInfo.limitSimilarity
+				    });
+				}
 			});
 		},
 		getCardList:function(page,closeLoad){//获取数据
 			const json={
 	  			params:{
-	  				phoneExam:vm.get('inputValue'),
+	  				phoneExam:vm.get('inputValue')||vm.get('selectLabel').type,
 	  				cityCode:vm.get('selectCity').cityCode,
 	  				ytDbOneCount:vm.get('cardData').ytDbOneCount,
 	  				page:page||1,

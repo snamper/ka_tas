@@ -1,0 +1,243 @@
+.m-certificate-info, .m-pic, .o-tips{
+    background-color: #fff;
+    
+}
+
+.m-certificate-info>li{
+    height: 0.4rem;
+    line-height: 0.4rem;
+    padding:0 0.1rem;
+    border-bottom: 1px solid #eee;
+}
+.m-certificate-info>li:last-child{
+    border-bottom: none;
+}
+.m-certificate-info>li>.fl{
+    color: #555;
+}
+.m-certificate-info>li>.fr{}
+.o-input{}
+.o-input .fl{
+    display: inline-block;
+    width: 0.6rem;
+}
+.o-input div{
+    margin-left: 0.6rem;
+
+}
+.o-input div>input{
+    width: 100%;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    text-align: right;
+    border:1px solid transparent;
+    outline: none;
+    font-size: 0.15rem;
+    border-bottom-color:#eee;
+}
+.o-input div>input:focus{
+    border-bottom-color:#4b3887; 
+}
+.o-tips{
+    font-size:0.1rem;line-height: 1.5;
+    padding:0.1rem;
+}
+
+/*拍照*/
+.m-takePhoto, .photo-tag{
+    display: flex;
+    display: -webkit-flex;
+}
+.u-icon-photo{
+    background-image: url("../img/sdk2_ic_photograph.png");
+}
+.m-takePhoto>.box{
+    flex: 1;
+    -webkit-flex: 1;
+    margin:5px 10px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+}
+.m-takePhoto>.box>a{
+    position: absolute;
+    top: 50%;
+    left:50%;
+    display: inline-block;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-left: -0.4rem;
+    margin-top: -0.4rem;
+    background-position: center;
+    background-size: 100%;
+    background-repeat:no-repeat;
+}
+.photo-tag>.item{
+     flex: 1;
+    -webkit-flex: 1;
+    text-align: center;
+    color:#555;
+    font-size: 0.12rem;
+    margin-bottom:5px;
+}
+@media screen and (max-width: 414px){
+    .m-takePhoto>.box>a{
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-left: -0.25rem;
+        margin-top: -0.25rem;
+    }
+}
+#photo-front{
+    background-image: url("../img/IDphoto01.png");
+}
+#photo-back{
+    background-image: url("../img/IDphoto02.png");
+}
+/*#photo-hand{
+    background-image: url("../img/IDphoto03.jpg");
+}*/
+
+/*手签名模块*/
+/*复选框*/
+.m-form-checkbox>div{
+    
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.m-form-checkbox>div>.checkbox{
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle
+}
+
+.m-form-checkbox>div>.checkbox>span{
+    display: inline-block;
+    position: relative;
+    border: 1px solid #bfcbd9;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    
+    transition: border-color .25s cubic-bezier(.71, -.46, .29, 1.46), background-color .25s cubic-bezier(.71, -.46, .29, 1.46);
+    -webkit-transition: border-color .25s cubic-bezier(.71, -.46, .29, 1.46), background-color .25s cubic-bezier(.71, -.46, .29, 1.46)
+}
+
+.m-form-checkbox>div>.checkbox>span:active {
+    border-color: #4b3887
+}
+
+.m-form-checkbox>div>.checkbox>span:after {
+    box-sizing: content-box;
+    content: "";
+    border: 2px solid #fff;
+    border-left: 0;
+    border-top: 0;
+    height: 8px;
+    left: 5px;
+    position: absolute;
+    top: 1px;
+    transform: rotate(45deg) scaleY(0);
+    -webkit-transform: rotate(45deg) scaleY(0);
+    width: 4px;
+    transition: transform .15s cubic-bezier(.71, -.46, .88, .6) .05s;
+    -webkit-transition: transform .15s cubic-bezier(.71, -.46, .88, .6) .05s;
+    transform-origin: center
+}
+
+.m-form-checkbox>div>.text{
+    font-size: 14px;
+}
+.m-form-checkbox>div>.checkbox.active>span{
+    border-color: #4b3887;background: #4b3887;
+}
+.m-form-checkbox>div>.checkbox.active>span:after{
+    transform: rotate(45deg) scaleY(1);
+    -webkit-transform: rotate(45deg) scaleY(1)
+}
+.o-tips2{
+    font-size: 0.12rem;
+    margin-bottom: 0.1rem;
+}
+.m-sign{}
+.m-sign>.fl{
+    font-size: 0.12rem;
+    line-height: 0.7rem;
+}
+.m-sign>.fr{
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.15);
+}
+.m-signature, .m-signature>.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.m-signature{
+    z-index: 888;
+}
+.m-signature>.mask{
+    background-color: rgba(0,0,0,0.5);
+    z-index: 777;
+}
+.m-signature>.inner{
+    position: absolute;
+    left: 0;
+    bottom:0;
+    z-index: 778;
+    width: 100%;
+    
+}
+.m-signature>.inner>.title{
+    background-color: #f5f6f7;
+}
+.m-signature>.inner>.title>a{
+    display: inline-block;
+    background-size: 0.18rem;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-image: url(../img/modify.png);
+    width: 0.55rem;
+    padding: 0.1rem;
+    text-align: right;
+}
+.m-signature>.inner>canvas{
+    background-color: #f5f6f7;
+    width: 100%;
+    /*height:6rem;*/
+    outline: none;
+}
+.m-signature>.inner>canvas:active{
+    
+}
+
+.m-signature>.inner>.footer{}
+.m-signature>.inner>.footer>a{
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    height: 0.35rem;
+    line-height: 0.35rem;
+    text-align: center;
+}
+.m-signature>.inner>.footer>.purple{}
+.m-signature>.inner>.footer>.red{}

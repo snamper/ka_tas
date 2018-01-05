@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>人工审核</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.选号选套餐</div>
+			</li>
+			<li>
+				<div class="title">2.实名认证</div>
+			</li>
+			<li class="active">
+				<div class="title">3.订单审核</div>
+			</li>
+			<li>
+				<div class="title">4.开卡申请</div>
+			</li>
+			<li>
+				<div class="title">5.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<ul class="m-order-info clr grey">
+			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
+			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
+			<li>
+				<span class="left">所选号码:</span>
+				<b class="purple">{{ phoneFormat(orderInfo.phone) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<span>[{{orderInfo.cityName}}]</span>
+			</li>
+		</ul>
+		<section class="verification-box">
+			<div class="load">
+				<div class="loading" m-if="off.load">
+					<i></i><i class="layui-m-layerload"></i><i></i>
+				</div>
+				<div class="loaded" m-if="off.step==2"></div>
+			</div>
+			<div class="step-text">
+				<p class="yellow" m-if="off.step==1">订单正在审核，请耐心等待</p>
+				<div m-if="off.step==2">
+					<p>人工审核已通过</p>
+				</div>
+			</div>
+		</section>
+		
+		<div m-on:click="createSheet" m-literal:class="{btny:off.step==2,btn:true,btnDefault:true}">生成受理单</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

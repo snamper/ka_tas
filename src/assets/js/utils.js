@@ -39,6 +39,29 @@ export default{
         Moon.prototype.mathCentToYuan=function(value){
             return (parseFloat(value)/100).toFixed(2);
         },
+        Moon.prototype.orderCancel=function(userInfo,sysOrderId){
+            var _self=this;
+            layer.open({
+                content:'您要放弃未完成的订单的后续操作么？',
+                btn:['放弃','取消'],
+                title:'提示',
+                yes:function(){
+                    var json={
+                        'params':{
+                            'sysOrderId':sysOrderId,
+                        },
+                        'userInfo':userInfo
+                    };
+                    _self.AJAX('../../w/business/orderCancell',json,function(data){
+                        Jsborya.pageJump({
+                            url:"index.html",
+                            stepCode:'2001'
+                        });
+                    });
+                    
+                }
+            });
+        },
         /**
          * 存储localStorage
          */
@@ -64,10 +87,6 @@ export default{
             if (!name) return;
             window.localStorage.removeItem(name);
         },
-        // Moon.prototype.filterLevel=function(level){//翻译号码等级
-        //     var levelArr=['','特级，','','','','','',''];
-        //     return levelArr[parseInt(level)];
-        // },
         Moon.prototype.AJAX=function(url,data,success,load,other){//http
             // data数据格式
             // {
@@ -86,7 +105,56 @@ export default{
             !load&&(index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'}));
 
             const error=(data)=>{
-                if(data.code=='685'){
+                if(data.code=='681'){
+                    layer.open({
+                        content:'你当前还有未完成订单',
+                        btn:['继续完成'],
+                        shadeClose:false,
+                        title:'提示',
+                        yes:function(){
+                            let url='';
+                            if(data.data.orderStatusCode==='PACKAGE_SELECTION'){
+                                url='package.html';
+                                //depiction='选择套餐';
+                            }else if(data.data.orderStatusCode==='UPLOAD_DATA'){
+                                url='certification.html';
+                                //depiction='上传资料';
+                            }else if(data.data.orderStatusCode==='CARD_PAY'){
+                                url='faceVerification.html';
+                                //depiction='活体识别';
+                            }else if(data.data.orderStatusCode==='CARD_AUDIT'){
+                                url='cardAudit.html';
+                                //depiction='订单审核';
+                            }else if(data.data.orderStatusCode==='CREATE_SHEET'){
+                                url='createSheet.html';
+                                //depiction='受理单';
+                            }else if(data.data.orderStatusCode==='CARD_WRITING'){
+                                url='cardWriting.html';
+                               //depiction='写卡';
+                            }else if(data.data.orderStatusCode==='CARD_ACTIVE'){
+                                url='cardActive.html';
+                                //depiction='开空卡';
+                            }
+                            vm.setStore('ORDER_INFO',{//订单信息
+                                "sysOrderId":data.data.sysOrderId,
+                                "createTime":data.data.createTime,
+                                "phone": data.data.phoneNum,
+                                "numberLevel":data.data.numberLevel,
+                                "cityName":data.data.cityName,
+                                "totalMoney":data.data.totalMoney,//总价格
+                                "cardMoney":data.data.cardMoney,//号码占用费
+                                "prestoreMoney":data.data.prestoreMoney,//预存价格
+                                "similarity":data.data.similarity,
+                                "limitSimilarity":data.data.limitSimilarity
+                            });
+
+                            Jsborya.pageJump({
+                                url:url,
+                                stepCode:999
+                            });
+                        }
+                    });
+                }else if(data.code=='685'){
                     layer.open({
                         content:'订单超时已关闭',
                         btn:['返回选号'],
@@ -99,29 +167,55 @@ export default{
                             });
                         }
                     });
-                }else if(data.code=="724"){//打开GPS
-                    Jsborya.dialog({
-                        content:"当前定位功能未打开，请打开定位",
-                        btn:["打开定位","取消"],
-                        code:"724"
+                }else if(data.code=='689'){
+                    layer.open({
+                        content:'号卡ID未找到',
+                        btn:['返回选号'],
+                        shadeClose:false,
+                        title:'提示',
+                        yes:function(){
+                            Jsborya.pageJump({
+                                url:"index.html",
+                                stepCode:'2001'
+                            });
+                        }
                     });
-                }else if(data.code=="725"){//GPS异常
-                    Jsborya.dialog({
-                        content:"当前位置信息不可用，请重新获取。",
-                        btn:["重新获取","取消"],
-                        code:'725'
+                }else if(data.code=='690'){
+                    layer.open({
+                        content:'无效卡',
+                        btn:['返回选号'],
+                        shadeClose:false,
+                        title:'提示',
+                        yes:function(){
+                            Jsborya.pageJump({
+                                url:"index.html",
+                                stepCode:'2001'
+                            });
+                        }
+                    });
+                }else if(data.code=='691'){
+                    layer.open({
+                        content:'无效卡',
+                        btn:['请使用华虹卡'],
+                        shadeClose:false,
+                        title:'提示',
+                        yes:function(){
+                            Jsborya.pageJump({
+                                url:"index.html",
+                                stepCode:'2001'
+                            });
+                        }
                     });
                 }else{
                     layer.open({
                         content:data.msg||data,
                         skin: "msg",
-                        msgSkin:'error',
                         time: 3
                     });
                 }
-            }
-            
-            postData.iccid=data.userInfo.iccid;
+            };
+            if(data.userInfo.hasOwnProperty('iccid'))postData.iccid=data.userInfo.iccid;
+            if(data.userInfo.hasOwnProperty('userId'))postData.userId=data.userInfo.userId;
             postData.applicationID=data.userInfo.applicationID;
             postData.token=data.userInfo.token;
             postData.timestamp=data.userInfo.timestamp;
@@ -140,7 +234,7 @@ export default{
                     if(xhr.status>=200&&(xhr.status<300 || xhr.status===304)){
                         try{
                             var responseText=JSON.parse(xhr.responseText);
-                            responseText.code=='200'||responseText.code=='681' ? success(responseText) : error(responseText);
+                            responseText.code=='200' ? success(responseText) : error(responseText);
                         }catch(e){
                             console.log(e);
                             error('数据解析错误');

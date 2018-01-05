@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>开空卡</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+.order-tips{text-align: center;margin-top: 0.3rem;margin-bottom:0.2rem;}
+.order-tips img{width: 0.7rem;}
+.order-tips>.dp>b{font-size: 0.18rem;padding: 0.1rem 0;display: inline-block;font-weight: bold;}
+.order-tips>.tips{
+	width: 90%;
+	margin:auto;
+	margin-top:0.1rem;
+}
+.order-tips>.tips>dt{
+	margin-bottom:5px;
+}
+.order-tips>.tips>dd{
+	margin-bottom:3px;
+}
+.pay-load{}
+.pay-load>b{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    background-color:#10CD6E;
+    -webkit-animation: pay-loading 1.4s infinite ease-in-out;
+    animation: pay-loading 1.4s infinite ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+.pay-load>b.f1 {
+    margin-left: 0;
+    -webkit-animation-delay: -.32s;
+    animation-delay: -.32s
+}
+
+.pay-load>b.f2 {
+    -webkit-animation-delay: -.16s;
+    animation-delay: -.16s
+}
+@-webkit-keyframes pay-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes pay-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+.btn-back-home{
+	display: block;
+	width: 40%;
+	margin:auto;
+	border-radius: 20px;
+	padding:5px 0;
+	border:1px solid transparent;
+	border-color: #424242;
+	color:#424242 ;
+}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.选号选套餐</div>
+			</li>
+			<li>
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.订单审核</div>
+			</li>
+			<li>
+				<div class="title">4.开卡申请</div>
+			</li>
+			<li class="active">
+				<div class="title">5.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<section>
+			<div class="order-tips">
+				<div>
+					<img m-show="off.load!=3" src="../../assets/img/icon_suc_a.png">
+					<img m-show="off.load==3" src="../../assets/img/error2.png">
+				</div>
+				<div class="dp">
+					<b class="green" m-show="off.load==1">开卡申请已受理，请等待开卡结果</b>
+					<b class="green" m-show="off.load==2">开卡成功！该卡已可正常使用</b>
+					<b class="red" m-show="off.load==3">开卡失败</b>
+				</div>
+				<div m-show="off.load==1"><span class="pay-load">
+					<b class="f1"></b>
+					<b class="f2"></b>
+					<b></b>
+				</span></div>
+				<a class="btn-back-home btnScale" m-on:click="jump" m-show="off.load!=1">返回号板</a>
+				<dl class="tips f-tal grey" m-show="off.load==3">
+					<dt>温馨提示</dt>
+					<dd>1、该号卡板已不可再使用。</dd>
+					<dd>2、您可以重新选择号码进行开卡。</dd>
+				</dl>
+			</div>
+		</section>
+		<ul class="m-order-info clr grey">
+			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
+			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
+			<li>
+				<span class="left">所选号码:</span>
+				<b class="purple">{{ phoneFormat(orderInfo.phone) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<span>[{{orderInfo.cityName}}]</span>
+			</li>
+			<li class="double-border"></li>
+			<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(orderInfo.cardMoney)}}</span></li>
+			<li class="border">
+				<span class="left">+含预存话费</span>
+				<span class="fr right">￥{{mathCentToYuan(orderInfo.prestoreMoney)}}</span>
+			</li>
+			<li><span class="fr right black">总价:<b class="red font-big">￥{{orderInfo.totalMoney}}</b></span></li>
+		</ul>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

@@ -16,7 +16,7 @@
 <body>
 <div id="app" m-mask>
 	<section>
-		<div class="m-msg yellow" m-show="orderInfo.status==2" m-on:click="showOrderDetails">您当前有一项未完成的操作，查看详情>></div>
+		<div class="m-msg yellow" m-show="off.showOrderMsg" m-on:click="toOrderDetails">您当前有一项未完成的操作，查看详情>></div>
 		<div class="m-search f-mt-20">
 			<div class="m-hd">
 				<b>随心搜</b>
@@ -56,7 +56,7 @@
 		</div>
 		<div id="cardBox" class="f-scroll" m-on:scroll="pullLoad">
 			<ul class="m-card-ul">
-				<li m-for="item,index in cardData.list">
+				<li m-for="item,index in cardData.list" m-on:click="toPackage(index)">
 					<div class="number" m-html="filterNumber(item.number)"></div>
 					<span class="city">（{{ item.cityName }}）<i class="u-icon-pretty" m-show="item.pretty==1"></i></span>
 				</li>

@@ -49,7 +49,7 @@ body{
 	<ul class="m-order-info clr">
 		<li>
 			<span class="left grey">所选号码:</span>
-			<b class="purple">{{ phoneFormat(orderInfo.phone) }}</b>({{orderInfo.cityName}}<b class="yellow" m-show="orderInfo.pretty==1">,靓号</b>)</li>
+			<b class="purple">{{ phoneFormat(cardInfo.phone) }}</b>({{cardInfo.cityName}}<b class="yellow" m-show="cardInfo.pretty==1">,靓号</b>)</li>
 		<li class="double-border"></li>
 		<li m-show="selectPackage.packageCode" m-on:click="jumpToPackageDetails" class="border">
 			<span class="left grey">所选套餐:</span>
@@ -59,7 +59,7 @@ body{
 		
 		<li>
 			<span class="left grey">号码占用费</span>
-			<span class="fr right">￥{{ mathCentToYuan(orderInfo.phoneMoney) }}</span>
+			<span class="fr right">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
 		</li>
 		<li m-show="selectPackage.packageCode" class="border">
 			<span class="left grey">含预存话费</span>
@@ -72,12 +72,24 @@ body{
 	<section m-show="!selectPackage.packageCode" class="m-all-tag">
 		<div class="tag">套餐选择</div>
 		<ul class="m-recommend-ul clr" id="bagUl">
-			<li m-for="todo,index in recommendList" m-on:click="jumpToPackageList(todo.type)">{{ todo.name }}</li>
+			<li m-for="todo,index in recommendList" m-on:click="jumpToPackageList(todo.type,todo.name)">{{ todo.name }}</li>
 		</ul>
 	</section>
 	<section m-show="selectPackage.packageCode" class="m-btn-double clr">
 		<div class="btn fl btnp" m-on:click="changePackage">更换套餐</div>
-		<div class="btn fl btny" m-on:click="savePackage">保存套餐</div>
+		<div href="javascript:void(0)" m-on:click="readCardICCID" class="btn fl btny">
+			<span m-show="!off.load">保存套餐</span>
+			<span m-show="off.load==1">号卡校验中，请稍候<span class="pay-load">
+				<b class="f1"></b>
+				<b class="f2"></b>
+				<b></b>
+			</span></span>
+			<span m-show="off.load==2">保存信息中<span class="pay-load">
+				<b class="f1"></b>
+				<b class="f2"></b>
+				<b></b>
+			</span></span>
+		</div>
 	</section>
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

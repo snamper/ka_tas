@@ -46,3 +46,51 @@
 .m-btn-double>.btn{
     width: 49%;
 }
+
+.pay-load{}
+.pay-load>b{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color:#2CA43A;
+    -webkit-animation: pay-loading 1.4s infinite ease-in-out;
+    animation: pay-loading 1.4s infinite ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+.pay-load>b.f1 {
+    margin-left: 0;
+    -webkit-animation-delay: -.32s;
+    animation-delay: -.32s
+}
+
+.pay-load>b.f2 {
+    -webkit-animation-delay: -.16s;
+    animation-delay: -.16s
+}
+@-webkit-keyframes pay-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes pay-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}

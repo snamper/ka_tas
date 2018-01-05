@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+<title>上传资料</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+</style>
+</head>
+<body style="padding-bottom: 0.3rem;">
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.选号选套餐</div>
+			</li>
+			<li class="active">
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.订单审核</div>
+			</li>
+			<li>
+				<div class="title">4.开卡申请</div>
+			</li>
+			<li>
+				<div class="title">5.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<section class="m-all-tag clr">
+			<div class="tag">
+				<span class="purple">请上传开卡人的有效身份证照片</span>
+			</div>
+			<div class="m-takePhoto">
+				<div class="box" id="photo-front">
+					<a href="javascript:void(0)" m-on:click="takePhotos(3)" class="u-icon-photo"></a>
+				</div>
+				<div class="box" id="photo-back">
+					<a href="javascript:void(0)" m-on:click="takePhotos(4)" class="u-icon-photo"></a>
+				</div>
+			</div>
+			<div class="photo-tag">
+				<div class="item">身份证正面</div>
+				<div class="item">身份证反面</div>
+			</div>
+		</section>
+		<section class="m-all-tag clr">
+			<div class="tag">
+				<span class="purple">开卡人证件信息</span>
+			</div>
+			<ul class="m-certificate-info o-input">
+				<li class="clr"><span class="fl">姓名</span><div><input m-on:focus="inputFocus" m-on:blur="inputBlur" maxlength="12" type="text" m-model="idCardInfo.name"></div></li>
+				<li class="clr"><span class="fl">证件号码</span><div><input m-on:focus="inputFocus" m-on:blur="inputBlur" maxlength="18" type="text" m-model="idCardInfo.number"></div></li>
+				<li class="clr"><span class="fl">证件地址</span><div><input m-on:focus="inputFocus" m-on:blur="inputBlur" maxlength="32" type="text" m-model="idCardInfo.address"></div></li>
+			</ul>
+		</section>
+		<section style="padding: 0.1rem;" id="handle-box">
+			<div class="red o-tips2">本人证实上述资料属实，并已阅读及同意本受理单内容和相关协议。</div>
+			<div class="m-form-checkbox">
+				<div>
+					<span m-on:click="agree" m-literal:class="{active:off.agree,checkbox:true,}">
+						<span></span>
+					</span>
+					<span class="text">
+						<span m-on:click="agree">同意并签名</span>
+						<a class="purple" href="javascript:void(0)" m-on:click="skimAgreement">
+							<b>《远特客户入网服务协议》</b>
+						</a>
+					</span>
+				</div>
+			</div>
+			<div class="m-sign clr">
+				<div class="fl grey">注：点击右侧签名框添加/修改签名照片</div>
+				<div id="signatureImg" class="fr" m-on:click="doSignature(1)"></div>
+			</div>
+		</section>
+		<section class="m-signature" m-show="off.signature">
+			<div class="mask" m-on:click="doSignature(0)"></div>
+			<div class="inner">
+				<div class="title clr"><a href="javascript:void(0)" id="clear" class="fr purple">修改</a></div>
+				<canvas id="signature"></canvas>
+				<div class="footer">
+					<a href="javascript:void(0)" id="save" class="purple">保存</a>
+					<a href="javascript:void(0)" m-on:click="doSignature(0)" class="red">取消</a>
+				</div>
+			</div>
+		</section>
+		<div href="javascript:void(0)" m-on:click="jump" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">下一步</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

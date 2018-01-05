@@ -3,6 +3,7 @@
   *@author: thinkmix
   *@date 2017-12-27
 ***/
+require('./base64.js');
 !function(a,b){
 	"function" == typeof define && (define.amd || define.cmd) ? define(function() {
 		return b(a)
@@ -38,7 +39,7 @@
 		}
 	}
 	function callHandler(props){
-		var data=props.data ? encodeURI(JSON.stringify(props.data)) : '';
+		var data=props.data ? BASE64.encode(JSON.stringify(props.data)) : '';
 		window.WebViewJavascriptBridge ? window.WebViewJavascriptBridge.callHandler(props.name,data,props.callback)  : null;
 	}
 	a.Jsborya={
@@ -49,19 +50,35 @@
 			    });
 		    },cb);
 		},
-		getUserInfo:function(cb){//获取app用户信息
-			// cb(encodeURI(JSON.stringify({
+		getUserInfo:function(cb){//获取登录用户信息
+			// cb({
 			// 	"userId":"00000",
 			// 	"applicationID":"123",
 			// 	"token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",
 			// 	"timestamp":"1509608023665",
 			//	"packageName":"xxx.apk",
-			// })));
+			// });
 			callHandler({
 				name:'getUserInfo',
 				data:'',
 				callback:function(str){
-					cb(JSON.parse(decodeURI(str)));
+					cb(JSON.parse(BASE64.decode(str)));
+				}
+			});
+		},
+		getGuestInfo:function(cb){//获取新用户信息
+			// cb({
+			// 	"iccid":"00000",
+			// 	"applicationID":"123",
+			// 	"token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",
+			// 	"timestamp":"1509608023665",
+			//	"packageName":"xxx.apk",
+			// });
+			callHandler({
+				name:'getGuestInfo',
+				data:'',
+				callback:function(str){
+					cb(JSON.parse(BASE64.decode(str)));
 				}
 			});
 		},
@@ -112,7 +129,7 @@
 				name:'dialog',
 				data:json,
 				callback:function(str){
-					json.yes ? json.yes(JSON.parse(decodeURI(str))) : console.log('dialog');
+					json.yes ? json.yes(JSON.parse(BASE64.decode(str))) : console.log('dialog');
 				}
 			});
 		},
@@ -121,7 +138,7 @@
 				name:'takePhotos',
 				data:json,
 				callback:function(str){
-					json.complete(JSON.parse(decodeURI(str)));
+					json.complete(JSON.parse(BASE64.decode(str)));
 				}
 			});
 		},
@@ -134,7 +151,7 @@
 				name:'faceVerification',
 				data:json,
 				callback:function(str){
-					json.complete(JSON.parse(decodeURI(str)));
+					json.complete(JSON.parse(BASE64.decode(str)));
 				}
 			});
 		},
@@ -149,9 +166,14 @@
 				name:'readCardICCID',
 				data:'',
 				callback:function(str){
-					cb(JSON.parse(decodeURI(str)));
+					cb(JSON.parse(BASE64.decode(str)));
 				}
 			});
+		},
+		registerMethods:function(name,cb){//提供APP直接调用的方法注册接口
+			OS==1 ? (WebViewJavascriptBridge.registerHandler(name, function(data, responseCallback) {
+		        cb(data);
+		    })) : this[name]=cb;
 		},
 		readCardIMSI:function(cb){//读取IMSI
 			// setTimeout(function(){
@@ -165,7 +187,7 @@
 				name:'readCardIMSI',
 				data:'',
 				callback:function(str){
-					cb(JSON.parse(decodeURI(str)));
+					cb(JSON.parse(BASE64.decode(str)));
 				}
 			});
 		},
@@ -179,7 +201,7 @@
 				name:'callWriteCard',
 				data:json,
 				callback:function(str){
-					json.complete(JSON.parse(decodeURI(str)));
+					json.complete(JSON.parse(BASE64.decode(str)));
 				}
 			});
 		},
@@ -191,6 +213,7 @@
 					console.log('success');
 				}
 			});
+
 		}
 	};
 	

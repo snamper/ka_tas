@@ -1,0 +1,86 @@
+.verification-box{
+    margin-top: 0.6rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.verification-box>.load{}
+.verification-box>.load>.loading, .verification-box>.load>.loaded{
+    width: 0.6rem;
+    height: 0.6rem;
+    display: inline-block;
+    margin-bottom: 0.1rem;
+}
+.verification-box>.load>.loading{
+    line-height: 0.55rem;
+    border-radius: 50%;
+    border:2px solid transparent;
+    border-color:#ffc333;
+}
+.verification-box>.load>.loaded{
+    background-image: url(../img/icon_suc_a.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:0.6rem;
+}
+.verification-box>.step-text{}
+.verification-box>.step-text p{
+    margin:5px 0;
+}
+
+
+.verification-box>.load>.loading i {
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+    display: inline-block;
+    background-color: #ffc333;
+    border-radius: 100%;
+    -webkit-animation: layui-m-anim-loading 1.4s infinite ease-in-out;
+    animation: layui-m-anim-loading 1.4s infinite ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+.verification-box>.load>.loading i:first-child {
+    margin-left: 0;
+    -webkit-animation-delay: -.32s;
+    animation-delay: -.32s
+}
+
+.verification-box>.load>.loading i.layui-m-layerload {
+    -webkit-animation-delay: -.16s;
+    animation-delay: -.16s
+}
+@-webkit-keyframes layui-m-anim-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes layui-m-anim-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+/*顶部订单*/
+@media screen and (max-width: 375px){
+    .m-order>.fl, .m-order>.fr{float: none !important;}
+    .m-order>.fr{display: block;margin-top: 5px;}
+}
+.m-order{color:#666;padding:0 0.1rem;font-size: 0.12rem;}
+.m-order label{display: inline-block;text-align: right;width: 0.55rem;}
+
