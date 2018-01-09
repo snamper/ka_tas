@@ -37,8 +37,6 @@ var vm=new Moon({
 	    	vm=this;
 	    	Jsborya.setHeader({
 				title:'选择套餐',
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',
@@ -77,7 +75,7 @@ var vm=new Moon({
 			Jsborya.readCardIMSI(function(data){
 				if(data.status==1){
 					if(data.imsi=='FFFFFFFFFFFFFFF')data.imsi='';
-					vm.callMethod("getOrderInfo",[data.imsi,data.smsp]);
+					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 				}else{
 					vm.callMethod("filterConnectStatus",[data.status]);
 				}
@@ -87,17 +85,13 @@ var vm=new Moon({
 			if(status==2){
 				alert("读取失败");
 			}else if(status==3){
-				layer.open({
-	                content:"未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽",
-	                btn:['确定'],
-	                title:'未检测到插卡'
-	            });
+				alert("未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽");
 			}else{
 				alert("异常错误");
 				return false;
 			}
 		},
-		getOrderInfo:function(imsi,smsp){//获取订单信息
+		iccidCheck:function(imsi,smsp){//获取订单信息
 			const json={
 	  			params:{
 	  				imsi:imsi||'',
@@ -115,21 +109,14 @@ var vm=new Moon({
                         content:'您有未完成的订单，请先【完成】或【放弃订单】',
                         btn:['查看订单','放弃订单'],
                         yes:function(){
-                        	vm.setStore('ORDER_INFO',{//订单信息
-								"sysOrderId":data.data.orderInfo.sysOrderId,
-								"createTime":data.data.orderInfo.createTime,
-								"phone": data.data.orderInfo.phoneNum,
-						        "numberLevel":data.data.orderInfo.numberLevel,
-						        "cityName":data.data.orderInfo.cityName,
-								"totalMoney":data.data.orderInfo.totalMoney,//总价格
-								"cardMoney":data.data.orderInfo.cardMoney,//号码占用费
-								"prestoreMoney":data.data.orderInfo.prestoreMoney,//预存价格
-								"similarity":data.data.orderInfo.similarity,
-								"limitSimilarity":data.data.orderInfo.limitSimilarity
-						    });
+                        	vm.setStore('ORDER_INFO',data.data.orderInfo);
 						    Jsborya.pageJump({
 				                url:'orderDetails.html',
-				                stepCode:999
+				                stepCode:999,
+				                header:{
+				                    frontColor:'#ffffff',
+				                    backgroundColor:'#4b3887',
+				                }
 				            });
                         },
                         no:function(){
@@ -166,21 +153,27 @@ var vm=new Moon({
 	  		};
 			vm.AJAX('../../w/source/orderCreate',json,function(data){
 				vm.set("off.load",false);
-				vm.setStore('ORDER_INFO',{//订单信息
-					"sysOrderId":data.data.sysOrderId,
-					"createTime":data.data.createTime,
-					"phone": cardInfo.phone,
-			        "numberLevel":cardInfo.phoneLevel,
-			        "cityName":cardInfo.cityName,
-					"totalMoney":vm.get('totalPrice'),//总价格
-					"cardMoney":cardInfo.phoneMoney,//号码占用费
-					"prestoreMoney":vm.get('selectPackage').prestore,//预存价格
-					"similarity":'',
-					"limitSimilarity":''
-			    });
+				vm.setStore('ORDER_INFO',{
+		            "phoneNum":cardInfo.phone,
+		            "numberLevel":cardInfo.phoneLevel,
+		            "cityName":cardInfo.cityName,
+		            "createTime":data.data.createTime,
+		            "cardMoney":cardInfo.phoneMoney,//号码占用费
+		            "orderStatusCode":"PACKAGE_SELECTION",
+		            "totalMoney":vm.get('totalPrice'),//总价格
+		            "limitSimilarity":0,
+		            "validTime":0,
+		            "sysOrderId":data.data.sysOrderId,
+		            "prestoreMoney":vm.get('selectPackage').prestore,//预存价格
+		            "similarity":0,
+		        });
 				Jsborya.pageJump({
 					url:'certification.html',
-					stepCode:999
+					stepCode:999,
+					header:{
+	                    frontColor:'#ffffff',
+	                    backgroundColor:'#4b3887',
+	                }
 				});
 			},false,function(){
 				vm.set("off.load",2);
@@ -189,13 +182,21 @@ var vm=new Moon({
 		jumpToPackageList:function(type,name){
 			Jsborya.pageJump({
 				url:'packageList.html?type='+BASE64.encode(JSON.stringify({val:type,name:name})),
-				stepCode:999
+				stepCode:999,
+				header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
 			});
 		},
 		jumpToPackageDetails:function(){
 			Jsborya.pageJump({
 				url:'packageDetails.html?code='+vm.get('selectPackage').packageCode+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
-				stepCode:999
+				stepCode:999,
+				header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
 			});
 		},
 		phoneFormat:function(phone){

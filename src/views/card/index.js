@@ -22,7 +22,6 @@ var vm=new Moon({
 		pageSize:10,//显示条数
 		userInfo:'',//用户信息
 		hotLabel:[{type:'1166',name:'一举成名'},{type:'3322',name:'德望兼备'},{type:'5588',name:'富贵自来'},{type:'2266',name:'天时地利'},{type:'2288',name:'荣华富贵'},{type:'6111',name:'大吉大利晚上吃鸡'},{type:'9944',name:'旭日升天'},{type:'3344',name:'生生世世'},{type:'5201314',name:'我爱你一生一世'},{type:'1314920',name:'一生一世就爱你'},{type:'520',name:'我爱你'},{type:'6699',name:'顺顺利利'},{type:'3399',name:'长长久久'},{type:'20110',name:'爱你一亿年'},{type:'1314',name:'一生一世'}],//标签数据
-		orderInfo:{status:'1'},//订单信息
 		cardData:{
 			ytDbOneCount:'-1',
 			list:[]
@@ -31,6 +30,19 @@ var vm=new Moon({
 	hooks: {
 	    init: function() {
 			vm=this;
+			Jsborya.setHeader({
+				title:'号码搜索',
+				left:{
+					icon:'back_black',
+					value:'',
+					callback:'headerLeftClick'
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			const window_h=document.documentElement.clientHeight;
@@ -52,7 +64,11 @@ var vm=new Moon({
 			let selectCity=JSON.stringify(vm.get('selectCity'));
 			Jsborya.pageJump({
                 url:'city.html?data='+BASE64.encode(selectCity),
-                stepCode:'999'
+                stepCode:'999',
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
             });
 		},
 		inputKeyup:function(e){//键盘事件
@@ -115,7 +131,11 @@ var vm=new Moon({
 		toOrderDetails:function(){
 			Jsborya.pageJump({
                 url:'orderDetails.html',
-                stepCode:999
+                stepCode:999,
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
             });
 		},
 		toPackage:function(index){
@@ -130,18 +150,22 @@ var vm=new Moon({
 			});
 			Jsborya.pageJump({
                 url:'package.html',
-                stepCode:'999'
+                stepCode:'999',
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
             });
 		},
 		readCardICCID:function(){
 			Jsborya.readCardIMSI(function(data){
 				if(data.status==1){
 					if(data.imsi=='FFFFFFFFFFFFFFF')data.imsi='';
-					vm.callMethod("getOrderInfo",[data.imsi,data.smsp]);
+					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 				}
 			});
 		},
-		getOrderInfo:function(imsi,smsp){//获取订单信息
+		iccidCheck:function(imsi,smsp){
 			const json={
 	  			params:{
 	  				imsi:imsi||'',
@@ -152,18 +176,7 @@ var vm=new Moon({
 			vm.AJAX('../../w/source/iccidCheck',json,function(data){
 				if(data.data.status==2){
 					vm.set('off.showOrderMsg',true);
-					vm.setStore('ORDER_INFO',{//订单信息
-						"sysOrderId":data.data.orderInfo.sysOrderId,
-						"createTime":data.data.orderInfo.createTime,
-						"phone": data.data.orderInfo.phoneNum,
-				        "numberLevel":data.data.orderInfo.numberLevel,
-				        "cityName":data.data.orderInfo.cityName,
-						"totalMoney":data.data.orderInfo.totalMoney,//总价格
-						"cardMoney":data.data.orderInfo.cardMoney,//号码占用费
-						"prestoreMoney":data.data.orderInfo.prestoreMoney,//预存价格
-						"similarity":data.data.orderInfo.similarity,
-						"limitSimilarity":data.data.orderInfo.limitSimilarity
-				    });
+					vm.setStore('ORDER_INFO',data.data.orderInfo);
 				}
 			});
 		},

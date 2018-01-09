@@ -95,25 +95,25 @@ require('./base64.js');
 		},
 		pageJump:function(json){//页面跳转
 			json.url.indexOf("http")===-1 ? json.url=URL+json.url : void 0;
-			window.location.href=json.url;
-			// callHandler({
-			// 	name:'pageJump',
-			// 	data:json,
-			// 	callback:function(str){
-			// 		console.log('jump');
-			// 	}
-			// });
+			//window.location.href=json.url;
+			callHandler({
+				name:'pageJump',
+				data:json,
+				callback:function(str){
+					console.log('jump');
+				}
+			});
 		},
 		pageBack:function(json){//页面返回
 			json.url=URL+json.url;
-			window.location.href=json.url;
-			// callHandler({
-			// 	name:'pageBack',
-			// 	data:json,
-			// 	callback:function(str){
-			// 		console.log('back');
-			// 	}
-			// });
+			//window.location.href=json.url;
+			callHandler({
+				name:'pageBack',
+				data:json,
+				callback:function(str){
+					console.log('back');
+				}
+			});
 		},
 		updateVersion:function(json){//app弹出版本更新
 			callHandler({
@@ -172,7 +172,7 @@ require('./base64.js');
 		},
 		registerMethods:function(name,cb){//提供APP直接调用的方法注册接口
 			OS==1 ? (WebViewJavascriptBridge.registerHandler(name, function(data, responseCallback) {
-		        cb(data);
+		        cb(JSON.parse(BASE64.decode(data)));
 		    })) : this[name]=cb;
 		},
 		readCardIMSI:function(cb){//读取IMSI

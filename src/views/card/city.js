@@ -19,8 +19,6 @@ var vm=new Moon({
 		init:function(){
 			Jsborya.setHeader({
 				title:'选择城市',
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',

@@ -86,8 +86,6 @@ var vm=new Moon({
 			}
 			Jsborya.setHeader({
 				title:title,
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',

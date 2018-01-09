@@ -15,18 +15,21 @@ var vm=new Moon({
 			payType:"2",
 			layerIndex:0,
 		},
-		numberValue:0,//选号费计算
-		orderInfo: {//订单信息
-			"sysOrderId":"00000000000000000",
-			"createTime":"0",
-			"phone": "00000000000",
-	        "numberLevel":"0",
-	        "cityName": "--",
-			"totalMoney":"0.00",//总价格
-			"cardMoney":0,//号码占用费
-			"prestoreMoney":0,//预存价格   
-	    },
-        userInfo:{'sysOrderId':'000000000000000000'},//用户信息
+		orderInfo: {
+            "phoneNum":"00000000000",
+            "numberLevel":0,
+            "cityName":"--",
+            "createTime":"0",
+            "cardMoney":"0",
+            "orderStatusCode":"PACKAGE_SELECTION",
+            "totalMoney":0,
+            "limitSimilarity":0,
+            "validTime":0,
+            "sysOrderId":"00000000000000000",
+            "prestoreMoney":0,
+            "similarity":0,
+        },
+        userInfo:'',//用户信息
         faceConfirmInfo:{//活体认证信息
         	'img':'',
         	'similarity':'0',
@@ -39,8 +42,6 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.setHeader({
 				title:'开卡受理',
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',
@@ -72,8 +73,8 @@ var vm=new Moon({
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo.sysOrderId);
 					});
-					Jsborya.registerMethods('payComplete',function(){
-						vm.callMethod('payComplete');
+					Jsborya.registerMethods('payComplete',function(data){
+						vm.callMethod('payComplete',[data]);
 					});
 				});
 			}else{
@@ -82,61 +83,79 @@ var vm=new Moon({
 		}
 	},
 	methods:{
-		payComplete:function(){//支付完成
-			const json={
-				userInfo:vm.get('userInfo'),
-				params:{
-					sysOrderId:vm.get('orderInfo').sysOrderId,
-				}
-			};
-			vm.set('off.load',2);
-			window.Timer=setInterval(function(){
-				vm.AJAX('../../w/business/payLaterStatus',json,function(data){
-					var status=data.data.orderStatus;
-
-					if(status!=2){
-						clearInterval(window.Timer);
-						vm.set('off.load',false);
+		payComplete:function(status){//支付完成
+			if(status==1){//支付成功
+				const json={
+					userInfo:vm.get('userInfo'),
+					params:{
+						sysOrderId:vm.get('orderInfo').sysOrderId,
 					}
+				};
+				vm.set('off.load',2);
+				window.Timer=setInterval(function(){
+					vm.AJAX('../../w/business/payLaterStatus',json,function(data){
+						var status=data.data.orderStatus;
 
-					if(status==2){
-						//---
-					}else if(status==1||status==4){
-						var text='';
-						status==1 ? text='订单超时已关闭' : status==4 ? text='支付失败，订单关闭' : text="异常错误，返回号板";
-						layer.closeAll();
-						layer.open({
-	                        content:text,
-	                        btn:['确定'],
-	                        title:'提示',
-	                        yes:function(){
-	                        	Jsborya.pageJump({
-	                                url:"index.html",
-	                                stepCode:'2001'
-	                            });
-	                        }
-	                    });
-					}else{
-						Jsborya.pageJump({
-							url:'cardAudit.html',
-							stepCode:999,
-						});
-					}
-				},function(){
+						if(status!=2){
+							clearInterval(window.Timer);
+							vm.set('off.load',false);
+						}
 
+						if(status==2){
+							//---
+						}else if(status==1||status==4){
+							var text='';
+							status==1 ? text='订单超时已关闭' : status==4 ? text='支付失败，订单关闭' : text="异常错误，返回号板";
+							layer.closeAll();
+							layer.open({
+		                        content:text,
+		                        btn:['确定'],
+		                        title:'提示',
+		                        yes:function(){
+		                        	Jsborya.pageJump({
+		                                url:"index.html",
+		                                stepCode:'2001',
+		                                header:{
+		                                    frontColor:'#000000',
+		                                    backgroundColor:'#fff',
+		                                }
+		                            });
+		                        }
+		                    });
+						}else{
+							Jsborya.pageJump({
+								url:'cardAudit.html',
+								stepCode:999,
+								header:{
+			                        frontColor:'#ffffff',
+			                        backgroundColor:'#4b3887',
+			                    }
+							});
+						}
+					},function(){
+
+					});
+				},2000);
+			}else if(status==2){
+				vm.set('off.load',false);
+				layer.open({
+					title:'支付失败',
+					content:'如果您想重新发起支付，请点击【去支付】按钮',
+					btn:['确定'],
+					shadeClose:false,
 				});
-			},2000);
-			// layer.open({
-			// 	title:'支付操作确认',
-			// 	content:'如果您已完成支付操作，请点击【支付完成】按钮;如果您放弃支付请点击左上角【放弃】按钮，放弃此订单！',
-			// 	btn:['支付完成','取消'],
-			// 	type:1,
-			// 	style:"width:75%;max-width:640px;",
-			// 	shadeClose:false,
-			// 	yes:function(){
-			// 		vm.callMethod("getPayInfo");
-			// 	}
-			// });
+			}else if(status==3){
+				vm.set('off.load',false);
+				layer.open({
+					title:'支付取消',
+					content:'您已取消支付，如果想重新发起支付，请点击【去支付】按钮',
+					btn:['确定'],
+					shadeClose:false,
+				});
+			}else{
+				alert('异常支付状态');
+			}
+			
 		},
 		toFaceVerification:function(){
 			Jsborya.faceVerification({
@@ -216,6 +235,10 @@ var vm=new Moon({
                             Jsborya.pageJump({
 								url:'index.html',
 								stepCode:'2001',
+								header:{
+                                    frontColor:'#000000',
+                                    backgroundColor:'#fff',
+                                }
 							});
                         }
                     });
@@ -244,6 +267,10 @@ var vm=new Moon({
 					url:'',
 					stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
 					data:data.data,
+					header:{
+                        frontColor:'#ffffff',
+                        backgroundColor:'#4b3887',
+                    }
 				});		
 			},false,function(){
 				vm.set('off.load',false);

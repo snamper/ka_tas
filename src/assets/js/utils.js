@@ -55,7 +55,11 @@ export default{
                     _self.AJAX('../../w/business/orderCancell',json,function(data){
                         Jsborya.pageJump({
                             url:"index.html",
-                            stepCode:'2001'
+                            stepCode:'2001',
+                            header:{
+                                frontColor:'#000000',
+                                backgroundColor:'#fff',
+                            }
                         });
                     });
                     
@@ -108,49 +112,18 @@ export default{
                 if(data.code=='681'){
                     layer.open({
                         content:'你当前还有未完成订单',
-                        btn:['继续完成'],
+                        btn:['查看详情'],
                         shadeClose:false,
                         title:'提示',
                         yes:function(){
-                            let url='';
-                            if(data.data.orderStatusCode==='PACKAGE_SELECTION'){
-                                url='package.html';
-                                //depiction='选择套餐';
-                            }else if(data.data.orderStatusCode==='UPLOAD_DATA'){
-                                url='certification.html';
-                                //depiction='上传资料';
-                            }else if(data.data.orderStatusCode==='CARD_PAY'){
-                                url='faceVerification.html';
-                                //depiction='活体识别';
-                            }else if(data.data.orderStatusCode==='CARD_AUDIT'){
-                                url='cardAudit.html';
-                                //depiction='订单审核';
-                            }else if(data.data.orderStatusCode==='CREATE_SHEET'){
-                                url='createSheet.html';
-                                //depiction='受理单';
-                            }else if(data.data.orderStatusCode==='CARD_WRITING'){
-                                url='cardWriting.html';
-                               //depiction='写卡';
-                            }else if(data.data.orderStatusCode==='CARD_ACTIVE'){
-                                url='cardActive.html';
-                                //depiction='开空卡';
-                            }
-                            vm.setStore('ORDER_INFO',{//订单信息
-                                "sysOrderId":data.data.sysOrderId,
-                                "createTime":data.data.createTime,
-                                "phone": data.data.phoneNum,
-                                "numberLevel":data.data.numberLevel,
-                                "cityName":data.data.cityName,
-                                "totalMoney":data.data.totalMoney,//总价格
-                                "cardMoney":data.data.cardMoney,//号码占用费
-                                "prestoreMoney":data.data.prestoreMoney,//预存价格
-                                "similarity":data.data.similarity,
-                                "limitSimilarity":data.data.limitSimilarity
-                            });
-
+                            window.localStorage.setItem('ORDER_INFO',JSON.stringify(data.data));
                             Jsborya.pageJump({
-                                url:url,
-                                stepCode:999
+                                url:'orderDetails.html',
+                                stepCode:999,
+                                header:{
+                                    frontColor:'#ffffff',
+                                    backgroundColor:'#4b3887',
+                                }
                             });
                         }
                     });
@@ -163,7 +136,11 @@ export default{
                         yes:function(){
                             Jsborya.pageJump({
                                 url:"index.html",
-                                stepCode:'2001'
+                                stepCode:'2001',
+                                header:{
+                                    frontColor:'#000000',
+                                    backgroundColor:'#fff',
+                                }
                             });
                         }
                     });
@@ -176,7 +153,11 @@ export default{
                         yes:function(){
                             Jsborya.pageJump({
                                 url:"index.html",
-                                stepCode:'2001'
+                                stepCode:'2001',
+                                header:{
+                                    frontColor:'#000000',
+                                    backgroundColor:'#fff',
+                                }
                             });
                         }
                     });
@@ -189,7 +170,11 @@ export default{
                         yes:function(){
                             Jsborya.pageJump({
                                 url:"index.html",
-                                stepCode:'2001'
+                                stepCode:'2001',
+                                header:{
+                                    frontColor:'#000000',
+                                    backgroundColor:'#fff',
+                                }
                             });
                         }
                     });
@@ -202,7 +187,11 @@ export default{
                         yes:function(){
                             Jsborya.pageJump({
                                 url:"index.html",
-                                stepCode:'2001'
+                                stepCode:'2001',
+                                header:{
+                                    frontColor:'#000000',
+                                    backgroundColor:'#fff',
+                                }
                             });
                         }
                     });

@@ -47,8 +47,6 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.setHeader({
 				title:'套餐详情',
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',

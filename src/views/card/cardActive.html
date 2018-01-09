@@ -139,7 +139,7 @@
 			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
 			<li>
 				<span class="left">所选号码:</span>
-				<b class="purple">{{ phoneFormat(orderInfo.phone) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<b class="purple">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
 				<span>[{{orderInfo.cityName}}]</span>
 			</li>
 			<li class="double-border"></li>

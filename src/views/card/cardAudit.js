@@ -10,16 +10,20 @@ var vm=new Moon({
 			step:1,//1,订单审核中;2,审核成功;
 			load:true
 		},
-		orderInfo: {//订单信息
-			"sysOrderId":"00000000000000000",
-			"createTime":"0",
-			"phone": "00000000000",
-	        "numberLevel":"0",
-	        "cityName": "--",
-			"totalMoney":"0.00",//总价格
-			"cardMoney":0,//号码占用费
-			"prestoreMoney":0,//预存价格   
-	    },
+		orderInfo: {
+            "phoneNum":"00000000000",
+            "numberLevel":0,
+            "cityName":"--",
+            "createTime":"0",
+            "cardMoney":"0",
+            "orderStatusCode":"PACKAGE_SELECTION",
+            "totalMoney":0,
+            "limitSimilarity":0,
+            "validTime":0,
+            "sysOrderId":"00000000000000000",
+            "prestoreMoney":0,
+            "similarity":0,
+        },
         userInfo:'',
 	},
 	hooks:{
@@ -27,8 +31,6 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.setHeader({
 				title:'订单审核',
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',
@@ -104,7 +106,11 @@ var vm=new Moon({
                         yes:function(){
                         	Jsborya.pageJump({
                                 url:"index.html",
-                                stepCode:'2001'
+                                stepCode:'2001',
+                                header:{
+                                    frontColor:'#000000',
+                                    backgroundColor:'#fff',
+                                }
                             });
                         }
                     });
@@ -116,6 +122,10 @@ var vm=new Moon({
 				Jsborya.pageJump({
 					url:'createSheet.html',
 					stepCode:999,
+					header:{
+                        frontColor:'#ffffff',
+                        backgroundColor:'#4b3887',
+                    }
 				});
 			}
 		},
