@@ -44,13 +44,12 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=this.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
-				vm.set('orderInfo',orderInfo);
+				vm.set('orderInfo',orderInfo);limitSimilarity
 				if(orderInfo.similarity){//已经进行活体识别
 					var similarity=parseFloat(orderInfo.similarity);
 					vm.set('off.isFace',true);
-					vm.set('faceConfirmInfo.similarity',similarity);
 					var limitSimilarity=parseFloat(orderInfo.limitSimilarity);	
 					if(limitSimilarity<=similarity){//识别通过
 						vm.set('off.isPass',true);
@@ -71,11 +70,13 @@ var vm=new Moon({
 	methods:{
 		continueOrder:function(){
 			let orderInfo=vm.get('orderInfo');
-			let url=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode]).url;
+			let todo=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode]);
             
             Jsborya.pageJump({
-                url:url,
+                url:todo.url,
                 stepCode:999,
+                depiction:todo.next,
+                destroyed:false,
                 header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',
@@ -83,33 +84,41 @@ var vm=new Moon({
             });
 		},
 		filterOrderStatus:function(orderStatusCode){
-			let url='',depiction='';
+			let url='',depiction='',next='';
 			if(orderStatusCode==='PACKAGE_SELECTION'){
                 url='certification.html';
                 depiction='已选择套餐';
+                next='实名认证';
             }else if(orderStatusCode==='UPLOAD_DATA'){
                 url='faceVerification.html';
                 depiction='已上传资料';
+                next='活体识别';
             }else if(orderStatusCode==='CARD_PAY'){
                 url='cardAudit.html';
                 depiction='已支付';
+                next='订单审核';
             }else if(orderStatusCode==='CARD_AUDIT'){
                 url='createSheet.html';
                 depiction='已审核';
+                next='确认受理单';
             }else if(orderStatusCode==='CREATE_SHEET'){
                 url='cardWriting.html';
                 depiction='已生成受理单';
+                next='写卡';
             }else if(orderStatusCode==='CARD_IMSI'){
                 url='cardWriting.html';
                 depiction='已获取IMSI';
+                next='写卡';
             }else if(orderStatusCode==='CARD_WRITING'){
                 url='cardActive.html';
-               depiction='已写卡';
+               	depiction='已写卡';
+               	next='开卡受理';
             }else if(orderStatusCode==='CARD_ACTIVE'){
                 url='cardActive.html';
                 depiction='已获得开卡结果';
+                next='开卡受理';
             }
-            return {url:url,depiction:depiction};
+            return {url:url,depiction:depiction,next:next};
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);

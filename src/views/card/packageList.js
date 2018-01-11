@@ -105,12 +105,16 @@ var vm=new Moon({
 	  			params:{
 	  				type:vm.get('type'),
 	  				cityCode:vm.get('cardInfo').cityCode,
-	  				phoneNumber:vm.get('cardInfo').phone
+	  				phoneNum:vm.get('cardInfo').phone
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../w/source/packageList',json,function(data){
+			vm.AJAX('../../../tas/w/source/packageList',json,function(data){
 				vm.set('packageList',data.data.titleList);
+				let prestoreMoneyList=data.data.titleList[0].packInfo.prestoreMoneyList;
+				for(let i=0,len=prestoreMoneyList.length;i<len;i++){
+					if(prestoreMoneyList[i].init==1)vm.set('off.prestore',i);
+				}
 			});
 		},
 		shiftPackage:function(e){//套餐切换
@@ -174,6 +178,9 @@ var vm=new Moon({
 		phoneFormat:function(phone){
 			return this.phoneFormat(phone);
 		},
+		mathCentToYuan:function(value){
+	    	return this.mathCentToYuan(value);
+	    },
 		filterBr:function(str){
 			return str?str.split('<br>'):str=[];
 		},

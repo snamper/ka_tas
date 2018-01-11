@@ -43,7 +43,7 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=this.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				Jsborya.getGuestInfo(function(userInfo){
@@ -64,7 +64,7 @@ var vm=new Moon({
 			var vm=this;
 			vm.set("off.load",1);
 			window.Timer=setInterval(function(){
-				vm.AJAX('../../w/business/getResult',{
+				vm.AJAX('../../../tas/w/business/getResult',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId
@@ -89,14 +89,7 @@ var vm=new Moon({
 			},2000);
 		},
 		jump:function(){
-			Jsborya.pageJump({
-                url:"index.html",
-                stepCode:'2001',
-                header:{
-                    frontColor:'#000000',
-                    backgroundColor:'#fff',
-                }
-            });
+			vm.toIndexPage();
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);

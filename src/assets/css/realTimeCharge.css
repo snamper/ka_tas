@@ -1,0 +1,36 @@
+body{
+	padding-bottom: 0.2rem;
+}
+.m-top-head{
+	margin:0.2rem 0.15rem 0.1rem 0.15rem;
+}
+.m-top-head>b{
+	font-size: 0.18rem;
+	padding-right: 5px;
+}
+.m-realTime-info{
+	background-color: #fff;
+	border-top:1px solid #ececec;
+}
+.m-realTime-info>li{
+	border-bottom:1px solid #ececec;
+	height: 0.45rem;
+	line-height: 0.45rem;
+	padding-right: 0.1rem;
+	margin-left: 0.15rem;
+	transition: all .3s;
+}
+.m-realTime-info>li:hover{
+	box-shadow: 0 0 7px rgba(0,0,0,0.15);
+	padding-left: 5px;
+	margin-left: 0;
+	font-size: 0.15rem;
+}
+.m-realTime-info>li:last-child{
+	border-bottom:none;
+}
+.m-bottom-tips{
+	font-size: 0.1rem;
+	margin:5px 10px;
+}
+

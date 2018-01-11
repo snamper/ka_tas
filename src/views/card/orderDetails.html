@@ -29,11 +29,11 @@
 			<span class="left">+含预存话费</span>
 			<span class="fr right">￥{{mathCentToYuan(orderInfo.prestoreMoney)}}</span>
 		</li>
-		<li class="clr border"><span class="fr right black">总价:<b class="red font-big">￥{{orderInfo.totalMoney}}</b></span></li>
+		<li class="clr border"><span class="fr right black">总价:<b class="red font-big">￥{{ mathCentToYuan(orderInfo.totalMoney) }}</b></span></li>
 		<li m-show="off.isFace"><span class="left">活体识别:</span>
 			<span class="fr right">
 				<span class="green" m-show="off.isPass">成功</span>
-				<span class="red" m-show="!off.isPass">失败</span>（{{ orderInfo.similarity }}）
+				<span class="red" m-show="!off.isPass">失败</span>（{{ orderInfo.similarity }}%）
 			</span>
 		</li>
 		<li><span class="left">当前状态:</span>

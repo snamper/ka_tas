@@ -13,7 +13,7 @@ var vm=new Moon({
 			showMoreLabel:false,//更多标签
 			showNoMore:false,//暂无更多
 			showPullLoad:false,//上拉加载
-			showOrderMsg:false//是否有订单
+			showOrderMsg:false,//是否有订单
 		},
 		inputValue:'',//搜索框value
 		selectLabel:'',//选择的标签
@@ -30,24 +30,13 @@ var vm=new Moon({
 	hooks: {
 	    init: function() {
 			vm=this;
-			Jsborya.setHeader({
-				title:'号码搜索',
-				left:{
-					icon:'back_black',
-					value:'',
-					callback:'headerLeftClick'
-				},
-				right:{
-					icon:'',
-					value:'',
-					callback:''
-				}
-			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			const window_h=document.documentElement.clientHeight;
-			document.getElementById("cardBox").style.height=window_h-173+'px';
-
+			setTimeout(function(){
+				const window_h=document.documentElement.clientHeight;
+				document.getElementById("cardBox").style.height=window_h-173+'px';
+			},100);
+			
 			const data=vm.getUrlParam('data');
 			if(data){
 				vm.set('selectCity',JSON.parse(BASE64.decode(data)));
@@ -55,16 +44,54 @@ var vm=new Moon({
 			vm.removeStore('ORDER_INFO');
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
+				let deviceIcon='';
+				userInfo.iccid==='000000000000' ? deviceIcon='card_red' : deviceIcon='card_green';
+				Jsborya.setHeader({
+					title:'号码搜索',
+					left:{
+						icon:'back_black',
+						value:'返回',
+						callback:''
+					},
+					right:{
+						icon:deviceIcon,
+						value:'',
+						callback:'headerRightClick'
+					}
+				});
+				Jsborya.registerMethods('headerRightClick',function(){
+					Jsborya.pageJump({
+						url:"simInfo.html",
+						stepCode:999,
+						depiction:'SIM卡信息',
+						destroyed:false,
+						header:{
+	                        frontColor:'#ffffff',
+	                        backgroundColor:'#4b3887',
+	                    }
+					});
+				});
 				vm.callMethod('readCardICCID');
 			});
 	    }
 	},
 	methods:{
+		getColor:function (){  
+		    var colorElements = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f";  
+		    var colorArray = colorElements.split(",");  
+		    var color ="#";  
+		    for(var i =0;i<6;i++){  
+		        color+=colorArray[Math.floor(Math.random()*16)];  
+		    }  
+		    return 'color:'+color;
+		},
 		cityClick:function(){//城市切换
 			let selectCity=JSON.stringify(vm.get('selectCity'));
 			Jsborya.pageJump({
                 url:'city.html?data='+BASE64.encode(selectCity),
                 stepCode:'999',
+                depiction:'选择城市',
+                destroyed:false,
                 header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',
@@ -132,6 +159,8 @@ var vm=new Moon({
 			Jsborya.pageJump({
                 url:'orderDetails.html',
                 stepCode:999,
+                depiction:'订单详情',
+                destroyed:false,
                 header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',
@@ -148,9 +177,12 @@ var vm=new Moon({
 				phoneMoney:phoneData.cardMoney,
 				phoneLevel:phoneData.numberLevel
 			});
+			vm.removeStore('selectPackage');
 			Jsborya.pageJump({
                 url:'package.html',
                 stepCode:'999',
+                depiction:'选择套餐',
+                destroyed:false,
                 header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',
@@ -160,7 +192,6 @@ var vm=new Moon({
 		readCardICCID:function(){
 			Jsborya.readCardIMSI(function(data){
 				if(data.status==1){
-					if(data.imsi=='FFFFFFFFFFFFFFF')data.imsi='';
 					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 				}
 			});
@@ -173,7 +204,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../w/source/iccidCheck',json,function(data){
+			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
 				if(data.data.status==2){
 					vm.set('off.showOrderMsg',true);
 					vm.setStore('ORDER_INFO',data.data.orderInfo);
@@ -193,7 +224,8 @@ var vm=new Moon({
 	  		};
 	  		vm.set('off.showFirstLabel',false);
 	  		vm.set('off.showNoMore',false);
-			vm.AJAX('../../w/source/phoneList',json,function(data){
+			vm.AJAX('../../../tas/w/source/phoneList',json,function(data){
+				vm.set('off.showPullLoad',false);
 				if(closeLoad){
 					vm.set('cardData.list',vm.get('cardData').list.concat(data.data.list));
 				}else{
@@ -201,24 +233,33 @@ var vm=new Moon({
 				}
 				
 				if(data.data.list.length==0)vm.set('off.showNoMore',true);
-
 			},closeLoad);
 		},
 		pullLoad:function(e){//上拉执行
 			e.preventDefault();
 	    	let page=vm.get('page'),obj=document.getElementById('cardBox');
-	    	
-	    	if(vm.get('off.showPullLoad')&&vm.get('off.showNoMore')&&obj.scrollHeight<=(obj.scrollTop+obj.offsetHeight)){
+
+	    	if(!vm.get('off').showPullLoad&&!vm.get('off').showNoMore&&obj.scrollHeight<=(obj.scrollTop+obj.offsetHeight)){
 	    		page++;
-	    		vm.set('showPullLoad',false);
+	    		vm.set('off.showPullLoad',true);
 	    		vm.set('page',page);
 	    		vm.callMethod('getCardList',[page,true]);
 	    	}
 		},
 		filterNumber:function(number){
-			let keyWord=this.get('inputValue').toString();
+			//未知BUG：inputValue和selectLabel的值改变会触发此函数
+			var inputValue=vm.get('inputValue'),
+				selectLabel=vm.get('selectLabel'),
+				keyWord='';
+
+			if(inputValue){
+				keyWord=inputValue;
+			}else if(selectLabel){
+				keyWord=selectLabel.type;
+			}
+			
 			const nodeToString=function( node ) {  
-			   var tmpNode=document.createElement("div");  
+			   var tmpNode=document.createElement("div");
 			   tmpNode.appendChild(node.cloneNode(true));  
 			   var str=tmpNode.innerHTML;  
 			   tmpNode=node=null;
@@ -233,7 +274,7 @@ var vm=new Moon({
 
 		    var newNumbersElement=document.createElement("div");
 
-		    for (let i = 0, ii=number.length; i<ii;i++){
+		    for (let i = 0, len=number.length; i<len;i++){
 		        var numberElement=document.createElement('span');
 		        if (keyWordStartIndex>=0&&keyWordStartIndex<=i&&keyWordEndIndex>i) {
 		            numberElement.className+="red ";

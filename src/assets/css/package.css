@@ -37,7 +37,7 @@
     background-repeat: no-repeat;
 }
 
-.m-btn-double{
+/*.m-btn-double{
     margin:auto 0.1rem;
 }
 .m-btn-double>.btnp{
@@ -45,7 +45,7 @@
 }
 .m-btn-double>.btn{
     width: 49%;
-}
+}*/
 
 .pay-load{}
 .pay-load>b{
@@ -53,7 +53,7 @@
     width: 10px;
     height: 10px;
     border-radius: 100%;
-    background-color:#2CA43A;
+    background-color:#ffc333;
     -webkit-animation: pay-loading 1.4s infinite ease-in-out;
     animation: pay-loading 1.4s infinite ease-in-out;
     -webkit-animation-fill-mode: both;

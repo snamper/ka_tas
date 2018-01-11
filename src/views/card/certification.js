@@ -62,20 +62,23 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let windowWidth=document.documentElement.clientWidth,photoHeight=(windowWidth/2-20)*0.602;
-			document.getElementById("photo-front").style.height=photoHeight+"px";
-			document.getElementById("photo-back").style.height=photoHeight+"px";
+			setTimeout(function(){
+				let windowWidth=document.documentElement.clientWidth,photoHeight=(windowWidth/2-20)*0.602;
+				document.getElementById("photo-front").style.height=photoHeight+"px";
+				document.getElementById("photo-back").style.height=photoHeight+"px";
 
-			vm.callMethod("initSignaturePad");
+				vm.callMethod("initSignaturePad");
+			},100);
+			
 
-			let orderInfo=this.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 
 					Jsborya.registerMethods('uploadImgComplete',function(data){//android 上传后回调
-						vm.callMethod("uploadImgComplete",[JSON.parse(BASE64.decode(data))]);
+						vm.callMethod("uploadImgComplete",[data]);
 				    });
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo.sysOrderId);
@@ -122,17 +125,14 @@ var vm=new Moon({
 		takePhotos:function(type){//调用APP接口获取图片
 			Jsborya.takePhotos({
 				type:type,
-				multiple:false,
+				sysOrderId:vm.get('orderInfo').sysOrderId,
 				apiComplete:'uploadImgComplete',
 				complete:function(data){
-					data=JSON.parse(BASE64.decode(data));
-					var os=getUserAgent();
-					var photoItem=data.photoList[0];
 					if(type==3){//正面
-						document.getElementById("photo-front").style.backgroundImage="url(data:image/jpeg;base64,"+photoItem+")";
+						document.getElementById("photo-front").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";
 						vm.set('uploadType',1);
 					}else if(type==4){//反面
-						document.getElementById("photo-back").style.backgroundImage="url(data:image/jpeg;base64,"+photoItem+")";
+						document.getElementById("photo-back").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";
 						vm.set('uploadType',2);
 					}
 				}
@@ -182,7 +182,7 @@ var vm=new Moon({
 					imgNo:index
 				}
 			};
-			vm.AJAX('../../w/business/imgUpload',json,function(data){
+			vm.AJAX('../../../tas/w/business/imgUpload',json,function(data){
 				vm.callMethod('uploadImgComplete',[data]);
 			});
 		},
@@ -242,15 +242,19 @@ var vm=new Moon({
 						sysOrderId:vm.get('orderInfo').sysOrderId,
 					}
 				}
-				vm.AJAX('../../w/business/materialUpload',json,function(data){
-					let orderInfo=Object.assign(vm.get('orderInfo'),{
+				vm.AJAX('../../../tas/w/business/materialUpload',json,function(data){
+					let orderInfo=vm.get('orderInfo');
+					Object.assign(orderInfo,{
 						idCardName:vm.get('idCardInfo').name,
 						idCardNo:vm.get('idCardInfo').number
 					});
-					vm.getStore('ORDER_INFO',orderInfo);
+					
+					vm.setStore('ORDER_INFO',orderInfo);
+					alert(JSON.stringify(vm.getStore('ORDER_INFO')));
 					Jsborya.pageJump({
 						url:'faceVerification.html',
 						stepCode:999,
+						depiction:'活体识别',
 						header:{
 	                        frontColor:'#ffffff',
 	                        backgroundColor:'#4b3887',
@@ -263,6 +267,8 @@ var vm=new Moon({
 			Jsborya.pageJump({
 				url:"http://km.m10027.com/yt-rwxy.html",
 				stepCode:800,
+				depiction:'远特客户入网服务协议',
+				destroyed:false,
 				header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',

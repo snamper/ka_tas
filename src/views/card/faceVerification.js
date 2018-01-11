@@ -41,7 +41,7 @@ var vm=new Moon({
 		init:function(){
 			vm=this;
 			Jsborya.setHeader({
-				title:'开卡受理',
+				title:'活体识别',
 				left:{
 					icon:'back_white',
 					value:'',
@@ -55,7 +55,7 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=this.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				if(orderInfo.similarity){//已经进行活体识别
@@ -74,7 +74,7 @@ var vm=new Moon({
 						vm.orderCancel(userInfo,orderInfo.sysOrderId);
 					});
 					Jsborya.registerMethods('payComplete',function(data){
-						vm.callMethod('payComplete',[data]);
+						vm.callMethod('payComplete',[data.status]);
 					});
 				});
 			}else{
@@ -84,6 +84,8 @@ var vm=new Moon({
 	},
 	methods:{
 		payComplete:function(status){//支付完成
+			alert(status)
+			vm.set('off.load',false);
 			if(status==1){//支付成功
 				const json={
 					userInfo:vm.get('userInfo'),
@@ -93,7 +95,7 @@ var vm=new Moon({
 				};
 				vm.set('off.load',2);
 				window.Timer=setInterval(function(){
-					vm.AJAX('../../w/business/payLaterStatus',json,function(data){
+					vm.AJAX('../../../tas/w/business/payLaterStatus',json,function(data){
 						var status=data.data.orderStatus;
 
 						if(status!=2){
@@ -112,20 +114,14 @@ var vm=new Moon({
 		                        btn:['确定'],
 		                        title:'提示',
 		                        yes:function(){
-		                        	Jsborya.pageJump({
-		                                url:"index.html",
-		                                stepCode:'2001',
-		                                header:{
-		                                    frontColor:'#000000',
-		                                    backgroundColor:'#fff',
-		                                }
-		                            });
+		                        	vm.toIndexPage();
 		                        }
 		                    });
 						}else{
 							Jsborya.pageJump({
 								url:'cardAudit.html',
 								stepCode:999,
+								depiction:'订单审核',
 								header:{
 			                        frontColor:'#ffffff',
 			                        backgroundColor:'#4b3887',
@@ -152,6 +148,10 @@ var vm=new Moon({
 					btn:['确定'],
 					shadeClose:false,
 				});
+			}else if(status==-1){
+				let payType=vm.get('off').payType;
+				if(payType==2)alert('请先安装【微信】客户端');
+				if(payType==3)alert('请先安装【支付宝】客户端');
 			}else{
 				alert('异常支付状态');
 			}
@@ -162,7 +162,7 @@ var vm=new Moon({
 				name:vm.get('orderInfo').idCardName,
 				number:vm.get('orderInfo').idCardNo,
 				complete:function(data){
-					data=JSON.parse(BASE64.decode(data));
+					alert(JSON.stringify(data));
 					if(data.status==1){
 						vm.set('faceConfirmInfo.livingId',data.livingId);
 						vm.callMethod('beginGetResult');
@@ -205,7 +205,7 @@ var vm=new Moon({
 			vm.callMethod('getFaceVerificationResult');
 		},
 		getFaceVerificationResult:function(){
-			vm.AJAX('../../w/business/livingResult',{
+			vm.AJAX('../../../tas/w/business/livingResult',{
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:vm.get('orderInfo').sysOrderId,
@@ -232,14 +232,7 @@ var vm=new Moon({
                         shadeClose:false,
                         title:'提示',
                         yes:function(){
-                            Jsborya.pageJump({
-								url:'index.html',
-								stepCode:'2001',
-								header:{
-                                    frontColor:'#000000',
-                                    backgroundColor:'#fff',
-                                }
-							});
+                            vm.toIndexPage();
                         }
                     });
 					
@@ -255,7 +248,7 @@ var vm=new Moon({
 			var vm=this,payType=vm.get('off').payType;
 			if(vm.get('off').load)return false;
 			vm.set('off.load',1);
-			vm.AJAX('../../w/business/pay',{
+			vm.AJAX('../../../tas/w/business/pay',{
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:vm.get('orderInfo').sysOrderId,
@@ -263,10 +256,13 @@ var vm=new Moon({
 				}
 			},function(data){
 				vm.set('off.load',1);
+				alert(JSON.stringify(data));
 				Jsborya.pageJump({
 					url:'',
 					stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
 					data:data.data,
+					depiction:payType==2 ? "微信支付" : "支付宝支付",
+					destroyed:false,
 					header:{
                         frontColor:'#ffffff',
                         backgroundColor:'#4b3887',
@@ -276,11 +272,13 @@ var vm=new Moon({
 				vm.set('off.load',false);
 			});
 		},
-		
+		shiftPayType:function(payType){
+			vm.set('off.payType',payType);
+		},
 		jumpToPrev:function(){
 			Jsborya.pageBack({
                 url:"certification.html",
-                isLoad:false
+                isLoad:true
             });
 		},
 		mathCentToYuan:function(value){

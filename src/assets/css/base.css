@@ -102,22 +102,9 @@ textarea {
     background: #10CD6E;
     color: #fff;
 }
-.btny{
-    border-color: #ffc333!important;
-    color: #ffc333;
-}
-.btny:active{
-    background-color: #ffc333;
-    color: #fff
-}
-
-.btnp{
-    border-color: #4b3887!important;
-    color: #4b3887;
-}
-.btnp:active{
-    background-color: #4b3887;
-    color: #fff
+.bgy {
+    background: #ffc333;
+    color: #fff;
 }
 
 .btnDefault{
@@ -130,6 +117,31 @@ textarea {
     background-color: #ececec;
     border-color: #CECECE
 }
+.btny{
+    border-color: #ffc333!important;
+    color: #ffc333;
+}
+.btny:active{
+    background-color: #ffc333;
+    color: #fff
+}
+.btnp{
+    border-color: #4b3887!important;
+    color: #4b3887;
+}
+.btnp:active{
+    background-color: #4b3887;
+    color: #fff
+}
+.btng{
+    border-color: #10CD6E!important;
+    color: #10CD6E;
+}
+.btng:active{
+    background-color: #10CD6E;
+    color: #fff
+}
+
 
 .clr:after {
     content: '';

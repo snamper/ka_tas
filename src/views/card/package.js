@@ -25,6 +25,10 @@ var vm=new Moon({
 			selPackCode:'',
 			prestore:'',
 		},
+		imsiInfo:{
+			imsi:'',
+			smsp:''
+		},
 		recommendList:[{name:'流量多',type:'liuliang'},{name:'语音多',type:'yuyin'},{name:'最省钱',type:'price'},{name:'全部套餐',type:'all'}],
 		userInfo:'',//用户信息
 	},
@@ -50,8 +54,8 @@ var vm=new Moon({
 			});
 	    	Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let cardInfo=this.getStore('CARD_INFO'),
-				selectPackage=this.getStore('selectPackage');
+			let cardInfo=vm.getStore('CARD_INFO'),
+				selectPackage=vm.getStore('selectPackage');
 			if(cardInfo){
 				vm.set('cardInfo',cardInfo);
 				if(selectPackage){
@@ -74,7 +78,10 @@ var vm=new Moon({
 			vm.set("off.load",1);
 			Jsborya.readCardIMSI(function(data){
 				if(data.status==1){
-					if(data.imsi=='FFFFFFFFFFFFFFF')data.imsi='';
+					vm.set('imsiInfo',{
+						imsi:data.imsi,
+						smsp:data.smsp
+					});
 					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 				}else{
 					vm.callMethod("filterConnectStatus",[data.status]);
@@ -99,7 +106,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../w/source/iccidCheck',json,function(data){
+			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
 				vm.set("off.load",false);
 				if(data.data.status==1){
 					vm.callMethod('savePackage');
@@ -113,6 +120,7 @@ var vm=new Moon({
 						    Jsborya.pageJump({
 				                url:'orderDetails.html',
 				                stepCode:999,
+				                depiction:'订单详情',
 				                header:{
 				                    frontColor:'#ffffff',
 				                    backgroundColor:'#4b3887',
@@ -121,7 +129,7 @@ var vm=new Moon({
                         },
                         no:function(){
                         	layer.closeAll();
-                        	vm.orderCancel(vm.get('userInfo'),data.data.orderInfo.sysOrderId);
+                        	vm.orderCancel(vm.get('userInfo'),data.data.orderInfo.sysOrderId,false);
                         },
                     });
 				}else if(data.data.status==3){
@@ -145,13 +153,15 @@ var vm=new Moon({
 			const json={
 	  			params:{
 	  				phoneNum:cardInfo.phone,
+	  				imsi:vm.get('imsiInfo').imsi,
+	  				smsp:vm.get('imsiInfo').smsp,
 	  				packageCode:vm.get('selectPackage').packageCode,
 	  				selPackCode:vm.get('selectPackage').selPackCode,
 	  				prestoreMoney:vm.get('selectPackage').prestore,
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../w/source/orderCreate',json,function(data){
+			vm.AJAX('../../../tas/w/business/orderCreate',json,function(data){
 				vm.set("off.load",false);
 				vm.setStore('ORDER_INFO',{
 		            "phoneNum":cardInfo.phone,
@@ -160,7 +170,7 @@ var vm=new Moon({
 		            "createTime":data.data.createTime,
 		            "cardMoney":cardInfo.phoneMoney,//号码占用费
 		            "orderStatusCode":"PACKAGE_SELECTION",
-		            "totalMoney":vm.get('totalPrice'),//总价格
+		            "totalMoney":parseInt(vm.get('totalPrice'))*100,//总价格
 		            "limitSimilarity":0,
 		            "validTime":0,
 		            "sysOrderId":data.data.sysOrderId,
@@ -170,19 +180,22 @@ var vm=new Moon({
 				Jsborya.pageJump({
 					url:'certification.html',
 					stepCode:999,
+					depiction:'实名认证',
 					header:{
 	                    frontColor:'#ffffff',
 	                    backgroundColor:'#4b3887',
 	                }
 				});
 			},false,function(){
-				vm.set("off.load",2);
+				vm.set("off.load",false);
 			});
 		},
 		jumpToPackageList:function(type,name){
 			Jsborya.pageJump({
 				url:'packageList.html?type='+BASE64.encode(JSON.stringify({val:type,name:name})),
 				stepCode:999,
+				depiction:'套餐列表',
+				destroyed:false,
 				header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',
@@ -193,6 +206,8 @@ var vm=new Moon({
 			Jsborya.pageJump({
 				url:'packageDetails.html?code='+vm.get('selectPackage').packageCode+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
 				stepCode:999,
+				depiction:'套餐详情',
+				destroyed:false,
 				header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',

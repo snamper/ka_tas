@@ -44,7 +44,7 @@
 					<div>
 						<p class="f-w red" m-show="!off.isPass">人脸识别失败</p>
 						<p class="f-w green" m-show="off.isPass">人脸识别通过验证</p>
-						<p class="btn-aside"><a href="javascript:void(0)" m-show="!off.isPass" m-on:click="toFaceVerification" class="btn btn-p">重新识别</a></p>
+						<p class="btn-aside"><span m-show="!off.isPass" m-on:click="toFaceVerification" class="btn btnp">重新识别</a></span>
 						<p class="grey">与证件照片<span class="yellow">{{faceConfirmInfo.similarity}}%</span>相似度</p>
 					</div>
 				</div>
@@ -62,21 +62,21 @@
 						<span class="left">+含预存话费</span>
 						<span class="fr right">￥{{mathCentToYuan(orderInfo.prestoreMoney)}}</span>
 					</li>
-					<li><span class="fr right black">总价:<b class="red font-big">￥{{orderInfo.totalMoney}}</b></span></li>
+					<li><span class="fr right black">总价:<b class="red font-big">￥{{mathCentToYuan(orderInfo.totalMoney)}}</b></span></li>
 				</ul>
 
 				<ul class="m-pay-choose">
 					<li class="m-form-radio">
-						<label class="clr">
-							<label for="payType" class="text u-icon-wechat"></label>
-							<span class="radio fr"><input type="radio" name="off.payType" value="2" m-model="off.payType"><span></span></span>
-						</label>
+						<div class="clr" m-on:click="shiftPayType(2)">
+							<span class="text u-icon-wechat"></span>
+							<span class="radio fr"><input type="radio" value="2"><span m-literal:class="{active:off.payType==2}"></span></span>
+						</div>
 					</li>
-					<li class="m-form-radio">
-						<label class="clr">
-							<label for="payType" class="text u-icon-alipay"></label>
-							<span class="radio fr"><input type="radio" name="off.payType" value="3" m-model="off.payType"><span></span></span>
-						</label>
+					<li class="m-form-radio" m-on:click="shiftPayType(3)">
+						<div class="clr">
+							<span class="text u-icon-alipay"></span>
+							<span class="radio fr"><input type="radio" value="3"><span m-literal:class="{active:off.payType==3}"></span></span>
+						</div>
 					</li>
 				</ul>
 				<div m-show="off.isPass">

@@ -52,11 +52,11 @@ require('./base64.js');
 		},
 		getUserInfo:function(cb){//获取登录用户信息
 			// cb({
-			// 	"userId":"00000",
+			// 	"userId":"00000000000",
 			// 	"applicationID":"123",
 			// 	"token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",
 			// 	"timestamp":"1509608023665",
-			//	"packageName":"xxx.apk",
+			// 	"packageName":"xxx.apk",
 			// });
 			callHandler({
 				name:'getUserInfo',
@@ -68,11 +68,13 @@ require('./base64.js');
 		},
 		getGuestInfo:function(cb){//获取新用户信息
 			// cb({
-			// 	"iccid":"00000",
-			// 	"applicationID":"123",
-			// 	"token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",
-			// 	"timestamp":"1509608023665",
-			//	"packageName":"xxx.apk",
+			// 	"imsi":"460110502674386",
+			// 	"smsp":"",
+			// 	"applicationID":"TF-1515485499208-101638986",
+			// 	"iccid":"89860316940286781726",
+			// 	"packageName":"com.yuantel.common.lite",
+			// 	"timestamp":"1515485664316",
+			// 	"token":"YQ5B/3HFzmnc5HlFOwMli/Zw1ypzAai0aWhJdC1GSsaYpMrJX29Hv2ocCxlCQX2DinEsud7LVW4S7gLmZL3dgL9P0k9lLvKFm5wvr4E+8GM="
 			// });
 			callHandler({
 				name:'getGuestInfo',
@@ -96,6 +98,7 @@ require('./base64.js');
 		pageJump:function(json){//页面跳转
 			json.url.indexOf("http")===-1 ? json.url=URL+json.url : void 0;
 			//window.location.href=json.url;
+			if(!json.hasOwnProperty('destroyed'))json.destroyed=true;//默认是销毁当前视图
 			callHandler({
 				name:'pageJump',
 				data:json,
@@ -159,9 +162,9 @@ require('./base64.js');
 			// setTimeout(function(){
 			// 	cb({
 			// 		'status':'1',
-			// 		'iccid':'231456487894232',
+			// 		'iccid':'89860316940286781726',
 			// 	});
-			// },3000)
+			// },3000);
 			callHandler({
 				name:'readCardICCID',
 				data:'',
@@ -172,16 +175,17 @@ require('./base64.js');
 		},
 		registerMethods:function(name,cb){//提供APP直接调用的方法注册接口
 			OS==1 ? (WebViewJavascriptBridge.registerHandler(name, function(data, responseCallback) {
-		        cb(JSON.parse(BASE64.decode(data)));
+				if(data)data=JSON.parse(BASE64.decode(data));
+		        cb(data);
 		    })) : this[name]=cb;
 		},
 		readCardIMSI:function(cb){//读取IMSI
 			// setTimeout(function(){
 			// 	cb({
 			// 		'status':'1',
-			// 		'imsi':'',
+			// 		'imsi':'460110502674386',
 			// 	});
-			// },3000)
+			// },3000);
 			
 			callHandler({
 				name:'readCardIMSI',
@@ -214,6 +218,26 @@ require('./base64.js');
 				}
 			});
 
+		},
+		httpRequest:function(json){
+			// setTimeout(function(){
+			// 	json.complete(JSON.stringify({
+			// 	    "code": "200",
+			// 	    "msg": "success",
+			// 	    "data": {
+			// 	        "restFee": "155000",//可用余额，以分为单位
+			// 	        "curTotalFee": "100",// 当月话费
+			// 			"creditFee": "100",//信用度
+			// 	    }
+			// 	}));
+			// },3000)
+			callHandler({
+				name:'httpRequest',
+				data:json,
+				callback:function(str){
+					json.complete(JSON.parse(BASE64.decode(str)));
+				}
+			});
 		}
 	};
 	

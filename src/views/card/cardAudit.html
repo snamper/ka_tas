@@ -56,9 +56,14 @@
 				<div class="loaded" m-if="off.step==2"></div>
 			</div>
 			<div class="step-text">
-				<p class="yellow" m-if="off.step==1">订单正在审核，请耐心等待</p>
+				<h3 class="yellow" m-if="off.step==1">订单正在审核，请耐心等待</h3>
 				<div m-if="off.step==2">
-					<p>人工审核已通过</p>
+					<h3 class="green">人工审核已通过</h3>
+				</div>
+				<div m-if="off.step==3">
+					<img src="../../assets/img/error2.png">
+					<h3 class="red">审核未通过</h3>
+					<div class="m-reason f-tal" m-html="auditReason"></div>
 				</div>
 			</div>
 		</section>

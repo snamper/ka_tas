@@ -81,8 +81,12 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../w/source/packageInfo',json,function(data){
+			vm.AJAX('../../../tas/w/source/packageInfo',json,function(data){
 				vm.set('packageInfo',data.data);
+				let prestoreMoneyList=data.data.prestoreMoneyList;
+				for(let i=0,len=prestoreMoneyList.length;i<len;i++){
+					if(prestoreMoneyList[i].init==1)vm.set('off.prestore',i);
+				}
 			});
 		},
 		shiftSelPackage:function(e){
@@ -143,6 +147,9 @@ var vm=new Moon({
 		phoneFormat:function(phone){
 			return this.phoneFormat(phone);
 		},
+		mathCentToYuan:function(value){
+	    	return this.mathCentToYuan(value);
+	    },
 		filterBr:function(str){
 			return str?str.split('<br>'):str=[];
 		},

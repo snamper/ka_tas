@@ -37,29 +37,43 @@ var vm=new Moon({
 	hooks:{
 		init:function(){
 			vm=this;
-			Jsborya.setHeader({
-				title:'写卡',
-				left:{
-					icon:'back_white',
-					value:'',
-					callback:'headerLeftClick'
-				},
-				right:{
-					icon:'',
-					value:'',
-					callback:''
-				}
-			});
+			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=this.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
-
+					let deviceIcon='';
+					userInfo.iccid==='000000000000' ? deviceIcon='card_red' : deviceIcon='card_green';
+					Jsborya.setHeader({
+						title:'写卡',
+						left:{
+							icon:'back_white',
+							value:'',
+							callback:'headerLeftClick'
+						},
+						right:{
+							icon:deviceIcon,
+							value:'',
+							callback:'headerRightClick'
+						}
+					});
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+					});
+					Jsborya.registerMethods('headerRightClick',function(){
+						Jsborya.pageJump({
+							url:"simInfo.html",
+							stepCode:999,
+							depiction:'SIM卡信息',
+							destroyed:false,
+							header:{
+		                        frontColor:'#ffffff',
+		                        backgroundColor:'#4b3887',
+		                    }
+						});
 					});
 					vm.callMethod("readCardICCID");
 				});
@@ -74,24 +88,20 @@ var vm=new Moon({
 			Jsborya.readCardIMSI(function(data){
 				vm.set("off.readLoad",false);
 				vm.set("deviceStatus",data.status);
-
+				alert(JSON.stringify(data));
 				if(data.status==1){
-					if(data.imsi=='FFFFFFFFFFFFFFF'){
-						vm.set("off.readLoad",true);
-						Jsborya.readCardICCID(function(data){
-							vm.set("off.readLoad",false);
-							vm.set("deviceStatus",data.status);
-
-							if(data.status==1){
-								vm.set("iccid",data.iccid);
-								vm.callMethod("getImsi");
-							}else{
-								vm.callMethod("filterConnectStatus",[data.status]);
-							}
-						});
-					}else{
-						vm.set("off.msg","当前SIM卡为非空卡,请更换SIM卡点击【重新获取】");
-					}
+					vm.set("off.readLoad",true);
+					Jsborya.readCardICCID(function(data){
+						vm.set("off.readLoad",false);
+						vm.set("deviceStatus",data.status);
+						alert(JSON.stringify(data));
+						if(data.status==1){
+							vm.set("iccid",data.iccid);
+							vm.callMethod("getImsi");
+						}else{
+							vm.callMethod("filterConnectStatus",[data.status]);
+						}
+					});
 				}else{
 					vm.callMethod("filterConnectStatus",[data.status]);
 				}
@@ -101,13 +111,14 @@ var vm=new Moon({
 		getImsi:function(){
 			vm.set("off.getLoad",1);
 			vm.set("off.submitLoad",false);
-			vm.AJAX('../../w/business/getImsi',{
+			vm.AJAX('../../../tas/w/business/getImsi',{
 				userInfo:vm.get("userInfo"),
 				params:{
 					sysOrderId:vm.get("orderInfo").sysOrderId,
 					iccid:vm.get('iccid'),
 				}
 			},function(data){
+				alert(JSON.stringify(data));
 				let imsiSubstr=data.data.imsi,reg = /^(\d{4})(\d*)(\d{4})$/;
 				imsiSubstr=imsiSubstr.replace(reg, function(a,b,c,d){
 				    return b+c.replace(/\d/g, "*")+d;
@@ -124,28 +135,37 @@ var vm=new Moon({
 		callWriteCard:function(){//写卡
 			vm.set("off.submitLoad",false);
 			vm.set("off.getLoad",2);
+			alert(JSON.stringify({
+				imsi:vm.get('imsi'),
+				smsp:vm.get('smsp'),
+				iccid:vm.get('iccid')
+			}));
 			Jsborya.callWriteCard({
 				imsi:vm.get('imsi'),
 				smsp:vm.get('smsp'),
 				iccid:vm.get('iccid'),
 				complete:function(data){
+					alert(JSON.stringify(data));
 					vm.set("off.getLoad",false);
-					if(data.status==1){
-						vm.set("off.submitLoad",1);
-						vm.set("off.isJump",true);
-					}else if(data.status==2){
-						vm.set("off.msg","写卡失败");
-					}else if(data.status==3){
-						vm.set("off.msg","设备连接失败,请连接好设备");
-						vm.set("deviceStatus",2);
-					}else if(data.status==4){
-						vm.set("off.msg","设备未连接");
-						vm.set("deviceStatus",3);
-					}else if(data.status==5){
-						vm.set("off.msg","卡槽未插卡，请将SIM卡插入卡槽");
-						vm.set("deviceStatus",4);
-					}else if(data.status==6){
-						vm.set("off.msg","当前SIM卡与获取ICCID不一致，请重新插入对应SIM卡");
+					switch(data.status){
+						case 1:
+							vm.set("off.submitLoad",1);
+							vm.set("off.isJump",true);
+							break;
+						case 2:
+							vm.set("off.msg","写卡失败");
+							break;
+						case 3:
+							vm.set("off.msg","卡槽未插卡，请将SIM卡插入卡槽");
+							vm.set("deviceStatus",2);
+							break;
+						case 4:
+							vm.set("off.msg","当前SIM卡与获取ICCID不一致，请重新插入对应SIM卡");
+							vm.set("deviceStatus",3);
+							break;
+						default:
+							alert('异常状态');
+							break;
 					}
 				}
 			});
@@ -154,7 +174,7 @@ var vm=new Moon({
 		submitOrder:function(){//开卡申请
 			if(!vm.get("off").isJump)return false;
 			vm.set("off.submitLoad",2);
-			vm.AJAX('../../eas/sdk/business/submitOrder',{
+			vm.AJAX('../../../tas/eas/sdk/business/submitOrder',{
 				'userInfo':vm.get("userInfo"),
 				'params':{
 					'sysOrderId':vm.get("orderInfo").sysOrderId,
@@ -165,6 +185,7 @@ var vm=new Moon({
 				Jsborya.pageJump({
 					url:"cardActive.html",
 					stepCode:999,
+					depiction:'开卡受理',
 					header:{
                         frontColor:'#ffffff',
                         backgroundColor:'#4b3887',

@@ -75,9 +75,8 @@ body{
 			<li m-for="todo,index in recommendList" m-on:click="jumpToPackageList(todo.type,todo.name)">{{ todo.name }}</li>
 		</ul>
 	</section>
-	<section m-show="selectPackage.packageCode" class="m-btn-double clr">
-		<div class="btn fl btnp" m-on:click="changePackage">更换套餐</div>
-		<div href="javascript:void(0)" m-on:click="readCardICCID" class="btn fl btny">
+	<section m-show="selectPackage.packageCode" class="m-btn-double">
+		<div href="javascript:void(0)" m-on:click="readCardICCID" class="btn btny">
 			<span m-show="!off.load">保存套餐</span>
 			<span m-show="off.load==1">号卡校验中，请稍候<span class="pay-load">
 				<b class="f1"></b>
@@ -90,6 +89,7 @@ body{
 				<b></b>
 			</span></span>
 		</div>
+		<div class="btn btnp" m-on:click="changePackage">更换套餐</div>
 	</section>
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

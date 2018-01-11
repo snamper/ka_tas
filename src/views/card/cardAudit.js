@@ -7,8 +7,8 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			step:1,//1,订单审核中;2,审核成功;
-			load:true
+			step:1,//1,订单审核中;2,审核成功;3,审核失败
+			load:1
 		},
 		orderInfo: {
             "phoneNum":"00000000000",
@@ -24,6 +24,7 @@ var vm=new Moon({
             "prestoreMoney":0,
             "similarity":0,
         },
+        auditReason:'',
         userInfo:'',
 	},
 	hooks:{
@@ -44,7 +45,7 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=this.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				Jsborya.getGuestInfo(function(userInfo){
@@ -70,7 +71,7 @@ var vm=new Moon({
 					sysOrderId:vm.get('orderInfo').sysOrderId
 				}
 			};
-			vm.AJAX('../../w/business/payLaterStatus',json,function(data){
+			vm.AJAX('../../../tas/w/business/payLaterStatus',json,function(data){
 				var status=data.data.status;
 				// 1 已关闭
 				// 2 等待支付结果
@@ -81,19 +82,16 @@ var vm=new Moon({
 				// 7 事后审核
 				if(status!=3&&status!=2){
 					clearInterval(window.Timer);
+					vm.set('off.load',false);
 				}
 
 				if(status==5||status==7){
-					vm.set('off.load',false);
 					vm.set('off.step',2);
 				}else if(status==6){
-					var text='<p class="f-tal">原因：'+data.data.reason;
-					if(data.data.remark)text+='<br>备注：data.data.remark';
-					layer.open({
-                        content:text+'</p>',
-                        btn:['确定'],
-                        title:'审核失败',
-                    });
+					vm.set('off.step',3);
+					var text='<p><span>原因：</span>'+data.data.reason+'</p>';
+					if(data.data.remark)text+='<p><span>备注：</span>'+data.data.remark+'</p>';
+					vm.set('auditReason',text);
 				}else if(status==3||status==2){
 					//---
 				}else{
@@ -103,15 +101,9 @@ var vm=new Moon({
                         content:text,
                         btn:['确定'],
                         title:'提示',
+                        shadeClose:false,
                         yes:function(){
-                        	Jsborya.pageJump({
-                                url:"index.html",
-                                stepCode:'2001',
-                                header:{
-                                    frontColor:'#000000',
-                                    backgroundColor:'#fff',
-                                }
-                            });
+                        	vm.toIndexPage();
                         }
                     });
 				}
@@ -122,6 +114,7 @@ var vm=new Moon({
 				Jsborya.pageJump({
 					url:'createSheet.html',
 					stepCode:999,
+					depiction:'确认受理单',
 					header:{
                         frontColor:'#ffffff',
                         backgroundColor:'#4b3887',

@@ -45,29 +45,31 @@ var app=new Moon({
 				}
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
+			
+			setTimeout(function(){
+				var window_h=document.documentElement.clientHeight;//视图高度
+				document.getElementById("slider-box").style.height=window_h-105+"px";//设置轮播盒子高度
 
-			var window_h=document.documentElement.clientHeight;//视图高度
-			document.getElementById("slider-box").style.height=window_h-105+"px";//设置轮播盒子高度
+				let orderInfo=vm.getStore('ORDER_INFO');
+				if(orderInfo){
+					vm.set('orderInfo',orderInfo);
+					Jsborya.getGuestInfo(function(userInfo){
+						vm.set('userInfo',userInfo);
 
-			let orderInfo=this.getStore('ORDER_INFO');
-			if(orderInfo){
-				vm.set('orderInfo',orderInfo);
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
-
-					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						Jsborya.registerMethods('headerLeftClick',function(){
+							vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						});
+						vm.callMethod("getAcceptance",[window_h]);
 					});
-					vm.callMethod("getAcceptance");
-				});
-			}else{
-				alert('本地订单信息丢失');
-			}
+				}else{
+					alert('本地订单信息丢失');
+				}
+			},100)
 		}
 	},
 	methods:{
-		getAcceptance:function(){
-			vm.AJAX('../../w/business/acceptance',{//获取受理单图片
+		getAcceptance:function(window_h){
+			vm.AJAX('../../../tas/w/business/acceptance',{//获取受理单图片
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:vm.get('orderInfo').sysOrderId,
@@ -88,6 +90,7 @@ var app=new Moon({
 					for(let i=0;i<imgItems.length;i++){
 						if(imgItems[i].nodeType==1)imgItems[i].style.height=window_h-105+"px";
 					}
+					
 					new SmartPhoto(".slider",{
 						resizeStyle: 'fit',
 						arrows:false,
@@ -101,6 +104,7 @@ var app=new Moon({
 			Jsborya.pageJump({
 				url:'cardWriting.html',
 				stepCode:999,
+				depiction:'写卡',
 				header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',

@@ -8,7 +8,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			status:4,
+			status:4,//1、可用卡；2、有未完成订单；3、开卡成功；4、无效卡
 		},
 		simInfo:{
 			iccid:''
@@ -45,11 +45,22 @@ var vm=new Moon({
 			Jsborya.readCardIMSI(function(data){
 				layer.close(index);
 				if(data.status==1){
-					if(data.imsi=='FFFFFFFFFFFFFFF')data.imsi='';
 					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 				}else{
 					vm.callMethod("filterConnectStatus",[data.status]);
 				}
+			});
+		},
+		iccidCheck:function(imsi,smsp){
+			const json={
+	  			params:{
+	  				imsi:imsi||'',
+	  				smsp:smsp||'',
+	  			},
+	  			userInfo:vm.get('userInfo')
+	  		};
+			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
+				vm.set('off.status',data.data.status);
 			});
 		},
 		filterConnectStatus:function(status){
@@ -62,34 +73,26 @@ var vm=new Moon({
 				return false;
 			}
 		},
-		iccidCheck:function(imsi,smsp){
-			const json={
-	  			params:{
-	  				imsi:imsi||'',
-	  				smsp:smsp||'',
-	  			},
-	  			userInfo:vm.get('userInfo')
-	  		};
-			vm.AJAX('../../w/source/iccidCheck',json,function(data){
-				vm.set('off.status',data.data.status);
-			});
-		},
 		toIndexPage:function(){
-			Jsborya.pageJump({
-				url:'index.html',
-				stepCode:999
-			});
+			vm.toIndexPage();
 		},
 		toOrderPage:function(){
 			Jsborya.pageJump({
 				url:'orderDetails.html',
-				stepCode:999
+				stepCode:999,
+				depiction:'订单详情',
+				header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
 			});
 		},
 		toLoginPage:function(){
 			Jsborya.pageJump({
 				url:'',
-				stepCode:801
+				stepCode:801,
+				depiction:'登录',
+				destroyed:false,
 			});
 		}
 	}

@@ -1,6 +1,5 @@
 .verification-box{
-    margin-top: 0.6rem;
-    margin-bottom: 1rem;
+    margin: 0.6rem 0;
     text-align: center;
 }
 .verification-box>.load{}
@@ -22,11 +21,25 @@
     background-position: center;
     background-size:0.6rem;
 }
-.verification-box>.step-text{}
-.verification-box>.step-text p{
+.step-text{}
+.step-text h3{
     margin:5px 0;
 }
-
+.step-text img{
+    width: 0.7rem;
+}
+.m-reason{
+    width: 80%;
+    margin:auto;
+    margin-top:0.2rem;
+}
+.m-reason>p{
+    color: #616161;
+    line-height: 1.65;
+}
+.m-reason span{
+    color: #212121;
+}
 
 .verification-box>.load>.loading i {
     width: 10px;
