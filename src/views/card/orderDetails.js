@@ -76,7 +76,6 @@ var vm=new Moon({
                 url:todo.url,
                 stepCode:999,
                 depiction:todo.next,
-                destroyed:false,
                 header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',

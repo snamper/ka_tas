@@ -3,10 +3,10 @@
   *@author: thinkmix
   *@date 2017-12-27
 ***/
-var GlobalVar = function() {
-    return this || (0, eval)("(this)")
-}();
-GlobalVar.Gshec = /^1(3|4|5|7|8)\d{9}$/, GlobalVar.Gchec = /^[0-9]*[1-9][0-9]*$/;
+// var GlobalVar = function() {
+//     return this || (0, eval)("(this)")
+// }();
+// GlobalVar.Gshec = /^1(3|4|5|7|8)\d{9}$/, GlobalVar.Gchec = /^[0-9]*[1-9][0-9]*$/;
 
 export default{
     init(Moon){

@@ -113,7 +113,7 @@ var vm=new Moon({
 				}else if(data.data.status==2){
 					layer.open({
 						title:'提示',
-                        content:'您有未完成的订单，请先【完成】或【放弃订单】',
+                        content:'您有未完成的订单，请先完成或放弃该订单',
                         btn:['查看订单','放弃订单'],
                         yes:function(){
                         	vm.setStore('ORDER_INFO',data.data.orderInfo);
@@ -129,7 +129,14 @@ var vm=new Moon({
                         },
                         no:function(){
                         	layer.closeAll();
-                        	vm.orderCancel(vm.get('userInfo'),data.data.orderInfo.sysOrderId,false);
+		                    vm.AJAX('../../../tas/w/business/orderCancell',{
+		                        'params':{
+		                            'sysOrderId':data.data.orderInfo.sysOrderId,
+		                        },
+		                        'userInfo':vm.get('userInfo')
+		                    },function(data){
+		                        
+		                    });
                         },
                     });
 				}else if(data.data.status==3){

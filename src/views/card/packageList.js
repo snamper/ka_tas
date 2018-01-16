@@ -111,20 +111,26 @@ var vm=new Moon({
 	  		};
 			vm.AJAX('../../../tas/w/source/packageList',json,function(data){
 				vm.set('packageList',data.data.titleList);
-				let prestoreMoneyList=data.data.titleList[0].packInfo.prestoreMoneyList;
-				for(let i=0,len=prestoreMoneyList.length;i<len;i++){
-					if(prestoreMoneyList[i].init==1)vm.set('off.prestore',i);
-				}
+				vm.callMethod('setSelectPrestore');
+				vm.callMethod('renderDom');
 			});
+		},
+		setSelectPrestore:function(){
+			let prestoreMoneyList=vm.get('packageList')[vm.get('off').select].packInfo.prestoreMoneyList;
+			for(let i=0,len=prestoreMoneyList.length;i<len;i++){
+				if(prestoreMoneyList[i].init==1)vm.set('off.prestore',i);
+			}
 		},
 		shiftPackage:function(e){//套餐切换
 			vm.set('off.select',parseInt(e.target.title));
+			vm.callMethod('setSelectPrestore');
 			vm.callMethod('siblingC',[e.target]);
+			vm.callMethod('renderDom');
 		},
-		shiftSelPackage:function(e){
-			var btn,index=parseInt(e.target.title);
+		shiftSelPackage:function(e){//可选包切换
+			var btn,index=parseInt(e.title);
 			var selPackage=vm.get('packageList')[vm.get('off').select].packInfo.selPackage[index];
-			selPackage.init==2 ? btn=['关闭'] : e.target.className=='active' ? btn=['不选择','关闭'] : btn=['选择','关闭'];
+			selPackage.init==2 ? btn=['关闭'] : e.className=='active' ? btn=['不选择','关闭'] : btn=['选择','关闭'];
 
 			layer.open({
 				content:'<div class="select-info f-scroll"><dl><dt>可选包名称</dt><dd class="b">'+selPackage.title+'</dd></dl><dl><dt>资费标准</dt><dd>'+selPackage.standard+'</dd></dl><dl><dt>资费说明</dt><dd>'+selPackage.feeDescribe+'</dd></dl></div>',
@@ -132,13 +138,39 @@ var vm=new Moon({
 				style:'width:95%;max-width:540px;',
 				type:1,
 				yes:function(){
-					selPackage.init!=2&&(e.target.className=='active' ? e.target.className='' : e.target.className='active');
+					selPackage.init!=2&&(e.className=='active' ? e.className='' : e.className='active');
 					layer.closeAll();
 				},
 				no:function(){
 					layer.closeAll();
 				}
 			})
+		},
+		shiftPrestore:function(e){//预存切换
+			vm.set('off.prestore',parseInt(e.title));
+			vm.callMethod('siblingC',[e]);
+		},
+		renderDom:function(){
+			var selPackageUl=document.getElementById('selPackageUl'),
+				prestoreUl=document.getElementById('prestoreUl'),
+				str='',packInfo=vm.get('packageList')[vm.get('off').select].packInfo;
+			
+			//渲染可选包
+			for(let i=0,todo=packInfo.selPackage,len=todo.length;i<len;i++){
+				if(todo[i].init==1){str+='<li class="active"';}
+				else if(todo[i].init==2){str+='<li class="active active2"';}
+				else str+='<li';
+				str+=' onclick="shiftSelPackage(this)" title="'+i+'">'+todo[i].title+'</li>';
+			}
+			selPackageUl.innerHTML=str,str='';
+
+			//渲染预存
+			for(let i=0,todo=packInfo.prestoreMoneyList,len=todo.length;i<len;i++){
+				if(todo[i].init==1){str+='<li class="active"';}
+				else str+='<li';
+				str+=' onclick="shiftPrestore(this)" title="'+i+'">'+vm.mathCentToYuan(todo[i].prestoreMoney)+'</li>';
+			}
+			prestoreUl.innerHTML=str,str='';
 		},
 		makeSure:function(){
 			if(vm.get('packageList')[0].code=="0")return false;
@@ -164,10 +196,6 @@ var vm=new Moon({
 				isLoad:true
 			});
 		},
-		shiftPrestore:function(e){
-			vm.set('off.prestore',parseInt(e.target.title));
-			vm.callMethod('siblingC',[e.target]);
-		},
 		siblingC:function(e){//同级元素，class切换
 			var parent=e.parentNode;
 			for(var i=0;i<parent.childNodes.length;i++){
@@ -186,6 +214,11 @@ var vm=new Moon({
 		},
 	}
 });
-
+window.shiftSelPackage=function(e){
+	vm.callMethod("shiftSelPackage",[e]);
+};
+window.shiftPrestore=function(e){
+	vm.callMethod("shiftPrestore",[e]);
+};
 
 });

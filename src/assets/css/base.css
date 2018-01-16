@@ -48,8 +48,8 @@ body {
 }
 #app{
     font-size: .13rem;
-    transition: opacity ease 1.5s;
-    -webkit-transition: opacity ease 1.5s;
+    transition: opacity ease 1s;
+    -webkit-transition: opacity ease 1s;
 }
 input,
 textarea {

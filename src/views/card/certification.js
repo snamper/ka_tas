@@ -63,7 +63,8 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			setTimeout(function(){
-				let windowWidth=document.documentElement.clientWidth,photoHeight=(windowWidth/2-20)*0.602;
+				let windowWidth=document.documentElement.clientWidth||window.innerWidth||document.body.clientwidth,
+				photoHeight=(windowWidth/2-20)*0.602;
 				document.getElementById("photo-front").style.height=photoHeight+"px";
 				document.getElementById("photo-back").style.height=photoHeight+"px";
 
@@ -93,7 +94,7 @@ var vm=new Moon({
 	methods:{
 		initSignaturePad:function(){//初始化签名面板
 			var signatureDom=document.getElementById('signature'),//canvas dom对象
-			window_h=document.documentElement.clientHeight,//视图高度
+			window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight,//视图高度
 			ratio=Math.max(window.devicePixelRatio || 1, 1);//DPR
 			signatureDom.height=(window_h-107-100)*ratio;
 

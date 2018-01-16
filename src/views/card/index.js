@@ -3,7 +3,6 @@ require('../../assets/css/index.css');
 
 Jsborya.ready(function(){
 
-
 var vm=new Moon({
 	el:'#app',
 	data:{
@@ -33,7 +32,8 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			setTimeout(function(){
-				const window_h=document.documentElement.clientHeight;
+				const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
+				//alert('windowHeight:'+window_h);
 				document.getElementById("cardBox").style.height=window_h-173+'px';
 			},100);
 			
@@ -44,21 +44,6 @@ var vm=new Moon({
 			vm.removeStore('ORDER_INFO');
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
-				let deviceIcon='';
-				userInfo.iccid==='000000000000' ? deviceIcon='card_red' : deviceIcon='card_green';
-				Jsborya.setHeader({
-					title:'号码搜索',
-					left:{
-						icon:'back_black',
-						value:'返回',
-						callback:''
-					},
-					right:{
-						icon:deviceIcon,
-						value:'',
-						callback:'headerRightClick'
-					}
-				});
 				Jsborya.registerMethods('headerRightClick',function(){
 					Jsborya.pageJump({
 						url:"simInfo.html",
@@ -106,11 +91,11 @@ var vm=new Moon({
 			}
 		},
 		inputSearchClick:function(){//搜索按钮点击
-			if(!vm.get('inputValue')){
+			if(!vm.get('inputValue')&&!vm.get('selectLabel').type){
 				layer.open({
-                    content:'请输入搜索条件',
+                    content:'请输入或选择搜索条件',
                     skin: "msg",
-                    time: 3
+                    time: 2
                 });
                 return false;
 			}
@@ -143,7 +128,7 @@ var vm=new Moon({
 			}
 			vm.callMethod('closeMoreLabel');
 			const top=dom.getBoundingClientRect().top,dom_moreLabel=document.getElementById('m-more-label');
-			const window_h=document.documentElement.clientHeight;
+			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 			dom_moreLabel.style.height=window_h-(top+27)+'px';
 			dom_moreLabel.style.top=(top+27)+'px';
 		},
@@ -205,10 +190,28 @@ var vm=new Moon({
 	  			userInfo:vm.get('userInfo')
 	  		};
 			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
+				let deviceIcon='card_green';
 				if(data.data.status==2){
 					vm.set('off.showOrderMsg',true);
 					vm.setStore('ORDER_INFO',data.data.orderInfo);
+				}else if(data.data.status==4){
+					deviceIcon='card_red';
 				}
+				Jsborya.setHeader({
+					title:'号码搜索',
+					frontColor:'#000000',
+	                backgroundColor:'#F6F7F9',
+					left:{
+						icon:'back_black',
+						value:'返回',
+						callback:''
+					},
+					right:{
+						icon:deviceIcon,
+						value:'',
+						callback:'headerRightClick'
+					}
+				});
 			});
 		},
 		getCardList:function(page,closeLoad){//获取数据
@@ -225,24 +228,24 @@ var vm=new Moon({
 	  		vm.set('off.showFirstLabel',false);
 	  		vm.set('off.showNoMore',false);
 			vm.AJAX('../../../tas/w/source/phoneList',json,function(data){
-				vm.set('off.showPullLoad',false);
-				if(closeLoad){
+				vm.set('page',json.params.page);
+				if(closeLoad){//上拉
+					vm.set('off.showPullLoad',false);
 					vm.set('cardData.list',vm.get('cardData').list.concat(data.data.list));
 				}else{
+					document.getElementById("cardBox").scrollTop=0;
 					vm.set('cardData',data.data);
 				}
-				
 				if(data.data.list.length==0)vm.set('off.showNoMore',true);
 			},closeLoad);
 		},
 		pullLoad:function(e){//上拉执行
+			var vm=this;
 			e.preventDefault();
 	    	let page=vm.get('page'),obj=document.getElementById('cardBox');
-
 	    	if(!vm.get('off').showPullLoad&&!vm.get('off').showNoMore&&obj.scrollHeight<=(obj.scrollTop+obj.offsetHeight)){
 	    		page++;
 	    		vm.set('off.showPullLoad',true);
-	    		vm.set('page',page);
 	    		vm.callMethod('getCardList',[page,true]);
 	    	}
 		},
@@ -263,11 +266,11 @@ var vm=new Moon({
 			   tmpNode.appendChild(node.cloneNode(true));  
 			   var str=tmpNode.innerHTML;  
 			   tmpNode=node=null;
-			   return str;  
+			   return str;
 			};
 			var keyWordStartIndex=-1;
-		    if (number.indexOf(keyWord)>0){
-		        keyWordStartIndex=number.indexOf(keyWord);
+		    if (number.lastIndexOf(keyWord)>-1){
+		        keyWordStartIndex=number.lastIndexOf(keyWord);
 		    }
 
 		    var keyWordEndIndex=keyWordStartIndex+keyWord.length;
@@ -290,6 +293,5 @@ var vm=new Moon({
 		}
 	}
 });
-
 
 });

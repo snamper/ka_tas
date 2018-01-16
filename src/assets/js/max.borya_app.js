@@ -44,6 +44,7 @@ require('./base64.js');
 	}
 	a.Jsborya={
 		ready:function(cb){
+			//cb();
 			connect(function(bridge) {
 			    bridge.init(function(message, responseCallback) {
 			        console.log('connect success ！', message);
@@ -70,11 +71,11 @@ require('./base64.js');
 			// cb({
 			// 	"imsi":"460110502674386",
 			// 	"smsp":"",
-			// 	"applicationID":"TF-1515485499208-101638986",
-			// 	"iccid":"89860316940286781726",
+			// 	"applicationID":"TF-1516003054260-48440280",
+			// 	"iccid":"89860117841022194607",
 			// 	"packageName":"com.yuantel.common.lite",
-			// 	"timestamp":"1515485664316",
-			// 	"token":"YQ5B/3HFzmnc5HlFOwMli/Zw1ypzAai0aWhJdC1GSsaYpMrJX29Hv2ocCxlCQX2DinEsud7LVW4S7gLmZL3dgL9P0k9lLvKFm5wvr4E+8GM="
+			// 	"timestamp":"1516073570172",
+			// 	"token":"TmCyVptvK/vLl5onWkaZWAEf6hMKr+B36pfuwNDyiqjQWnrrljC497otIEF65zwmahMO1bl5hF0rkIBbXrsiMoMP7aGZS14Pk7DsTnAXWTg="
 			// });
 			callHandler({
 				name:'getGuestInfo',
@@ -162,7 +163,7 @@ require('./base64.js');
 			// setTimeout(function(){
 			// 	cb({
 			// 		'status':'1',
-			// 		'iccid':'89860316940286781726',
+			// 		'iccid':'89860117841022194607',
 			// 	});
 			// },3000);
 			callHandler({
@@ -186,7 +187,6 @@ require('./base64.js');
 			// 		'imsi':'460110502674386',
 			// 	});
 			// },3000);
-			
 			callHandler({
 				name:'readCardIMSI',
 				data:'',
@@ -217,7 +217,6 @@ require('./base64.js');
 					console.log('success');
 				}
 			});
-
 		},
 		httpRequest:function(json){
 			// setTimeout(function(){

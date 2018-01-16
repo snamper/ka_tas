@@ -164,8 +164,16 @@ var vm=new Moon({
 				complete:function(data){
 					alert(JSON.stringify(data));
 					if(data.status==1){
-						vm.set('faceConfirmInfo.livingId',data.livingId);
-						vm.callMethod('beginGetResult');
+						// vm.set('faceConfirmInfo.livingId',data.livingId);
+						// vm.callMethod('beginGetResult');
+
+						var limitSimilarity=parseFloat(vm.get('orderInfo').limitSimilarity),
+						similarity=parseFloat(data.similarity);
+						if(limitSimilarity<=similarity){
+							vm.set('off.isPass',true);
+						}
+						vm.set('faceConfirmInfo.similarity',similarity);
+						vm.set('off.isFace',true);
 					}else{
 						//失败
 						vm.set('off.isFace',false);
@@ -173,77 +181,77 @@ var vm=new Moon({
 				}
 			});
 		},
-		beginGetResult:function(){
-			var index=0;
-			index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
-			vm.set('off.layerIndex',index);
+		// beginGetResult:function(){
+		// 	var index=0;
+		// 	index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
+		// 	vm.set('off.layerIndex',index);
 
-			window.Timer=setInterval(function(){
-				var counter=vm.get('off').counter;
-				if(counter>60){
-					clearInterval(window.Timer);
-					layer.close(index);
-					vm.set('off.counter',0);
+		// 	window.Timer=setInterval(function(){
+		// 		var counter=vm.get('off').counter;
+		// 		if(counter>60){
+		// 			clearInterval(window.Timer);
+		// 			layer.close(index);
+		// 			vm.set('off.counter',0);
 
-					setTimeout(function(){
-						layer.open({
-							title:'验证超时',
-							content:'获取服务器响应超时，您可以重新查询识别结果。',
-							btn:['重新查询','取消'],
-							yes:function(){
-								layer.closeAll();
-								vm.callMethod('beginGetResult');
-							}
-						});
-					},2000)
+		// 			setTimeout(function(){
+		// 				layer.open({
+		// 					title:'验证超时',
+		// 					content:'获取服务器响应超时，您可以重新查询识别结果。',
+		// 					btn:['重新查询','取消'],
+		// 					yes:function(){
+		// 						layer.closeAll();
+		// 						vm.callMethod('beginGetResult');
+		// 					}
+		// 				});
+		// 			},2000)
 					
-				}else{
-					counter++;
-					vm.set('off.counter',counter);
-				}
-			},1000);
-			vm.callMethod('getFaceVerificationResult');
-		},
-		getFaceVerificationResult:function(){
-			vm.AJAX('../../../tas/w/business/livingResult',{
-				userInfo:vm.get('userInfo'),
-				params:{
-					sysOrderId:vm.get('orderInfo').sysOrderId,
-					livingId:vm.get('faceConfirmInfo').livingId
-				}
-			},function(data){
-				clearInterval(window.Timer);
-				layer.close(vm.get('off').layerIndex);
-				vm.set('off.counter',0);
+		// 		}else{
+		// 			counter++;
+		// 			vm.set('off.counter',counter);
+		// 		}
+		// 	},1000);
+		// 	vm.callMethod('getFaceVerificationResult');
+		// },
+		// getFaceVerificationResult:function(){
+		// 	vm.AJAX('../../../tas/w/business/livingResult',{
+		// 		userInfo:vm.get('userInfo'),
+		// 		params:{
+		// 			sysOrderId:vm.get('orderInfo').sysOrderId,
+		// 			livingId:vm.get('faceConfirmInfo').livingId
+		// 		}
+		// 	},function(data){
+		// 		clearInterval(window.Timer);
+		// 		layer.close(vm.get('off').layerIndex);
+		// 		vm.set('off.counter',0);
 				
-				if(data.data.state==1){
-					vm.set('faceConfirmInfo.similarity',data.data.similarity);
-					vm.set('off.isFace',true);
-					var limitSimilarity=parseFloat(vm.get('orderInfo').limitSimilarity),
-					similarity=parseFloat(data.data.similarity);
-					if(limitSimilarity<=similarity){
-						vm.set('off.isPass',true);
-					}
+		// 		if(data.data.state==1){
+		// 			vm.set('faceConfirmInfo.similarity',data.data.similarity);
+		// 			vm.set('off.isFace',true);
+		// 			var limitSimilarity=parseFloat(vm.get('orderInfo').limitSimilarity),
+		// 			similarity=parseFloat(data.data.similarity);
+		// 			if(limitSimilarity<=similarity){
+		// 				vm.set('off.isPass',true);
+		// 			}
 
-				}else if(data.data.state==2){		
-					layer.open({
-                        content:'订单超时已关闭',
-                        btn:['返回选号'],
-                        shadeClose:false,
-                        title:'提示',
-                        yes:function(){
-                            vm.toIndexPage();
-                        }
-                    });
+		// 		}else if(data.data.state==2){		
+		// 			layer.open({
+  //                       content:'订单超时已关闭',
+  //                       btn:['返回选号'],
+  //                       shadeClose:false,
+  //                       title:'提示',
+  //                       yes:function(){
+  //                           vm.toIndexPage();
+  //                       }
+  //                   });
 					
-				}else{
-					vm.callMethod('getFaceVerificationResult');
-				}
-			},function(){
+		// 		}else{
+		// 			vm.callMethod('getFaceVerificationResult');
+		// 		}
+		// 	},function(){
 
-			});
+		// 	});
 
-		},
+		// },
 		pay:function(){//去支付
 			var vm=this,payType=vm.get('off').payType;
 			if(vm.get('off').load)return false;

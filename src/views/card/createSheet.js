@@ -47,7 +47,7 @@ var app=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			
 			setTimeout(function(){
-				var window_h=document.documentElement.clientHeight;//视图高度
+				var window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;//视图高度
 				document.getElementById("slider-box").style.height=window_h-105+"px";//设置轮播盒子高度
 
 				let orderInfo=vm.getStore('ORDER_INFO');
