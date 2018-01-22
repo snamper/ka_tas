@@ -14,11 +14,12 @@
 body{
 	padding-bottom: 0.3rem;
 }
+
 </style>
 </head>
 <body>
 <div id="app" m-mask>
-	<section class="m-all-tag" style="padding-bottom: 0.1rem">
+	<section class="m-all-tag" style="padding-bottom: 0.1rem;">
 		<div class="tag"><b class="purple">{{ packageInfo.title }}</b></div>
 		<div class="details f-scroll">
 			<div class="details-header">套餐标准</div>
@@ -92,7 +93,7 @@ body{
 				m-for="todo,index in packageInfo.prestoreMoneyList"
 				m-literal:class="{active:todo.init==1,active2:todo.init==2}"
 				m-literal:title="index"
-				m-on:click="shiftPrestore">{{ mathCentToYuan(todo.prestoreMoney) }}</li>
+				m-on:click="shiftPrestore">{{ mathCentToYuan(todo.prestoreMoney) }}元</li>
 		</ul>
 	</section>
 	<div m-on:click="makeSure" class="btn btny">确定</div>

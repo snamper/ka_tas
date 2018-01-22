@@ -24,20 +24,22 @@ body{
     margin:auto;
 	padding-bottom:0.3rem;
 }
+.o-sheet{}
+.o-sheet>a{
+    text-align: center;
+}
 </style>
 </head>
 <body>
 	<div id="app" m-mask>
 		<section id="slider-box">
-			<div class="m-slider-box" m-show="sheetImg.length">
+			<div class="m-slider-box" m-show="orderInfo.images.length">
 				<div class="m-slider-wrapper o-sheet">
-					<a class="slider" m-for="todo in sheetImg" m-literal:href="todo.imageName"><img class="imgItem" m-literal:src="todo.imageName" alt=""></a>
+					<a class="slider" m-for="todo in orderInfo.images" m-literal:href="todo.imageName"><img class="imgItem" m-literal:src="todo.imageName" m-literal:style="setImgHeight()"></a>
 				</div>
-				<div class="m-slider-pagination">
-					
-				</div>
+				<div class="m-slider-pagination"></div>
 			</div>
-			<div style="background-color: #fff;height:100%;" m-show="!sheetImg.length"></div>
+			<div style="background-color: #fff;height:100%;" m-show="!orderInfo.images.length"></div>
 		</section>
 		<div href="javascript:void(0)" m-on:click="submitSheet" class="btny btn">提交受理单</div>
 	</div>

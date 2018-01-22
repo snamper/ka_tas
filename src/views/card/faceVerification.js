@@ -84,7 +84,7 @@ var vm=new Moon({
 	},
 	methods:{
 		payComplete:function(status){//支付完成
-			alert(status)
+			//alert(status)
 			vm.set('off.load',false);
 			if(status==1){//支付成功
 				const json={
@@ -161,8 +161,9 @@ var vm=new Moon({
 			Jsborya.faceVerification({
 				name:vm.get('orderInfo').idCardName,
 				number:vm.get('orderInfo').idCardNo,
+				sysOrderId:vm.get('orderInfo').sysOrderId,
 				complete:function(data){
-					alert(JSON.stringify(data));
+					//alert(JSON.stringify(data));
 					if(data.status==1){
 						// vm.set('faceConfirmInfo.livingId',data.livingId);
 						// vm.callMethod('beginGetResult');
@@ -264,7 +265,7 @@ var vm=new Moon({
 				}
 			},function(data){
 				vm.set('off.load',1);
-				alert(JSON.stringify(data));
+				//alert(JSON.stringify(data));
 				Jsborya.pageJump({
 					url:'',
 					stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
@@ -276,7 +277,7 @@ var vm=new Moon({
                         backgroundColor:'#4b3887',
                     }
 				});		
-			},false,function(){
+			},true,function(){
 				vm.set('off.load',false);
 			});
 		},

@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>写卡卡</title>
+<title>写卡</title>
 <style type="text/css">
 [m-mask]{
 	opacity: 0
@@ -26,7 +26,7 @@
 				<div class="title">3.订单审核</div>
 			</li>
 			<li class="active">
-				<div class="title">4.开卡申请</div>
+				<div class="title">4.写卡</div>
 			</li>
 			<li>
 				<div class="title">5.开卡受理</div>
@@ -39,15 +39,6 @@
 			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
 			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
-		<ul class="m-order-info clr grey">
-			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
-			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
-			<li>
-				<span class="left">所选号码:</span>
-				<b class="purple">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
-				<span>[{{orderInfo.cityName}}]</span>
-			</li>
-		</ul>
 		<section>
 			<div class="device-box">
 				<div class="state">
@@ -57,7 +48,10 @@
 				<div class="bg">
 					<img style="width: 70%" src="../../assets/img/phone_sim.png">
 				</div>
-				<div class="tips">*请把号卡插入设备侧面卡槽中<br/>然后点击“提交开卡申请”</div>
+				<div class="tips">
+					<span m-show="!off.msg">*请把号卡插入手机侧面卡槽中</span>
+					<span class="red" m-show="off.msg">{{off.msg}}</span>
+				</div>
 			</div>
 		</section>
 		<section class="m-all-tag">
@@ -79,10 +73,8 @@
 				<li class="set" m-show="imsiSubstr"><span class="left">IMSI:</span>{{imsiSubstr}}</li>
 			</ul>
 		</section>
-		<div class="m-msg">
-			<b class="red" m-show="off.msg">{{off.msg}}</b>
-		</div>
-		<div m-on:click="submitOrder" m-show="off.submitLoad" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">
+		
+		<div m-on:click="callWriteCard" m-show="off.submitLoad" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">
 			<i m-show="off.submitLoad==1">提交开卡申请</i>
 			<i m-show="off.submitLoad==2">开卡申请中，请稍后</i>
 			<b m-show="off.submitLoad==2"></b>

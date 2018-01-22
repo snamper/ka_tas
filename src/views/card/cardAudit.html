@@ -26,7 +26,7 @@
 				<div class="title">3.订单审核</div>
 			</li>
 			<li>
-				<div class="title">4.开卡申请</div>
+				<div class="title">4.写卡</div>
 			</li>
 			<li>
 				<div class="title">5.开卡受理</div>
@@ -44,7 +44,7 @@
 			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
 			<li>
 				<span class="left">所选号码:</span>
-				<b class="purple">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
 				<span>[{{orderInfo.cityName}}]</span>
 			</li>
 		</ul>
@@ -56,19 +56,22 @@
 				<div class="loaded" m-if="off.step==2"></div>
 			</div>
 			<div class="step-text">
-				<h3 class="yellow" m-if="off.step==1">订单正在审核，请耐心等待</h3>
+				<h3 class="yellow" m-if="off.step==1">我们正在马不停蹄的为您办理业务<br>请耐心等待</h3>
 				<div m-if="off.step==2">
-					<h3 class="green">人工审核已通过</h3>
+					<h3 class="green">审核成功了~!</h3>
 				</div>
 				<div m-if="off.step==3">
-					<img src="../../assets/img/error2.png">
-					<h3 class="red">审核未通过</h3>
+					<img src="../../assets/img/icon_failure.png">
+					<h3 class="red">{{errorMsg}}</h3>
 					<div class="m-reason f-tal" m-html="auditReason"></div>
 				</div>
 			</div>
 		</section>
 		
-		<div m-on:click="createSheet" m-literal:class="{btny:off.step==2,btn:true,btnDefault:true}">生成受理单</div>
+		<div m-on:click="createSheet" m-literal:class="{btny:off.step!=1,btn:true,btnDefault:true}">
+			<span m-show="off.step!=3">生成受理单</span>
+			<span m-show="off.step==3">返回首页</span>
+		</div>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
 </body>

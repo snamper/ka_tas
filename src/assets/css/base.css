@@ -40,7 +40,7 @@ body {
     margin: auto;
     width: 100%;
     font-family: Helvetica Neue, sans-serif;
-    background: #F6F7F9;
+    background: #F8F8F8;
     font-size: .13rem;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
@@ -48,8 +48,8 @@ body {
 }
 #app{
     font-size: .13rem;
-    transition: opacity ease 1s;
-    -webkit-transition: opacity ease 1s;
+    transition: opacity ease 0.6s;
+    -webkit-transition: opacity ease 0.6s;
 }
 input,
 textarea {
@@ -66,7 +66,7 @@ textarea {
     /*2ecc71*/
 }
 .yellow {
-    color: #ffc333!important
+    color: #eb7a00!important
 }
 .purple {
     color: #4b3887!important
@@ -84,8 +84,8 @@ textarea {
     text-align: center;
     border:1px solid transparent;
     margin-top: 0.3rem;
-    padding: 0.1rem 0;
-    border-radius: 7px;
+    padding:11px 0 9px 0;
+    border-radius: 20px;
     transition: all .05s ease-out;
     -webkit-transition: all .05s ease-in-out;
 }
@@ -103,10 +103,9 @@ textarea {
     color: #fff;
 }
 .bgy {
-    background: #ffc333;
+    background: #eb7a00;
     color: #fff;
 }
-
 .btnDefault{
     color: #ACA9A9;
     background-color: #FFF;
@@ -118,11 +117,11 @@ textarea {
     border-color: #CECECE
 }
 .btny{
-    border-color: #ffc333!important;
-    color: #ffc333;
+    border-color: #eb7a00!important;
+    color: #eb7a00;
 }
 .btny:active{
-    background-color: #ffc333;
+    background-color: #eb7a00;
     color: #fff
 }
 .btnp{
@@ -141,7 +140,9 @@ textarea {
     background-color: #10CD6E;
     color: #fff
 }
-
+.btny.btnDefault{
+    background-color:transparent;
+}
 
 .clr:after {
     content: '';
@@ -156,9 +157,13 @@ textarea {
 }
 .f-scroll {
     overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
 }
 .f-tal{
     text-align: left !important;
+}
+.f-fts-18{
+    font-size: 0.18rem;
 }
 .u-mask{
     position: absolute;
@@ -170,20 +175,21 @@ textarea {
 }
 /*icon*/
 .u-icon-pretty{background-image: url(../img/sprite_icons.png);}
+.u-icon-tag{background-image: url(../img/shiming_title_icon.png);}
+.u-icon-cancel{background-image: url(../img/cancel.png);}
 /*layer-loading*/
 .m-loading-ka{
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.5rem;
+    height: 0.5rem;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    background-color: hsla(0, 0%, 100%, 0.5);
+    background-color: hsla(0, 0%, 100%, 0.6);
     
     border-radius: 7px;
-    -webkit-border-radius: 7px;
     background-image: url(../img/loading.svg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 0.3rem;
+    background-size: 0.25rem;
 }
 
 /*时间轴*/
@@ -226,9 +232,9 @@ textarea {
 .m-time-axis>.passed>.title{color: #000;}
 .m-time-axis-sub>.passed>.sub-line>b{background-color:#000 !important;}
 .m-time-axis-sub>.passed>.sub-line>span{border-color:#000 !important;}
-.m-time-axis>.active>.title{color: #ffc333;}
-.m-time-axis-sub>.active>.sub-line>b{background-color:#ffc333 !important;}
-.m-time-axis-sub>.active>.sub-line>span{border-color:#ffc333 !important;/*#6c71c4*/}
+.m-time-axis>.active>.title{color: #eb7a00;}
+.m-time-axis-sub>.active>.sub-line>b{background-color:#eb7a00 !important;}
+.m-time-axis-sub>.active>.sub-line>span{border-color:#eb7a00 !important;/*#6c71c4*/}
 
 @media screen and (max-width: 340px){
     .m-time-axis>li>.title{font-size: 0.1rem;}
@@ -250,16 +256,28 @@ textarea {
 .m-all-tag>.tag{
     margin-left: 0.2rem;
     margin-bottom: 0.1rem;
-    padding:0.1rem 0;
+    padding:8px 0 6px 0;
     padding-right: 0.1rem;
     border-bottom: 1px solid #EEEFF2;
+    position: relative;
+}
+.m-all-tag>.tag>.u-icon-tag{
+    position: absolute;
+    display: inline-block;
+    width: 0.15rem;
+    height: 0.15rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0.13rem;
+    top: 9px;
+    left: -0.17rem;
 }
 .m-order-info{
     background-color: #fff;
-    padding: 5px 0;
+    padding-top: 5px;
 }
 .m-order-info>li{
-    margin: 0.1rem;
+    margin:5px 0.1rem;
 }
 .m-order-info>.double-border{
     margin:0 0.1rem;
@@ -278,13 +296,14 @@ textarea {
 }
 .m-order-info>li>.left{
     margin-right: 5px;
+    font-size: 0.12rem;
 }
 .m-order-info>li>.right{
     text-align: right;
 }
 .m-order-info>.border{
      border-bottom:1px solid #EEEFF2;
-     padding-bottom: 0.1rem;
+     padding-bottom: 8px;
 }
 .m-order-info>li>.f-btn{
     color: #656565;

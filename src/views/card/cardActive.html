@@ -12,8 +12,9 @@
 	opacity: 0
 }
 .order-tips{text-align: center;margin-top: 0.3rem;margin-bottom:0.2rem;}
-.order-tips img{width: 0.7rem;}
-.order-tips>.dp>b{font-size: 0.18rem;padding: 0.1rem 0;display: inline-block;font-weight: bold;}
+.order-tips .success{width: 0.7rem;}
+.order-tips .error{width: 1.5rem;}
+.order-tips>.dp>b{font-size: 0.16rem;padding: 0.1rem 0;display: inline-block;font-weight: bold;}
 .order-tips>.tips{
 	width: 90%;
 	margin:auto;
@@ -28,8 +29,8 @@
 .pay-load{}
 .pay-load>b{
     display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     border-radius: 100%;
     background-color:#10CD6E;
     -webkit-animation: pay-loading 1.4s infinite ease-in-out;
@@ -79,8 +80,8 @@
 	border-radius: 20px;
 	padding:5px 0;
 	border:1px solid transparent;
-	border-color: #424242;
-	color:#424242 ;
+	border-color: #4b3887;
+	color:#4b3887 ;
 }
 </style>
 </head>
@@ -97,7 +98,7 @@
 				<div class="title">3.订单审核</div>
 			</li>
 			<li>
-				<div class="title">4.开卡申请</div>
+				<div class="title">4.写卡</div>
 			</li>
 			<li class="active">
 				<div class="title">5.开卡受理</div>
@@ -113,20 +114,23 @@
 		<section>
 			<div class="order-tips">
 				<div>
-					<img m-show="off.load!=3" src="../../assets/img/icon_suc_a.png">
-					<img m-show="off.load==3" src="../../assets/img/error2.png">
+					<img class="success" m-show="off.load!=3" src="../../assets/img/icon_suc_a.png">
+					<img class="error" m-show="off.load==3" src="../../assets/img/icon_failure.png">
 				</div>
 				<div class="dp">
 					<b class="green" m-show="off.load==1">开卡申请已受理，请等待开卡结果</b>
 					<b class="green" m-show="off.load==2">开卡成功！该卡已可正常使用</b>
-					<b class="red" m-show="off.load==3">开卡失败</b>
+					<b class="red" m-show="off.load==3">
+						<span m-show="orderStatus==3">开卡失败</span>
+						<span m-show="orderStatus==4">订单已关闭</span>
+					</b>
 				</div>
 				<div m-show="off.load==1"><span class="pay-load">
 					<b class="f1"></b>
 					<b class="f2"></b>
 					<b></b>
 				</span></div>
-				<a class="btn-back-home btnScale" m-on:click="jump" m-show="off.load!=1">返回号板</a>
+				<a class="btn-back-home btnScale" m-on:click="jump" m-show="off.load!=1">返回选号</a>
 				<dl class="tips f-tal grey" m-show="off.load==3">
 					<dt>温馨提示</dt>
 					<dd>1、该号卡板已不可再使用。</dd>
@@ -139,16 +143,16 @@
 			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
 			<li>
 				<span class="left">所选号码:</span>
-				<b class="purple">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
 				<span>[{{orderInfo.cityName}}]</span>
 			</li>
 			<li class="double-border"></li>
-			<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(orderInfo.cardMoney)}}</span></li>
-			<li class="border">
+			<li class="clr"><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(orderInfo.cardMoney)}}</span></li>
+			<li class="clr">
 				<span class="left">+含预存话费</span>
 				<span class="fr right">￥{{mathCentToYuan(orderInfo.prestoreMoney)}}</span>
 			</li>
-			<li><span class="fr right black">总价:<b class="red font-big">￥{{mathCentToYuan(orderInfo.totalMoney)}}</b></span></li>
+			<li class="clr"><span class="fr right black">总价:<b class="red font-big">￥{{mathCentToYuan(orderInfo.totalMoney)}}</b></span></li>
 		</ul>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

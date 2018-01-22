@@ -1,4 +1,5 @@
 .u-icon-right{background-image:url(../img/icon-right.png);}
+.u-icon-shift{background-image:url(../img/shift.png);}
 
 .m-recommend-ul{
     padding-bottom: 0.1rem;
@@ -7,7 +8,7 @@
     width: 22%;
     margin:0 1.5%;
     float: left;
-    padding:5px 0;
+    padding:8px 0 6px 0;
     border:1px solid transparent;
     background-color: #fff;
     text-align:center;
@@ -31,21 +32,30 @@
 }
 
 .u-icon-right{
-    padding: 0.1rem;
+    display: inline-block;
+    width: 0.15rem;
+    height: 0.15rem;
+    vertical-align: middle;
+    position: relative;
+    top: 1px;
     background-position: center;
     background-size: 0.15rem;
     background-repeat: no-repeat;
 }
 
-/*.m-btn-double{
-    margin:auto 0.1rem;
+.btn-c-package{}
+.btn-c-package>.u-icon-shift{
+    display: inline-block;
+    width: 0.15rem;
+    height: 0.15rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    margin-right: 3px;
+    background-position: center;
+    background-size: 0.15rem;
+    background-repeat: no-repeat;
 }
-.m-btn-double>.btnp{
-    margin-right: 2%;
-}
-.m-btn-double>.btn{
-    width: 49%;
-}*/
 
 .pay-load{}
 .pay-load>b{
@@ -53,7 +63,7 @@
     width: 10px;
     height: 10px;
     border-radius: 100%;
-    background-color:#ffc333;
+    background-color:#eb7a00;
     -webkit-animation: pay-loading 1.4s infinite ease-in-out;
     animation: pay-loading 1.4s infinite ease-in-out;
     -webkit-animation-fill-mode: both;

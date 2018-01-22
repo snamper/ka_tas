@@ -98,8 +98,8 @@ require('./base64.js');
 		},
 		pageJump:function(json){//页面跳转
 			json.url.indexOf("http")===-1 ? json.url=URL+json.url : void 0;
-			//window.location.href=json.url;
 			if(!json.hasOwnProperty('destroyed'))json.destroyed=true;//默认是销毁当前视图
+			//window.location.href=json.url;
 			callHandler({
 				name:'pageJump',
 				data:json,

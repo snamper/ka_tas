@@ -15,9 +15,9 @@
 </head>
 <body>
 <div id="app" m-mask>
-	<section class="f-mlr-10">
-		<div class="m-msg bgy" m-show="off.showOrderMsg" m-on:click="toOrderDetails">您当前有未完成的订单，点击查看详情>></div>
-		<div class="m-search f-mt-20">
+	<section class="f-mlr-20">
+		<div class="m-msg yellow" m-show="off.showOrderMsg" m-on:click="toOrderDetails">您当前有未完成的订单，点击查看详情>></div>
+		<div class="m-search">
 			<div class="m-hd">
 				<b>随心搜</b>
 				<span class="text" m-on:click="cityClick"><i class="u-icon-location"></i>{{ selectCity.cityName }}</span>
@@ -31,37 +31,24 @@
 				/>
 				<span class="u-icon-cancel" m-on:click="inputClearClick" m-show="inputValue.length"></span>
 				<span class="u-icon-search" m-on:click="inputSearchClick"></span>
-				<span class="m-slt-lb" m-show="selectLabel" m-on:click="clearSelectLabel">{{ selectLabel.name }}<i class="u-icon-clear"></i></span>
+				
 			</div>
 		</div>
 	</section>
-	<section m-show="off.showFirstLabel" class="f-mt-20 f-mlr-10">
+	<section id="hotLabel" m-show="off.showFirstLabel" class="f-mt-20 f-mlr-20">
 		<ul class="m-hot-label">
 			<li
 			m-for="item,index in hotLabel"
-			m-literal:style="getColor()"
 			m-literal:title="index"
 			m-on:click="labelClick">{{ item.name }}</li>
 		</ul>
 		<!-- <span class="btn-openmore">展开<i class="u-icon-openmore"></i></span> -->
 	</section>
-	<section m-show="!off.showFirstLabel">
-		<div class="m-search-label">
-			<span id="btn-more-label"
-				m-literal:class="{active:off.showMoreLabel}"
-				m-on:click="moreLabelClick">更多标签<i class="u-icon-tagdown"></i>
-			</span>
-			<div id="m-more-label" m-literal:class="{active:off.showMoreLabel}">
-				<ul class="m-hot-label f-scroll">
-					<li
-					m-for="item,index in hotLabel"
-					m-literal:title="index"
-					m-literal:style="getColor()"
-					m-on:click="moreLabelSelect">{{ item.name }}</li>
-				</ul>
-				<div class="u-mask" m-on:touchmove.prevent m-on:click="closeMoreLabel"></div>
-			</div>
+	<section m-show="!off.showFirstLabel" class="f-mlr-20">
+		<div class="m-search-label" m-show="selectLabel.name">
+			<span class="m-slt-lb" m-on:click="clearSelectLabel">{{ selectLabel.name }}<i class="u-icon-clear"></i></span>
 		</div>
+		<div class="m-search-tag grey">搜索结果</div>
 		<div id="cardBox" class="f-scroll" m-on:scroll="pullLoad">
 			<ul class="m-card-ul f-mlr-10">
 				<li m-for="todo,index in cardData.list" m-on:click="toPackage(index)">

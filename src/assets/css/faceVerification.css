@@ -52,14 +52,6 @@
     line-height: 1.65;
 }
 
-.tipsBox{
-    /*transform: translate3d(0,0,0);
-    transition: transform .3s ease-in-out;*/
-}
-.dActive{
-    /*transform: translate3d(0,100%,0);*/
-}
-
 .m-pay-choose{padding-left: 0.2rem;}
 .m-pay-choose>li:first-child{
     border-bottom: 1px solid #ececec;
@@ -108,14 +100,14 @@
     border-radius: 50%;
     -webkit-border-radius: 50%;
     background-color: #fff;
-    position: relative;cursor: pointer;
+    position: relative;
     display: inline-block;
 }
 .m-form-radio>div>.radio>span:active{
     border-color: #4b3887
 }
 .m-form-radio>div>.radio>span:after{
-    width: 9px;height: 9px;
+    width: 11px;height: 11px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     background-color: #fff;content: "";

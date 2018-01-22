@@ -10,13 +10,13 @@
     margin-bottom: 0.1rem;
 }
 .verification-box>.load>.loading{
-    line-height: 0.55rem;
+    line-height: 0.57rem;
     border-radius: 50%;
     border:2px solid transparent;
-    border-color:#ffc333;
+    border-color:#eb7a00;
 }
 .verification-box>.load>.loaded{
-    background-image: url(../img/icon_suc_a.png);
+    background-image: url(../img/picture_writecard.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size:0.6rem;
@@ -24,9 +24,10 @@
 .step-text{}
 .step-text h3{
     margin:5px 0;
+    font-weight: normal;
 }
 .step-text img{
-    width: 0.7rem;
+    width: 1.5rem;
 }
 .m-reason{
     width: 80%;
@@ -46,7 +47,7 @@
     height: 10px;
     margin-left: 5px;
     display: inline-block;
-    background-color: #ffc333;
+    background-color: #eb7a00;
     border-radius: 100%;
     -webkit-animation: layui-m-anim-loading 1.4s infinite ease-in-out;
     animation: layui-m-anim-loading 1.4s infinite ease-in-out;
@@ -88,12 +89,3 @@
         -webkit-transform: scale(1)
     }
 }
-
-/*顶部订单*/
-@media screen and (max-width: 375px){
-    .m-order>.fl, .m-order>.fr{float: none !important;}
-    .m-order>.fr{display: block;margin-top: 5px;}
-}
-.m-order{color:#666;padding:0 0.1rem;font-size: 0.12rem;}
-.m-order label{display: inline-block;text-align: right;width: 0.55rem;}
-

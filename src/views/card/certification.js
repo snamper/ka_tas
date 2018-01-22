@@ -9,7 +9,7 @@ var vm=new Moon({
 		off:{
 			load:false,
 			isJump:0,
-			signature:true,
+			signature:false,
 			agree:false,
 		},
 		userInfo:'',
@@ -34,9 +34,9 @@ var vm=new Moon({
 	    	'period':'--',
 	    	'devMac':'--',
 	    	'devInfo':'--',
-	    	'livingSoftwareName':'真信'
+	    	'livingSoftwareName':'旷视'
 	    },
-	    uploadType:0,//上传图片类型
+	    uploadType:1,//上传图片类型
 	    imgName:{//上传后返回的图片地址
 	    	a:'',//正面
 	    	b:'',//反面
@@ -61,17 +61,7 @@ var vm=new Moon({
 				}
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
-
-			setTimeout(function(){
-				let windowWidth=document.documentElement.clientWidth||window.innerWidth||document.body.clientwidth,
-				photoHeight=(windowWidth/2-20)*0.602;
-				document.getElementById("photo-front").style.height=photoHeight+"px";
-				document.getElementById("photo-back").style.height=photoHeight+"px";
-
-				vm.callMethod("initSignaturePad");
-			},100);
 			
-
 			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
@@ -88,10 +78,18 @@ var vm=new Moon({
 			}else{
 				alert('本地订单信息丢失');
 			}
-			
+			vm.callMethod('setPage');
 		}
 	},
 	methods:{
+		setPage:function(){
+			let windowWidth=document.documentElement.clientWidth||window.innerWidth||document.body.clientwidth,
+			photoHeight=(windowWidth/2-20)*0.602;
+			document.getElementById("photo-front").style.height=photoHeight+"px";
+			document.getElementById("photo-back").style.height=photoHeight+"px";
+
+			vm.callMethod("initSignaturePad");
+		},
 		initSignaturePad:function(){//初始化签名面板
 			var signatureDom=document.getElementById('signature'),//canvas dom对象
 			window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight,//视图高度
@@ -121,7 +119,6 @@ var vm=new Moon({
 			signatureDom.getContext("2d").scale(ratio, ratio);
 			signaturePad.clear();
 			vm.set('off.signature',false);
-			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 		},
 		takePhotos:function(type){//调用APP接口获取图片
 			Jsborya.takePhotos({
@@ -141,7 +138,7 @@ var vm=new Moon({
 		},
 		uploadImgComplete(data){
 			var index=vm.get('uploadType');
-			if(data.data.imgName){
+			if(data.data&&data.data.imgName){
 				if(index==1){
 					vm.set('imgName.a',data.data.imgName);
 					if(data.data.userName){
@@ -149,15 +146,12 @@ var vm=new Moon({
 						vm.set("idCardInfo.address",data.data.userAddress);
 						vm.set("idCardInfo.number",data.data.iDcard);
 					}else{
-						layer.open({
-		                    content:"身份证识别失败",
-		                    skin: "msg",
-		                    msgSkin:'error',
-		                    time: 3
-		                });
+						document.getElementById("photo-front").style.backgroundImage="";
+						vm.error('身份证识别失败');
 					}
 				}else if(index==2){
 					vm.set('imgName.b',data.data.imgName);
+					vm.set('idCardInfo.period',data.data.period);
 				}else if(index==3){
 					vm.set('imgName.c',data.data.imgName);
 				}else if(index==4){
@@ -165,13 +159,24 @@ var vm=new Moon({
 				}
 				
 				vm.callMethod("checkIsJump");
+			}else if(data.code){
+				vm.error(data);
+				//--清空缩略图
+				if(index==1){
+					document.getElementById("photo-front").style.backgroundImage="";
+				}else if(index==2){
+					document.getElementById("photo-back").style.backgroundImage="";
+				}
 			}else{
-				layer.open({
-                    content:index==1 ? '身份证正面上传失败，请重试' : index==2 ? '身份证反面上传失败，请重试' : index==3 ? '手持照片上传失败，请重试' : '上传手签名照片失败',
-                    skin: "msg",
-                    msgSkin:'error',
-                    time: 4
-                });
+				let msg='异常错误';
+				if(index==1){
+					msg='身份证正面上传失败，请重试';
+				}else if(index==2){
+					msg='身份证正面上传失败，请重试';
+				}else if(index==4){
+					msg='上传手签名照片失败';
+				}
+				vm.error(msg);
 			}
 		},
 		upLoadImgData:function(data,index){//上传图片
@@ -251,7 +256,7 @@ var vm=new Moon({
 					});
 					
 					vm.setStore('ORDER_INFO',orderInfo);
-					alert(JSON.stringify(vm.getStore('ORDER_INFO')));
+					//alert(JSON.stringify(vm.getStore('ORDER_INFO')));
 					Jsborya.pageJump({
 						url:'faceVerification.html',
 						stepCode:999,

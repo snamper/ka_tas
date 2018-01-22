@@ -23,7 +23,8 @@ var vm=new Moon({
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
             "similarity":0,
-        }
+        },
+        orderStatus:'',
 	},
 	hooks:{
 		init:function(){
@@ -71,7 +72,7 @@ var vm=new Moon({
 					}
 				},function(data){
 					var status=data.data.orderStatus;
-
+					vm.set('orderStatus',status);
 					if(status!=1){
 						clearInterval(window.Timer);
 					}
@@ -81,7 +82,6 @@ var vm=new Moon({
 					}else if(status==3){
 						vm.set("off.load",3);
 					}else if(status==4){
-						alert('订单已关闭');
 						vm.set("off.load",3);
 					}
 

@@ -8,9 +8,10 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			status:4,//1、可用卡；2、有未完成订单；3、开卡成功；4、无效卡
+			status:4,//1、可用卡；2、有未完成订单；3、开卡成功；4、无效卡；
 		},
-		simInfo:{
+		deviceStatus:3,//1、读取成功；2、读取失败；3、未插卡
+		userInfo:{
 			iccid:''
 		}
 	},
@@ -32,6 +33,7 @@ var vm=new Moon({
 					callback:''
 				}
 			});
+			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
@@ -46,9 +48,14 @@ var vm=new Moon({
 				layer.close(index);
 				if(data.status==1){
 					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+				}else if(data.status==2){
+					//alert("读取失败");
+				}else if(data.status==3){
+					//alert("未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽");
 				}else{
-					vm.callMethod("filterConnectStatus",[data.status]);
+					alert("异常错误");
 				}
+				vm.set('deviceStatus',data.status);
 			});
 		},
 		iccidCheck:function(imsi,smsp){
@@ -62,16 +69,6 @@ var vm=new Moon({
 			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
 			});
-		},
-		filterConnectStatus:function(status){
-			if(status==2){
-				alert("读取失败");
-			}else if(status==3){
-				alert("未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽");
-			}else{
-				alert("异常错误");
-				return false;
-			}
 		},
 		toIndexPage:function(){
 			vm.toIndexPage();

@@ -17,6 +17,13 @@ body{
 .m-all-tag{
 	margin-top: 0.2rem;
 }
+.other-set{
+	padding: 0 !important;
+}
+.other-set>li{
+	margin-right:0!important;
+	padding-right: 0.1rem;
+}
 </style>
 </head>
 <body>
@@ -32,7 +39,7 @@ body{
 			<div class="title">3.订单审核</div>
 		</li>
 		<li>
-			<div class="title">4.开卡申请</div>
+			<div class="title">4.写卡</div>
 		</li>
 		<li>
 			<div class="title">5.开卡受理</div>
@@ -49,34 +56,38 @@ body{
 	<ul class="m-order-info clr">
 		<li>
 			<span class="left grey">所选号码:</span>
-			<b class="purple">{{ phoneFormat(cardInfo.phone) }}</b>({{cardInfo.cityName}}<b class="yellow" m-show="cardInfo.pretty==1">,靓号</b>)</li>
-		<li class="double-border"></li>
-		<li m-show="selectPackage.packageCode" m-on:click="jumpToPackageDetails" class="border">
-			<span class="left grey">所选套餐:</span>
-			<span>{{ selectPackage.name }}</span>
-			<i class="fr u-icon-right"></i>
-		</li>
-		
-		<li>
-			<span class="left grey">号码占用费</span>
-			<span class="fr right">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
-		</li>
-		<li m-show="selectPackage.packageCode" class="border">
-			<span class="left grey">含预存话费</span>
-			<span class="fr right">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
-		</li>
-		<li m-show="selectPackage.packageCode">
-			<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>
-		</li>
+			<b class="purple f-fts-18">{{ phoneFormat(cardInfo.phone) }}</b>({{cardInfo.cityName}}<b class="yellow" m-show="cardInfo.pretty==1">,靓号</b>)</li>
+<!-- 		<li class="double-border"></li> -->
 	</ul>
-	<section m-show="!selectPackage.packageCode" class="m-all-tag">
-		<div class="tag">套餐选择</div>
-		<ul class="m-recommend-ul clr" id="bagUl">
+	<section class="m-all-tag">
+		<div class="tag clr">
+			<i class="u-icon-tag"></i>
+			<span>套餐选择</span>
+			<span m-show="selectPackage.packageCode" class="btn-c-package fr purple" m-on:click="changePackage"><i class="u-icon-shift"></i>换套餐</span>
+		</div>
+		<ul class="m-order-info other-set clr" m-show="selectPackage.packageCode">
+			<li m-show="selectPackage.packageCode" m-on:click="jumpToPackageDetails" class="border">
+				<span class="left grey">所选套餐:</span>
+				<span>{{ selectPackage.name }}</span>
+				<i class="fr u-icon-right"></i>
+			</li>
+			<li>
+				<span class="left grey">号码占用费</span>
+				<span class="fr right">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
+			</li>
+			<li>
+				<span class="left grey">含预存话费</span>
+				<span class="fr right">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
+			</li>
+			<li class="clr">
+				<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>
+			</li>
+		</ul>
+		<ul m-show="!selectPackage.packageCode" class="m-recommend-ul clr" id="bagUl">
 			<li m-for="todo,index in recommendList" m-on:click="jumpToPackageList(todo.type,todo.name)">{{ todo.name }}</li>
 		</ul>
 	</section>
 	<section m-show="selectPackage.packageCode" class="m-btn-double">
-		<div class="btn btnp" m-on:click="changePackage">更换套餐</div>
 		<div m-on:click="readCardICCID" class="btn btny">
 			<span m-show="!off.load">下一步</span>
 			<span m-show="off.load==1">号卡校验中，请稍候<span class="pay-load">
@@ -84,7 +95,7 @@ body{
 				<b class="f2"></b>
 				<b></b>
 			</span></span>
-			<span m-show="off.load==2">保存信息中<span class="pay-load">
+			<span m-show="off.load==2">保存套餐中<span class="pay-load">
 				<b class="f1"></b>
 				<b class="f2"></b>
 				<b></b>

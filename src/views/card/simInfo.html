@@ -24,7 +24,7 @@
 		<div class="m-card-box">
 			<div class="m-inner-box">
 				<img src="../../assets/img/sim_card.png">
-				<div class="iccid">{{ simInfo.iccid }}</div>
+				<div class="iccid">{{ userInfo.iccid }}</div>
 			</div>
 		</div>
 		
@@ -41,7 +41,9 @@
 	</section>
 	<div class="m-insert-card" m-show="off.status==4">
 		<header class="m-top-msg">
-			<p class="red ftb" m-show="simInfo.iccid">抱歉，当前SIM卡为无效卡！</p>
+			<p class="red ftb" m-show="deviceStatus==1">抱歉，当前SIM卡为无效卡！</p>
+			<p class="red ftb" m-show="deviceStatus==2">读取SIM卡信息失败</p>
+			<p class="red ftb" m-show="deviceStatus==3">未检测到SIM卡插入卡槽</p>
 			<span>请将“远特信时空”SIM卡插入手机卡槽</span>
 		</header>
 		<div class="m-card-box">

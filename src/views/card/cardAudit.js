@@ -24,6 +24,7 @@ var vm=new Moon({
             "prestoreMoney":0,
             "similarity":0,
         },
+        errorMsg:'',
         auditReason:'',
         userInfo:'',
 	},
@@ -54,9 +55,14 @@ var vm=new Moon({
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo.sysOrderId);
 					});
-					window.Timer=setInterval(function(){
-						vm.callMethod('getAuditInfo');
-					},2000);
+					if(orderInfo.orderStatusCode==='CARD_AUDIT'){//已审核通过
+						vm.set('off.step',2);
+						vm.set('off.load',0);
+					}else{
+						window.Timer=setInterval(function(){
+							vm.callMethod('getAuditInfo');
+						},2000);
+					}
 				});
 			}else{
 				alert('本地订单信息丢失');
@@ -87,39 +93,57 @@ var vm=new Moon({
 
 				if(status==5||status==7){
 					vm.set('off.step',2);
-				}else if(status==6){
+				}else if(status==1||status==6){
 					vm.set('off.step',3);
-					var text='<p><span>原因：</span>'+data.data.reason+'</p>';
+					vm.set('errorMsg',status==6 ? '非常抱歉！审核未通过' : '订单已关闭');
+					let text='<p><span>原因：</span>'+data.data.reason+'</p>';
 					if(data.data.remark)text+='<p><span>备注：</span>'+data.data.remark+'</p>';
 					vm.set('auditReason',text);
 				}else if(status==3||status==2){
 					//---
 				}else{
-					var text='';
-					status==1 ? text='订单超时已关闭' : status==4 ? text='支付失败，订单关闭' : status==8 ? text='开卡失败' : void 0;
-					layer.open({
-                        content:text,
-                        btn:['确定'],
-                        title:'提示',
-                        shadeClose:false,
-                        yes:function(){
-                        	vm.toIndexPage();
-                        }
-                    });
+					vm.set('off.step',3);
+					let text='';
+					status==4 ? text='支付失败，订单关闭' : status==8 ? text='开卡失败' : void 0;
+					vm.set('errorMsg',text);
 				}
 			},true);
 		},
 		createSheet:function(){//生成受理单
-			if(vm.get('off').step==2){
-				Jsborya.pageJump({
-					url:'createSheet.html',
-					stepCode:999,
-					depiction:'确认受理单',
-					header:{
-                        frontColor:'#ffffff',
-                        backgroundColor:'#4b3887',
-                    }
+			let step=vm.get('off').step;
+			var orderInfo=vm.get('orderInfo');
+			if(step==2){
+				vm.AJAX('../../../tas/w/business/acceptance',{//获取受理单图片
+					userInfo:vm.get('userInfo'),
+					params:{
+						sysOrderId:orderInfo.sysOrderId,
+					}
+				},function(data){
+					var imgArray=data.data.images;
+					for(let i =0;i<imgArray.length;i++){
+						imgArray[i].imageName=imgArray[i].imageName.replace(/\\/g,"/");
+					}
+
+					Object.assign(orderInfo,{
+						images:imgArray,
+					});
+					
+					vm.setStore('ORDER_INFO',orderInfo);
+
+					Jsborya.pageJump({
+						url:'createSheet.html',
+						stepCode:999,
+						depiction:'确认受理单',
+						header:{
+	                        frontColor:'#ffffff',
+	                        backgroundColor:'#4b3887',
+	                    }
+					});
+
 				});
+				
+			}else if(step==3){
+				vm.toIndexPage();
 			}
 		},
 	    phoneFormat:function(phone){

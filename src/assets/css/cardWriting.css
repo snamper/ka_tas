@@ -1,22 +1,37 @@
-.device-box{position: relative;margin-top:0.2rem;padding-bottom: 0.4rem; }
-.device-box>.state{position: absolute;top: 0;right:0.3rem;color: #666;font-size: 0.12rem;}
-.device-box>.state .black{color: #000;}
+.device-box{
+	position: relative;
+	margin-top:0.2rem;
+	padding-bottom: 0.4rem;
+}
+.device-box>.state{
+	position: absolute;
+	top: 0;
+	right:0.3rem;
+	color: #666;
+	font-size: 0.12rem;
+}
+.device-box>.state .black{
+	color: #000;
+}
 .device-box>.bg{}
-.device-box>.bg>img{display: block;width: 90%;margin:auto; }
+.device-box>.bg>img{
+	display: block;
+	width: 90%;
+	margin:auto;
+}
 .device-box>.tips{
 	color:#4e5e6e;line-height: 1.65;
 	margin:0.1rem;
-}
-
-.btn-default, .btnDefault{
-	background: none;
+	font-size: 0.12rem;
 }
 .btn.btny{
 	color:#EA6E08 !important;
 	border-color:#EA6E08 !important;
 	position: relative;
 }
-.btn.btny:active{background-color:#F1B97C;}
+.btn.btny:active{
+	background-color:#F1B97C;
+}
 .btn.btny>b{
 	position: absolute;
 	display: block;
@@ -57,6 +72,7 @@
 }
 .m-all-tag{
 	margin-bottom: 0;
+	padding-bottom:5px;
 }
 .m-all-tag>.tag{
 	margin-bottom: 0;
@@ -187,7 +203,3 @@
 .m-msg{
 	margin:5px;
 }
-.m-msg>b{
-
-}
-

@@ -84,11 +84,13 @@ var vm=new Moon({
 					});
 					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 				}else{
+					vm.set("off.load",false);
 					vm.callMethod("filterConnectStatus",[data.status]);
 				}
 			});
 		},
 		filterConnectStatus:function(status){
+
 			if(status==2){
 				alert("读取失败");
 			}else if(status==3){
@@ -152,6 +154,8 @@ var vm=new Moon({
                         title:'提示'
                     });
 				}
+			},true,function(){
+				vm.set("off.load",false);
 			});
 		},
 		savePackage:function(){
@@ -177,7 +181,7 @@ var vm=new Moon({
 		            "createTime":data.data.createTime,
 		            "cardMoney":cardInfo.phoneMoney,//号码占用费
 		            "orderStatusCode":"PACKAGE_SELECTION",
-		            "totalMoney":parseInt(vm.get('totalPrice'))*100,//总价格
+		            "totalMoney":parseFloat(vm.get('totalPrice'))*100,//总价格
 		            "limitSimilarity":0,
 		            "validTime":0,
 		            "sysOrderId":data.data.sysOrderId,
@@ -193,7 +197,7 @@ var vm=new Moon({
 	                    backgroundColor:'#4b3887',
 	                }
 				});
-			},false,function(){
+			},true,function(){
 				vm.set("off.load",false);
 			});
 		},

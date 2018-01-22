@@ -1,5 +1,4 @@
 require('../../public.js');
-require('../../assets/css/orderDetails.css');
 
 Jsborya.ready(function(){
 
@@ -97,13 +96,13 @@ var vm=new Moon({
                 depiction='已支付';
                 next='订单审核';
             }else if(orderStatusCode==='CARD_AUDIT'){
-                url='createSheet.html';
+                url='cardAudit.html';
                 depiction='已审核';
-                next='确认受理单';
+                next='生成受理单';
             }else if(orderStatusCode==='CREATE_SHEET'){
-                url='cardWriting.html';
+                url='createSheet.html';
                 depiction='已生成受理单';
-                next='写卡';
+                next='确认受理单';
             }else if(orderStatusCode==='CARD_IMSI'){
                 url='cardWriting.html';
                 depiction='已获取IMSI';

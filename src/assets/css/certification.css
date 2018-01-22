@@ -10,7 +10,6 @@ body{
 }
 .m-certificate-info, .m-pic, .o-tips{
     background-color: #fff;
-    
 }
 
 .m-certificate-info>li{
@@ -109,12 +108,9 @@ body{
     background-image: url("../img/IDphoto03.jpg");
 }*/
 
-/*手签名模块*/
 /*复选框*/
 .m-form-checkbox>div{
-    
     position: relative;
-    cursor: pointer;
     display: inline-block;
     white-space: nowrap;
     user-select: none;
@@ -123,11 +119,11 @@ body{
 
 .m-form-checkbox>div>.checkbox{
     white-space: nowrap;
-    cursor: pointer;
     outline: none;
     display: inline-block;
     position: relative;
-    vertical-align: middle
+    vertical-align: middle;
+    margin-right: 3px;
 }
 
 .m-form-checkbox>div>.checkbox>span{
@@ -136,8 +132,8 @@ body{
     border: 1px solid #bfcbd9;
     border-radius: 4px;
     box-sizing: border-box;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     background-color: #fff;
     
     transition: border-color .25s cubic-bezier(.71, -.46, .29, 1.46), background-color .25s cubic-bezier(.71, -.46, .29, 1.46);
@@ -155,7 +151,7 @@ body{
     border-left: 0;
     border-top: 0;
     height: 8px;
-    left: 5px;
+    left: 4px;
     position: absolute;
     top: 1px;
     transform: rotate(45deg) scaleY(0);
@@ -167,7 +163,7 @@ body{
 }
 
 .m-form-checkbox>div>.text{
-    font-size: 14px;
+    font-size: 12px;
 }
 .m-form-checkbox>div>.checkbox.active>span{
     border-color: #4b3887;background: #4b3887;
@@ -176,6 +172,7 @@ body{
     transform: rotate(45deg) scaleY(1);
     -webkit-transform: rotate(45deg) scaleY(1)
 }
+/*手签名模块*/
 .o-tips2{
     font-size: 0.12rem;
     margin-bottom: 0.1rem;
@@ -195,21 +192,26 @@ body{
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0,0,0,0.15);
 }
-.m-signature, .m-signature>.mask{
+#signatureBox, #signatureBox>.mask{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
 }
-.m-signature{
-    z-index: 888;
+#signatureBox{
+    z-index: -1;
+    opacity: 0;
 }
-.m-signature>.mask{
+#signatureBox.active{
+    z-index: 888;
+    opacity: 1;
+}
+#signatureBox>.mask{
     background-color: rgba(0,0,0,0.5);
     z-index: 777;
 }
-.m-signature>.inner{
+#signatureBox>.inner{
     position: absolute;
     left: 0;
     bottom:0;
@@ -217,10 +219,10 @@ body{
     width: 100%;
     
 }
-.m-signature>.inner>.title{
+#signatureBox>.inner>.title{
     background-color: #f5f6f7;
 }
-.m-signature>.inner>.title>a{
+#signatureBox>.inner>.title>a{
     display: inline-block;
     background-size: 0.18rem;
     background-position: left center;
@@ -230,18 +232,14 @@ body{
     padding: 0.1rem;
     text-align: right;
 }
-.m-signature>.inner>canvas{
+#signatureBox>.inner>canvas{
     background-color: #f5f6f7;
     width: 100%;
     /*height:6rem;*/
     outline: none;
 }
-.m-signature>.inner>canvas:active{
-    
-}
-
-.m-signature>.inner>.footer{}
-.m-signature>.inner>.footer>a{
+#signatureBox>.inner>.footer{}
+#signatureBox>.inner>.footer>a{
     background-color: #fff;
     display: block;
     width: 100%;
@@ -249,5 +247,3 @@ body{
     line-height: 0.35rem;
     text-align: center;
 }
-.m-signature>.inner>.footer>.purple{}
-.m-signature>.inner>.footer>.red{}

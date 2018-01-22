@@ -1,0 +1,9 @@
+window._CONFIG={
+	"prod_env":false,
+	"dev":{
+		"TMS_URL":"https://192.168.10.98:6088/tms/",
+	},
+	"prod":{
+		"TMS_URL":"https://kmsdk.m10027.com/tms/",
+	}
+}

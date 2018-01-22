@@ -22,15 +22,18 @@ body{
 	bottom: 0;
 	width: 1rem;
 	height: 100%;
-	background-color:#F0F2F5;
+	background-color:#f2f2f2;
+}
+.m-all-tag{
+	margin-bottom: 0 !important;
 }
 .m-package-ul{
 	
 }
 .m-package-ul>li{
 	text-align:center;
-	border-bottom: 1px solid #dcdcdc;
-	padding:0.15rem 0;
+	border-bottom: 1px solid #dfdfdf;
+	padding:17px 0 13px 0;
 	position: relative;
 }
 .m-package-ul>li>b{
@@ -66,7 +69,7 @@ body{
 		</ul>
 	</div>
 	<div id="packageInfo">
-		<section class="m-all-tag" style="padding:0.1rem 0">
+		<section class="m-all-tag" style="padding:0.1rem 0;background-color:#F9F9F9;">
 			<!-- <div class="tag"><b class="purple">{{ packageList[off.select].title }}</b></div> -->
 			<div class="details f-scroll">
 				<div class="details-header">套餐标准</div>
@@ -126,21 +129,13 @@ body{
 		<section class="m-all-tag">
 			<div class="tag">可选包</div>
 			<ul class="m-col-double clr" id="selPackageUl">
-				<!-- <li
-					m-for="todo,index in packageList[off.select].packInfo.selPackage"
-					m-literal:class="{active:todo.init==1,active2:todo.init==2}"
-					m-literal:title="index"
-					m-on:click="shiftSelPackage">{{ todo.title }}</li> -->
+				
 			</ul>
 		</section>
 		<section class="m-all-tag">
 			<div class="tag">预存话费</div>
 			<ul class="m-col-double clr" id="prestoreUl">
-				<!-- <li
-					m-for="todo,index in packageList[off.select].packInfo.prestoreMoneyList"
-					m-literal:class="{active:todo.init==1,active2:todo.init==2}"
-					m-literal:title="index"
-					m-on:click="shiftPrestore">{{ mathCentToYuan(todo.prestoreMoney) }}</li> -->
+
 			</ul>
 		</section>
 		<div m-on:click="makeSure" class="btn btny">确定</div>

@@ -26,8 +26,9 @@ var vm=new Moon({
 				});
 				request=JSON.stringify(request);
 				var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
+				var httpUrl=_CONFIG.prod_env ? _CONFIG.prod.TMS_URL : _CONFIG.dev.TMS_URL;
 				Jsborya.httpRequest({
-					url:'http://192.168.10.117:6088/tms/c/user/logout/monthFee',
+					url:_httpUrl+'/c/user/monthFee',
 					data:request,
 					complete:function(data){
 						layer.close(index);

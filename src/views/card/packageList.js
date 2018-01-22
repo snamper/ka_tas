@@ -111,6 +111,9 @@ var vm=new Moon({
 	  		};
 			vm.AJAX('../../../tas/w/source/packageList',json,function(data){
 				vm.set('packageList',data.data.titleList);
+				for(let i=0,len=data.data.titleList.length;i<len;i++){
+					if(data.data.titleList[i].init==1)vm.set('off.select',i);
+				}
 				vm.callMethod('setSelectPrestore');
 				vm.callMethod('renderDom');
 			});
@@ -168,7 +171,7 @@ var vm=new Moon({
 			for(let i=0,todo=packInfo.prestoreMoneyList,len=todo.length;i<len;i++){
 				if(todo[i].init==1){str+='<li class="active"';}
 				else str+='<li';
-				str+=' onclick="shiftPrestore(this)" title="'+i+'">'+vm.mathCentToYuan(todo[i].prestoreMoney)+'</li>';
+				str+=' onclick="shiftPrestore(this)" title="'+i+'">'+parseInt(todo[i].prestoreMoney)/100+'元</li>';
 			}
 			prestoreUl.innerHTML=str,str='';
 		},
@@ -188,7 +191,7 @@ var vm=new Moon({
 			vm.setStore('selectPackage',{
 				name:pack.title,
 				packageCode:pack.code,
-				selPackCode:getSelPackageCode()||0,
+				selPackCode:getSelPackageCode(),
 				prestore:pack.packInfo.prestoreMoneyList[vm.get('off').prestore].prestoreMoney,
 			});
 			Jsborya.pageBack({
@@ -206,9 +209,6 @@ var vm=new Moon({
 		phoneFormat:function(phone){
 			return this.phoneFormat(phone);
 		},
-		mathCentToYuan:function(value){
-	    	return this.mathCentToYuan(value);
-	    },
 		filterBr:function(str){
 			return str?str.split('<br>'):str=[];
 		},

@@ -125,6 +125,72 @@ export default{
             window.localStorage.removeItem(name);
         },
         /**
+         *@describe 错误处理
+         *@param {Object/String} (data) 
+        ep:
+            {
+                code:'',
+                msg:''
+            }
+            or'错误描述' 
+         **/
+        Moon.prototype.error=function(data){
+            const _self=this;
+            const layerOpen=(content)=>layer.open({
+                content:content,
+                btn:['确定'],
+                shadeClose:false,
+                title:'提示',
+                yes:function(){
+                    _self.toIndexPage();
+                }
+            });
+            switch(parseInt(data.code)){
+                case 681:
+                    layer.open({
+                        content:'你当前还有未完成订单',
+                        btn:['查看详情'],
+                        shadeClose:false,
+                        title:'提示',
+                        yes:function(){
+                            window.localStorage.setItem('ORDER_INFO',JSON.stringify(data.data));
+                            Jsborya.pageJump({
+                                url:'orderDetails.html',
+                                stepCode:999,
+                                depiction:'订单详情',
+                                header:{
+                                    frontColor:'#ffffff',
+                                    backgroundColor:'#4b3887',
+                                }
+                            });
+                        }
+                    });
+                    break;
+                case 685:
+                    layerOpen('订单超时已关闭');
+                    break;
+                case 689:
+                    layerOpen('号卡ID未找到');
+                    break;
+                case 690:
+                    layerOpen('无效卡');
+                    break;
+                case 691:
+                    layerOpen('请使用华虹卡');
+                    break;
+                case 692:
+                    layerOpen('号码已被占用，请重新更换号码');
+                    break;
+                default:
+                    layer.open({
+                        content:data.msg||data,
+                        skin: "msg",
+                        time: 3
+                    });
+                    break;
+            }
+        },
+        /**
          *@describe http请求
          *@param {String} (url) 请求地址
          *@param {Object} (data) 请求携带数据
@@ -149,59 +215,7 @@ export default{
             var xhr=new XMLHttpRequest(),index,postData=data.params || {},_self=this;
             !load&&(index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'}));
 
-            const error=(data)=>{
-                typeof fail==='function'&&fail();
-                const layerOpen=(content)=>layer.open({
-                    content:content,
-                    btn:['确定'],
-                    shadeClose:false,
-                    title:'提示',
-                    yes:function(){
-                        _self.toIndexPage();
-                    }
-                });
-                switch(data.code){
-                    case 681:
-                        layer.open({
-                            content:'你当前还有未完成订单',
-                            btn:['查看详情'],
-                            shadeClose:false,
-                            title:'提示',
-                            yes:function(){
-                                window.localStorage.setItem('ORDER_INFO',JSON.stringify(data.data));
-                                Jsborya.pageJump({
-                                    url:'orderDetails.html',
-                                    stepCode:999,
-                                    depiction:'订单详情',
-                                    header:{
-                                        frontColor:'#ffffff',
-                                        backgroundColor:'#4b3887',
-                                    }
-                                });
-                            }
-                        });
-                        break;
-                    case 685:
-                        layerOpen('订单超时已关闭');
-                        break;
-                    case 689:
-                        layerOpen('号卡ID未找到');
-                        break;
-                    case 690:
-                        layerOpen('无效卡');
-                        break;
-                    case 691:
-                        layerOpen('请使用华虹卡');
-                        break;
-                    default:
-                        layer.open({
-                            content:data.msg||data,
-                            skin: "msg",
-                            time: 3
-                        });
-                        break;
-                }
-            };
+            
             Object.assign(postData,data.userInfo);
             postData=JSON.stringify(postData);
 
@@ -216,23 +230,30 @@ export default{
                     if(xhr.status>=200&&(xhr.status<300 || xhr.status===304)){
                         try{
                             var responseText=JSON.parse(xhr.responseText);
-                            responseText.code=='200' ? success(responseText) : error(responseText);
+                            if(responseText.code=='200'){
+                                success(responseText)
+                            }else{
+                                typeof fail==='function'&&fail();
+                                _self.error(responseText);
+                            }
                         }catch(e){
+                            typeof fail==='function'&&fail();
                             alert(e);
-                            error('数据解析错误');
+                            _self.error('数据解析错误');
                         }
                         
                     }else{
+                        typeof fail==='function'&&fail();
                         if(xhr.status===504||xhr.status===500){
-                            error('服务器异常');
+                            _self.error('服务器异常');
                         }else if(xhr.status===200){
-                            error('服务器响应错误');
+                            _self.error('服务器响应错误');
                         }else if(xhr.status===404){
-                            error('服务器地址错误');
+                            _self.error('服务器地址错误');
                         }else if(xhr.status===0){
-                            error('服务器失联');
+                            _self.error('服务器失联');
                         }else{
-                            error(xhr.statusText+xhr.status);
+                            _self.error(xhr.statusText+xhr.status);
                         }
                     }
                 }

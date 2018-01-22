@@ -88,13 +88,13 @@ var vm=new Moon({
 			Jsborya.readCardIMSI(function(data){
 				vm.set("off.readLoad",false);
 				vm.set("deviceStatus",data.status);
-				alert(JSON.stringify(data));
+				//alert(JSON.stringify(data));
 				if(data.status==1){
 					vm.set("off.readLoad",true);
 					Jsborya.readCardICCID(function(data){
 						vm.set("off.readLoad",false);
 						vm.set("deviceStatus",data.status);
-						alert(JSON.stringify(data));
+						//alert(JSON.stringify(data));
 						if(data.status==1){
 							vm.set("iccid",data.iccid);
 							vm.callMethod("getImsi");
@@ -118,15 +118,16 @@ var vm=new Moon({
 					iccid:vm.get('iccid'),
 				}
 			},function(data){
-				alert(JSON.stringify(data));
+				//alert(JSON.stringify(data));
 				let imsiSubstr=data.data.imsi,reg = /^(\d{4})(\d*)(\d{4})$/;
 				imsiSubstr=imsiSubstr.replace(reg, function(a,b,c,d){
 				    return b+c.replace(/\d/g, "*")+d;
 				});
+				vm.set("off.getLoad",false);
 				vm.set("imsi",data.data.imsi);
 				vm.set("imsiSubstr",imsiSubstr);
 				vm.set("smsp",data.data.smsp);
-				vm.callMethod("callWriteCard");
+				//vm.callMethod("callWriteCard");
 			},false,function(){
 				vm.set("off.getLoad",false);
 				vm.set("off.submitLoad",1);
@@ -135,22 +136,23 @@ var vm=new Moon({
 		callWriteCard:function(){//写卡
 			vm.set("off.submitLoad",false);
 			vm.set("off.getLoad",2);
-			alert(JSON.stringify({
-				imsi:vm.get('imsi'),
-				smsp:vm.get('smsp'),
-				iccid:vm.get('iccid')
-			}));
+			// alert(JSON.stringify({
+			// 	imsi:vm.get('imsi'),
+			// 	smsp:vm.get('smsp'),
+			// 	iccid:vm.get('iccid')
+			// }));
 			Jsborya.callWriteCard({
 				imsi:vm.get('imsi'),
 				smsp:vm.get('smsp'),
 				iccid:vm.get('iccid'),
 				complete:function(data){
-					alert(JSON.stringify(data));
+					//alert(JSON.stringify(data));
 					vm.set("off.getLoad",false);
-					switch(data.status){
+					switch(parseInt(data.status)){
 						case 1:
 							vm.set("off.submitLoad",1);
 							vm.set("off.isJump",true);
+							vm.callMethod('submitOrder');
 							break;
 						case 2:
 							vm.set("off.msg","写卡失败");
@@ -172,9 +174,8 @@ var vm=new Moon({
 		},
 		
 		submitOrder:function(){//开卡申请
-			if(!vm.get("off").isJump)return false;
 			vm.set("off.submitLoad",2);
-			vm.AJAX('../../../tas/eas/sdk/business/submitOrder',{
+			vm.AJAX('../../../tas/w/business/submitOrder',{
 				'userInfo':vm.get("userInfo"),
 				'params':{
 					'sysOrderId':vm.get("orderInfo").sysOrderId,
@@ -197,7 +198,7 @@ var vm=new Moon({
 		},
 		filterConnectStatus:function(status){
 			if(status==2){
-				alert("读取失败");
+				alert("读取SIM卡信息失败");
 			}else if(status==3){
 				layer.open({
 	                content:"未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽，点击【重新获取】",

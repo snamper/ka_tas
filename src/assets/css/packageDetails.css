@@ -14,7 +14,7 @@
     background-color: #F0F2F5;
     color: #212121;
     border-radius: 5px;
-    padding: 8px 0;
+    padding: 9px 0 7px 0;
     margin-bottom: .1rem;
     float: left;
 }
@@ -47,15 +47,15 @@
 }
 .m-col-double>.active2:after {
     background-image: url(../img/ic_checked2.png);
-    width: .3rem;
-    height: .3rem;
+    width: .25rem;
+    height: .25rem;
     bottom: -1px
 }
 
 /*套餐详情*/
 .details {
     font-size: .13rem;
-    height: 3rem;
+    height: 2.5rem;
     margin:0 5px;
 }
 .details-header{
@@ -77,9 +77,9 @@
 }
 
 .details>table td {
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
     padding: .05rem;
-    color: #757575;
+    color: #666;
     line-height: 1.6
 }
 

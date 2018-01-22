@@ -1,6 +1,7 @@
 .m-insert-card{
     margin:0.1rem;
     text-align: center;
+    animation: fadeIn .4s ease-in-out;
 }
 .m-top-msg{
     margin-top: 0.4rem;
@@ -53,4 +54,14 @@
     font-size: 0.12rem;
     margin-top: 5px;
     word-break: break-all;
+}
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+        transform: translate3d(0,-100%,0);
+    }
+    100%{
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
 }

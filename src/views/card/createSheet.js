@@ -1,11 +1,6 @@
 require('../../public.js');
-require('../../assets/css/createSheet.css');
 require('../../assets/js/slider.js');
-// var img_1=require("../assets/img/IDphoto01.jpg");
-// var img_2=require("../assets/img/IDphoto02.jpg");
-// var img_3=require("../assets/img/IDphoto03.jpg");
 
-//var SmartPhoto=require('smartphoto');
 Jsborya.ready(function(){
 
 
@@ -25,8 +20,9 @@ var app=new Moon({
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
             "similarity":0,
+            "images":[]
         },
-		sheetImg:[],
+        windowHeight:600,
 	},
 	hooks:{
 		init:function(){
@@ -46,59 +42,46 @@ var app=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			
-			setTimeout(function(){
-				var window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;//视图高度
-				document.getElementById("slider-box").style.height=window_h-105+"px";//设置轮播盒子高度
+			let orderInfo=vm.getStore('ORDER_INFO');
+			//let orderInfo={"idCardName":"王兴璐","images":[{"imageName":"https://192.168.10.109:6085/tas/tfcardorder/20180122/89860117841022194581/TF18012217133648258_accept.png"}],"idCardNo":"511321198807295598","totalMoney":1,"limitSimilarity":10,"phoneNum":"17082880233","numberLevel":0,"cityName":"四川成都","createTime":1516612416100,"cardMoney":0,"similarity":92,"orderStatusCode":"CREATE_SHEET","validTime":1558651,"sysOrderId":"TF18012217133648258","prestoreMoney":20000};
+			if(orderInfo){
+				vm.set('orderInfo',orderInfo);
+				Jsborya.getGuestInfo(function(userInfo){
+					vm.set('userInfo',userInfo);
 
-				let orderInfo=vm.getStore('ORDER_INFO');
-				if(orderInfo){
-					vm.set('orderInfo',orderInfo);
-					Jsborya.getGuestInfo(function(userInfo){
-						vm.set('userInfo',userInfo);
-
-						Jsborya.registerMethods('headerLeftClick',function(){
-							vm.orderCancel(userInfo,orderInfo.sysOrderId);
-						});
-						vm.callMethod("getAcceptance",[window_h]);
+					Jsborya.registerMethods('headerLeftClick',function(){
+						vm.orderCancel(userInfo,orderInfo.sysOrderId);
 					});
-				}else{
-					alert('本地订单信息丢失');
-				}
-			},100)
+					vm.callMethod("setAcceptance");
+				});
+			}else{
+				alert('本地订单信息丢失');
+			}
+			vm.callMethod('setPage');
 		}
 	},
 	methods:{
-		getAcceptance:function(window_h){
-			vm.AJAX('../../../tas/w/business/acceptance',{//获取受理单图片
-				userInfo:vm.get('userInfo'),
-				params:{
-					sysOrderId:vm.get('orderInfo').sysOrderId,
-				}
-			},function(data){
-				var imgArray=data.data.images;
-				for(let i =0;i<imgArray.length;i++){
-					imgArray[i].imageName=imgArray[i].imageName.replace(/\\/g,"/");
-				}
-				vm.set('sheetImg',imgArray);
+		setPage:function(){
+			var window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;//视图高度
+			document.getElementById("slider-box").style.height=window_h-105+"px";//设置轮播盒子高度
 
-				Slider.init({
-					index:data.data.images.length
-				});
-
-				setTimeout(function(){
-					var imgItems=document.getElementsByClassName("imgItem");//img 对象
-					for(let i=0;i<imgItems.length;i++){
-						if(imgItems[i].nodeType==1)imgItems[i].style.height=window_h-105+"px";
-					}
-					
-					new SmartPhoto(".slider",{
-						resizeStyle: 'fit',
-						arrows:false,
-						nav:false
-					});
-				},200);
-				
+			vm.set('windowHeight',window_h||600);
+		},
+		setAcceptance:function(){
+			Slider.init({
+				index:vm.get('orderInfo').images.length
 			});
+
+			setTimeout(function(){
+				new SmartPhoto(".slider",{
+					resizeStyle: 'fit',
+					arrows:false,
+					nav:false
+				});
+			},300);
+		},
+		setImgHeight:function(){
+			return 'height:'+(parseInt(vm.get('windowHeight'))-105)+'px';
 		},
 		submitSheet:function(){
 			Jsborya.pageJump({
