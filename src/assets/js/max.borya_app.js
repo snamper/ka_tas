@@ -54,6 +54,7 @@ require('./base64.js');
 		getUserInfo:function(cb){//获取登录用户信息
 			// cb({
 			// 	"userId":"00000000000",
+			//	"phone":"",
 			// 	"applicationID":"123",
 			// 	"token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",
 			// 	"timestamp":"1509608023665",

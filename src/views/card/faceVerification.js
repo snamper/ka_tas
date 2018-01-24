@@ -85,6 +85,7 @@ var vm=new Moon({
 	methods:{
 		payComplete:function(status){//支付完成
 			//alert(status)
+			layer.closeAll();
 			vm.set('off.load',false);
 			if(status==1){//支付成功
 				const json={
@@ -96,7 +97,7 @@ var vm=new Moon({
 				vm.set('off.load',2);
 				window.Timer=setInterval(function(){
 					vm.AJAX('../../../tas/w/business/payLaterStatus',json,function(data){
-						var status=data.data.orderStatus;
+						var status=data.data.status;
 
 						if(status!=2){
 							clearInterval(window.Timer);
@@ -108,7 +109,6 @@ var vm=new Moon({
 						}else if(status==1||status==4){
 							var text='';
 							status==1 ? text='订单超时已关闭' : status==4 ? text='支付失败，订单关闭' : text="异常错误，返回号板";
-							layer.closeAll();
 							layer.open({
 		                        content:text,
 		                        btn:['确定'],
@@ -165,9 +165,6 @@ var vm=new Moon({
 				complete:function(data){
 					//alert(JSON.stringify(data));
 					if(data.status==1){
-						// vm.set('faceConfirmInfo.livingId',data.livingId);
-						// vm.callMethod('beginGetResult');
-
 						var limitSimilarity=parseFloat(vm.get('orderInfo').limitSimilarity),
 						similarity=parseFloat(data.similarity);
 						if(limitSimilarity<=similarity){
@@ -182,77 +179,6 @@ var vm=new Moon({
 				}
 			});
 		},
-		// beginGetResult:function(){
-		// 	var index=0;
-		// 	index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
-		// 	vm.set('off.layerIndex',index);
-
-		// 	window.Timer=setInterval(function(){
-		// 		var counter=vm.get('off').counter;
-		// 		if(counter>60){
-		// 			clearInterval(window.Timer);
-		// 			layer.close(index);
-		// 			vm.set('off.counter',0);
-
-		// 			setTimeout(function(){
-		// 				layer.open({
-		// 					title:'验证超时',
-		// 					content:'获取服务器响应超时，您可以重新查询识别结果。',
-		// 					btn:['重新查询','取消'],
-		// 					yes:function(){
-		// 						layer.closeAll();
-		// 						vm.callMethod('beginGetResult');
-		// 					}
-		// 				});
-		// 			},2000)
-					
-		// 		}else{
-		// 			counter++;
-		// 			vm.set('off.counter',counter);
-		// 		}
-		// 	},1000);
-		// 	vm.callMethod('getFaceVerificationResult');
-		// },
-		// getFaceVerificationResult:function(){
-		// 	vm.AJAX('../../../tas/w/business/livingResult',{
-		// 		userInfo:vm.get('userInfo'),
-		// 		params:{
-		// 			sysOrderId:vm.get('orderInfo').sysOrderId,
-		// 			livingId:vm.get('faceConfirmInfo').livingId
-		// 		}
-		// 	},function(data){
-		// 		clearInterval(window.Timer);
-		// 		layer.close(vm.get('off').layerIndex);
-		// 		vm.set('off.counter',0);
-				
-		// 		if(data.data.state==1){
-		// 			vm.set('faceConfirmInfo.similarity',data.data.similarity);
-		// 			vm.set('off.isFace',true);
-		// 			var limitSimilarity=parseFloat(vm.get('orderInfo').limitSimilarity),
-		// 			similarity=parseFloat(data.data.similarity);
-		// 			if(limitSimilarity<=similarity){
-		// 				vm.set('off.isPass',true);
-		// 			}
-
-		// 		}else if(data.data.state==2){		
-		// 			layer.open({
-  //                       content:'订单超时已关闭',
-  //                       btn:['返回选号'],
-  //                       shadeClose:false,
-  //                       title:'提示',
-  //                       yes:function(){
-  //                           vm.toIndexPage();
-  //                       }
-  //                   });
-					
-		// 		}else{
-		// 			vm.callMethod('getFaceVerificationResult');
-		// 		}
-		// 	},function(){
-
-		// 	});
-
-		// },
 		pay:function(){//去支付
 			var vm=this,payType=vm.get('off').payType;
 			if(vm.get('off').load)return false;
@@ -264,20 +190,34 @@ var vm=new Moon({
 					payType:payType
 				}
 			},function(data){
-				vm.set('off.load',1);
 				//alert(JSON.stringify(data));
-				Jsborya.pageJump({
-					url:'',
-					stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
-					data:data.data,
-					depiction:payType==2 ? "微信支付" : "支付宝支付",
-					destroyed:false,
-					header:{
-                        frontColor:'#ffffff',
-                        backgroundColor:'#4b3887',
-                    }
-				});		
-			},true,function(){
+				if(data.data.payStatusOld){
+					vm.callMethod('payComplete',[1]);
+				}else{
+					setTimeout(function(){
+						layer.open({
+							title:'支付操作确认',
+							content:'如果您已完成支付操作，请点击【已支付】按钮;如果您未支付请重新发起支付',
+							btn:['已支付','未支付'],
+							yes:function(){
+								vm.callMethod('payComplete',[1]);
+							},
+						});
+					},1500);
+					Jsborya.pageJump({
+						url:'',
+						stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
+						data:data.data,
+						depiction:payType==2 ? "微信支付" : "支付宝支付",
+						destroyed:false,
+						header:{
+	                        frontColor:'#ffffff',
+	                        backgroundColor:'#4b3887',
+	                    }
+					});
+				}
+					
+			},function(){
 				vm.set('off.load',false);
 			});
 		},

@@ -35,27 +35,23 @@ var vm=new Moon({
 			});
 			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
-			Jsborya.getGuestInfo(function(userInfo){
-				vm.set('userInfo',userInfo);
-				vm.callMethod('readCardICCID');
-			});
-		}
+		},
+		mounted:function(){
+			vm.callMethod('readCardICCID');
+		},
 	},
 	methods:{
 		readCardICCID:function(){
 			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
-			Jsborya.readCardIMSI(function(data){
-				layer.close(index);
-				if(data.status==1){
-					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-				}else if(data.status==2){
-					//alert("读取失败");
-				}else if(data.status==3){
-					//alert("未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽");
-				}else{
-					alert("异常错误");
-				}
-				vm.set('deviceStatus',data.status);
+			Jsborya.getGuestInfo(function(userInfo){
+				vm.set('userInfo',userInfo);
+				Jsborya.readCardIMSI(function(data){
+					layer.close(index);
+					if(data.status==1){
+						vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+					}
+					vm.set('deviceStatus',data.status);
+				});
 			});
 		},
 		iccidCheck:function(imsi,smsp){

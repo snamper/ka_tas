@@ -39,31 +39,46 @@ var vm=new Moon({
 	    	//this.setStore('selectPackage',{name:'联通无限流量套餐',packageCode:'1002',selPackCode:'1254',prestore:'320',});
 	    	//this.removeStore('selectPackage');
 	    	vm=this;
-	    	Jsborya.setHeader({
-				title:'选择套餐',
-				left:{
-					icon:'back_white',
-					value:'',
-					callback:''
-				},
-				right:{
-					icon:'',
-					value:'',
-					callback:''
-				}
-			});
+	    	
 	    	Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			let cardInfo=vm.getStore('CARD_INFO'),
 				selectPackage=vm.getStore('selectPackage');
 			if(cardInfo){
 				vm.set('cardInfo',cardInfo);
+				let icon='card_green';
+				if(cardInfo.deviceStatus==0)icon='card_red';
+				Jsborya.setHeader({
+					title:'选择套餐',
+					left:{
+						icon:'back_white',
+						value:'',
+						callback:''
+					},
+					right:{
+						icon:icon,
+						value:'',
+						callback:'headerRightClick'
+					}
+				});
 				if(selectPackage){
 					vm.set('selectPackage',selectPackage);
 					vm.set('totalPrice',(parseFloat(cardInfo.phoneMoney)/100+parseFloat(selectPackage.prestore)/100).toFixed(2));
 				}
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
+					Jsborya.registerMethods('headerRightClick',function(){
+						Jsborya.pageJump({
+							url:"simInfo.html",
+							stepCode:999,
+							depiction:'SIM卡信息',
+							destroyed:false,
+							header:{
+		                        frontColor:'#ffffff',
+		                        backgroundColor:'#4b3887',
+		                    }
+						});
+					});
 				});
 			}else{
 				alert('本地号卡信息错误');
@@ -154,6 +169,23 @@ var vm=new Moon({
                         title:'提示'
                     });
 				}
+
+				let icon='card_green';
+				if(data.data.status==4)icon='card_red';
+				Jsborya.setHeader({
+					title:'选择套餐',
+					left:{
+						icon:'back_white',
+						value:'',
+						callback:''
+					},
+					right:{
+						icon:icon,
+						value:'',
+						callback:''
+					}
+				});
+
 			},true,function(){
 				vm.set("off.load",false);
 			});

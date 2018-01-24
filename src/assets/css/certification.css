@@ -15,12 +15,11 @@ body{
 .m-certificate-info>li{
     height: 0.4rem;
     line-height: 0.4rem;
-    padding:0 0.1rem;
     border-bottom: 1px solid #eee;
 }
-.m-certificate-info>li:last-child{
+/*.m-certificate-info>li:last-child{
     border-bottom: none;
-}
+}*/
 .m-certificate-info>li>.fl{
     color: #555;
 }
@@ -28,17 +27,17 @@ body{
 .o-input{}
 .o-input .fl{
     display: inline-block;
-    width: 0.6rem;
+    text-align: right;
+    font-size: 0.12rem;
+    width: 0.7rem;
 }
 .o-input div{
-    margin-left: 0.6rem;
-
+    margin-left: 0.75rem;
 }
 .o-input div>input{
     width: 100%;
     height: 0.4rem;
     line-height: 0.4rem;
-    text-align: right;
     border:1px solid transparent;
     outline: none;
     font-size: 0.15rem;
@@ -47,9 +46,21 @@ body{
 .o-input div>input:focus{
     border-bottom-color:#4b3887; 
 }
+.space3{
+    display: inline-block;
+    width: 0.36rem;
+}
+.space1{
+    display: inline-block;
+    width: 4px;
+}
 .o-tips{
     font-size:0.1rem;line-height: 1.5;
     padding:0.1rem;
+}
+
+.f-s-10{
+    font-size: 0.1rem;
 }
 
 /*拍照*/

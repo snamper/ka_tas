@@ -133,8 +133,9 @@
 				<a class="btn-back-home btnScale" m-on:click="jump" m-show="off.load!=1">返回选号</a>
 				<dl class="tips f-tal grey" m-show="off.load==3">
 					<dt>温馨提示</dt>
-					<dd>1、该号卡板已不可再使用。</dd>
-					<dd>2、您可以重新选择号码进行开卡。</dd>
+					<dd class="red">1、失败原因：{{ desc }}</dd>
+					<dd>2、该号卡板已不可再使用。</dd>
+					<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
 				</dl>
 			</div>
 		</section>

@@ -123,7 +123,9 @@ var vm=new Moon({
 				imsiSubstr=imsiSubstr.replace(reg, function(a,b,c,d){
 				    return b+c.replace(/\d/g, "*")+d;
 				});
+				vm.set("off.submitLoad",1);
 				vm.set("off.getLoad",false);
+				vm.set("off.isJump",true);
 				vm.set("imsi",data.data.imsi);
 				vm.set("imsiSubstr",imsiSubstr);
 				vm.set("smsp",data.data.smsp);
@@ -134,6 +136,7 @@ var vm=new Moon({
 			});
 		},
 		callWriteCard:function(){//写卡
+			if(!vm.get("off").isJump)return false;
 			vm.set("off.submitLoad",false);
 			vm.set("off.getLoad",2);
 			// alert(JSON.stringify({
@@ -147,11 +150,10 @@ var vm=new Moon({
 				iccid:vm.get('iccid'),
 				complete:function(data){
 					//alert(JSON.stringify(data));
+					vm.set("off.submitLoad",1);
 					vm.set("off.getLoad",false);
 					switch(parseInt(data.status)){
 						case 1:
-							vm.set("off.submitLoad",1);
-							vm.set("off.isJump",true);
 							vm.callMethod('submitOrder');
 							break;
 						case 2:

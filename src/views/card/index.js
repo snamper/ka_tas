@@ -13,6 +13,7 @@ var vm=new Moon({
 			showPullLoad:false,//上拉加载
 			showOrderMsg:false,//是否有订单
 		},
+		deviceStatus:1,//设备状态0,异常状态;1,正常状态
 		cardBoxHeight:400,//号码容器高度
 		inputValue:'',//搜索框value
 		selectLabel:{type:0,name:'',tag:''},//选择的标签
@@ -67,7 +68,11 @@ var vm=new Moon({
 				vm.callMethod('getLableList');
 				vm.callMethod('readCardICCID');
 			});
-			vm.callMethod('setPage');
+	    },
+	    mounted:function(){
+	    	setTimeout(function(){
+	    		vm.callMethod('setPage');
+	    	},300);
 	    }
 	},
 	methods:{
@@ -152,7 +157,8 @@ var vm=new Moon({
 				cityCode:phoneData.cityCode,
 				pretty:phoneData.pretty,
 				phoneMoney:phoneData.cardMoney,
-				phoneLevel:phoneData.numberLevel
+				phoneLevel:phoneData.numberLevel,
+				deviceStatus:vm.get('deviceStatus')
 			});
 			vm.removeStore('selectPackage');
 			Jsborya.pageJump({
@@ -171,6 +177,7 @@ var vm=new Moon({
 				if(data.status==1){
 					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 				}else{
+					vm.set('deviceStatus',0);
 					Jsborya.setHeader({
 						title:'号码搜索',
 						frontColor:'#000000',

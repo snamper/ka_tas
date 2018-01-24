@@ -39,6 +39,15 @@
 			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
 			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
+		<ul class="m-order-info clr grey">
+			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
+			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
+			<li>
+				<span class="left">所选号码:</span>
+				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<span>[{{orderInfo.cityName}}]</span>
+			</li>
+		</ul>
 		<section>
 			<div class="device-box">
 				<div class="state">
@@ -77,7 +86,11 @@
 		<div m-on:click="callWriteCard" m-show="off.submitLoad" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">
 			<i m-show="off.submitLoad==1">提交开卡申请</i>
 			<i m-show="off.submitLoad==2">开卡申请中，请稍后</i>
-			<b m-show="off.submitLoad==2"></b>
+			<span class="pay-load" m-show="off.submitLoad==2">
+				<b class="f1"></b>
+				<b class="f2"></b>
+				<b></b>
+			</span>
 		</div>
 		<div m-show="off.getLoad" class="btn btny">
 			<span>

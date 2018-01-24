@@ -7,7 +7,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:1//1,等待中;2,成功;3,失败
+			load:3//1,等待中;2,成功;3,失败
 		},
 		userInfo:'',//用户信息
 		orderInfo: {
@@ -25,6 +25,7 @@ var vm=new Moon({
             "similarity":0,
         },
         orderStatus:'',
+        desc:''//错误描述
 	},
 	hooks:{
 		init:function(){
@@ -32,7 +33,7 @@ var vm=new Moon({
 			Jsborya.setHeader({
 				title:'开卡受理',
 				left:{
-					icon:'back_white',
+					icon:'',
 					value:'',
 					callback:'headerLeftClick'
 				},
@@ -51,7 +52,23 @@ var vm=new Moon({
 					vm.set('userInfo',userInfo);
 
 					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						let load=vm.get('off').load;
+						if(load==1){
+							layer.open({
+								title:'提示',
+								content:'还未拿到当前开卡结果，请您稍等~',
+								btn:['确定']
+							});
+						}else{
+							layer.open({
+								title:'提示',
+								content:'是否返回【号码搜索】页面',
+								btn:['确定'],
+								yes:function(){
+									vm.toIndexPage();
+								}
+							});
+						}
 					});
 					vm.callMethod("intervalGetResult");
 				});
@@ -73,6 +90,7 @@ var vm=new Moon({
 				},function(data){
 					var status=data.data.orderStatus;
 					vm.set('orderStatus',status);
+					vm.set('desc',data.data.desc);
 					if(status!=1){
 						clearInterval(window.Timer);
 					}

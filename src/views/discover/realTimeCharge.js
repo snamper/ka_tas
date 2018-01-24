@@ -7,7 +7,7 @@ Jsborya.ready(function(){
 var vm=new Moon({
 	el:'#app',
 	data:{
-		userInfo:{userId:'00000000000'},
+		userInfo:{phone:'00000000000'},
 		responseData:{
 	        "restFee": "0",//可用余额，以分为单位
 	        "curTotalFee": "0",// 当月话费
@@ -28,14 +28,13 @@ var vm=new Moon({
 				var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
 				var httpUrl=_CONFIG.prod_env ? _CONFIG.prod.TMS_URL : _CONFIG.dev.TMS_URL;
 				Jsborya.httpRequest({
-					url:_httpUrl+'/c/user/monthFee',
+					url:httpUrl+'c/user/monthFee',
 					data:request,
 					complete:function(data){
 						layer.close(index);
 						try{
-							data=JSON.parse(data);
 							if(data.code==200){
-								vm.set('responseData',data.data);
+								data.data&&vm.set('responseData',data.data);
 							}else{
 								alert(data.msg);
 							}

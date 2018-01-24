@@ -59,14 +59,15 @@
 			</div>
 		</section>
 		<section class="m-all-tag clr">
-			<div class="tag">
+			<div class="tag" style="margin-bottom:0">
 				<i class="u-icon-tag"></i>
-				<span>开卡人证件信息</span>
+				<span>开卡人证件信息<span class="f-s-10 grey"><br>（请确保以下信息与身份证信息一致，如有偏差请手动修改）</span></span>
 			</div>
 			<ul class="m-certificate-info o-input">
-				<li class="clr"><span class="fl">姓名</span><div><input m-on:focus="inputFocus" m-on:blur="inputBlur" maxlength="12" type="text" m-model="idCardInfo.name"></div></li>
-				<li class="clr"><span class="fl">证件号码</span><div><input m-on:focus="inputFocus" m-on:blur="inputBlur" maxlength="18" type="text" m-model="idCardInfo.number"></div></li>
-				<li class="clr"><span class="fl">证件地址</span><div><input m-on:focus="inputFocus" m-on:blur="inputBlur" maxlength="32" type="text" m-model="idCardInfo.address"></div></li>
+				<li class="clr"><span class="fl">姓<b class="space3"></b>名:</span><div><input maxlength="12" type="text" m-model="idCardInfo.name"></div></li>
+				<li class="clr"><span class="fl">证<b class="space1"></b>件<b class="space1"></b>号<b class="space1"></b>码:</span><div><input maxlength="18" type="text" m-model="idCardInfo.number"></div></li>
+				<li class="clr"><span class="fl">证<b class="space1"></b>件<b class="space1"></b>地<b class="space1"></b>址:</span><div><input maxlength="32" type="text" m-model="idCardInfo.address"></div></li>
+				<li class="clr"><span class="fl">证件有效期:</span><div><input maxlength="24" type="text" m-model="idCardInfo.period"></div></li>
 			</ul>
 		</section>
 		<section style="padding: 0.1rem;" id="handle-box">

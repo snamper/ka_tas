@@ -16,7 +16,7 @@
 </head>
 <body>
 <div id="app" m-mask>
-	<div class="m-top-head purple"><b>{{ phoneFormat(userInfo.userId) }}</b>当前实时话费信息如下：</div>
+	<div class="m-top-head purple"><b>{{ phoneFormat(userInfo.phone) }}</b>当前实时话费信息如下：</div>
 	<ul class="m-realTime-info">
 		<li class="clr"><span>可用余额</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.restFee) }}</span>元</span></li>
 		<!-- <li class="clr"><span>未解冻余额</span><span class="fr"><span class="yellow">10.00</span>元</span></li>

@@ -57,8 +57,12 @@ var app=new Moon({
 			}else{
 				alert('本地订单信息丢失');
 			}
-			vm.callMethod('setPage');
-		}
+		},
+	    mounted:function(){
+	    	setTimeout(function(){
+	    		vm.callMethod('setPage');
+	    	},300);
+	    }
 	},
 	methods:{
 		setPage:function(){

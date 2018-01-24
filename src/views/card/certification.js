@@ -31,7 +31,7 @@ var vm=new Moon({
 	    	'name':'',
 	    	'address':'',
 	    	'number':'',
-	    	'period':'--',
+	    	'period':'',
 	    	'devMac':'--',
 	    	'devInfo':'--',
 	    	'livingSoftwareName':'旷视'
@@ -78,13 +78,18 @@ var vm=new Moon({
 			}else{
 				alert('本地订单信息丢失');
 			}
-			vm.callMethod('setPage');
-		}
+		},
+	    mounted:function(){
+	    	setTimeout(function(){
+	    		vm.callMethod('setPage');
+	    	},300);
+	    }
 	},
 	methods:{
 		setPage:function(){
-			let windowWidth=document.documentElement.clientWidth||window.innerWidth||document.body.clientwidth,
+			let windowWidth=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth,
 			photoHeight=(windowWidth/2-20)*0.602;
+
 			document.getElementById("photo-front").style.height=photoHeight+"px";
 			document.getElementById("photo-back").style.height=photoHeight+"px";
 
@@ -194,7 +199,9 @@ var vm=new Moon({
 		},
 		checkIsJump:function(){//检测是否执行下一步操作
 			var vm=this;
-			if(vm.get('idCardInfo').name&&vm.get('idCardInfo').number&&vm.get('idCardInfo').address&&vm.get('imgName').a&&vm.get('imgName').b&&vm.get('imgName').d&&vm.get('off').agree){
+			let idCardInfo=vm.get('idCardInfo');
+			let imgName=vm.get('imgName');
+			if(idCardInfo.name&&idCardInfo.number&&idCardInfo.address&&imgName.a&&imgName.b&&imgName.d&&vm.get('off').agree){
 				vm.set('off.isJump',true);
 			}else{
 				vm.set('off.isJump',false);
@@ -209,22 +216,31 @@ var vm=new Moon({
                     time: 3
                 });
 			};
-			if(!vm.get('imgName').a){
+			let idCardInfo=vm.get('idCardInfo');
+			let imgName=vm.get('imgName');
+			let orderInfo=vm.get('orderInfo');
+			if(!imgName.a){
 				callLayer('请上传身份证正面照片');
 	            return false;
-			}else if(vm.get('idCardInfo').name==''){
-				callLayer('请输入姓名');
-                return false;
-			}else if(vm.get('idCardInfo').number==''){
-				callLayer('请输入证件号码');
-                return false;
-			}else if(vm.get('idCardInfo').address==''){
-				callLayer('请输入证件地址');
-                return false;
-			}else if(!vm.get('imgName').b){
+			}else if(!imgName.b){
 				callLayer('请上传身份证反面照片');
                 return false;
-			}else if(!vm.get('imgName').d){
+			}else if(idCardInfo.name==''){
+				callLayer('请输入姓名');
+                return false;
+			}else if(idCardInfo.number==''){
+				callLayer('请输入证件号码');
+                return false;
+			}else if(idCardInfo.address==''){
+				callLayer('请输入证件地址');
+                return false;
+			}else if(idCardInfo.period==''){
+				callLayer('请输入证件有效期');
+                return false;
+			}else if(null==idCardInfo.period.match(/^(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})-(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})$/)){
+				callLayer('证件有效期格式错误');
+                return false;
+			}else if(!imgName.d){
 				callLayer('请添加手签名照片');
                 return false;
 			}else if(!vm.get('off').agree){
@@ -234,25 +250,25 @@ var vm=new Moon({
 				var json={
 					userInfo:vm.get('userInfo'),
 					params:{
-						userName:vm.get('idCardInfo').name,//身份证姓名
-						iDcard:vm.get('idCardInfo').number,//身份证号码
-						userAddress:vm.get('idCardInfo').address,//身份证地址
-						period:vm.get('idCardInfo').period,//有效期
-						devInfo:vm.get('idCardInfo').devInfo,//设备信息
-						devMac:vm.get('idCardInfo').devMac,//设备MAC地址
-						livingSoftwareName:vm.get('idCardInfo').livingSoftwareName,
-						imageName:vm.get('imgName').a,//正面照片
-						backImageName:vm.get('imgName').b,//反面照片
+						userName:idCardInfo.name,//身份证姓名
+						iDcard:idCardInfo.number,//身份证号码
+						userAddress:idCardInfo.address,//身份证地址
+						period:idCardInfo.period,//有效期
+						devInfo:idCardInfo.devInfo,//设备信息
+						devMac:idCardInfo.devMac,//设备MAC地址
+						livingSoftwareName:idCardInfo.livingSoftwareName,
+						imageName:imgName.a,//正面照片
+						backImageName:imgName.b,//反面照片
 						// 'handImageName':vm.get('imgName').c,//手持照片
-						signImageName:vm.get('imgName').d,//手签名
-						sysOrderId:vm.get('orderInfo').sysOrderId,
+						signImageName:imgName.d,//手签名
+						sysOrderId:orderInfo.sysOrderId,
 					}
 				}
 				vm.AJAX('../../../tas/w/business/materialUpload',json,function(data){
-					let orderInfo=vm.get('orderInfo');
+					
 					Object.assign(orderInfo,{
-						idCardName:vm.get('idCardInfo').name,
-						idCardNo:vm.get('idCardInfo').number
+						idCardName:idCardInfo.name,
+						idCardNo:idCardInfo.number
 					});
 					
 					vm.setStore('ORDER_INFO',orderInfo);
@@ -292,12 +308,6 @@ var vm=new Moon({
 		},
 		doSignature:function(off){//show or hidden signaturePad
 			this.set('off.signature',off||0);
-		},
-		inputFocus:function(e){
-			e.target.style.textAlign="left";
-		},
-		inputBlur:function(e){
-			e.target.style.textAlign="right";
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);

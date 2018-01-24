@@ -144,8 +144,12 @@ var vm=new Moon({
 				vm.set('location.cityName',selectCity.cityName);
 				vm.set('location.cityCode',selectCity.cityCode);
 			}
-			vm.callMethod('setPage');
-		}
+		},
+	    mounted:function(){
+	    	setTimeout(function(){
+	    		vm.callMethod('setPage');
+	    	},300);
+	    }
 	},
 	methods:{
 		setPage:function(){
