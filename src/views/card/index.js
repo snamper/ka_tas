@@ -51,6 +51,7 @@ var vm=new Moon({
 			if(selectCity)vm.set('selectCity',selectCity);
 
 			vm.removeStore('ORDER_INFO');
+			vm.removeStore('CARD_INFO');
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
 				Jsborya.registerMethods('headerRightClick',function(){
@@ -210,6 +211,7 @@ var vm=new Moon({
 					document.getElementById("cardBox").style.height=parseInt(vm.get('cardBoxHeight'))-23+'px';
 					vm.setStore('ORDER_INFO',data.data.orderInfo);
 				}else if(data.data.status==4){
+					vm.set('deviceStatus',0);
 					Jsborya.setHeader({
 						title:'号码搜索',
 						frontColor:'#000000',
