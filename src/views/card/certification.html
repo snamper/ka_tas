@@ -91,7 +91,7 @@
 			</div>
 		</section>
 		<section id="signatureBox" m-literal:class="{active:off.signature}">
-			<div class="mask" m-on:click="doSignature(0)"></div>
+			<div class="mask" m-on:touchmove.prevent m-on:click="doSignature(0)"></div>
 			<div class="inner">
 				<div class="title clr"><a href="javascript:void(0)" id="clear" class="fr purple">修改</a></div>
 				<canvas id="signature"></canvas>

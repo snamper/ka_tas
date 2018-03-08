@@ -10,7 +10,7 @@ FastClick.attach(document.body);
 require("./assets/css/base.css");
 require('./assets/js/layer/layer.js');
 require("./assets/js/layer/layer.css");
-require("./assets/js/max.borya_app.js");
+require("./assets/js/webviewBridge.js");
 
 window.onload = function() {
     document.body.addEventListener("touchstart", function() {})
