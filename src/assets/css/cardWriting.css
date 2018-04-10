@@ -49,6 +49,8 @@
 	border-radius: 25px;
 	z-index: -1;
 	background-color:#F1B97C;
+}
+.btn.btny.active>b{
 	animation:aniBgMove 2s linear infinite;
 	-webkit-animation:aniBgMove 2s linear infinite;
 }

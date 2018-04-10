@@ -9,7 +9,7 @@ var vm=new Moon({
 		off:{
 			load:!1,
 			payType:"2",
-			payStatus:2,//0,未支付;1,支付成功;2,支付失败;3,订单关闭;
+			payStatus:0,//0,未支付;1,支付成功;2,支付失败;3,订单关闭;
 		},
 		orderInfo: {
             "phoneNum":"00000000000",
@@ -27,12 +27,6 @@ var vm=new Moon({
             "idCardName":"--",
             "idCardNo":"--"
         },
-        selectPackage:{
-			name:'',
-			packageCode:'',
-			selPackCode:'',
-			prestore:'',
-		},
         userInfo:'',//用户信息
 	},
 	hooks:{
@@ -53,12 +47,10 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO'),
-			selectPackage=vm.getStore('selectPackage');
+			let orderInfo=vm.getStore('ORDER_INFO');
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.set('selectPackage',selectPackage);
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 
@@ -88,7 +80,7 @@ var vm=new Moon({
 				};
 				vm.set('off.load',2);
 				window.Timer=setInterval(function(){
-					vm.AJAX('../../../tas/w/business/payLaterStatus',json,function(data){
+					vm.AJAX('/ka-tas/w/business/payLaterStatus',json,function(data){
 						var status=data.data.status;
 						// 1 等待审核结果
 						// 2 审核失败
@@ -145,7 +137,7 @@ var vm=new Moon({
 			var vm=this,payType=vm.get('off').payType;
 			if(vm.get('off').load)return false;
 			vm.set('off.load',1);
-			vm.AJAX('../../../tas/w/business/pay',{
+			vm.AJAX('/ka-tas/w/business/pay',{
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:vm.get('orderInfo').sysOrderId,
@@ -187,7 +179,8 @@ var vm=new Moon({
 			vm.set('off.payType',payType);
 		},
 		createSheet:function(){//生成受理单
-			vm.AJAX('../../../tas/w/business/acceptance',{//获取受理单图片
+			var orderInfo=vm.get('orderInfo');
+			vm.AJAX('/ka-tas/w/business/acceptance',{//获取受理单图片
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:orderInfo.sysOrderId,

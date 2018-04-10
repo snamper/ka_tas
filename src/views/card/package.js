@@ -155,7 +155,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
+			vm.AJAX('/ka-tas/w/source/iccidCheck',json,function(data){
 				vm.set("off.load",false);
 				if(data.data.status==1){
 					vm.callMethod('savePackage');
@@ -178,7 +178,7 @@ var vm=new Moon({
                         },
                         no:function(){
                         	layer.closeAll();
-		                    vm.AJAX('../../../tas/w/business/orderCancell',{
+		                    vm.AJAX('/ka-tas/w/business/orderCancell',{
 		                        'params':{
 		                            'sysOrderId':data.data.orderInfo.sysOrderId,
 		                        },
@@ -236,19 +236,19 @@ var vm=new Moon({
 		},
 		savePackage:function(){
 			vm.set("off.load",2);
-			const cardInfo=vm.get('cardInfo');
+			const cardInfo=vm.get('cardInfo'),selectPackage=vm.get('selectPackage');
 			const json={
 	  			params:{
 	  				phoneNum:cardInfo.phone,
 	  				imsi:vm.get('imsiInfo').imsi,
 	  				smsp:vm.get('imsiInfo').smsp,
-	  				packageCode:vm.get('selectPackage').packageCode,
-	  				selPackCode:vm.get('selectPackage').selPackCode,
-	  				prestoreMoney:vm.get('selectPackage').prestore,
+	  				packageCode:selectPackage.packageCode,
+	  				selPackCode:selectPackage.selPackCode,
+	  				prestoreMoney:selectPackage.prestore,
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../../tas/w/business/orderCreate',json,function(data){
+			vm.AJAX('/ka-tas/w/business/orderCreate',json,function(data){
 				vm.set("off.load",false);
 				vm.setStore('ORDER_INFO',{
 		            "phoneNum":cardInfo.phone,
@@ -261,7 +261,9 @@ var vm=new Moon({
 		            "limitSimilarity":0,
 		            "validTime":0,
 		            "sysOrderId":data.data.sysOrderId,
-		            "prestoreMoney":vm.get('selectPackage').prestore,//预存价格
+		            "packageName":selectPackage.name,
+		            "packageCode":selectPackage.packageCode,
+		            "prestoreMoney":selectPackage.prestore,//预存价格
 		            "similarity":0,
 		        });
 				Jsborya.pageJump({
@@ -306,7 +308,7 @@ var vm=new Moon({
 	  		};
 
 	  		vm.set('off.loadPackage',true);
-			vm.AJAX('../../../tas/w/source/packageList',json,function(data){
+			vm.AJAX('/ka-tas/w/source/packageList',json,function(data){
 				let selectCode=vm.get('selectPackage').packageCode;
 				if(selectCode){
 					let arr=[],item={};

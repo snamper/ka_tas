@@ -23,13 +23,9 @@ var vm=new Moon({
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
             "similarity":0,
+            "packageName":"--",
+            "packageCode":"0"
         },
-        selectPackage:{
-			name:'',
-			packageCode:'',
-			selPackCode:'',
-			prestore:'',
-		},
 		deviceType:1,//卡类型
 		userInfo:'',
 		errorMsg:'',//错误描述
@@ -59,12 +55,10 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			let orderInfo=vm.getStore('ORDER_INFO'),
-			selectPackage=vm.getStore('selectPackage'),
 			deviceType=vm.getStore('CARD_INFO').deviceType;
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.set('selectPackage',selectPackage);
 				vm.set('deviceType',deviceType)
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
@@ -149,27 +143,25 @@ var vm=new Moon({
 		},
 		getImsi:function(){
 			vm.set("off.step",2);
-			vm.AJAX('../../../tas/w/business/getImsi',{
+			vm.AJAX('/ka-tas/w/business/getImsi',{
 				userInfo:vm.get("userInfo"),
 				params:{
 					sysOrderId:vm.get("orderInfo").sysOrderId,
 					iccid:vm.get('iccid'),
 				}
 			},function(data){
-				if(data.code==671){
-					vm.set("errorMsg",'无可用的IMSI');
-				}else{
-					let imsiSubstr=data.data.imsi,reg = /^(\d{4})(\d*)(\d{4})$/;
+				let imsiSubstr=data.data.imsi,reg = /^(\d{4})(\d*)(\d{4})$/;
 					imsiSubstr=imsiSubstr.replace(reg, function(a,b,c,d){
 					    return b+c.replace(/\d/g, "*")+d;
 					});
-					vm.set("imsi",data.data.imsi);
-					vm.set("imsiSubstr",imsiSubstr);
-					vm.set("smsp",data.data.smsp);
-					vm.callMethod("callWriteCard");
-				}
+				vm.set("imsi",data.data.imsi);
+				vm.set("imsiSubstr",imsiSubstr);
+				vm.set("smsp",data.data.smsp);
+				vm.callMethod("callWriteCard");
 			},false,function(data){
-				if(data.code==685){
+				if(data.code==671){
+					vm.set("errorMsg",'无可用的IMSI');
+				}else if(data.code==685){
 					vm.set("errorMsg",'该订单已结束');
 				}
 			});
@@ -204,7 +196,7 @@ var vm=new Moon({
 		
 		submitOrder:function(){//开卡申请
 			vm.set("off.submitLoad",1);
-			vm.AJAX('../../../tas/w/business/submitOrder',{
+			vm.AJAX('/ka-tas/w/business/submitOrder',{
 				'userInfo':vm.get("userInfo"),
 				'params':{
 					'sysOrderId':vm.get("orderInfo").sysOrderId,

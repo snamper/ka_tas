@@ -8,7 +8,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			isFace:1,
+			isFace:!1,
 			isPass:!1
 		},
         userInfo:'',//用户信息

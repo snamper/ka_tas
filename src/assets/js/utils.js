@@ -83,7 +83,7 @@ export default{
                         },
                         'userInfo':userInfo
                     };
-                    _self.AJAX('../../../tas/w/business/orderCancell',json,function(data){
+                    _self.AJAX('/ka-tas/w/business/orderCancell',json,function(data){
                         isJump&&_self.toIndexPage();
                     });
                     
@@ -225,9 +225,8 @@ export default{
                     load ? typeof load==='function'&&load() : layer.close(index);
                     if(xhr.status>=200&&(xhr.status<300 || xhr.status===304)){
                         try{
-                            alert(xhr.responseText);
                             var responseText=JSON.parse(xhr.responseText);
-                            if(responseText.code=='200'||responseText.code=='671'){
+                            if(responseText.code=='200'){
                                 success(responseText)
                             }else{
                                 typeof fail==='function'&&fail(responseText);

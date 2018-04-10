@@ -23,13 +23,9 @@ var vm=new Moon({
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
             "similarity":0,
+            "packageName":"--",
+            "packageCode":"0"
         },
-        selectPackage:{
-			name:'',
-			packageCode:'',
-			selPackCode:'',
-			prestore:'',
-		},
 		password1:'',
 		password2:'',
         orderStatus:'',
@@ -53,12 +49,10 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO'),
-			selectPackage=vm.getStore('selectPackage');
+			let orderInfo=vm.getStore('ORDER_INFO');
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.set('selectPackage',selectPackage);
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 
@@ -93,7 +87,7 @@ var vm=new Moon({
 			var vm=this;
 			vm.set("off.load",1);
 			window.Timer=setInterval(function(){
-				vm.AJAX('../../../tas/w/business/getResult',{
+				vm.AJAX('/ka-tas/w/business/getResult',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId
@@ -136,7 +130,7 @@ var vm=new Moon({
                 });
                 return false;
 			}else{
-				vm.AJAX('../../../tas/w/business/setPwd',{
+				vm.AJAX('/ka-tas/w/business/setPwd',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId,
@@ -147,10 +141,7 @@ var vm=new Moon({
 						url:'',
 						stepCode:802,
 						depiction:'',
-						data:{
-							password:password2,
-							phone:vm.get('orderInfo').phoneNum
-						}
+						data:data.data
 					});
 				});
 			}

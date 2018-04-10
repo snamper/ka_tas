@@ -49,7 +49,7 @@
 					<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
 					<span>[{{orderInfo.cityName}}]</span>
 				</li>
-				<li><span class="left">所选套餐:</span>{{ selectPackage.name }}</li>
+				<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
 				<li class="double-border"></li>
 				<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(orderInfo.cardMoney)}}</span></li>
 				<li class="clr">
@@ -93,11 +93,11 @@
 				</div>
 				<div m-on:click="createSheet" class="btn btny">生成受理单</div>
 			</div>
-			<div m-show="off.payStatus=2||off.payStatus=3">
+			<div m-show="off.payStatus==2||off.payStatus==3">
 				<div class="m-pay-status">
 					<img src="../../assets/img/icon_failure.png">
-					<p class="red" m-show="off.payStatus=2">支付失败</p>
-					<p class="red" m-show="off.payStatus=3">订单关闭</p>
+					<p class="red" m-show="off.payStatus==2">支付失败</p>
+					<p class="red" m-show="off.payStatus==3">订单关闭</p>
 				</div>
 				<div m-on:click="jumpToIndex" class="btn btnp">返回首页</div>
 			</div>

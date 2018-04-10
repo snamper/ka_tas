@@ -62,7 +62,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
+			vm.AJAX('/ka-tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
 			});
 		},

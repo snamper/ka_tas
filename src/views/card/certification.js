@@ -26,6 +26,8 @@ var vm=new Moon({
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
             "similarity":0,
+            "packageName":"--",
+            "packageCode":"0"
         },
 	    idCardInfo:{
 	    	'name':'',
@@ -193,7 +195,7 @@ var vm=new Moon({
 					imgNo:index
 				}
 			};
-			vm.AJAX('../../../tas/w/business/imgUpload',json,function(data){
+			vm.AJAX('/ka-tas/w/business/imgUpload',json,function(data){
 				vm.callMethod('uploadImgComplete',[data]);
 			});
 		},
@@ -264,7 +266,7 @@ var vm=new Moon({
 						sysOrderId:orderInfo.sysOrderId,
 					}
 				}
-				vm.AJAX('../../../tas/w/business/materialUpload',json,function(data){
+				vm.AJAX('/ka-tas/w/business/materialUpload',json,function(data){
 					
 					Object.assign(orderInfo,{
 						idCardName:idCardInfo.name,

@@ -148,7 +148,6 @@ require('./base64.js');
 				name:'takePhotos',
 				data:json,
 				callback:function(result){
-					alert(JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -162,7 +161,6 @@ require('./base64.js');
 				name:'faceVerification',
 				data:json,
 				callback:function(result){
-					alert(JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -215,6 +213,7 @@ require('./base64.js');
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
+					alert(JSON.stringify(result));
 					json.complete(result);
 				}
 			});

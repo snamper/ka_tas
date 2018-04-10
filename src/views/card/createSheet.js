@@ -20,7 +20,9 @@ var app=new Moon({
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
             "similarity":0,
-            "images":[]
+            "images":[],
+            "packageName":"--",
+            "packageCode":"0"
         },
         windowHeight:600,
 	},

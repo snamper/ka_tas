@@ -10,7 +10,7 @@ var vm=new Moon({
 		off:{
 			status:4,//1、可用卡；2、有未完成订单；3、开卡成功；4、无效卡；
 		},
-		deviceStatus:3,//1、读取成功；2、读取失败；3、未插卡；4、未连接
+		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		scanIccid:'',//扫描到的ICCID
 		deviceType:1,//1、手机卡；2、手表卡
 		userInfo:{
@@ -134,7 +134,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('../../../tas/w/source/iccidCheck',json,function(data){
+			vm.AJAX('/ka-tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
 				if(data.data.status==2){
 					vm.set('orderInfo',data.data.orderInfo);
@@ -181,7 +181,7 @@ var vm=new Moon({
 		continueOrder:function(){
 			let orderInfo=vm.get('orderInfo');
 			let todo=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode]);
-            
+            vm.setStore('ORDER_INFO',orderInfo);
             Jsborya.pageJump({
                 url:todo.url,
                 stepCode:999,

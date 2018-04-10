@@ -24,14 +24,10 @@ var vm=new Moon({
             "prestoreMoney":0,
             "similarity":0,
             "idCardName":"--",
-            "idCardNo":"--"
+            "idCardNo":"--",
+            "packageName":"--",
+            "packageCode":"0"
         },
-        selectPackage:{
-			name:'',
-			packageCode:'',
-			selPackCode:'',
-			prestore:'',
-		},
         errorMsg:'',
         auditReason:'',
         userInfo:'',
@@ -54,12 +50,10 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO'),
-			selectPackage=vm.getStore('selectPackage');
+			let orderInfo=vm.getStore('ORDER_INFO');
 			
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.set('selectPackage',selectPackage);
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 
@@ -88,7 +82,7 @@ var vm=new Moon({
 					sysOrderId:vm.get('orderInfo').sysOrderId
 				}
 			};
-			vm.AJAX('../../../tas/w/business/payLaterStatus',json,function(data){
+			vm.AJAX('/ka-tas/w/business/payLaterStatus',json,function(data){
 				var status=data.data.status;
 				// 1 等待审核结果
 				// 2 审核失败
@@ -122,6 +116,7 @@ var vm=new Moon({
 			},true);
 		},
 		jumpToPay:function(){
+			let step=vm.get('off').step;
 			if(step==2){
 				Jsborya.pageJump({
 					url:'pay.html',
