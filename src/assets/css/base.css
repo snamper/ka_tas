@@ -66,7 +66,7 @@ textarea {
     /*2ecc71*/
 }
 .yellow {
-    color: #eb7a00!important
+    color: #FFC107!important
 }
 .purple {
     color: #4b3887!important
@@ -76,6 +76,9 @@ textarea {
 }
 .black{
     color: #212121!important
+}
+.blue{
+    color: #29adf6!important
 }
 /*按钮*/
 .btn{
@@ -103,7 +106,7 @@ textarea {
     color: #fff;
 }
 .bgy {
-    background: #eb7a00;
+    background: #FFC107;
     color: #fff;
 }
 .btnDefault{
@@ -117,11 +120,11 @@ textarea {
     border-color: #CECECE
 }
 .btny{
-    border-color: #eb7a00!important;
-    color: #eb7a00;
+    border-color: #FFC107!important;
+    color: #FFC107;
 }
 .btny:active{
-    background-color: #eb7a00;
+    background-color: #FFC107;
     color: #fff
 }
 .btnp{
@@ -232,9 +235,9 @@ textarea {
 .m-time-axis>.passed>.title{color: #000;}
 .m-time-axis-sub>.passed>.sub-line>b{background-color:#000 !important;}
 .m-time-axis-sub>.passed>.sub-line>span{border-color:#000 !important;}
-.m-time-axis>.active>.title{color: #eb7a00;}
-.m-time-axis-sub>.active>.sub-line>b{background-color:#eb7a00 !important;}
-.m-time-axis-sub>.active>.sub-line>span{border-color:#eb7a00 !important;/*#6c71c4*/}
+.m-time-axis>.active>.title{color: #FFC107;}
+.m-time-axis-sub>.active>.sub-line>b{background-color:#FFC107 !important;}
+.m-time-axis-sub>.active>.sub-line>span{border-color:#FFC107 !important;/*#6c71c4*/}
 
 @media screen and (max-width: 340px){
     .m-time-axis>li>.title{font-size: 0.1rem;}

@@ -23,6 +23,8 @@ var vm=new Moon({
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
             "similarity":0,
+            "packageName":"--",
+            "packageCode":"0"
         }
 	},
 	hooks:{

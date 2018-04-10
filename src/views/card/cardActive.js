@@ -7,7 +7,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:3//1,等待中;2,成功;3,失败
+			load:2//1,等待中;2,成功;3,失败
 		},
 		userInfo:'',//用户信息
 		orderInfo: {
@@ -24,6 +24,14 @@ var vm=new Moon({
             "prestoreMoney":0,
             "similarity":0,
         },
+        selectPackage:{
+			name:'',
+			packageCode:'',
+			selPackCode:'',
+			prestore:'',
+		},
+		password1:'',
+		password2:'',
         orderStatus:'',
         desc:''//错误描述
 	},
@@ -45,9 +53,12 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO'),
+			selectPackage=vm.getStore('selectPackage');
+
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
+				vm.set('selectPackage',selectPackage);
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 
@@ -70,7 +81,7 @@ var vm=new Moon({
 							});
 						}
 					});
-					vm.callMethod("intervalGetResult");
+					//vm.callMethod("intervalGetResult");
 				});
 			}else{
 				alert('本地订单信息丢失');
@@ -105,6 +116,44 @@ var vm=new Moon({
 
 				});
 			},2000);
+		},
+		setServicePsd:function(){
+			let password1=vm.get('password1'),
+			    password2=vm.get('password2');;
+
+			if(!password1.match(/^\d{6}$/)){
+				layer.open({
+                    content:'密码格式错误',
+                    skin: "msg",
+                    time: 3
+                });
+                return false;
+			}else if(password1!=password2){
+				layer.open({
+                    content:'两次输入密码不一致',
+                    skin: "msg",
+                    time: 3
+                });
+                return false;
+			}else{
+				vm.AJAX('../../../tas/w/business/setPwd',{
+					userInfo:vm.get('userInfo'),
+					params:{
+						sysOrderId:vm.get('orderInfo').sysOrderId,
+						pwd:password2
+					}
+				},function(data){
+					Jsborya.pageJump({
+						url:'',
+						stepCode:802,
+						depiction:'',
+						data:{
+							password:password2,
+							phone:vm.get('orderInfo').phoneNum
+						}
+					});
+				});
+			}
 		},
 		jump:function(){
 			vm.toIndexPage();

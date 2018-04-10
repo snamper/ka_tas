@@ -1,29 +1,39 @@
-.device-box{
-	position: relative;
+.m-write-load{
+	margin-top: 0.5rem;
+	text-align: center;
+}
+.m-write-load>.m-loading-ka{
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	background-size: 0.8rem;
+	box-shadow: none;
+	background-color: #F8F8F8
+}
+.m-write-load>h4{
+	margin-top: 0.1rem;
+}
+.m-error{
+    text-align: center;
+    margin-top: 0.5rem;
+}
+.m-error>img{
+    width: 0.8rem;
+}
+.m-error>h3{
+	margin-top: 5px 0;
+	font-size: 0.17rem;
+}
+.m-error>p{
+    font-size: 0.15rem;
+}
+.m-error>.tips{
 	margin-top:0.2rem;
-	padding-bottom: 0.4rem;
-}
-.device-box>.state{
-	position: absolute;
-	top: 0;
-	right:0.3rem;
-	color: #666;
 	font-size: 0.12rem;
+	line-height: 1.65;
+	padding:0 0.2rem;
 }
-.device-box>.state .black{
-	color: #000;
-}
-.device-box>.bg{}
-.device-box>.bg>img{
-	display: block;
-	width: 90%;
-	margin:auto;
-}
-.device-box>.tips{
-	color:#4e5e6e;line-height: 1.65;
-	margin:0.1rem;
-	font-size: 0.12rem;
-}
+
 .btn.btny{
 	color:#EA6E08 !important;
 	border-color:#EA6E08 !important;
@@ -57,149 +67,4 @@
 	100%{
 		width: 100%;
 	}
-}
-.btn-line{
-	border:1px solid transparent;
-	border-color: #4b3887;
-	border-radius: 3px;
-	padding:2px 5px;
-	font-size: 0.12rem;
-	color: #4b3887;
-}
-.btn-line:active{
-	color: #fff;
-	background-color:#4b3887;
-}
-.m-all-tag{
-	margin-bottom: 0;
-	padding-bottom:5px;
-}
-.m-all-tag>.tag{
-	margin-bottom: 0;
-}
-.m-all-tag>.tag>.fl{
-	line-height: 0.25rem;
-}
-.m-order-info>.set{
-	font-weight: bold;
-}
-.m-order-info>.set>.left{
-	text-align: right;
-	width: 0.4rem;
-}
-.btn-line, .m-scan{
-	display: inline-block;
-	vertical-align: middle;
-}
-.m-scan{	
-	position: relative;
-	width: 0.35rem;
-	height: 0.25rem;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size:contain;
-	background-image: url("../img/sim.png");
-}
-.m-scan>span{
-	display: inline-block;
-	border-color:#4b3887 !important;
-	width:5px;
-	height:5px;
-	position: absolute;
-}
-.m-scan>.top-left, .m-scan>.top-right{
-	border-top: 1px solid transparent;
-	top:0;
-}
-.m-scan>.top-left, .m-scan>.bottom-left{
-	border-left: 1px solid transparent;
-	left: 0;
-}
-.m-scan>.top-right, .m-scan>.bottom-right{
-	border-right: 1px solid transparent;
-	right: 0;
-}
-.m-scan>.bottom-left, .m-scan>.bottom-right{
-	border-bottom: 1px solid transparent;
-	bottom: 0;
-}
-.m-scan>.line{
-	display: inline-block;
-	position: absolute;
-	height: 0.3rem;
-	width: 2px;
-	top:-2px;
-	left:0;
-	background-image:-webkit-linear-gradient(to bottom, #fff 0, #4527A0 50%, #fff 100%);
-	background-image:-moz-linear-gradient(to bottom, #fff 0, #4527A0 50%, #fff 100%);
-	background-image:linear-gradient(to bottom, #fff 0, #4527A0 50%, #fff 100%);
-	background-image:-ms-linear-gradient(to bottom, #fff 0, #4527A0 50%, #fff 100%);
-	animation:aniLineMove .5s ease-in-out infinite alternate;
-	-webkit-animation:aniLineMove .5s ease-in-out infinite alternate;
-}
-@keyframes aniLineMove{
-	0%{
-		left:0;
-	}
-	100%{
-		left:33px;
-	}
-}
-@-webkit-keyframes aniLineMove{
-	0%{
-		left:0;
-	}
-	100%{
-		left:35px;
-	}
-}
-.pay-load{}
-.pay-load>b{
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    background-color:#EA6E08;
-    -webkit-animation: pay-loading 1.4s infinite ease-in-out;
-    animation: pay-loading 1.4s infinite ease-in-out;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both
-}
-.pay-load>b.f1 {
-    margin-left: 0;
-    -webkit-animation-delay: -.32s;
-    animation-delay: -.32s
-}
-
-.pay-load>b.f2 {
-    -webkit-animation-delay: -.16s;
-    animation-delay: -.16s
-}
-@-webkit-keyframes pay-loading {
-    0%,
-    100%,
-    80% {
-        transform: scale(0);
-        -webkit-transform: scale(0)
-    }
-    40% {
-        transform: scale(1);
-        -webkit-transform: scale(1)
-    }
-}
-
-@keyframes pay-loading {
-    0%,
-    100%,
-    80% {
-        transform: scale(0);
-        -webkit-transform: scale(0)
-    }
-    40% {
-        transform: scale(1);
-        -webkit-transform: scale(1)
-    }
-}
-.m-msg{
-	margin:5px;
 }

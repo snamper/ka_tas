@@ -8,7 +8,9 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:0
+			load:0,
+			packageType:0,
+			loadPackage:0
 		},
 		totalPrice:0,//价格计算
 		cardInfo:{
@@ -29,8 +31,9 @@ var vm=new Moon({
 			imsi:'',
 			smsp:''
 		},
-		recommendList:[{name:'流量多',type:'liuliang'},{name:'语音多',type:'yuyin'},{name:'最省钱',type:'price'},{name:'全部套餐',type:'all'}],
+		recommendList:[{name:'流量多',type:'2'},{name:'语音多',type:'3'},{name:'最省钱',type:'4'},{name:'全部',type:'1'}],
 		userInfo:'',//用户信息
+		packageList:[]
 	},
 	hooks: {
 	    init: function() {
@@ -46,10 +49,23 @@ var vm=new Moon({
 				selectPackage=vm.getStore('selectPackage');
 			if(cardInfo){
 				vm.set('cardInfo',cardInfo);
-				let icon='card_green';
-				if(cardInfo.deviceStatus==0)icon='card_red';
+
+				let deviceType=cardInfo.deviceType,icon='';
+				if(cardInfo.deviceType==1){
+					if(cardInfo.deviceStatus==1){
+						icon='card_green';
+					}else icon='card_red';
+					
+				}else if(cardInfo.deviceType==2){
+					if(cardInfo.deviceStatus==1){
+						icon='wcard_green';
+					}else icon='wcard_red';
+					
+				}
 				Jsborya.setHeader({
 					title:'选择套餐',
+					frontColor:'#ffffff',
+					backgroundColor:'#4b3887',
 					left:{
 						icon:'back_white',
 						value:'',
@@ -67,27 +83,43 @@ var vm=new Moon({
 				}
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
+					vm.callMethod('getPackageList');
 					Jsborya.registerMethods('headerRightClick',function(){
-						Jsborya.pageJump({
-							url:"simInfo.html",
-							stepCode:999,
-							depiction:'SIM卡信息',
-							destroyed:false,
-							header:{
-		                        frontColor:'#ffffff',
-		                        backgroundColor:'#4b3887',
-		                    }
-						});
+						if(cardInfo.deviceType==1){
+							Jsborya.pageJump({
+								url:"simInfo.html",
+								stepCode:999,
+								depiction:'SIM卡信息',
+								destroyed:false,
+								header:{
+			                        frontColor:'#ffffff',
+			                        backgroundColor:'#4b3887',
+			                    }
+							});
+						}else if(cardInfo.deviceType==2){
+							Jsborya.pageJump({
+								url:'',
+								stepCode:803,
+								depiction:'设备管理',
+								destroyed:false,
+							});
+						}
 					});
 				});
 			}else{
 				alert('本地号卡信息错误');
 			}
 	    },
+	    mounted:function(){
+	    	setTimeout(function(){
+	    		vm.callMethod('setPage');
+	    	},300);
+	    }
 	},
 	methods:{
-		changePackage:function(){
-			vm.callMethod('jumpToPackageList',['all']);
+		setPage:function(){
+			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
+			document.getElementById("packageList").style.maxHeight=window_h-323+'px';
 		},
 		readCardICCID:function(){
 			vm.set("off.load",1);
@@ -135,7 +167,7 @@ var vm=new Moon({
                         yes:function(){
                         	vm.setStore('ORDER_INFO',data.data.orderInfo);
 						    Jsborya.pageJump({
-				                url:'orderDetails.html',
+				                url:'orderInfo.html',
 				                stepCode:999,
 				                depiction:'订单详情',
 				                header:{
@@ -170,10 +202,22 @@ var vm=new Moon({
                     });
 				}
 
-				let icon='card_green';
-				if(data.data.status==4)icon='card_red';
+				let deviceType=data.data.deviceType,icon='';
+				if(deviceType==1){
+					if(data.data.status==1){
+						icon='card_green';
+					}else icon='card_red';
+					
+				}else if(deviceType==2){
+					if(data.data.status==1){
+						icon='wcard_green';
+					}else icon='wcard_red';
+					
+				}
 				Jsborya.setHeader({
 					title:'选择套餐',
+					frontColor:'#ffffff',
+					backgroundColor:'#4b3887',
 					left:{
 						icon:'back_white',
 						value:'',
@@ -182,7 +226,7 @@ var vm=new Moon({
 					right:{
 						icon:icon,
 						value:'',
-						callback:''
+						callback:'headerRightClick'
 					}
 				});
 
@@ -233,21 +277,56 @@ var vm=new Moon({
 				vm.set("off.load",false);
 			});
 		},
-		jumpToPackageList:function(type,name){
-			Jsborya.pageJump({
-				url:'packageList.html?type='+BASE64.encode(JSON.stringify({val:type,name:name})),
-				stepCode:999,
-				depiction:'套餐列表',
-				destroyed:false,
-				header:{
-                    frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
-                }
+		// jumpToPackageList:function(type,name){
+		// 	Jsborya.pageJump({
+		// 		url:'packageList.html?type='+BASE64.encode(JSON.stringify({val:type,name:name})),
+		// 		stepCode:999,
+		// 		depiction:'套餐列表',
+		// 		destroyed:false,
+		// 		header:{
+  //                   frontColor:'#ffffff',
+  //                   backgroundColor:'#4b3887',
+  //               }
+		// 	});
+		// },
+		shiftRcmd:function(index){
+			if(vm.get('off').loadPackage)return false;
+			vm.set('off.packageType',index);
+			vm.callMethod('getPackageList');
+		},
+		getPackageList:function(){//获取套餐列表
+			const json={
+	  			params:{
+	  				type:vm.get('recommendList')[vm.get('off').packageType].type,
+	  				cityCode:vm.get('cardInfo').cityCode,
+	  				phoneNum:vm.get('cardInfo').phone,
+	  				size:20
+	  			},
+	  			userInfo:vm.get('userInfo')
+	  		};
+
+	  		vm.set('off.loadPackage',true);
+			vm.AJAX('../../../tas/w/source/packageList',json,function(data){
+				let selectCode=vm.get('selectPackage').packageCode;
+				if(selectCode){
+					let arr=[],item={};
+					data.data.titleList.forEach((value,index)=>{
+						if(value.code==selectCode){
+							item=value;
+						}else arr.push(value);
+					});
+					arr.unshift(item);
+					vm.set('packageList',arr);
+				}else vm.set('packageList',data.data.titleList);
+				
+				
+			},function(){
+				vm.set('off.loadPackage',false);
 			});
 		},
-		jumpToPackageDetails:function(){
+		jumpToPackageDetails:function(code){
 			Jsborya.pageJump({
-				url:'packageDetails.html?code='+vm.get('selectPackage').packageCode+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
+				url:'packageDetails.html?code='+code+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
 				stepCode:999,
 				depiction:'套餐详情',
 				destroyed:false,

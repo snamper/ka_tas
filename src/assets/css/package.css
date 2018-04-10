@@ -1,5 +1,5 @@
 .u-icon-right{background-image:url(../img/icon-right.png);}
-.u-icon-shift{background-image:url(../img/shift.png);}
+/*.u-icon-shift{background-image:url(../img/shift.png);}*/
 
 .m-recommend-ul{
     padding-bottom: 0.1rem;
@@ -8,39 +8,67 @@
     width: 22%;
     margin:0 1.5%;
     float: left;
-    padding:8px 0 6px 0;
+    padding:7px 0 5px 0;
     border:1px solid transparent;
+    border-color: #757575;
+    color: #757575;
     background-color: #fff;
     text-align:center;
     border-radius:3px;
 }
-.m-recommend-ul>li:nth-child(1){
-    color:#2196F3;
-    border-color:#2196F3;
-}
-.m-recommend-ul>li:nth-child(2){
-    color:#FFC107;
-    border-color:#FFC107;
-}
-.m-recommend-ul>li:nth-child(3){
-    color:#00E676;
-    border-color:#00E676;
-}
-.m-recommend-ul>li:nth-child(4){
-    color:#757575;
-    border-color:#757575;
+.m-recommend-ul>.active{
+    border-color: #4b3887;
+    color: #4b3887;
 }
 
-.u-icon-right{
-    display: inline-block;
-    width: 0.15rem;
-    height: 0.15rem;
-    vertical-align: middle;
+.m-packageList{
+    
+}
+.m-packageList>li{
     position: relative;
-    top: 1px;
-    background-position: center;
+    padding:0.1rem 0 0.1rem 0.05rem;
+    margin-left: 0.1rem;
+    border-bottom: 1px solid #eee;
+}
+.m-packageList>li:last-child{
+    border-bottom: none;
+}
+.m-packageList>li>.title{
+    font-size: 0.14rem;
+}
+.m-packageList>li>.info{
+    font-size: 0.12rem;
+    padding-right: 0.6rem;
+    margin-top: 5px;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.m-packageList>li>.right{
+    position: absolute;
+    right: 0.1rem;
+    top: 0.2rem;
+    height: 0.2rem;
+    line-height: 0.2rem;
+    padding-right: 0.2rem;
     background-size: 0.15rem;
-    background-repeat: no-repeat;
+    background-position: right center;
+    background-repeat:no-repeat;
+}
+.m-packageList>li>.right>.yellow{
+
+}
+#packageList{
+    position: relative;
+    min-height: 0.5rem;
+    border-top: 1px solid #eee;
+}
+#packageList>.pay-load{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top:-0.1rem;
+    margin-left: -0.2rem;
 }
 
 .btn-c-package{}
@@ -63,7 +91,7 @@
     width: 10px;
     height: 10px;
     border-radius: 100%;
-    background-color:#eb7a00;
+    background-color:#FFC107;
     -webkit-animation: pay-loading 1.4s infinite ease-in-out;
     animation: pay-loading 1.4s infinite ease-in-out;
     -webkit-animation-fill-mode: both;

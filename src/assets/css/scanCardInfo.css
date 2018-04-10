@@ -1,0 +1,139 @@
+.u-icon-tagnum_1{
+    background-image: url(../img/icon_no1.png);
+}
+.u-icon-tagnum_2{
+    background-image: url(../img/icon_no2.png);
+}
+.u-icon-tagnum_3{
+    background-image: url(../img/icon_no3.png);
+}
+.u-icon-wcg{
+    background-image: url(../img/picture_watch_connected.png);
+}
+.u-icon-wcr{
+    background-image: url(../img/picture_watch_ununited.png);
+}
+
+.m-tag{
+    padding: 0.1rem;
+}
+.m-tag>i{
+    display: inline-block;
+    vertical-align: top;
+    width: 0.2rem;
+    height: 0.2rem;
+    margin-right:5px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0.2rem;
+}
+.m-tag>span{
+    display: inline-block;
+    vertical-align: top;
+    line-height: 0.2rem;
+}
+
+.g-col-2{
+    background-color: #fff;
+}
+.g-col-2>.line{
+    border-bottom: 1px solid #eee;
+}
+.g-col-2>.row{
+    display: flex;
+    margin-left: 0.1rem;
+    padding:0.1rem 0;
+}
+.g-col-2>.row>span{
+    flex: 1;
+}
+.g-col-2>.row>.left{
+    color: #515151
+}
+.g-col-2>.row>.right{
+    text-align: right;
+    padding-right: 0.1rem;
+}
+
+.m-tips{
+    font-size: 0.12rem;
+    padding: 0.1rem;
+}
+.m-nocard-tips{
+    display: flex;
+    padding: 0.1rem 0;
+}
+.m-nocard-tips>.left{
+    width: 1.2rem;
+}
+.m-nocard-tips>.left>img{
+    display: block;
+    width: 90%;
+}
+.m-nocard-tips>.right{
+    flex:1;
+    line-height: 1.6;
+    font-size: 0.12rem;
+    margin-top: 0.1rem;
+}
+.m-nocard-error{
+    background-color: #fff;
+}
+.m-nocard-error>.iccid{
+    padding-top: 0.1rem;
+    padding-left:0.1rem;
+}
+.m-nocard-error>.iccid>span{
+    
+}
+.m-nocard-error>.iccid>b{
+    padding-left: 0.1rem;
+}
+.m-btn-group{
+    padding:0 0.2rem;
+}
+.m-btn-group>.btn{
+    display: inline-block;
+}
+.m-btn-group>.btny{
+    width: 63%;
+}
+.m-btn-group>.btnDefault{
+    width: 32%;
+    margin-right:3%; 
+}
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+        transform: translate3d(0,-100%,0);
+    }
+    100%{
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
+}
+
+
+
+.m-wacard-tips{
+
+}
+.m-wacard-tips>div{
+    margin:5px;
+    color: #212121;
+}
+.m-wacard-tips>div>i{
+    display: inline-block;
+    vertical-align: top;
+    width: 0.2rem;
+    height: 0.2rem;
+    margin-right:5px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0.2rem;
+}
+.m-wacard-tips>div>.red{
+    padding-left: 0.1rem;
+}

@@ -36,7 +36,7 @@ body{
 			<div class="title">2.实名认证</div>
 		</li>
 		<li>
-			<div class="title">3.订单审核</div>
+			<div class="title">3.支付</div>
 		</li>
 		<li>
 			<div class="title">4.写卡</div>
@@ -57,24 +57,18 @@ body{
 		<li>
 			<span class="left grey">所选号码:</span>
 			<b class="purple f-fts-18">{{ phoneFormat(cardInfo.phone) }}</b>({{cardInfo.cityName}}<b class="yellow" m-show="cardInfo.pretty==1">,靓号</b>)</li>
-<!-- 		<li class="double-border"></li> -->
+		<li class="double-border"></li>
+		<li>
+			<span class="left grey">号码占用费</span>
+			<span class="fr right">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
+		</li>
 	</ul>
 	<section class="m-all-tag">
 		<div class="tag clr">
 			<i class="u-icon-tag"></i>
 			<span>套餐选择</span>
-			<span m-show="selectPackage.packageCode" class="btn-c-package fr purple" m-on:click="changePackage"><i class="u-icon-shift"></i>换套餐</span>
 		</div>
-		<ul class="m-order-info other-set clr" m-show="selectPackage.packageCode">
-			<li m-show="selectPackage.packageCode" m-on:click="jumpToPackageDetails" class="border">
-				<span class="left grey">所选套餐:</span>
-				<span>{{ selectPackage.name }}</span>
-				<i class="fr u-icon-right"></i>
-			</li>
-			<li>
-				<span class="left grey">号码占用费</span>
-				<span class="fr right">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
-			</li>
+		<!-- <ul class="m-order-info other-set clr" m-show="selectPackage.packageCode">
 			<li>
 				<span class="left grey">含预存话费</span>
 				<span class="fr right">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
@@ -82,10 +76,26 @@ body{
 			<li class="clr">
 				<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>
 			</li>
+		</ul> -->
+		<ul class="m-recommend-ul clr">
+			<li m-for="todo,index in recommendList" m-on:click="shiftRcmd(index)" m-literal:class="{active:off.packageType==index}">{{ todo.name }}</li>
 		</ul>
-		<ul m-show="!selectPackage.packageCode" class="m-recommend-ul clr" id="bagUl">
-			<li m-for="todo,index in recommendList" m-on:click="jumpToPackageList(todo.type,todo.name)">{{ todo.name }}</li>
-		</ul>
+		<div id="packageList" class="f-scroll">
+			<ul class="m-packageList" m-show="!off.loadPackage">
+				<li m-for="todo,index in packageList" m-on:click="jumpToPackageDetails(todo.code)">
+					<div class="title">{{ todo.title }}</div>
+					<div class="info grey">{{ todo.info }}</div>
+					<div class="right u-icon-right">
+						<span class="yellow" m-show="todo.code==selectPackage.packageCode">已选择</span>
+					</div>
+				</li>
+			</ul>
+			<span class="pay-load" m-show="off.loadPackage">
+				<b class="f1"></b>
+				<b class="f2"></b>
+				<b></b>
+			</span>
+		</div>
 	</section>
 	<section m-show="selectPackage.packageCode" class="m-btn-double">
 		<div m-on:click="readCardICCID" class="btn btny">

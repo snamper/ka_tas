@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>号板</title>
+<title>随心搜</title>
 <style type="text/css">
 [m-mask]{
 	opacity: 0
@@ -15,13 +15,10 @@
 </head>
 <body>
 <div id="app" m-mask>
-	<section class="f-mlr-20">
-		<div class="m-msg yellow" m-show="off.showOrderMsg" m-on:click="toOrderDetails">您当前有未完成的订单，点击查看详情>></div>
+	<section>
+		<div class="m-msg" m-show="off.showOrderMsg" m-on:click="toOrderDetails">您当前有未完成的订单，点击查看详情>></div>
 		<div class="m-search">
-			<div class="m-hd">
-				<b>随心搜</b>
-				<span class="text" m-on:click="cityClick"><i class="u-icon-location"></i>{{ selectCity.cityName }}</span>
-			</div>
+			<div class="m-hd yellow" m-on:click="cityClick">{{ selectCity.cityName }}</div>
 			<div class="m-sch">
 				<input id="searchInput"
 					autocomplete="off"
@@ -35,21 +32,23 @@
 			</div>
 		</div>
 	</section>
-	<section id="hotLabel" m-show="off.showFirstLabel" class="f-mt-20 f-mlr-20">
+	<section id="hotLabel" m-show="off.isRecommend">
 		<ul class="m-hot-label">
 			<li
 			m-for="item,index in hotLabel"
 			m-literal:title="index"
 			m-on:click="labelClick">{{ item.name }}</li>
 		</ul>
-		<!-- <span class="btn-openmore">展开<i class="u-icon-openmore"></i></span> -->
 	</section>
-	<section m-show="!off.showFirstLabel" class="f-mlr-20">
-		<div class="m-search-label" m-show="selectLabel.name">
-			<span class="m-slt-lb" m-on:click="clearSelectLabel">{{ selectLabel.name }}<i class="u-icon-clear"></i></span>
-		</div>
-		<div class="m-search-tag grey">搜索结果</div>
-		<div id="cardBox" class="f-scroll" m-on:scroll="pullLoad">
+	<section>
+		<section m-show="!off.isRecommend">
+			<div class="m-search-label f-mlr-15" m-show="selectLabel.name">
+				<span class="m-slt-lb" m-on:click="clearSelectLabel">{{ selectLabel.name }}<i class="u-icon-clear"></i></span>
+			</div>
+			<div class="m-search-tag grey">搜索结果</div>
+		</section>
+		<div class="m-search-tag grey" m-show="off.isRecommend"><i class="u-icon-rcmd"></i>推荐号码</div>
+		<div id="cardBox" class="f-scroll f-mlr-15" m-on:scroll="pullLoad">
 			<ul class="m-card-ul f-mlr-10">
 				<li m-for="todo,index in cardData.list" m-on:click="toPackage(index)">
 					<div class="number" m-html="filterNumber(todo.phoneNum)"></div>

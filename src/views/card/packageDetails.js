@@ -93,24 +93,27 @@ var vm=new Moon({
 				let selectPackage=vm.get('selectPackage'),
 					prestoreMoneyList=data.data.prestoreMoneyList,
 					selPackage=data.data.selPackage;
-				for(let i=0,len=prestoreMoneyList.length;i<len;i++){
-					if(prestoreMoneyList[i].prestoreMoney==selectPackage.prestore){
-						data.data.prestoreMoneyList[i].init=1;
-						vm.set('off.prestore',i);
-					}else data.data.prestoreMoneyList[i].init=0;
+				if(selectPackage.packageCode==data.data.code){
+					for(let i=0,len=prestoreMoneyList.length;i<len;i++){
+						if(prestoreMoneyList[i].prestoreMoney==selectPackage.prestore){
+							data.data.prestoreMoneyList[i].init=1;
+							vm.set('off.prestore',i);
+						}else data.data.prestoreMoneyList[i].init=0;
+					}
+					let selCodeArr=[];
+					if(selectPackage.selPackCode)selCodeArr=selectPackage.selPackCode.split('|');//选中的可选包code
+					for(let i=0,len=selPackage.length;i<len;i++){
+						if(selCodeArr.length){
+							for(let j=0,lenj=selCodeArr.length;j<lenj;j++){
+								if(selPackage[i].code==selCodeArr[j]){
+									if(selPackage[i].init==0)data.data.selPackage[i].init=1;//默认未选中更改为选中
+									break;
+								}else data.data.selPackage[i].init=0;
+							}
+						}else data.data.selPackage[i].init=0;//未选中任何可选包
+					}
 				}
-				let selCodeArr=[];
-				if(selectPackage.selPackCode)selCodeArr=selectPackage.selPackCode.split('|');//选中的可选包code
-				for(let i=0,len=selPackage.length;i<len;i++){
-					if(selCodeArr.length){
-						for(let j=0,lenj=selCodeArr.length;j<lenj;j++){
-							if(selPackage[i].code==selCodeArr[j]){
-								if(selPackage[i].init==0)data.data.selPackage[i].init=1;//默认未选中更改为选中
-								break;
-							}else data.data.selPackage[i].init=0;
-						}
-					}else data.data.selPackage[i].init=0;//未选中任何可选包
-				}
+				
 				vm.set('packageInfo',data.data);
 			});
 		},

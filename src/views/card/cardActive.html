@@ -13,7 +13,7 @@
 }
 .order-tips{text-align: center;margin-top: 0.3rem;margin-bottom:0.2rem;}
 .order-tips .success{width: 0.7rem;}
-.order-tips .error{width: 1.5rem;}
+.order-tips .error{width: 0.7rem;}
 .order-tips>.dp>b{font-size: 0.16rem;padding: 0.1rem 0;display: inline-block;font-weight: bold;}
 .order-tips>.tips{
 	width: 90%;
@@ -73,15 +73,53 @@
         -webkit-transform: scale(1)
     }
 }
-.btn-back-home{
-	display: block;
-	width: 40%;
-	margin:auto;
-	border-radius: 20px;
-	padding:5px 0;
-	border:1px solid transparent;
-	border-color: #4b3887;
-	color:#4b3887 ;
+.o-success{
+	position: relative;
+}
+.o-success>.right{
+	position: absolute;
+	right: 0;
+	top: 5px;
+}
+.o-success>.right>img{
+	width: 0.15rem;
+	vertical-align: middle;
+	position: relative;
+	top: -2px;
+	margin-right: 2px;
+}
+.m-success-set{
+	margin-bottom: 0.1rem;
+}
+.m-success-set>.grey{
+	padding:0.1rem 0.2rem;
+	font-size: 0.12rem;
+	line-height: 1.65;
+}
+
+.o-set-ul{
+
+}
+.o-set-ul>li{
+	display: flex;
+	margin-left:0.1rem;
+	padding:5px 10px 5px 5px;
+}
+.o-set-ul>li:first-child{
+	border-bottom: 1px solid #eee;
+}
+.o-set-ul>li>.lt{
+	width: 0.7rem;
+	line-height: 0.3rem;
+}
+.o-set-ul>li>.rt{
+	flex:1;
+}
+.o-set-ul>li>.rt>input{
+	width: 100%;
+	height: 0.3rem;
+	border:none;
+	letter-spacing: 3px;
 }
 </style>
 </head>
@@ -95,7 +133,7 @@
 				<div class="title">2.实名认证</div>
 			</li>
 			<li>
-				<div class="title">3.订单审核</div>
+				<div class="title">3.支付</div>
 			</li>
 			<li>
 				<div class="title">4.写卡</div>
@@ -111,50 +149,68 @@
 			<li><div class="sub-line"><b></b><span></span></div></li>
 			<li class="active"><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
-		<section>
-			<div class="order-tips">
-				<div>
-					<img class="success" m-show="off.load!=3" src="../../assets/img/icon_suc_a.png">
-					<img class="error" m-show="off.load==3" src="../../assets/img/icon_failure.png">
-				</div>
-				<div class="dp">
-					<b class="green" m-show="off.load==1">开卡申请已受理，请等待开卡结果</b>
-					<b class="green" m-show="off.load==2">开卡成功！该卡已可正常使用</b>
-					<b class="red" m-show="off.load==3">
-						<span m-show="orderStatus==3">开卡失败</span>
-						<span m-show="orderStatus==4">订单已关闭</span>
-					</b>
-				</div>
-				<div m-show="off.load==1"><span class="pay-load">
-					<b class="f1"></b>
-					<b class="f2"></b>
-					<b></b>
-				</span></div>
-				<a class="btn-back-home btnScale" m-on:click="jump" m-show="off.load!=1">返回选号</a>
-				<dl class="tips f-tal grey" m-show="off.load==3">
-					<dt>温馨提示</dt>
-					<dd class="red">1、失败原因：{{ desc }}</dd>
-					<dd>2、该号卡板已不可再使用。</dd>
-					<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
-				</dl>
-			</div>
-		</section>
 		<ul class="m-order-info clr grey">
 			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
 			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
-			<li>
+			<li class="o-success">
 				<span class="left">所选号码:</span>
 				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
 				<span>[{{orderInfo.cityName}}]</span>
+				<span class="right green" m-show="off.load==2"><img src="../../assets/img/icon_suc_a.png">开卡成功</span>
 			</li>
-			<li class="double-border"></li>
+			<li><span class="left">所选套餐:</span>{{ selectPackage.name }}</li>
+			<!-- <li class="double-border"></li>
 			<li class="clr"><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(orderInfo.cardMoney)}}</span></li>
 			<li class="clr">
 				<span class="left">+含预存话费</span>
 				<span class="fr right">￥{{mathCentToYuan(orderInfo.prestoreMoney)}}</span>
 			</li>
-			<li class="clr"><span class="fr right black">总价:<b class="red font-big">￥{{mathCentToYuan(orderInfo.totalMoney)}}</b></span></li>
+			<li class="clr"><span class="fr right black">总价:<b class="red font-big">￥{{mathCentToYuan(orderInfo.totalMoney)}}</b></span></li> -->
 		</ul>
+		<div class="order-tips" m-show="off.load!=2">
+			<div>
+				<img class="success" m-show="off.load==1" src="../../assets/img/icon_suc_a.png">
+				<img class="error" m-show="off.load==3" src="../../assets/img/icon_failure.png">
+			</div>
+			<div class="dp">
+				<b class="green" m-show="off.load==1">开卡申请已受理，请等待开卡结果</b>
+				<b class="red" m-show="off.load==3">
+					<span m-show="orderStatus==3">开卡失败</span>
+					<span m-show="orderStatus==4">订单已关闭</span>
+				</b>
+			</div>
+			<div m-show="off.load==1"><span class="pay-load">
+				<b class="f1"></b>
+				<b class="f2"></b>
+				<b></b>
+			</span></div>
+			<dl class="tips f-tal grey" m-show="off.load==3">
+				<dt>温馨提示:</dt>
+				<dd class="red">1、失败原因：{{ desc }}</dd>
+				<dd>2、该号卡板已不可再使用。</dd>
+				<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
+			</dl>
+			<div class="btn btnp" m-on:click="jump" m-show="off.load==3">返回选号</div>
+		</div>
+		<div class="m-success-set" m-show="off.load==2">
+			<div class="grey">
+				温馨提示：<br>1、贡献您成为远特用户;<br>2、马上设置服务密码，可直接登录“卡盟通服”掌上营业厅，可直接进行充值，查询实时话费、我的套餐、套餐余量等业务;<br>3、有疑问请拨打：语音自助服务10027  客服电话4000410027
+			</div>
+			<div class="m-all-tag">
+				<div class="tag purple">设置服务密码</div>
+				<ul class="o-set-ul">
+					<li>
+						<span class="lt">服务密码</span>
+						<span class="rt"><input m-model="password1" type="password" maxlength="6" placeholder="请输入6位数字密码"></span>
+					</li>
+					<li>
+						<span class="lt">二次确认</span>
+						<span class="rt"><input m-model="password2" type="password" maxlength="6" placeholder="请再次输入数字密码"></span>
+					</li>
+				</ul>
+			</div>
+			<div class="btn btny" m-on:click="setServicePsd">马上去查查</div>
+		</div>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
 </body>

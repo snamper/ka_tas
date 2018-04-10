@@ -3,10 +3,6 @@
   *@author: thinkmix
   *@date 2017-12-27
 ***/
-// var GlobalVar = function() {
-//     return this || (0, eval)("(this)")
-// }();
-// GlobalVar.Gshec = /^1(3|4|5|7|8)\d{9}$/, GlobalVar.Gchec = /^[0-9]*[1-9][0-9]*$/;
 
 export default{
     init(Moon){
@@ -229,11 +225,12 @@ export default{
                     load ? typeof load==='function'&&load() : layer.close(index);
                     if(xhr.status>=200&&(xhr.status<300 || xhr.status===304)){
                         try{
+                            alert(xhr.responseText);
                             var responseText=JSON.parse(xhr.responseText);
-                            if(responseText.code=='200'){
+                            if(responseText.code=='200'||responseText.code=='671'){
                                 success(responseText)
                             }else{
-                                typeof fail==='function'&&fail();
+                                typeof fail==='function'&&fail(responseText);
                                 _self.error(responseText);
                             }
                         }catch(e){

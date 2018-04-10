@@ -34,30 +34,30 @@ require('./base64.js');
 	}
 	a.Jsborya={
 		ready:function(cb){
-			// let num=0;
-			// let timer=setInterval(function(){
-			// 	num++;
-			// 	if(window.webviewBridge){
-			// 		clearInterval(timer);
-			// 		cb();
-			// 	}else if(num/10>10){
-			// 		alert('挂载webviewBridge超时');
-			// 		clearInterval(timer);
-			// 	}
-			// },100);
-			setTimeout(function(){
-				window.webviewBridge={
-					callHandler:function(){
+			let num=0;
+			let timer=setInterval(function(){
+				num++;
+				if(window.webviewBridge){
+					clearInterval(timer);
+					cb();
+				}else if(num/10>10){
+					alert('挂载webviewBridge超时');
+					clearInterval(timer);
+				}
+			},100);
+			// setTimeout(function(){
+			// 	window.webviewBridge={
+			// 		callHandler:function(){
 
-					}
-				};
-				cb();
-			},300);
+			// 		}
+			// 	};
+			// 	cb();
+			// },300);
 		},
 		getUserInfo:function(cb){//获取登录用户信息
 			// cb({
 			// 	"userId":"00000000000",
-			//	"phone":"",
+			// 	"phone":"",
 			// 	"applicationID":"123",
 			// 	"token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",
 			// 	"timestamp":"1509608023665",
@@ -148,6 +148,7 @@ require('./base64.js');
 				name:'takePhotos',
 				data:json,
 				callback:function(result){
+					alert(JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -161,6 +162,7 @@ require('./base64.js');
 				name:'faceVerification',
 				data:json,
 				callback:function(result){
+					alert(JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -176,6 +178,7 @@ require('./base64.js');
 				name:'readCardICCID',
 				data:'',
 				callback:function(result){
+					alert(JSON.stringify(result));
 					cb(result);
 				}
 			});
@@ -197,6 +200,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:'',
 				callback:function(result){
+					alert(JSON.stringify(result));
 					cb(result);
 				}
 			});

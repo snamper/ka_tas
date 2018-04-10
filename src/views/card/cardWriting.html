@@ -23,7 +23,7 @@
 				<div class="title">2.实名认证</div>
 			</li>
 			<li>
-				<div class="title">3.订单审核</div>
+				<div class="title">3.支付</div>
 			</li>
 			<li class="active">
 				<div class="title">4.写卡</div>
@@ -47,61 +47,26 @@
 				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
 				<span>[{{orderInfo.cityName}}]</span>
 			</li>
+			<li><span class="left">所选套餐:</span>{{ selectPackage.name }}</li>
 		</ul>
 		<section>
-			<div class="device-box">
-				<div class="state">
-					<div>设备状态：<span class="green" m-show="deviceStatus==1">连接正常</span><span class="red" m-show="deviceStatus==2">连接失败</span><span class="red" m-show="deviceStatus==3">未连接</span><span class="red" m-show="deviceStatus==4">未插卡</span><span m-show="!deviceStatus">--</span>
-					</div>
-				</div>
-				<div class="bg">
-					<img style="width: 70%" src="../../assets/img/phone_sim.png">
-				</div>
-				<div class="tips">
-					<span m-show="!off.msg">*请把号卡插入手机侧面卡槽中</span>
-					<span class="red" m-show="off.msg">{{off.msg}}</span>
-				</div>
+			<div class="m-write-load" m-show="!errorMsg">
+				<div class="m-loading-ka"></div>
+				<h4 class="purple">写卡中，请勿拔出SIM卡</h4>
+			</div>
+			<div class="m-error" m-show="errorMsg">
+				<img src="../../assets/img/icon_failure.png">
+				<h3 class="red">写卡失败</h3>
+				<p class="red">{{ errorMsg }}</p>
+				<div class="tips grey f-tal">温馨提示：<br>1、操作建议：请更换SIM卡后，点击下方按钮继续开卡;<br>2、有疑问请拨打：语音自助服务10027  客服电话4000410027</div>
+				<div m-on:click="readCardICCID" class="btn btny">继续开卡</div>
 			</div>
 		</section>
-		<section class="m-all-tag">
-			<div class="tag clr">
-				<span class="fl">读取ICCID</span>
-				<div class="fr" m-show="!off.isJump">
-					<div class="m-scan" m-show="off.readLoad">
-						<span class="top-left"></span>
-						<span class="top-right"></span>
-						<span class="bottom-left"></span>
-						<span class="bottom-right"></span>
-						<b class="line"></b>
-					</div>
-					<a class="btn-line" m-show="!off.readLoad" m-on:click="readCardICCID">重新读取</a>
-				</div>
-			</div>
-			<ul class="m-order-info">
-				<li class="set"><span class="left">ICCID:</span>{{iccid}}</li>
-				<li class="set" m-show="imsiSubstr"><span class="left">IMSI:</span>{{imsiSubstr}}</li>
-			</ul>
-		</section>
-		
-		<div m-on:click="callWriteCard" m-show="off.submitLoad" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">
-			<i m-show="off.submitLoad==1">提交开卡申请</i>
-			<i m-show="off.submitLoad==2">开卡申请中，请稍后</i>
-			<span class="pay-load" m-show="off.submitLoad==2">
-				<b class="f1"></b>
-				<b class="f2"></b>
-				<b></b>
-			</span>
-		</div>
-		<div m-show="off.getLoad" class="btn btny">
-			<span>
-				<i m-show="off.getLoad==1">获取IMSI中</i>
-				<i m-show="off.getLoad==2">写卡中，请稍后</i>
-				<span class="pay-load">
-					<b class="f1"></b>
-					<b class="f2"></b>
-					<b></b>
-				</span>
-			</span>
+
+		<div m-on:click="callWriteCard" m-literal:class="{active:off.submitLoad,btn:true,btny:true}" m-show="off.step==4">
+			<i m-show="!off.submitLoad">提交开卡申请</i>
+			<i m-show="off.submitLoad">开卡申请中，请稍后</i>
+			<b></b>
 		</div>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
