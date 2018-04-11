@@ -184,7 +184,7 @@ body{
 /*-----------号码----------*/
 #cardBox{
 	position: relative;
-	padding-bottom:0.25rem;
+	padding-bottom:0.15rem;
 }
 .m-card-ul>li{
 	background-color: #fff;
@@ -227,59 +227,31 @@ body{
 .m-loading {
 	display: inline-block;
 	position: fixed;
-	bottom:5px;
-	left: 50%;
-	margin-left: -0.12rem;
+	width: 100%;
+	bottom:0;
+	left: 0;
     text-align: center;
-    width:.25rem;
     height: .25rem;
 }
-
-.m-loading .circular {
-    width: .25rem;
-    height: .25rem;
-    animation: loading-rotate 2s linear infinite;
-    -webkit-animation: loading-rotate 2s linear infinite;
+.m-loading>.u-icon-loading{
+    position: relative;
+    display: inline-block;
+    top: 3px;
+    width: 0.16rem;
+    background-size: 0.16rem;
+    background-image: url(../img/re.png);
+    background-repeat: no-repeat;
+    background-position:center;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    animation: loading-rotate .9s linear infinite;
+    -webkit-animation: loading-rotate .9s linear infinite
 }
-
-.m-loading .path {
-    animation: loading-dash 1.5s ease-in-out infinite;
-    -webkit-animation: loading-dash 1.5s ease-in-out infinite;
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: 0;
-    stroke-width: 2;
-    stroke: #4b3887;
-    stroke-linecap: round
+.m-loading>span{
+    height: 0.16rem;
 }
-
-@keyframes loading-dash {
-    0% {
-        stroke-dasharray: 1, 200;
-        stroke-dashoffset: 0
-    }
-    50% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -40px
-    }
-    to {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -120px
-    }
-}
-
-@-webkit-keyframes loading-dash {
-    0% {
-        stroke-dasharray: 1, 200;
-        stroke-dashoffset: 0
-    }
-    50% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -40px
-    }
-    to {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -120px
-    }
+.m-loading>.text{
+    color: #bfbfbf;
 }
 @keyframes loading-rotate {
     0%{

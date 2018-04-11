@@ -62,12 +62,17 @@
 				<div m-on:click="readCardICCID" class="btn btny">继续开卡</div>
 			</div>
 		</section>
-
-		<div m-on:click="submitOrder" m-literal:class="{active:off.submitLoad,btn:true,btny:true}" m-show="off.step==4">
-			<i m-show="!off.submitLoad">提交开卡申请</i>
-			<i m-show="off.submitLoad">开卡申请中，请稍后</i>
-			<b></b>
-		</div>
+		<section m-show="off.step==4">
+			<div class="m-error">
+				<img src="../../assets/img/icon_suc_a.png">
+				<h3 class="green">写卡成功</h3>
+			</div>
+			<div m-on:click="submitOrder" m-literal:class="{active:off.submitLoad,btn:true,btny:true}">
+				<i m-show="!off.submitLoad">提交开卡申请</i>
+				<i m-show="off.submitLoad">开卡申请中，请稍后</i>
+				<b></b>
+			</div>
+		</section>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
 </body>
