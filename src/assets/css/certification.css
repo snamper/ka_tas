@@ -246,6 +246,7 @@ body{
 }
 #signatureBox>.inner>canvas{
     background-color: #f5f6f7;
+    opacity: 1;
     width: 100%;
     /*height:6rem;*/
     outline: none;

@@ -73,7 +73,7 @@ require('./base64.js');
 		},
 		getGuestInfo:function(cb){//获取新用户信息
 			// cb({
-			// 	"imsi":"460110502674386",
+			// 	"imsi":"",
 			// 	"smsp":"",
 			// 	"applicationID":"TF-1516003054260-48440280",
 			// 	"iccid":"89860117841022194607",
@@ -171,7 +171,7 @@ require('./base64.js');
 			// 		'status':'1',
 			// 		'iccid':'89860117841022194607',
 			// 	});
-			// },3000);
+			// },1000);
 			callHandler({
 				name:'readCardICCID',
 				data:'',
@@ -191,9 +191,9 @@ require('./base64.js');
 			// setTimeout(function(){
 			// 	cb({
 			// 		'status':'1',
-			// 		'imsi':'460110502674386',
+			// 		'imsi':'',
 			// 	});
-			// },3000);
+			// },1000);
 			callHandler({
 				name:'readCardIMSI',
 				data:'',
@@ -208,7 +208,7 @@ require('./base64.js');
 			// 	json.complete({
 			// 		'status':'1',
 			// 	});
-			// },3000)
+			// },1000)
 			callHandler({
 				name:'callWriteCard',
 				data:json,
@@ -238,7 +238,7 @@ require('./base64.js');
 			// 			"creditFee": "100",//信用度
 			// 	    }
 			// 	}));
-			// },3000)
+			// },1000)
 			callHandler({
 				name:'httpRequest',
 				data:json,

@@ -60,7 +60,7 @@
 }
 #packageList{
     position: relative;
-    min-height: 0.5rem;
+    max-height: 3rem;
     border-top: 1px solid #eee;
 }
 #packageList>.pay-load{

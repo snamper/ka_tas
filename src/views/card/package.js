@@ -119,7 +119,7 @@ var vm=new Moon({
 	methods:{
 		setPage:function(){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-			document.getElementById("packageList").style.maxHeight=window_h-323+'px';
+			document.getElementById("packageList").style.maxHeight=window_h-308+'px';
 		},
 		readCardICCID:function(){
 			vm.set("off.load",1);

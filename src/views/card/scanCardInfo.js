@@ -9,13 +9,12 @@ var vm=new Moon({
 	data:{
 		off:{
 			status:4,//1、可用卡；2、有未完成订单；3、开卡成功；4、无效卡；
+			isEqual:false//扫描的卡与获取的卡是否相等
 		},
 		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		scanIccid:'',//扫描到的ICCID
 		deviceType:1,//1、手机卡；2、手表卡
-		userInfo:{
-			iccid:''//读取到的ICCID
-		},
+		userInfo:'',
 		orderInfo:{
             "phoneNum":"00000000000",
             "numberLevel":0,
@@ -78,7 +77,9 @@ var vm=new Moon({
 			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
-				if(userInfo.iccid==vm.get('scanIccid')){
+				let isEqual=userInfo.iccid.indexOf(vm.get('scanIccid'))>-1;
+				vm.set('off.isEqual',isEqual);
+				if(isEqual){
 					let deviceType=vm.get('deviceType');
 					if(deviceType==2&&vm.get('off').status==1){//手表可用卡
 						Jsborya.pageJump({

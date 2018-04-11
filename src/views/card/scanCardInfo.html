@@ -75,7 +75,7 @@
 		</div>
 	</section>
 	<!--扫描卡与读取卡iccid不一致 || 没有读取到iccid-->
-	<section m-show="scanIccid!=userInfo.iccid || !userInfo.iccid">
+	<section m-show="!off.isEqual">
 		<div class="m-tag"><i class="u-icon-tagnum_2"></i><span>读取卡槽中的SIM卡</span></div>
 
 		<div class="m-nocard-tips" m-show="deviceType==1">
@@ -99,7 +99,7 @@
 			<div class="iccid"><span class="grey">读取卡号</span><b>{{ userInfo.iccid }}</b></div>
 			<div m-show="deviceStatus==1">
 				<div class="m-tips red" m-show="!userInfo.iccid">提示：未读取到SIM卡，请插入有效的SIM卡重新读取</div>
-				<div class="m-tips red" m-show="scanIccid!=userInfo.iccid">提示：当前卡信息与扫码读取的卡信息不一致，请更换SIM卡后重新读取</div>
+				<div class="m-tips red" m-show="!off.isEqual">提示：当前卡信息与扫码读取的卡信息不一致，请更换SIM卡后重新读取</div>
 			</div>
 			<div m-show="deviceStatus==2">
 				<div class="m-tips red" m-show="!userInfo.iccid">提示：读取失败，请插入有效的SIM卡重新读取</div>
