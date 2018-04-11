@@ -63,6 +63,7 @@ body{
 	background-color:#4b3887;
 	padding:0.1rem;
 	display: flex;
+	display: -webkit-flex;
 }
 .m-hd{
 	width: 0.6rem;
@@ -78,6 +79,7 @@ body{
 .m-sch{
 	position: relative;
 	flex:1;
+	-webkit-flex:1;
 }
 .m-sch>input{
 	display: block;

@@ -42,11 +42,13 @@
 }
 .g-col-2>.row{
     display: flex;
+    display: -webkit-flex;
     margin-left: 0.1rem;
     padding:0.1rem 0;
 }
 .g-col-2>.row>span{
     flex: 1;
+    -webkit-flex:1;
 }
 .g-col-2>.row>.left{
     color: #515151
@@ -62,6 +64,7 @@
 }
 .m-nocard-tips{
     display: flex;
+    display: -webkit-flex;
     padding: 0.1rem 0;
 }
 .m-nocard-tips>.left{
@@ -73,6 +76,7 @@
 }
 .m-nocard-tips>.right{
     flex:1;
+    -webkit-flex:1;
     line-height: 1.6;
     font-size: 0.12rem;
     margin-top: 0.1rem;

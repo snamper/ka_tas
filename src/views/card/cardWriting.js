@@ -44,7 +44,7 @@ var vm=new Moon({
 				left:{
 					icon:'back_white',
 					value:'返回',
-					callback:'headerRightClick'
+					callback:'headerLeftClick'
 				},
 				right:{
 					icon:'card_green',

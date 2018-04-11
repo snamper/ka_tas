@@ -39,7 +39,7 @@ var vm=new Moon({
 				left:{
 					icon:'',
 					value:'',
-					callback:'headerLeftClick'
+					callback:''
 				},
 				right:{
 					icon:'',
@@ -56,25 +56,25 @@ var vm=new Moon({
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 
-					Jsborya.registerMethods('headerLeftClick',function(){
-						let load=vm.get('off').load;
-						if(load==1){
-							layer.open({
-								title:'提示',
-								content:'还未拿到当前开卡结果，请您稍等~',
-								btn:['确定']
-							});
-						}else{
-							layer.open({
-								title:'提示',
-								content:'是否返回【号码搜索】页面',
-								btn:['确定'],
-								yes:function(){
-									vm.toIndexPage();
-								}
-							});
-						}
-					});
+					// Jsborya.registerMethods('headerLeftClick',function(){
+					// 	let load=vm.get('off').load;
+					// 	if(load==1){
+					// 		layer.open({
+					// 			title:'提示',
+					// 			content:'还未拿到当前开卡结果，请您稍等~',
+					// 			btn:['确定']
+					// 		});
+					// 	}else{
+					// 		layer.open({
+					// 			title:'提示',
+					// 			content:'是否返回【号码搜索】页面',
+					// 			btn:['确定'],
+					// 			yes:function(){
+					// 				vm.toIndexPage();
+					// 			}
+					// 		});
+					// 	}
+					// });
 					vm.callMethod("intervalGetResult");
 				});
 			}else{
