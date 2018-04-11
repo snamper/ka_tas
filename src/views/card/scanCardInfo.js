@@ -142,24 +142,28 @@ var vm=new Moon({
 				}
 			});
 		},
-		filterOrderStatus:function(orderStatusCode){
+		filterOrderStatus:function(orderStatusCode,similarity){
 			let url='',depiction='',next='';
 			if(orderStatusCode==='PACKAGE_SELECTION'){
                 url='certification.html';
                 depiction='已选择套餐';
                 next='实名认证';
+            }else if(parseInt(similarity)){
+            	url='cardAudit.html';
+                depiction='已上传资料';
+                next='订单审核';
             }else if(orderStatusCode==='UPLOAD_DATA'){
                 url='faceVerification.html';
                 depiction='已上传资料';
                 next='活体识别';
             }else if(orderStatusCode==='CARD_PAY'){
-                url='cardAudit.html';
+                url='pay.html';
                 depiction='已支付';
-                next='订单审核';
-            }else if(orderStatusCode==='CARD_AUDIT'){
-                url='cardAudit.html';
-                depiction='已审核';
                 next='生成受理单';
+            }else if(orderStatusCode==='CARD_AUDIT'){
+                url='pay.html';
+                depiction='已审核';
+                next='支付';
             }else if(orderStatusCode==='CREATE_SHEET'){
                 url='createSheet.html';
                 depiction='已生成受理单';
@@ -181,7 +185,7 @@ var vm=new Moon({
 		},
 		continueOrder:function(){
 			let orderInfo=vm.get('orderInfo');
-			let todo=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode]);
+			let todo=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode,orderInfo.similarity]);
             vm.setStore('ORDER_INFO',orderInfo);
             Jsborya.pageJump({
                 url:todo.url,

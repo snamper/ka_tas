@@ -37,7 +37,7 @@
 			</span>
 		</li>
 		<li><span class="left">当前状态:</span>
-			<span class="fr right yellow">{{ filterOrderStatus(orderInfo.orderStatusCode).depiction }}</span>
+			<span class="fr right yellow">{{ filterOrderStatus(orderInfo.orderStatusCode,orderInfo.similarity).depiction }}</span>
 		</li>
 	</ul>
 	<div class="btn btnp" m-on:click="continueOrder">继续完成订单</div>

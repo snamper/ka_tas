@@ -176,7 +176,7 @@ require('./base64.js');
 				name:'readCardICCID',
 				data:'',
 				callback:function(result){
-					alert(JSON.stringify(result));
+					//alert(JSON.stringify(result));
 					cb(result);
 				}
 			});
@@ -198,7 +198,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:'',
 				callback:function(result){
-					alert(JSON.stringify(result));
+					//alert(JSON.stringify(result));
 					cb(result);
 				}
 			});
@@ -213,7 +213,7 @@ require('./base64.js');
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					alert(JSON.stringify(result));
+					//alert(JSON.stringify(result));
 					json.complete(result);
 				}
 			});

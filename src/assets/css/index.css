@@ -184,7 +184,7 @@ body{
 /*-----------号码----------*/
 #cardBox{
 	position: relative;
-	padding-bottom:0.1rem;
+	padding-bottom:0.25rem;
 }
 .m-card-ul>li{
 	background-color: #fff;
@@ -226,6 +226,10 @@ body{
 }
 .m-loading {
 	display: inline-block;
+	position: fixed;
+	bottom:5px;
+	left: 50%;
+	margin-left: -0.12rem;
     text-align: center;
     width:.25rem;
     height: .25rem;

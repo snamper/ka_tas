@@ -158,7 +158,7 @@ var vm=new Moon({
 				vm.set("imsiSubstr",imsiSubstr);
 				vm.set("smsp",data.data.smsp);
 				vm.callMethod("callWriteCard");
-			},false,function(data){
+			},true,function(data){
 				if(data.code==671){
 					vm.set("errorMsg",'无可用的IMSI');
 				}else if(data.code==685){
