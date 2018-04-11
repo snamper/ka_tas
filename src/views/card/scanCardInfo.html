@@ -64,7 +64,7 @@
 			</div>
 			<div class="row">
 				<span class="left">总价</span>
-				<span class="right">{{ mathCentToYuan(orderInfo.totalMoney) }}</span>
+				<span class="right">￥{{ mathCentToYuan(orderInfo.totalMoney) }}</span>
 			</div>
 		</div>
 		<div class="m-tips red" m-show="orderInfo.orderStatusCode=='CARD_WRITING'||orderInfo.orderStatusCode=='CARD_ACTIVE'">温馨提示：当前订单已写卡完成，不能放弃操作。请点击继续开卡，完成后续操作</div>

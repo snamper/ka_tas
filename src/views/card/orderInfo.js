@@ -89,14 +89,6 @@ var vm=new Moon({
                 url='certification.html';
                 depiction='已选择套餐';
                 next='实名认证';
-            }else if(parseInt(similarity)){
-            	url='cardAudit.html';
-                depiction='已上传资料';
-                next='订单审核';
-            }else if(orderStatusCode==='UPLOAD_DATA'){
-                url='faceVerification.html';
-                depiction='已上传资料';
-                next='活体识别';
             }else if(orderStatusCode==='CARD_PAY'){
                 url='pay.html';
                 depiction='已支付';
@@ -121,6 +113,14 @@ var vm=new Moon({
                 url='cardActive.html';
                 depiction='已获得开卡结果';
                 next='开卡受理';
+            }else if(parseInt(similarity)){
+            	url='cardAudit.html';
+                depiction='已上传资料';
+                next='订单审核';
+            }else if(orderStatusCode==='UPLOAD_DATA'){
+                url='faceVerification.html';
+                depiction='已上传资料';
+                next='活体识别';
             }
             return {url:url,depiction:depiction,next:next};
 		},
