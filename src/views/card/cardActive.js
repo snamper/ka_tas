@@ -7,7 +7,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:2//1,等待中;2,成功;3,失败
+			load:1//1,等待中;2,成功;3,失败
 		},
 		userInfo:'',//用户信息
 		orderInfo: {
@@ -75,7 +75,7 @@ var vm=new Moon({
 							});
 						}
 					});
-					//vm.callMethod("intervalGetResult");
+					vm.callMethod("intervalGetResult");
 				});
 			}else{
 				alert('本地订单信息丢失');
