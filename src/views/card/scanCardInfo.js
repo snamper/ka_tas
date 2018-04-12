@@ -93,49 +93,41 @@ var vm=new Moon({
 			                }
 			            });
 					}else {
-						vm.callMethod('getCardImsi',[deviceType,function(){
+						Jsborya.readCardIMSI(function(data){
 							layer.close(index);
-						}])
+							vm.set('deviceStatus',data.status);
+
+							if(data.status==1){
+								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+							}
+							
+							if(deviceType==2){
+								let icon='';
+								if(data.status==1){
+									icon='wcard_green';
+								}else icon='wcard_red';
+								Jsborya.setHeader({
+									title:'读取卡信息',
+									frontColor:'#ffffff',
+									backgroundColor:'#4b3887',
+									left:{
+										icon:'back_white',
+										value:'',
+										callback:''
+									},
+									right:{
+										icon:icon,
+										value:'',
+										callback:'headerRightClick'
+									}
+								});
+							}
+							
+						});
 					}
 				}else if(scanIccid){
-					vm.callMethod('getCardImsi',[deviceType,function(){
-						layer.close(index);
-					},scanIccid])
+					vm.callMethod('iccidCheck',['','',scanIccid]);
 				}else layer.close(index);
-			});
-		},
-		getCardImsi:function(deviceType,closeLayer,scanIccid){
-			Jsborya.readCardIMSI(function(data){
-				closeLayer();
-				alert(data.status)
-				vm.set('deviceStatus',data.status);
-
-				if(data.status==1){
-					vm.callMethod("iccidCheck",[data.imsi,data.smsp,scanIccid]);
-				}
-				
-				if(deviceType==2){
-					let icon='';
-					if(data.status==1){
-						icon='wcard_green';
-					}else icon='wcard_red';
-					Jsborya.setHeader({
-						title:'读取卡信息',
-						frontColor:'#ffffff',
-						backgroundColor:'#4b3887',
-						left:{
-							icon:'back_white',
-							value:'',
-							callback:''
-						},
-						right:{
-							icon:icon,
-							value:'',
-							callback:'headerRightClick'
-						}
-					});
-				}
-				
 			});
 		},
 		iccidCheck:function(imsi,smsp,scanIccid){
