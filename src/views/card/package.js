@@ -152,6 +152,7 @@ var vm=new Moon({
 	  			params:{
 	  				imsi:imsi||'',
 	  				smsp:smsp||'',
+	  				scanIccid:''
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};

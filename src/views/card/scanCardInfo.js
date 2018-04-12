@@ -131,16 +131,13 @@ var vm=new Moon({
 			});
 		},
 		iccidCheck:function(imsi,smsp,scanIccid){
-			let userInfo=JSON.parse(JSON.stringify(vm.get('userInfo')));
-			if(scanIccid){
-				userInfo.iccid=scanIccid;
-			}
 			const json={
 	  			params:{
 	  				imsi:imsi||'',
 	  				smsp:smsp||'',
+	  				scanIccid:scanIccid||''
 	  			},
-	  			userInfo:userInfo
+	  			userInfo:vm.get('userInfo')
 	  		};
 			vm.AJAX('/ka-tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
