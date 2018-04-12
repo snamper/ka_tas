@@ -107,6 +107,7 @@ var vm=new Moon({
 		getCardImsi:function(deviceType,closeLayer,scanIccid){
 			Jsborya.readCardIMSI(function(data){
 				closeLayer();
+				alert(data.status)
 				vm.set('deviceStatus',data.status);
 
 				if(data.status==1){
