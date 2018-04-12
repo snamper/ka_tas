@@ -77,10 +77,11 @@ var vm=new Moon({
 			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
-				let isEqual=userInfo.iccid.indexOf(vm.get('scanIccid'))>-1;
+				let scanIccid=vm.get('scanIccid'),
+					deviceType=vm.get('deviceType'),
+					isEqual=userInfo.iccid.indexOf(scanIccid)>-1;
 				vm.set('off.isEqual',isEqual);
 				if(isEqual){
-					let deviceType=vm.get('deviceType');
 					if(deviceType==2&&vm.get('off').status==1){//手表可用卡
 						Jsborya.pageJump({
 			                url:'index.html',
@@ -92,48 +93,61 @@ var vm=new Moon({
 			                }
 			            });
 					}else {
-						Jsborya.readCardIMSI(function(data){
-							if(data.status==1){
-								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-							}
+						vm.callMethod('getCardImsi',[deviceType,function(){
 							layer.close(index);
-							vm.set('deviceStatus',data.status);
-
-							if(deviceType==2){
-								let icon='';
-								if(data.status==1){
-									icon='wcard_green';
-								}else icon='wcard_red';
-								Jsborya.setHeader({
-									title:'读取卡信息',
-									frontColor:'#ffffff',
-									backgroundColor:'#4b3887',
-									left:{
-										icon:'back_white',
-										value:'',
-										callback:''
-									},
-									right:{
-										icon:icon,
-										value:'',
-										callback:'headerRightClick'
-									}
-								});
-							}
-							
-						});
-					} 
-					
+						}])
+					}
+				}else if(scanIccid){
+					vm.callMethod('getCardImsi',[deviceType,function(){
+						layer.close(index);
+					},scanIccid])
 				}else layer.close(index);
 			});
 		},
-		iccidCheck:function(imsi,smsp){
+		getCardImsi:function(deviceType,closeLayer,scanIccid){
+			Jsborya.readCardIMSI(function(data){
+				closeLayer();
+				vm.set('deviceStatus',data.status);
+
+				if(data.status==1){
+					vm.callMethod("iccidCheck",[data.imsi,data.smsp,scanIccid]);
+				}
+				
+				if(deviceType==2){
+					let icon='';
+					if(data.status==1){
+						icon='wcard_green';
+					}else icon='wcard_red';
+					Jsborya.setHeader({
+						title:'读取卡信息',
+						frontColor:'#ffffff',
+						backgroundColor:'#4b3887',
+						left:{
+							icon:'back_white',
+							value:'',
+							callback:''
+						},
+						right:{
+							icon:icon,
+							value:'',
+							callback:'headerRightClick'
+						}
+					});
+				}
+				
+			});
+		},
+		iccidCheck:function(imsi,smsp,scanIccid){
+			let userInfo=JSON.parse(JSON.stringify(vm.get('userInfo')));
+			if(scanIccid){
+				userInfo.iccid=scanIccid;
+			}
 			const json={
 	  			params:{
 	  				imsi:imsi||'',
 	  				smsp:smsp||'',
 	  			},
-	  			userInfo:vm.get('userInfo')
+	  			userInfo:userInfo
 	  		};
 			vm.AJAX('/ka-tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
