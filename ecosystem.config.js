@@ -30,6 +30,14 @@ module.exports = {
       repo: 'https://github.com/thinkmix/ka_tas.git',
       path: '/root/nginx/html/ka_tas',
       'post-deploy' : 'yarn install && yarn run build && pm2 reload ecosystem.config.js --env test'
-    }
+    },    
+    production: {
+        user: 'root',
+        host: '47.98.43.180',
+        ref: 'origin/master',
+        repo: 'https://github.com/thinkmix/ka_tas.git',
+        path: '/usr/local/nginx/html/ka_tas',
+        'post-deploy' : 'yarn install && yarn run build && pm2 reload ecosystem.config.js --env production'
+      }
   }
 };
