@@ -1,3 +1,4 @@
+require('../../../static/config.js');
 require('../../public.js');
 require('../../assets/css/realTimeCharge.css');
 
