@@ -19,7 +19,8 @@ require('./base64.js');
 	}
 	
 	function createFnName(){//生成函数名
-		return 'CB_' + Date.now() + '_' + Math.ceil(Math.random() * 10);
+		return 'CB_WEB_FUNCTION';
+		// return 'CB_' + Date.now() + '_' + Math.ceil(Math.random() * 10);
 	}
 
 	function callHandler(props){
