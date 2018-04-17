@@ -1,5 +1,5 @@
 window._CONFIG={
-	"prod_env":false,
+	"prod_env":true,
 	"dev":{
 		"TMS_URL":"https://192.168.10.98:6088/tms/",
 	},
