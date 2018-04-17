@@ -27,7 +27,6 @@ require('./base64.js');
 		let callbackName=createFnName();
 		a[callbackName]=function(result){
 			if(result)result=JSON.parse(BASE64.decode(result));
-			alert(JSON.stringify(result));
 			props.callback(result);
 		};
 		if(window.webviewBridge.callHandler){
@@ -87,6 +86,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:'',
 				callback:function(result){
+					alert(JSON.stringify(result))
 					cb(result);
 				}
 			});
