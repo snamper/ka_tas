@@ -15,7 +15,7 @@ module.exports = {
             target:'http://192.168.10.37:6085',
             changeOrigin:true,
             pathRewrite:{
-                '^/ka-tas/':'/tas/'
+                '^/ka_tas/':'/tas/'
             }
         }
     },

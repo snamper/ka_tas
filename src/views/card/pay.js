@@ -80,7 +80,7 @@ var vm=new Moon({
 				};
 				vm.set('off.load',2);
 				window.Timer=setInterval(function(){
-					vm.AJAX('/ka-tas/w/business/payLaterStatus',json,function(data){
+					vm.AJAX('/ka_tas/w/business/payLaterStatus',json,function(data){
 						var status=data.data.status;
 						// 1 等待审核结果
 						// 2 审核失败
@@ -137,7 +137,7 @@ var vm=new Moon({
 			var vm=this,payType=vm.get('off').payType;
 			if(vm.get('off').load)return false;
 			vm.set('off.load',1);
-			vm.AJAX('/ka-tas/w/business/pay',{
+			vm.AJAX('/ka_tas/w/business/pay',{
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:vm.get('orderInfo').sysOrderId,
@@ -180,7 +180,7 @@ var vm=new Moon({
 		},
 		createSheet:function(){//生成受理单
 			var orderInfo=vm.get('orderInfo');
-			vm.AJAX('/ka-tas/w/business/acceptance',{//获取受理单图片
+			vm.AJAX('/ka_tas/w/business/acceptance',{//获取受理单图片
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:orderInfo.sysOrderId,

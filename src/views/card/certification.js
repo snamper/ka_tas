@@ -195,7 +195,7 @@ var vm=new Moon({
 					imgNo:index
 				}
 			};
-			vm.AJAX('/ka-tas/w/business/imgUpload',json,function(data){
+			vm.AJAX('/ka_tas/w/business/imgUpload',json,function(data){
 				vm.callMethod('uploadImgComplete',[data]);
 			});
 		},
@@ -266,7 +266,7 @@ var vm=new Moon({
 						sysOrderId:orderInfo.sysOrderId,
 					}
 				}
-				vm.AJAX('/ka-tas/w/business/materialUpload',json,function(data){
+				vm.AJAX('/ka_tas/w/business/materialUpload',json,function(data){
 					
 					Object.assign(orderInfo,{
 						idCardName:idCardInfo.name,

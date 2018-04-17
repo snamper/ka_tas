@@ -87,7 +87,7 @@ var vm=new Moon({
 			var vm=this;
 			vm.set("off.load",1);
 			window.Timer=setInterval(function(){
-				vm.AJAX('/ka-tas/w/business/getResult',{
+				vm.AJAX('/ka_tas/w/business/getResult',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId
@@ -130,7 +130,7 @@ var vm=new Moon({
                 });
                 return false;
 			}else{
-				vm.AJAX('/ka-tas/w/business/setPwd',{
+				vm.AJAX('/ka_tas/w/business/setPwd',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId,
