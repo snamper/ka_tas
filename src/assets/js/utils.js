@@ -65,6 +65,20 @@ export default{
             });
         },
         /**
+         *@describe 跳到购卡指引
+         **/
+        Moon.prototype.toBuyHelpPage=function(){
+            Jsborya.pageJump({
+                url:'http://km.m10027.com/tf/buyCardHelp.html',
+                stepCode:800,
+                depiction:'购卡指引',
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
+            });
+        },
+        /**
          *@describe 放弃订单
          *@param {Object} (userInfo) 用户信息
          *@param {String} (sysOrderId) 订单号
@@ -176,6 +190,18 @@ export default{
                     break;
                 case 692:
                     layerOpen('号码已被占用，请重新更换号码');
+                    break;
+                case 726:
+                    layer.open({
+                        content:'手机卡槽内未检测到空白卡',
+                        btn:['确定'],
+                        shadeClose:false,
+                        title:'提示',
+                        yes:function(){
+                            _self.toBuyHelpPage();
+                        }
+                    });
+                    
                     break;
                 default:
                     layer.open({

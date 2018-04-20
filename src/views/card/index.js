@@ -55,6 +55,10 @@ var vm=new Moon({
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
 				Jsborya.registerMethods('headerRightClick',function(){
+					if(userInfo.iccid=='666666666666'){
+						vm.toBuyHelpPage();
+						return false;
+					}
 					let deviceType=vm.get('deviceType');
 					if(deviceType==1){
 						Jsborya.pageJump({
@@ -245,6 +249,19 @@ var vm=new Moon({
 					}else icon='wcard_red';
 					
 				}
+				let right={
+					icon:icon,
+					value:'',
+					callback:'headerRightClick'
+				}
+				if(json.userInfo.iccid=='666666666666'){
+					right={
+						icon:'',
+						value:'购卡指引',
+						callback:'headerRightClick'
+					}
+				}
+
 				Jsborya.setHeader({
 					title:'号码搜索',
 					frontColor:'#ffffff',
@@ -254,11 +271,7 @@ var vm=new Moon({
 						value:'返回',
 						callback:''
 					},
-					right:{
-						icon:icon,
-						value:'',
-						callback:'headerRightClick'
-					}
+					right:right
 				});
 			});
 		},

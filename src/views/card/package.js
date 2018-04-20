@@ -119,7 +119,7 @@ var vm=new Moon({
 	methods:{
 		setPage:function(){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-			document.getElementById("packageList").style.maxHeight=window_h-308+'px';
+			document.getElementById("packageList").style.maxHeight=window_h-355+'px';
 		},
 		readCardICCID:function(){
 			vm.set("off.load",1);
@@ -236,7 +236,12 @@ var vm=new Moon({
 			});
 		},
 		savePackage:function(){
+			if(vm.get('userInfo').iccid=='666666666666'){
+				vm.toBuyHelpPage();
+				return false;
+			}
 			vm.set("off.load",2);
+			
 			const cardInfo=vm.get('cardInfo'),selectPackage=vm.get('selectPackage');
 			const json={
 	  			params:{

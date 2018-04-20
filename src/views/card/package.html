@@ -65,21 +65,19 @@ body{
 			<span class="left grey">号码占用费</span>
 			<span class="fr right">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
 		</li>
+		<li>
+			<span class="left grey">含预存话费</span>
+			<span class="fr right">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
+		</li>
+		<li class="clr">
+			<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>
+		</li>
 	</ul>
 	<section class="m-all-tag">
 		<div class="tag clr">
 			<i class="u-icon-tag"></i>
 			<span>套餐选择</span>
 		</div>
-		<!-- <ul class="m-order-info other-set clr" m-show="selectPackage.packageCode">
-			<li>
-				<span class="left grey">含预存话费</span>
-				<span class="fr right">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
-			</li>
-			<li class="clr">
-				<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>
-			</li>
-		</ul> -->
 		<ul class="m-recommend-ul clr">
 			<li m-for="todo,index in recommendList" m-on:click="shiftRcmd(index)" m-literal:class="{active:off.packageType==index}">{{ todo.name }}</li>
 		</ul>
