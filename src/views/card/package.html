@@ -65,11 +65,11 @@ body{
 			<span class="left grey">号码占用费</span>
 			<span class="fr right">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
 		</li>
-		<li>
+		<li m-show="selectPackage.packageCode">
 			<span class="left grey">含预存话费</span>
 			<span class="fr right">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
 		</li>
-		<li class="clr">
+		<li class="clr" m-show="selectPackage.packageCode">
 			<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>
 		</li>
 	</ul>
