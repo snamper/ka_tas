@@ -62,6 +62,7 @@ var vm=new Moon({
 				vm.set('deviceType',deviceType)
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
+					vm.set("iccid",userInfo.iccid);
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo.sysOrderId);
 					});
@@ -102,14 +103,15 @@ var vm=new Moon({
 				alert(data.status)
 				if(data.status==1){
 					alert('doing')
-					Jsborya.readCardICCID(function(data){
-						if(data.status==1){
-							vm.set("iccid",data.iccid);
-							vm.callMethod("getImsi");
-						}else{
-							vm.callMethod("filterConnectStatus",[data.status]);
-						}
-					});
+					vm.callMethod("getImsi");
+					// Jsborya.readCardICCID(function(data){
+					// 	if(data.status==1){
+					// 		vm.set("iccid",data.iccid);
+					// 		vm.callMethod("getImsi");
+					// 	}else{
+					// 		vm.callMethod("filterConnectStatus",[data.status]);
+					// 	}
+					// });
 				}else{
 					vm.callMethod("filterConnectStatus",[data.status]);
 				}
