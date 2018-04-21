@@ -61,6 +61,7 @@
 #packageList{
     position: relative;
     max-height: 3rem;
+    min-height: 0.5rem;
     border-top: 1px solid #eee;
 }
 #packageList>.pay-load{
