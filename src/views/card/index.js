@@ -210,9 +210,26 @@ var vm=new Moon({
             });
 		},
 		readCardICCID:function(){
-			Jsborya.readCardIMSI(function(data){
+			let userInfo=vm.get('userInfo');
+			if(userInfo.iccid=='666666666666'){
+				Jsborya.setHeader({
+					title:'号码搜索',
+					frontColor:'#ffffff',
+					backgroundColor:'#4b3887',
+					left:{
+						icon:'back_white',
+						value:'返回',
+						callback:''
+					},
+					right:{
+						icon:'',
+						value:'购卡指引',
+						callback:'headerRightClick'
+					}
+				});
+			}else Jsborya.readCardIMSI(function(data){
 				if(data.status==1){
-					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+					vm.callMethod("iccidCheck",[data.imsi||'',data.smsp||'']);
 				}else{
 					vm.set('deviceStatus',0);
 				}
@@ -249,19 +266,6 @@ var vm=new Moon({
 					}else icon='wcard_red';
 					
 				}
-				let right={
-					icon:icon,
-					value:'',
-					callback:'headerRightClick'
-				}
-				if(json.userInfo.iccid=='666666666666'){
-					right={
-						icon:'',
-						value:'购卡指引',
-						callback:'headerRightClick'
-					}
-				}
-
 				Jsborya.setHeader({
 					title:'号码搜索',
 					frontColor:'#ffffff',
@@ -271,7 +275,11 @@ var vm=new Moon({
 						value:'返回',
 						callback:''
 					},
-					right:right
+					right:{
+						icon:icon,
+						value:'',
+						callback:'headerRightClick'
+					}
 				});
 			});
 		},
