@@ -100,9 +100,7 @@ var vm=new Moon({
 			vm.set("off.step",1);
 			vm.set("errorMsg",'');
 			Jsborya.readCardIMSI(function(data){
-				alert(data.status)
 				if(data.status==1){
-					alert('doing')
 					vm.callMethod("getImsi");
 					// Jsborya.readCardICCID(function(data){
 					// 	if(data.status==1){
