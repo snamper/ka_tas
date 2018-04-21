@@ -174,6 +174,7 @@ require('./base64.js');
 			// 		'iccid':'89860117841022194607',
 			// 	});
 			// },1000);
+			alert('doing2')
 			callHandler({
 				name:'readCardICCID',
 				data:'',
