@@ -144,8 +144,20 @@ var vm=new Moon({
 			document.getElementById("packageList").style.maxHeight=window_h-topH+'px';
 		},
 		readCardICCID:function(){
+			
 			if(vm.get('userInfo').iccid=='666666666666'){
-				vm.toBuyHelpPage();
+				layer.open({
+                    content:'无卡将无法进行下一步操作，如您需要购卡，请点击购卡指引',
+                    btn:['购卡指引','关闭'],
+                    shadeClose:false,
+                    title:'提示',
+                    yes:function(){
+                        vm.toBuyHelpPage();
+                    },
+                    no:function(){
+                        vm.toIndexPage();
+                    }
+                });
 				return false;
 			}
 			vm.set("off.load",1);

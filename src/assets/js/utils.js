@@ -193,12 +193,15 @@ export default{
                     break;
                 case 726:
                     layer.open({
-                        content:'手机卡槽内未检测到空白卡',
-                        btn:['确定'],
+                        content:'无卡将无法进行下一步操作，如您需要购卡，请点击购卡指引',
+                        btn:['购卡指引','关闭'],
                         shadeClose:false,
                         title:'提示',
                         yes:function(){
                             _self.toBuyHelpPage();
+                        },
+                        no:function(){
+                            _self.toIndexPage();
                         }
                     });
                     

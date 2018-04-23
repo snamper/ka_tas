@@ -83,7 +83,7 @@ body{
 		</ul>
 		<div id="packageList" class="f-scroll">
 			<ul class="m-packageList" m-show="!off.loadPackage">
-				<li m-for="todo,index in packageList" m-on:click="jumpToPackageDetails(todo.code)">
+				<li m-for="todo,index in packageList" m-on:click="jumpToPackageDetails(todo.code)" m-literal:class="{active:!todo.info}">
 					<div class="title">{{ todo.title }}</div>
 					<div class="info grey">{{ todo.info }}</div>
 					<div class="right u-icon-right">

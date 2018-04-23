@@ -55,7 +55,13 @@
     background-position: right center;
     background-repeat:no-repeat;
 }
-.m-packageList>li>.right>.yellow{
+.m-packageList>.active>.right{
+    top:0.1rem;
+}
+.m-packageList>.active>.info{
+    margin-top:0;
+}
+.m-packageList>.active>.right{
 
 }
 #packageList{

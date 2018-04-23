@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/ka_tas/':{
-            target:'http://192.168.10.6:6085',
+            target:'http://192.168.10.19:6085',
             changeOrigin:true,
             pathRewrite:{
                 '^/ka_tas/':'/tas/'
@@ -21,7 +21,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '192.168.10.6', // can be overwritten by process.env.HOST
+    host: '192.168.10.19', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
