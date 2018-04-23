@@ -126,6 +126,10 @@ var vm=new Moon({
 			document.getElementById("packageList").style.maxHeight=window_h-topH+'px';
 		},
 		readCardICCID:function(){
+			if(vm.get('userInfo').iccid=='666666666666'){
+				vm.toBuyHelpPage();
+				return false;
+			}
 			vm.set("off.load",1);
 			Jsborya.readCardIMSI(function(data){
 				if(data.status==1){
@@ -240,10 +244,7 @@ var vm=new Moon({
 			});
 		},
 		savePackage:function(){
-			if(vm.get('userInfo').iccid=='666666666666'){
-				vm.toBuyHelpPage();
-				return false;
-			}
+			
 			vm.set("off.load",2);
 			
 			const cardInfo=vm.get('cardInfo'),selectPackage=vm.get('selectPackage');
