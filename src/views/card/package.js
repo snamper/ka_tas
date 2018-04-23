@@ -50,41 +50,59 @@ var vm=new Moon({
 			if(cardInfo){
 				vm.set('cardInfo',cardInfo);
 
-				let deviceType=cardInfo.deviceType,icon='';
-				if(cardInfo.deviceType==1){
-					if(cardInfo.deviceStatus==1){
-						icon='card_green';
-					}else icon='card_red';
-					
-				}else if(cardInfo.deviceType==2){
-					if(cardInfo.deviceStatus==1){
-						icon='wcard_green';
-					}else icon='wcard_red';
-					
-				}
-				Jsborya.setHeader({
-					title:'选择套餐',
-					frontColor:'#ffffff',
-					backgroundColor:'#4b3887',
-					left:{
-						icon:'back_white',
-						value:'',
-						callback:''
-					},
-					right:{
-						icon:icon,
-						value:'',
-						callback:'headerRightClick'
-					}
-				});
+				
 				if(selectPackage){
 					vm.set('selectPackage',selectPackage);
 					vm.set('totalPrice',(parseFloat(cardInfo.phoneMoney)/100+parseFloat(selectPackage.prestore)/100).toFixed(2));
 				}
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
+
+					let deviceType=cardInfo.deviceType,icon='',setRight;
+					if(cardInfo.deviceType==1){
+						if(cardInfo.deviceStatus==1){
+							icon='card_green';
+						}else icon='card_red';
+						
+					}else if(cardInfo.deviceType==2){
+						if(cardInfo.deviceStatus==1){
+							icon='wcard_green';
+						}else icon='wcard_red';
+						
+					}
+					setRight={
+						icon:icon,
+						value:'',
+						callback:'headerRightClick'
+					}
+					if(userInfo.iccid=='666666666666'){
+						setRight={
+							icon:'',
+							value:'购卡指引',
+							callback:'headerRightClick'
+						}
+						
+					}
+					
+					Jsborya.setHeader({
+						title:'号码搜索',
+						frontColor:'#ffffff',
+						backgroundColor:'#4b3887',
+						left:{
+							icon:'back_white',
+							value:'返回',
+							callback:''
+						},
+						right:setRight
+					});
+
 					vm.callMethod('getPackageList');
+
 					Jsborya.registerMethods('headerRightClick',function(){
+						if(userInfo.iccid=='666666666666'){
+							vm.toBuyHelpPage();
+							return false;
+						}
 						if(cardInfo.deviceType==1){
 							Jsborya.pageJump({
 								url:"simInfo.html",
