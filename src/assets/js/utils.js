@@ -72,6 +72,7 @@ export default{
                 url:'http://km.m10027.com/tf/buyCardHelp.html',
                 stepCode:800,
                 depiction:'购卡指引',
+                destroyed:false,
                 header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',
