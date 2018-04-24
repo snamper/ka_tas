@@ -31,7 +31,7 @@ var vm=new Moon({
 	    init: function() {
 			vm=this;
 			Jsborya.setHeader({
-				title:'随心搜',
+				title:'号码搜索',
 				frontColor:'#ffffff',
                 backgroundColor:'#4b3887',
 				left:{
@@ -60,6 +60,7 @@ var vm=new Moon({
 						return false;
 					}
 					let deviceType=vm.get('deviceType');
+					alert('deviceType:'deviceType);
 					if(deviceType==1){
 						Jsborya.pageJump({
 							url:"simInfo.html",

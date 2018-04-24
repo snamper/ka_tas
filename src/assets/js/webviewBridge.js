@@ -186,6 +186,7 @@ require('./base64.js');
 		registerMethods:function(name,cb){//提供APP直接调用的方法注册接口
 			a[name]=function(result){
 				if(result)result=JSON.parse(BASE64.decode(result));
+				alert('call');
 				cb(result);
 			};
 		},
