@@ -60,7 +60,7 @@ var vm=new Moon({
 						return false;
 					}
 					let deviceType=vm.get('deviceType');
-					alert('deviceType:'deviceType);
+					alert('deviceType:'+deviceType);
 					if(deviceType==1){
 						Jsborya.pageJump({
 							url:"simInfo.html",
