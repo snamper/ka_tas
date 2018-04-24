@@ -25,10 +25,10 @@ module.exports = {
   deploy : {
     test: {
       user: 'root',
-      host: '192.168.10.11',
+      host: '192.168.10.110',
       ref: 'origin/master',
       repo: 'https://github.com/thinkmix/ka_tas.git',
-      path: '/root/nginx/html/ka_tas',
+      path: '/home/nginx/html/ka_tas',
       'post-deploy' : 'yarn install && yarn run build && pm2 reload ecosystem.config.js --env test'
     },    
     production: {
