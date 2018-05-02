@@ -96,31 +96,18 @@
 	font-size: 0.12rem;
 	line-height: 1.65;
 }
+.m-success-set>.success{
+	text-align:center;
+	margin:0.2rem 0;
+}
+.m-success-set>.success>img{
+	width:0.7rem;
+}
+.black-lt{
+	color: #424345;
+	font-size:0.12rem;
+}
 
-.o-set-ul{
-
-}
-.o-set-ul>li{
-	display: flex;
-	margin-left:0.1rem;
-	padding:5px 10px 5px 5px;
-}
-.o-set-ul>li:first-child{
-	border-bottom: 1px solid #eee;
-}
-.o-set-ul>li>.lt{
-	width: 0.7rem;
-	line-height: 0.3rem;
-}
-.o-set-ul>li>.rt{
-	flex:1;
-}
-.o-set-ul>li>.rt>input{
-	width: 100%;
-	height: 0.3rem;
-	border:none;
-	letter-spacing: 3px;
-}
 </style>
 </head>
 <body>
@@ -156,16 +143,9 @@
 				<span class="left">所选号码:</span>
 				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
 				<span>[{{orderInfo.cityName}}]</span>
-				<span class="right green" m-show="off.load==2"><img src="../../assets/img/icon_suc_a.png">开卡成功</span>
+				<!-- <span class="right green" m-show="off.load==2"><img src="../../assets/img/icon_suc_a.png">开卡成功</span> -->
 			</li>
 			<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
-			<!-- <li class="double-border"></li>
-			<li class="clr"><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(orderInfo.cardMoney)}}</span></li>
-			<li class="clr">
-				<span class="left">+含预存话费</span>
-				<span class="fr right">￥{{mathCentToYuan(orderInfo.prestoreMoney)}}</span>
-			</li>
-			<li class="clr"><span class="fr right black">总价:<b class="red font-big">￥{{mathCentToYuan(orderInfo.totalMoney)}}</b></span></li> -->
 		</ul>
 		<div class="order-tips" m-show="off.load!=2">
 			<div>
@@ -174,42 +154,36 @@
 			</div>
 			<div class="dp">
 				<b class="green" m-show="off.load==1">开卡申请已受理，请等待开卡结果</b>
+				<p class="black-lt" m-show="off.load==1">开卡成功，我们将以短信的方式通知您<br>您可通过重新扫描卡板查看开卡进度</p>
 				<b class="red" m-show="off.load==3">
 					<span m-show="orderStatus==3">开卡失败</span>
 					<span m-show="orderStatus==4">订单已关闭</span>
 				</b>
 			</div>
-			<div m-show="off.load==1"><span class="pay-load">
+			<!-- <div m-show="off.load==1"><span class="pay-load">
 				<b class="f1"></b>
 				<b class="f2"></b>
 				<b></b>
-			</span></div>
+			</span></div> -->
 			<dl class="tips f-tal grey" m-show="off.load==3">
 				<dt>温馨提示:</dt>
 				<dd class="red">1、失败原因：{{ desc }}</dd>
 				<dd>2、该号卡板已不可再使用。</dd>
 				<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
 			</dl>
-			<div class="btn btnp" m-on:click="jump" m-show="off.load==3">返回选号</div>
+			<div class="btn btny" m-on:click="jumpToIndex" m-show="off.load==1">确定</div>
+			<div class="btn btny" m-on:click="jumpToIndex" m-show="off.load==3">返回选号</div>
 		</div>
 		<div class="m-success-set" m-show="off.load==2">
+			<div class="success">
+				<img src="../../assets/img/icon_suc_a.png">
+				<h3 class="green">开卡成功</h3>
+			</div>
 			<div class="grey">
 				温馨提示：<br>1、恭喜您成为远特用户;<br>2、马上设置服务密码，可直接登录“远特i卡”掌上营业厅，可直接进行充值，查询实时话费、我的套餐、套餐余量等业务;<br>3、有疑问请拨打：语音自助服务10027  客服电话4000410027
 			</div>
-			<div class="m-all-tag">
-				<div class="tag purple">设置服务密码</div>
-				<ul class="o-set-ul">
-					<li>
-						<span class="lt">服务密码</span>
-						<span class="rt"><input m-model="password1" type="password" maxlength="6" placeholder="请输入6位数字密码"></span>
-					</li>
-					<li>
-						<span class="lt">二次确认</span>
-						<span class="rt"><input m-model="password2" type="password" maxlength="6" placeholder="请再次输入数字密码"></span>
-					</li>
-				</ul>
-			</div>
-			<div class="btn btny" m-on:click="setServicePsd">马上去查查</div>
+			
+			<div class="btn btny" m-on:click="jumpToLogin">马上去查查</div>
 		</div>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

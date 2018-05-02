@@ -30,13 +30,13 @@ var vm=new Moon({
             "packageCode":"0"
         },
 	    idCardInfo:{
-	    	'name':'',
-	    	'address':'',
-	    	'number':'',
-	    	'period':'',
-	    	'devMac':'--',
-	    	'devInfo':'--',
-	    	'livingSoftwareName':'旷视'
+	    	name:'',
+	    	address:'',
+	    	number:'',
+	    	period:'',
+	    	devMac:'--',
+	    	devInfo:'--',
+	    	livingSoftwareName:'旷视'
 	    },
 	    uploadType:1,//上传图片类型
 	    imgName:{//上传后返回的图片地址
@@ -45,6 +45,8 @@ var vm=new Moon({
 	    	c:'',//手持
 	    	d:''//手签名
 	    },
+	    password1:'',
+		password2:'',
 	},
 	hooks:{
 		init:function(){
@@ -101,7 +103,7 @@ var vm=new Moon({
 			var signatureDom=document.getElementById('signature'),//canvas dom对象
 			window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight,//视图高度
 			ratio=Math.max(window.devicePixelRatio || 1, 1);//DPR
-			signatureDom.height=(window_h-107-100)*ratio;
+			signatureDom.height=(window_h-70-100)*ratio;
 
 			const signaturePad=new SignaturePad(signatureDom, {
 			  backgroundColor: 'rgba(255, 255, 255, 0)',
@@ -116,7 +118,7 @@ var vm=new Moon({
 			  vm.callMethod('doSignature');
 			  //console.log(data);
 			});
-			//修改按钮
+			//清空按钮
 			document.getElementById('clear').addEventListener('click', function (event) {
 			  signaturePad.clear();
 			});
@@ -199,11 +201,51 @@ var vm=new Moon({
 				vm.callMethod('uploadImgComplete',[data]);
 			});
 		},
+		setServicePsd:function(){
+			let password1=vm.get('password1'),
+			    password2=vm.get('password2');
+
+			if(!password1.match(/^\d{6}$/)){
+				layer.open({
+                    content:'密码格式错误',
+                    skin: "msg",
+                    time: 3
+                });
+                return false;
+			}else if(password1!=password2){
+				layer.open({
+                    content:'两次输入密码不一致',
+                    skin: "msg",
+                    time: 3
+                });
+                return false;
+			}else{
+				vm.AJAX('/ka_tas/w/business/setPwd',{
+					userInfo:vm.get('userInfo'),
+					params:{
+						sysOrderId:vm.get('orderInfo').sysOrderId,
+						pwd:password2
+					}
+				},function(data){
+					Jsborya.pageJump({
+						url:'',
+						stepCode:802,
+						depiction:'',
+						data:data.data
+					});
+				});
+			}
+		},
 		checkIsJump:function(){//检测是否执行下一步操作
-			var vm=this;
-			let idCardInfo=vm.get('idCardInfo');
-			let imgName=vm.get('imgName');
-			if(idCardInfo.name&&idCardInfo.number&&idCardInfo.address&&imgName.a&&imgName.b&&imgName.d&&vm.get('off').agree){
+			const vm=this;
+
+			let cardInfoCheck=Object.values(vm.get('idCardInfo')).filter((value)=>{
+				return value=='';
+			});
+			let imgNameCheck=Object.values(vm.get('imgName')).filter((value)=>{
+				return value=='';
+			});
+			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree){
 				vm.set('off.isJump',true);
 			}else{
 				vm.set('off.isJump',false);
@@ -218,9 +260,11 @@ var vm=new Moon({
                     time: 3
                 });
 			};
-			let idCardInfo=vm.get('idCardInfo');
-			let imgName=vm.get('imgName');
-			let orderInfo=vm.get('orderInfo');
+			let idCardInfo=vm.get('idCardInfo'),
+				imgName=vm.get('imgName'),
+				orderInfo=vm.get('orderInfo'),
+				password1=vm.get('password1'),
+			    password2=vm.get('password2');
 			if(!imgName.a){
 				callLayer('请上传身份证正面照片');
 	            return false;
@@ -242,6 +286,12 @@ var vm=new Moon({
 			}else if(null==idCardInfo.period.match(/^(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})-(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})$/)){
 				callLayer('证件有效期格式错误');
                 return false;
+			}else if(!password1.match(/^\d{6}$/)){
+				callLayer('密码格式错误');
+                return false;
+			}else if(password1!=password2){
+				callLayer('两次输入密码不一致');
+                return false;
 			}else if(!imgName.d){
 				callLayer('请添加手签名照片');
                 return false;
@@ -261,6 +311,7 @@ var vm=new Moon({
 						livingSoftwareName:idCardInfo.livingSoftwareName,
 						imageName:imgName.a,//正面照片
 						backImageName:imgName.b,//反面照片
+						pwd:password2,//密码
 						// 'handImageName':vm.get('imgName').c,//手持照片
 						signImageName:imgName.d,//手签名
 						sysOrderId:orderInfo.sysOrderId,

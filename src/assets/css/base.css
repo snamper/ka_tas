@@ -255,6 +255,7 @@ textarea {
 .m-all-tag{
     background-color: #fff;
     margin-bottom: 0.15rem;
+    padding-bottom: 2px;
 }
 .m-all-tag>.tag{
     margin-left: 0.2rem;
@@ -278,9 +279,10 @@ textarea {
 .m-order-info{
     background-color: #fff;
     padding-top: 5px;
+    padding-bottom: 2px;
 }
 .m-order-info>li{
-    margin:5px 0.1rem;
+    margin:5px 0 5px 0.1rem;
 }
 .m-order-info>.double-border{
     margin:0 0.1rem;
@@ -315,4 +317,14 @@ textarea {
     font-size: 0.12rem;
     padding: 2px 5px;
     margin-left:0.1rem;
+}
+.oldPrice{
+    text-decoration:line-through;
+    color: #717171;
+    font-size:0.12rem;
+    margin-top:1px;
+}
+.discount{
+    font-size:0.14rem;
+    padding-left: 0.1rem;
 }

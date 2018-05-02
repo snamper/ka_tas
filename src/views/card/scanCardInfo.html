@@ -36,7 +36,7 @@
 	
 	<!--有未完成订单-->
 	<section m-show="off.isEqual">
-		<section m-show="off.status==2">
+		<section m-show="off.status!=1">
 			<div class="m-tag"><i class="u-icon-tagnum_2"></i><span>读取卡槽中的SIM卡</span></div>
 			<div class="g-col-2">
 				<div class="row line">
@@ -53,7 +53,7 @@
 				</div>
 				<div class="row line">
 					<span class="left">订单状态</span>
-					<span class="right yellow">{{ filterOrderStatus(orderInfo.orderStatusCode,orderInfo.similarity).depiction }}</span>
+					<span m-literal:class="{yellow:off.status==2||off.status==5,green:off.status==3,red:off.status==6,right:true}">{{ filterOrderStatus(orderInfo.orderStatusCode,orderInfo.similarity).depiction }}</span>
 				</div>
 				<div class="row line">
 					<span class="left">所选号码</span>
@@ -65,15 +65,34 @@
 				</div>
 				<div class="row">
 					<span class="left">总价</span>
-					<span class="right">￥{{ mathCentToYuan(orderInfo.totalMoney) }}</span>
+					<span class="right">￥{{ orderInfo.totalMoney }}</span>
 				</div>
 			</div>
-			<div class="m-tips red" m-show="orderInfo.orderStatusCode=='CARD_WRITING'||orderInfo.orderStatusCode=='CARD_ACTIVE'">温馨提示：当前订单已写卡完成，不能放弃操作。请点击继续开卡，完成后续操作</div>
 
-			<div class="m-btn-group">
+			<div class="m-btn-group" m-show="off.status==2">
 				<span class="btn btnDefault" m-on:click="orderCancel">放弃</span>
 				<span class="btn btny" m-on:click="continueOrder">继续开卡</span>
 			</div>
+
+			<div class="m-tips grey" m-show="off.status==3">温馨提示：开卡成功，您可以登录“远特i卡”掌上营业厅，可进行充值，查询实时话费、我的套餐、套餐余量等业务;</div>
+			<div class="btn btny" m-show="off.status==3" m-on:click="jumpToLogin">去登录</div>
+
+			<dl class="m-order-tips grey" m-show="off.status==5">
+				<dt>温馨提示:</dt>
+				<dd>1、您的开卡申请已受理，请耐心等待开卡结果</dd>
+				<dd>2、开卡成功我们将以短信的形式进行通知。</dd>
+				<dd>3、您可以点击“重新获取”按钮获取开卡结果</dd>
+			</dl>
+			<div class="btn btny" m-show="off.status==5" m-on:click="continueOrder">重新获取</div>
+
+			
+			<dl class="m-order-tips grey" m-show="off.status==6">
+				<dt>温馨提示:</dt>
+				<dd class="red">1、失败原因：{{ orderInfo.orderDesc }}</dd>
+				<dd>2、支付的金额我们将在24小时内退回到您的账户。</dd>
+				<dd>3、马上联系客服：语音自助服务10027 客服电话4000410027</dd>
+			</dl>
+			<div class="btn btny" m-show="off.status==6" m-on:click="jumpToIndex">确定</div>
 		</section>
 	</section>
 	<!--扫描卡与读取卡iccid不一致 || 没有读取到iccid-->

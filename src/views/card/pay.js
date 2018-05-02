@@ -17,12 +17,14 @@ var vm=new Moon({
             "cityName":"--",
             "createTime":"0",
             "cardMoney":"0",
+            "cDiscount":10000,
             "orderStatusCode":"PACKAGE_SELECTION",
             "totalMoney":0,
             "limitSimilarity":0,
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
+            "pDuscount":10000,
             "similarity":0,
             "idCardName":"--",
             "idCardNo":"--"
@@ -215,6 +217,9 @@ var vm=new Moon({
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
 	    },
+	    mathDiscount:function(money,discount){
+			return vm.mathDiscount(money,discount);
+		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
 		},

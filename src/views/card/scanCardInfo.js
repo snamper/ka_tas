@@ -8,28 +8,32 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			status:4,//1、可用卡；2、有未完成订单；3、开卡成功；4、无效卡；
+			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败
 			isEqual:false//扫描的卡与获取的卡是否相等
 		},
 		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		scanIccid:'',//扫描到的ICCID
 		deviceType:1,//1、手机卡；2、手表卡
-		userInfo:'',
+		userInfo:{
+			iccid:'--'
+		},
 		orderInfo:{
             "phoneNum":"00000000000",
             "numberLevel":0,
             "cityName":"--",
             "createTime":"0",
             "cardMoney":"0",
+            "cDiscount":10000,
             "orderStatusCode":"PACKAGE_SELECTION",
             "totalMoney":0,
             "limitSimilarity":0,
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
+            "pDuscount":10000,
             "similarity":0,
             "packageName":"--",
-            "packageCode":"0"
+            "packageCode":"0",
         }
 	},
 	hooks:{
@@ -141,8 +145,10 @@ var vm=new Moon({
 	  		};
 			vm.AJAX('/ka_tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
-				if(data.data.status==2){
-					vm.set('orderInfo',data.data.orderInfo);
+				let orderInfo=data.data.orderInfo;
+				if(orderInfo){
+					vm.set('orderInfo',orderInfo);
+					vm.set('orderInfo.totalMoney',vm.mathPriceTotal(orderInfo.cardMoney,orderInfo.cDiscount,orderInfo.prestoreMoney,orderInfo.prestoreDiscount));
 				}
 			});
 		},
@@ -170,12 +176,17 @@ var vm=new Moon({
                 next='写卡';
             }else if(orderStatusCode==='CARD_WRITING'){
                 url='cardActive.html';
-               	depiction='已写卡';
+               	depiction='写卡成功，等待开卡结果';
                	next='开卡受理';
             }else if(orderStatusCode==='CARD_ACTIVE'){
-                url='cardActive.html';
-                depiction='已获得开卡结果';
-                next='开卡受理';
+            	let orderStatus=vm.get('off').status;
+                url='';
+                next='';
+                if(orderStatus==3){
+                	depiction='开卡成功';
+                }else if(orderStatus==6){
+                	depiction='开卡失败';
+                }
             }else if(parseInt(similarity)){
             	url='cardAudit.html';
                 depiction='已上传资料';
@@ -190,6 +201,7 @@ var vm=new Moon({
 		continueOrder:function(){
 			let orderInfo=vm.get('orderInfo');
 			let todo=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode,orderInfo.similarity]);
+			orderInfo.iccid=vm.get('userInfo').iccid;
             vm.setStore('ORDER_INFO',orderInfo);
             Jsborya.pageJump({
                 url:todo.url,
@@ -204,9 +216,22 @@ var vm=new Moon({
 		orderCancel:function(){
 			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
 		},
+		jumpToIndex:function(){
+			vm.toIndexPage();
+		},
+		jumpToLogin:function(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:801,
+				depiction:'登录',
+			});
+		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
 	    },
+		mathDiscount:function(money,discount){
+			return vm.mathDiscount(money,discount);
+		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
 		},

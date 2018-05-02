@@ -16,15 +16,17 @@ var vm=new Moon({
             "cityName":"--",
             "createTime":"0",
             "cardMoney":"0",
+            "cDiscount":10000,
             "orderStatusCode":"PACKAGE_SELECTION",
             "totalMoney":0,
             "limitSimilarity":0,
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
+            "pDuscount":10000,
             "similarity":0,
             "packageName":"--",
-            "packageCode":"0"
+            "packageCode":"0",
         }
 	},
 	hooks:{
@@ -47,7 +49,8 @@ var vm=new Moon({
 
 			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
-				vm.set('orderInfo',orderInfo);limitSimilarity
+				vm.set('orderInfo',orderInfo);
+				vm.set('orderInfo.totalMoney',vm.mathPriceTotal(orderInfo.cardMoney,orderInfo.cDiscount,orderInfo.prestoreMoney,orderInfo.prestoreDiscount));
 				if(orderInfo.similarity){//已经进行活体识别
 					var similarity=parseFloat(orderInfo.similarity);
 					vm.set('off.isFace',true);
@@ -72,7 +75,7 @@ var vm=new Moon({
 		continueOrder:function(){
 			let orderInfo=vm.get('orderInfo');
 			let todo=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode,orderInfo.similarity]);
-            
+            vm.setStore('ORDER_INFO',vm.get('orderInfo'));
             Jsborya.pageJump({
                 url:todo.url,
                 stepCode:999,
@@ -127,6 +130,9 @@ var vm=new Moon({
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
 	    },
+		mathDiscount:function(money,discount){
+			return vm.mathDiscount(money,discount);
+		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
 		},

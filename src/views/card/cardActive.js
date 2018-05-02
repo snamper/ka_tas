@@ -16,18 +16,18 @@ var vm=new Moon({
             "cityName":"--",
             "createTime":"0",
             "cardMoney":"0",
+            "cDiscount":10000,
             "orderStatusCode":"PACKAGE_SELECTION",
             "totalMoney":0,
             "limitSimilarity":0,
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
+            "pDuscount":10000,
             "similarity":0,
             "packageName":"--",
-            "packageCode":"0"
+            "packageCode":"0",
         },
-		password1:'',
-		password2:'',
         orderStatus:'',
         desc:''//错误描述
 	},
@@ -111,47 +111,22 @@ var vm=new Moon({
 				});
 			},2000);
 		},
-		setServicePsd:function(){
-			let password1=vm.get('password1'),
-			    password2=vm.get('password2');;
-
-			if(!password1.match(/^\d{6}$/)){
-				layer.open({
-                    content:'密码格式错误',
-                    skin: "msg",
-                    time: 3
-                });
-                return false;
-			}else if(password1!=password2){
-				layer.open({
-                    content:'两次输入密码不一致',
-                    skin: "msg",
-                    time: 3
-                });
-                return false;
-			}else{
-				vm.AJAX('/ka_tas/w/business/setPwd',{
-					userInfo:vm.get('userInfo'),
-					params:{
-						sysOrderId:vm.get('orderInfo').sysOrderId,
-						pwd:password2
-					}
-				},function(data){
-					Jsborya.pageJump({
-						url:'',
-						stepCode:802,
-						depiction:'',
-						data:data.data
-					});
-				});
-			}
+		jumpToLogin:function(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:801,
+				depiction:'登录',
+			});
 		},
-		jump:function(){
+		jumpToIndex:function(){
 			vm.toIndexPage();
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
 	    },
+		mathDiscount:function(money,discount){
+			return vm.mathDiscount(money,discount);
+		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
 		},

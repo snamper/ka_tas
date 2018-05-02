@@ -1,4 +1,4 @@
-.m-write-load{
+/*.m-write-load{
 	margin-top: 0.5rem;
 	text-align: center;
 }
@@ -12,20 +12,22 @@
 }
 .m-write-load>h4{
 	margin-top: 0.1rem;
+}*/
+.m-all-tag{
+	margin-top:0.15rem;
 }
+.m-all-tag>.tag{
+	margin-bottom: 0;
+}
+
+.m-order-info>li>.left{
+	display: inline-block;
+	width:0.55rem;
+	text-align:right;
+}
+
 .m-error{
-    text-align: center;
-    margin-top: 0.5rem;
-}
-.m-error>img{
-    width: 0.8rem;
-}
-.m-error>h3{
-	margin-top: 5px 0;
-	font-size: 0.17rem;
-}
-.m-error>p{
-    font-size: 0.15rem;
+
 }
 .m-error>.tips{
 	margin-top:0.2rem;

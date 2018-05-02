@@ -7,7 +7,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			step:1,//1读取ICCID中；2获取IMSI中；3写卡中；4,写卡完成
+			step:1,//1读取ICCID中；2获取IMSI中；3写卡中+提交开卡申请
 			submitLoad:0,//开卡申请load
 		},
 		orderInfo: {
@@ -16,20 +16,24 @@ var vm=new Moon({
             "cityName":"--",
             "createTime":"0",
             "cardMoney":"0",
+            "cDiscount":10000,
             "orderStatusCode":"PACKAGE_SELECTION",
             "totalMoney":0,
             "limitSimilarity":0,
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
+            "pDuscount":10000,
             "similarity":0,
             "packageName":"--",
-            "packageCode":"0"
+            "packageCode":"0",
+            "iccid":"--"
         },
 		deviceType:1,//卡类型
-		userInfo:'',
-		errorMsg:'',//错误描述
-	    iccid:'',//读取到的iccid
+		userInfo:{
+			iccid:'--'
+		},
+		error:{code:1,text:''},//错误描述
 	    imsi:'',//imsi
 	    imsiSubstr:'',//imsi
 	    smsp:'',//短信中心号
@@ -59,36 +63,33 @@ var vm=new Moon({
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.set('deviceType',deviceType)
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
-					vm.set("iccid",userInfo.iccid);
-					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
-					});
-					Jsborya.registerMethods('headerRightClick',function(){
-						if(deviceType==1){
-							Jsborya.pageJump({
-								url:"simInfo.html",
-								stepCode:999,
-								depiction:'SIM卡信息',
-								destroyed:false,
-								header:{
-			                        frontColor:'#ffffff',
-			                        backgroundColor:'#4b3887',
-			                    }
-							});
-						}else if(deviceType==2){
-							Jsborya.pageJump({
-								url:'',
-								stepCode:803,
-								depiction:'设备管理',
-								destroyed:false,
-							});
-						}
-						
-					});
-					vm.callMethod("readCardICCID");
+				vm.set('deviceType',deviceType);
+				vm.callMethod('readCardICCID');
+				
+				Jsborya.registerMethods('headerLeftClick',function(){
+					vm.orderCancel(userInfo,orderInfo.sysOrderId);
+				});
+				Jsborya.registerMethods('headerRightClick',function(){
+					if(deviceType==1){
+						Jsborya.pageJump({
+							url:"simInfo.html",
+							stepCode:999,
+							depiction:'SIM卡信息',
+							destroyed:false,
+							header:{
+		                        frontColor:'#ffffff',
+		                        backgroundColor:'#4b3887',
+		                    }
+						});
+					}else if(deviceType==2){
+						Jsborya.pageJump({
+							url:'',
+							stepCode:803,
+							depiction:'设备管理',
+							destroyed:false,
+						});
+					}
+					
 				});
 			}else{
 				alert('本地订单信息丢失');
@@ -98,18 +99,13 @@ var vm=new Moon({
 	methods:{
 		readCardICCID:function(){
 			vm.set("off.step",1);
-			vm.set("errorMsg",'');
+			vm.set("error",{code:1,text:''});
 			Jsborya.readCardIMSI(function(data){
 				if(data.status==1){
-					vm.callMethod("getImsi");
-					// Jsborya.readCardICCID(function(data){
-					// 	if(data.status==1){
-					// 		vm.set("iccid",data.iccid);
-					// 		vm.callMethod("getImsi");
-					// 	}else{
-					// 		vm.callMethod("filterConnectStatus",[data.status]);
-					// 	}
-					// });
+					Jsborya.getGuestInfo(function(userInfo){
+						vm.set('userInfo',userInfo);
+						vm.callMethod("getImsi");
+					});
 				}else{
 					vm.callMethod("filterConnectStatus",[data.status]);
 				}
@@ -149,7 +145,6 @@ var vm=new Moon({
 				userInfo:vm.get("userInfo"),
 				params:{
 					sysOrderId:vm.get("orderInfo").sysOrderId,
-					iccid:vm.get('iccid'),
 				}
 			},function(data){
 				let imsiSubstr=data.data.imsi,reg = /^(\d{4})(\d*)(\d{4})$/;
@@ -159,12 +154,11 @@ var vm=new Moon({
 				vm.set("imsi",data.data.imsi);
 				vm.set("imsiSubstr",imsiSubstr);
 				vm.set("smsp",data.data.smsp);
-				vm.callMethod("callWriteCard");
 			},true,function(data){
 				if(data.code==671){
-					vm.set("errorMsg",'无可用的IMSI');
+					vm.set("error",{code:5,text:'无可用的IMSI'});
 				}else if(data.code==685){
-					vm.set("errorMsg",'该订单已结束');
+					vm.set("error",{code:6,text:'该订单已结束'});
 				}
 			});
 		},
@@ -173,23 +167,23 @@ var vm=new Moon({
 			Jsborya.callWriteCard({
 				imsi:vm.get('imsi'),
 				smsp:vm.get('smsp'),
-				iccid:vm.get('iccid'),
+				iccid:vm.set('userInfo').iccid,
 				complete:function(data){
 					switch(parseInt(data.status)){
 						case 1:
-							vm.set("off.step",4);
+							vm.callMethod("submitOrder")
 							break;
 						case 2:
-							vm.set("errorMsg",'写卡失败');
+							vm.set("error",{code:2,text:'写卡失败'});
 							break;
 						case 3:
-							vm.set("errorMsg",'卡槽未插卡，请将SIM卡插入卡槽');
+							vm.set("error",{code:3,text:'卡槽未插卡，请将SIM卡插入卡槽'});
 							break;
 						case 4:
-							vm.set("errorMsg",'当前SIM卡与获取ICCID不一致，请重新插入对应SIM卡');
+							vm.set("error",{code:4,text:'当前SIM卡与获取ICCID不一致，请重新插入对应SIM卡'});
 							break;
 						default:
-							vm.set("errorMsg",'未知错误');
+							vm.set("error",{code:999,text:'异常错误'});
 							break;
 					}
 				}
@@ -197,12 +191,10 @@ var vm=new Moon({
 		},
 		
 		submitOrder:function(){//开卡申请
-			vm.set("off.submitLoad",1);
 			vm.AJAX('/ka_tas/w/business/submitOrder',{
 				'userInfo':vm.get("userInfo"),
 				'params':{
-					'sysOrderId':vm.get("orderInfo").sysOrderId,
-					'iccid':vm.get("iccid")
+					sysOrderId:vm.get("orderInfo").sysOrderId,
 				}
 			},function(data){
 				Jsborya.pageJump({
@@ -215,17 +207,20 @@ var vm=new Moon({
                     }
 				});
 			},function(){
-				vm.set("off.submitLoad",0);
+				vm.set("error",{code:9,text:'开卡申请失败'});
 			});
 		},
 		filterConnectStatus:function(status){
 			if(status==2){
-				vm.set("errorMsg",'读取SIM卡信息失败');
+				vm.set("error",{code:7,text:'读取SIM卡信息失败'});
 			}else if(status==3){
-				vm.set("errorMsg",'未检测到SIM卡插入卡槽');
+				vm.set("error",{code:8,text:'未检测到SIM卡插入卡槽'});
 			}else{
-				vm.set("errorMsg",'异常错误');
+				vm.set("error",{code:999,text:'异常错误'});
 			}
+		},
+		jumpToIndex:function(){
+			vm.toIndexPage();
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);

@@ -49,27 +49,41 @@
 			</li>
 			<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
 		</ul>
-		<section m-show="off.step!=4">
-			<div class="m-write-load" m-show="!errorMsg">
-				<div class="m-loading-ka"></div>
-				<h4 class="purple">写卡中，请勿拔出SIM卡</h4>
-			</div>
-			<div class="m-error" m-show="errorMsg">
-				<img src="../../assets/img/icon_failure.png">
-				<h3 class="red">写卡失败</h3>
-				<p class="red">{{ errorMsg }}</p>
-				<div class="tips grey f-tal">温馨提示：<br>1、操作建议：请更换SIM卡后，点击下方按钮继续开卡;<br>2、有疑问请拨打：语音自助服务10027  客服电话4000410027</div>
-				<div m-on:click="readCardICCID" class="btn btny">继续开卡</div>
-			</div>
+		<section class="m-all-tag">
+			<div class="tag purple"><span>SIM卡信息</span></div>
+			<ul class="m-order-info clr grey">
+				<li><span class="left">开卡卡号:</span>{{ orderInfo.iccid }}</li>
+				<li class="border"><span class="left">卡槽卡号:</span>{{ userInfo.iccid }}</li>
+				<li><span class="left">IMSI:</span>
+					<span class="green" m-show="imsi">IMSI获取成功</span>
+					<span class="yellow" m-show="off.step!=3">
+						<span m-show="error.code!=1">--</span>
+						<span m-show="error.code==1">IMSI获取中···</span>
+					</span>
+				</li>
+			</ul>
 		</section>
-		<section m-show="off.step==4">
-			<div class="m-error">
-				<img src="../../assets/img/icon_suc_a.png">
-				<h3 class="green">写卡成功</h3>
+		<section class="m-error" m-show="error.code!=1">
+			<div class="tips grey" m-show="error.code==2||error.code==6">
+				<div>温馨提示：</div>
+				<p class="red">1、{{ error.text }}</p>
+				<p>2、支付的金额我们将在24小时内退回到您的账户</p>
+				<p>3、有疑问请拨打：语音自助服务10027  客服电话4000410027</p>
+				<div m-on:click="jumpToIndex" class="btn btny">确定</div>
 			</div>
-			<div m-on:click="submitOrder" m-literal:class="{active:off.submitLoad,btn:true,btny:true}">
-				<i m-show="!off.submitLoad">提交开卡申请</i>
-				<i m-show="off.submitLoad">开卡申请中，请稍后</i>
+			<div class="tips grey" m-show="error.code==3||error.code==4||error.code==5||error.code==7||error.code==8">
+				<div>温馨提示：</div>
+				<p class="red">1、{{ error.text }}</p>
+				<p>2、请将正确的SIM卡插入到卡槽中</p>
+				<p>3、有疑问请拨打：语音自助服务10027  客服电话4000410027</p>
+				<div m-on:click="readCardICCID" class="btn btny">重新读取SIM卡信息</div>
+			</div>
+			
+		</section>
+		<section m-show="error.code==1">
+			<div m-on:click="callWriteCard" m-literal:class="{active:off.submitLoad,btn:true,btnDefault:off.step!=3,btny:off.step==3}">
+				<i m-show="off.step!=3">提交开卡申请</i>
+				<i m-show="off.step==3">开卡申请中，请稍后</i>
 				<b></b>
 			</div>
 		</section>

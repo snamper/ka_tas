@@ -248,6 +248,7 @@ var vm=new Moon({
 				if(data.data.status==2){
 					vm.set('off.showOrderMsg',true);
 					vm.callMethod('setPage',[234]);
+					data.data.orderInfo.iccid=vm.get('userInfo').iccid;
 					vm.setStore('ORDER_INFO',data.data.orderInfo);
 				}else if(data.data.status==4){
 					vm.set('deviceStatus',0);

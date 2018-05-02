@@ -19,13 +19,15 @@ var vm=new Moon({
 			cityCode:'100',
 			pretty:'1',
 			phoneMoney:0,
-			phoneLevel:0
+			phoneLevel:0,
+			discount:10000
 		},
 		selectPackage:{
 			name:'',
 			packageCode:'',
 			selPackCode:'',
 			prestore:'',
+			discount:10000
 		},
 		imsiInfo:{
 			imsi:'',
@@ -37,10 +39,6 @@ var vm=new Moon({
 	},
 	hooks: {
 	    init: function() {
-	    	//this.setStore('CARD_INFO',{});
-	    	//this.removeStore('CARD_INFO');
-	    	//this.setStore('selectPackage',{name:'联通无限流量套餐',packageCode:'1002',selPackCode:'1254',prestore:'320',});
-	    	//this.removeStore('selectPackage');
 	    	vm=this;
 	    	
 	    	Jsborya.webviewLoading({isLoad:false});//关闭app加载层
@@ -53,7 +51,6 @@ var vm=new Moon({
 				
 				if(selectPackage){
 					vm.set('selectPackage',selectPackage);
-					vm.set('totalPrice',(parseFloat(cardInfo.phoneMoney)/100+parseFloat(selectPackage.prestore)/100).toFixed(2));
 				}
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
@@ -204,6 +201,7 @@ var vm=new Moon({
                         content:'您有未完成的订单，请先完成或放弃该订单',
                         btn:['查看订单','放弃订单'],
                         yes:function(){
+                        	data.data.orderInfo.iccid=vm.get('userInfo').iccid;
                         	vm.setStore('ORDER_INFO',data.data.orderInfo);
 						    Jsborya.pageJump({
 				                url:'orderInfo.html',
@@ -297,15 +295,18 @@ var vm=new Moon({
 		            "cityName":cardInfo.cityName,
 		            "createTime":data.data.createTime,
 		            "cardMoney":cardInfo.phoneMoney,//号码占用费
+		            "cDiscount":cardInfo.discount,
 		            "orderStatusCode":"PACKAGE_SELECTION",
-		            "totalMoney":parseFloat(vm.get('totalPrice'))*100,//总价格
+		            "totalMoney":parseFloat(vm.get('totalPrice'))*100,//计算后总价格
 		            "limitSimilarity":0,
 		            "validTime":0,
 		            "sysOrderId":data.data.sysOrderId,
 		            "packageName":selectPackage.name,
 		            "packageCode":selectPackage.packageCode,
 		            "prestoreMoney":selectPackage.prestore,//预存价格
+		            "pDuscount":selectPackage.discount,
 		            "similarity":0,
+		            "iccid":vm.get('userInfo').iccid
 		        });
 				Jsborya.pageJump({
 					url:'certification.html',
@@ -338,11 +339,12 @@ var vm=new Moon({
 			vm.callMethod('getPackageList');
 		},
 		getPackageList:function(){//获取套餐列表
+			let cardInfo=vm.get('cardInfo');
 			const json={
 	  			params:{
 	  				type:vm.get('recommendList')[vm.get('off').packageType].type,
-	  				cityCode:vm.get('cardInfo').cityCode,
-	  				phoneNum:vm.get('cardInfo').phone,
+	  				cityCode:cardInfo.cityCode,
+	  				phoneNum:cardInfo.phone,
 	  				size:20
 	  			},
 	  			userInfo:vm.get('userInfo')
@@ -361,8 +363,10 @@ var vm=new Moon({
 					arr.unshift(item);
 					vm.set('packageList',arr);
 				}else vm.set('packageList',data.data.titleList);
-				
-				
+				vm.set('cardInfo.discount',data.data.discount)
+				vm.set('totalPrice',vm.mathPriceTotal(
+					cardInfo.phoneMoney,data.data.discount||10000,vm.get('selectPackage').prestore,vm.get('selectPackage').discount||10000
+				));
 			},function(){
 				vm.set('off.loadPackage',false);
 			});
@@ -384,6 +388,9 @@ var vm=new Moon({
 		},
 		mathCentToYuan:function(money){
 			return vm.mathCentToYuan(money);
+		},
+		mathDiscount:function(money,discount){
+			return vm.mathDiscount(money,discount);
 		}
 	}
 });

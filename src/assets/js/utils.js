@@ -56,6 +56,22 @@ export default{
             return (parseFloat(value)/100).toFixed(2);
         },
         /**
+         *@describe 计算总价
+         *@param {String/Number} (n) 分
+         *@return {Number} 元
+         **/
+        Moon.prototype.mathPriceTotal=function(phoneMoney,phoneMoneyDiscount,prestore,prestoreDiscount){
+            return (this.mathDiscount(phoneMoney,phoneMoneyDiscount)+this.mathDiscount(prestore,prestoreDiscount));
+        },
+        /**
+         *@describe 计算折扣
+         *@param {String/Number} (n) 分
+         *@return {Number} 元
+         **/
+        Moon.prototype.mathDiscount=function(price,discount){
+            return parseFloat((parseFloat(price)/100*parseFloat(discount)/10000).toFixed(2));
+        },
+        /**
          *@describe 返回号码搜索
          **/
         Moon.prototype.toIndexPage=function(){
@@ -259,8 +275,9 @@ export default{
                             if(responseText.code=='200'){
                                 success(responseText)
                             }else{
-                                typeof fail==='function'&&fail(responseText);
-                                _self.error(responseText);
+                                if(typeof fail==='function'){
+                                    fail(responseText);
+                                }else _self.error(responseText);
                             }
                         }catch(e){
                             typeof fail==='function'&&fail();

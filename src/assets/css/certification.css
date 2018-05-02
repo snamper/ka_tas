@@ -8,6 +8,9 @@ body{
     bottom: 0;
     margin:auto;
 }
+#app{
+    padding-bottom: 0.3rem;
+}
 .m-certificate-info, .m-pic, .o-tips{
     background-color: #fff;
 }
@@ -42,6 +45,7 @@ body{
     outline: none;
     font-size: 0.15rem;
     border-bottom-color:#eee;
+    border-radius: 0px;
 }
 .o-input div>input:focus{
     border-bottom-color:#4b3887; 
@@ -184,11 +188,39 @@ body{
     transform: rotate(45deg) scaleY(1);
     -webkit-transform: rotate(45deg) scaleY(1)
 }
-/*手签名模块*/
+/*设置服务密码*/
 .o-tips2{
     font-size: 0.12rem;
-    margin-bottom: 0.1rem;
+    position: relative;
+    margin-top:-5px;
+    padding:0 5px;
 }
+.o-set-ul{
+
+}
+.o-set-ul>li{
+    display: flex;
+    margin-left:0.1rem;
+    padding:5px 10px 5px 5px;
+}
+.o-set-ul>li:first-child{
+    border-bottom: 1px solid #eee;
+}
+.o-set-ul>li>.lt{
+    width: 0.7rem;
+    line-height: 0.3rem;
+}
+.o-set-ul>li>.rt{
+    flex:1;
+}
+.o-set-ul>li>.rt>input{
+    width: 100%;
+    height: 0.3rem;
+    border:none;
+    letter-spacing: 3px;
+}
+/*手签名模块*/
+
 .m-sign{}
 .m-sign>.fl{
     font-size: 0.12rem;
@@ -229,23 +261,38 @@ body{
     bottom:0;
     z-index: 778;
     width: 100%;
-    
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
 }
 #signatureBox>.inner>.title{
     background-color: #f5f6f7;
 }
+#signatureBox>.inner>.title>.fl{
+    line-height: 0.3rem;
+    padding-left:0.1rem;
+    color: #212121;
+}
 #signatureBox>.inner>.title>a{
     display: inline-block;
-    background-size: 0.18rem;
-    background-position: left center;
+    background-size: 0.15rem;
     background-repeat: no-repeat;
-    background-image: url(../img/modify.png);
-    width: 0.55rem;
-    padding: 0.1rem;
-    text-align: right;
+    height: 0.3rem;
+    line-height:0.3rem;
+    padding-left: 0.2rem;
+    font-size:0.14rem;
+}
+#save{
+    background-image: url(../img/save.png);
+    background-position: left center;
+    width: 0.5rem;
+}
+#clear{
+     background-image: url(../img/clear_grey.png);
+     background-position:center;
+     width:0.6rem;
 }
 #signatureBox>.inner>canvas{
-    background-color: #f5f6f7;
+    background-color: #fff;
     opacity: 1;
     width: 100%;
     /*height:6rem;*/
@@ -254,9 +301,12 @@ body{
 #signatureBox>.inner>.footer{}
 #signatureBox>.inner>.footer>a{
     background-color: #fff;
+    color: #323435;
+    border-top: 1px solid #eee;
+    font-size:0.14rem;
     display: block;
     width: 100%;
-    height: 0.35rem;
-    line-height: 0.35rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
     text-align: center;
 }

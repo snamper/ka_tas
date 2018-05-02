@@ -118,7 +118,17 @@
     }
 }
 
-
+.m-order-tips{
+    width: 90%;
+    margin:auto;
+    margin-top:0.1rem;
+}
+.m-order-tips>dt{
+    margin-bottom:5px;
+}
+.m-order-tips>dd{
+    margin-bottom:3px;
+}
 
 .m-wacard-tips{
 

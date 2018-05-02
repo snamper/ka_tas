@@ -178,6 +178,9 @@ var vm=new Moon({
 		mathCentToYuan:function(value){
 	    	return parseInt(value)/100;
 	    },
+		mathDiscount:function(money,discount){
+			return vm.mathDiscount(money,discount);
+		},
 		filterBr:function(str){
 			return str?str.split('<br>'):str=[];
 		},
