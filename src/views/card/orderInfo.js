@@ -23,7 +23,7 @@ var vm=new Moon({
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
-            "pDuscount":10000,
+            "pDiscount":10000,
             "similarity":0,
             "packageName":"--",
             "packageCode":"0",
@@ -50,8 +50,8 @@ var vm=new Moon({
 			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.set('orderInfo.totalMoney',vm.mathPriceTotal(orderInfo.cardMoney,orderInfo.cDiscount,orderInfo.prestoreMoney,orderInfo.prestoreDiscount));
-				if(orderInfo.similarity){//已经进行活体识别
+				// vm.set('orderInfo.totalMoney',vm.mathPriceTotal(orderInfo.cardMoney,orderInfo.cDiscount,orderInfo.prestoreMoney,orderInfo.pDiscount));
+				if(parseInt(orderInfo.similarity)){//已经进行活体识别
 					var similarity=parseFloat(orderInfo.similarity);
 					vm.set('off.isFace',true);
 					var limitSimilarity=parseFloat(orderInfo.limitSimilarity);	

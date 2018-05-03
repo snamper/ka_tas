@@ -23,7 +23,7 @@ var vm=new Moon({
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
-            "pDuscount":10000,
+            "pDiscount":10000,
             "similarity":0,
             "idCardName":"--",
             "idCardNo":"--",

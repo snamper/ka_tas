@@ -136,7 +136,7 @@ var vm=new Moon({
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 			let topH=263;
 			if(vm.get('selectPackage').packageCode){
-				topH=355;
+				topH=360;
 			}
 			document.getElementById("packageList").style.maxHeight=window_h-topH+'px';
 		},
@@ -304,7 +304,7 @@ var vm=new Moon({
 		            "packageName":selectPackage.name,
 		            "packageCode":selectPackage.packageCode,
 		            "prestoreMoney":selectPackage.prestore,//预存价格
-		            "pDuscount":selectPackage.discount,
+		            "pDiscount":selectPackage.discount,
 		            "similarity":0,
 		            "iccid":vm.get('userInfo').iccid
 		        });
@@ -363,7 +363,8 @@ var vm=new Moon({
 					arr.unshift(item);
 					vm.set('packageList',arr);
 				}else vm.set('packageList',data.data.titleList);
-				vm.set('cardInfo.discount',data.data.discount)
+
+				vm.set('cardInfo.discount',parseInt(data.data.discount));
 				vm.set('totalPrice',vm.mathPriceTotal(
 					cardInfo.phoneMoney,data.data.discount||10000,vm.get('selectPackage').prestore,vm.get('selectPackage').discount||10000
 				));

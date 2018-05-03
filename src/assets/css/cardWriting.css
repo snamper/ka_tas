@@ -13,6 +13,9 @@
 .m-write-load>h4{
 	margin-top: 0.1rem;
 }*/
+.m-order-info>li{
+    margin:5px 0 5px 0.1rem;
+}
 .m-all-tag{
 	margin-top:0.15rem;
 }

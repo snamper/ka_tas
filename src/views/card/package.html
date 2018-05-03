@@ -63,13 +63,13 @@ body{
 		<li class="double-border"></li>
 		<li>
 			<span class="left grey">+号码占用费</span>
-			<span class="fr right discount" m-show="cardInfo.discount!=10000">￥{{ mathDiscount(cardInfo.phoneMoney,cardInfo.discount) }}</span>
-			<span class="fr right oldPrice">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
+			<span class="fr right discount">￥{{ mathDiscount(cardInfo.phoneMoney,cardInfo.discount) }}</span>
+			<span class="fr right oldPrice" m-show="cardInfo.discount!=10000">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
 		</li>
 		<li m-show="selectPackage.packageCode">
 			<span class="left grey">+含预存话费</span>
-			<span class="fr right discount" m-show="selectPackage.discount!=10000">￥{{ mathDiscount(selectPackage.prestore,selectPackage.discount) }}</span>
-			<span class="fr right oldPrice">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
+			<span class="fr right discount">￥{{ mathDiscount(selectPackage.prestore,selectPackage.discount) }}</span>
+			<span class="fr right oldPrice" m-show="selectPackage.discount!=10000">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>
 		</li>
 		<li class="clr" m-show="selectPackage.packageCode">
 			<span class="fr right black">总价:<b class="red font-big">￥{{ totalPrice }}</b></span>

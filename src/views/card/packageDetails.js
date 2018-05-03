@@ -43,7 +43,8 @@ var vm=new Moon({
             }],
 	        "prestoreMoneyList": [{//预存
                 "init": "0",
-                "prestoreMoney": "0"
+                "prestoreMoney": "0",
+                "discount":10000
             }],
 	    },
 		userInfo:'',//用户信息
@@ -154,6 +155,7 @@ var vm=new Moon({
 				packageCode:pack.code,
 				selPackCode:getSelPackageCode(),
 				prestore:pack.prestoreMoneyList[vm.get('off').prestore].prestoreMoney,
+				discount:parseInt(pack.prestoreMoneyList[vm.get('off').prestore].discount)
 			});
 
 			Jsborya.pageBack({

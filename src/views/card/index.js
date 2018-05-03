@@ -195,7 +195,8 @@ var vm=new Moon({
 				phoneMoney:phoneData.cardMoney,
 				phoneLevel:phoneData.numberLevel,
 				deviceStatus:vm.get('deviceStatus'),
-				deviceType:vm.get('deviceType')
+				deviceType:vm.get('deviceType'),
+				discount:10000
 			});
 			vm.removeStore('selectPackage');
 			Jsborya.pageJump({
