@@ -93,7 +93,7 @@ body{
 				m-for="todo,index in packageInfo.prestoreMoneyList"
 				m-literal:class="{active:todo.init==1,active2:todo.init==2}"
 				m-literal:title="index"
-				m-on:click="shiftPrestore">{{ mathDiscount(todo.prestoreMoney,todo.discount) }}元</li>
+				m-on:click="shiftPrestore">{{ mathCentToYuan(todo.prestoreMoney) }}元</li>
 		</ul>
 	</section>
 	<div m-on:click="makeSure" class="btn btny">确定</div>

@@ -50,7 +50,6 @@ var vm=new Moon({
 			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				// vm.set('orderInfo.totalMoney',vm.mathPriceTotal(orderInfo.cardMoney,orderInfo.cDiscount,orderInfo.prestoreMoney,orderInfo.pDiscount));
 				if(parseInt(orderInfo.similarity)){//已经进行活体识别
 					var similarity=parseFloat(orderInfo.similarity);
 					vm.set('off.isFace',true);

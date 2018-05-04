@@ -148,7 +148,6 @@ var vm=new Moon({
 				let orderInfo=data.data.orderInfo;
 				if(orderInfo){
 					vm.set('orderInfo',orderInfo);
-					vm.set('orderInfo.totalMoney',vm.mathPriceTotal(orderInfo.cardMoney,orderInfo.cDiscount,orderInfo.prestoreMoney,orderInfo.prestoreDiscount));
 				}
 			});
 		},

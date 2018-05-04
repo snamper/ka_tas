@@ -365,9 +365,12 @@ var vm=new Moon({
 				}else vm.set('packageList',data.data.titleList);
 
 				vm.set('cardInfo.discount',parseInt(data.data.discount));
-				vm.set('totalPrice',vm.mathPriceTotal(
-					cardInfo.phoneMoney,data.data.discount||10000,vm.get('selectPackage').prestore,vm.get('selectPackage').discount||10000
-				));
+
+				let cardMoney=vm.mathDiscount(cardInfo.phoneMoney,data.data.discount||10000)
+				let prestoreMoney=vm.mathDiscount(vm.get('selectPackage').prestore,vm.get('selectPackage').discount||10000)
+				let totalPrice=(parseFloat(cardMoney)+parseFloat(prestoreMoney)).toFixed(2);
+
+				vm.set('totalPrice',totalPrice);
 			},function(){
 				vm.set('off.loadPackage',false);
 			});
