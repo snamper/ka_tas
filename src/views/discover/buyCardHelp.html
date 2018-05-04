@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>购卡指引</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+body{
+	padding-bottom: 0.3rem;
+}
+.black-lt{
+	color: #515151;
+}
+.top>img{
+	display: block;
+	width: 100%;
+}
+.top_sub{
+	text-align: center;
+	margin:0.2rem 0;
+}
+.top_sub>img{
+	width:55%;
+}
+.btn_tips{
+	text-align: center;
+}
+.jd_btn{
+	text-align:center;
+	margin-top: 0.1rem;
+	margin-bottom: 0.3rem;
+}
+.jd_btn>img{
+	width:30%;
+}
+.line_tips{
+	width:90%;
+	margin:auto;
+	border-top:1px solid #bbb;
+	position: relative;
+}
+.line_tips>span{
+	display: inline-block;
+	width:0.7rem;
+	text-align:center;
+	background-color:#F8F8F8;
+	position: absolute;
+	left: 50%;
+	margin-left: -0.35rem;
+	top:-9px;
+}
+.col-2{
+	width:90%;
+	margin:0.3rem auto auto auto;
+	display: flex;
+	max-width: 420px;
+}
+.col-2>.lt{
+	width:1rem;
+	padding-right: 0.1rem;
+	margin-right: 0.1rem;
+	border-right: 1px dashed #ddd;
+}
+.col-2>.lt>img{
+	display: block;
+	width:100%;
+}
+.col-2>.lt>.black-lt{
+	margin-top: 5px;
+	font-size: 0.12rem;
+}
+.col-2>.rt{
+	flex: 1;
+	padding-top: 5px;
+}
+.col-2>.rt>.row{
+	display: flex;
+	margin-bottom:0.1rem;
+}
+.col-2>.rt>.row>img{
+	width:0.45rem;
+	height: 0.45rem;
+}
+.col-2>.rt>.row>.ct{
+	float: 1;
+	margin-left:5px;
+	line-height: 0.45rem;
+}
+.col-2>.rt>.row>.ct>.link{
+	
+}
+@media screen and (max-width: 320px){
+	.col-2{
+		width:99%;
+	}
+	.col-2>.rt{
+		padding-top: 0.2rem;
+	}
+	.col-2>.rt>.row>img{
+		width:0.3rem;
+		height: 0.3rem;
+	}
+	.col-2>.rt>.row>.ct{
+		line-height: 0.3rem;
+	}
+}
+@media screen and (min-width: 321px) and (max-width: 350px){
+	.col-2{
+		width:95%;
+	}
+	.col-2>.rt{
+		padding-top: 0.1rem;
+	}
+	.col-2>.rt>.row>img{
+		width:0.35rem;
+		height: 0.35rem;
+	}
+	.col-2>.rt>.row>.ct{
+		line-height: 0.35rem;
+	}
+}
+@media screen and (min-width: 375px) and (max-width: 450px){
+	.col-2{
+		width:85%;
+	}
+}
+@media screen and (min-width: 451px){
+	.col-2{
+		width:80%;
+	}
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<div class="top"><img src="../../assets/img/discover/go_01.jpg"></div>
+	<div class="top_sub"><img src="../../assets/img/discover/character.png"></div>
+	<p class="btn_tips grey">猛戳下方按钮购买</p>
+	<div class="jd_btn" m-on:click="jumpToJD"><img src="../../assets/img/discover/jingdong.png"></div>
+	<div class="line_tips"><span>联系我们</span></div>
+	<div class="col-2">
+		<div class="lt"><img src="../../assets/img/discover/yuanweishangcheng.jpg"><span class="black-lt">远微商城公众号</span></div>
+		<div class="rt">
+			<div class="row">
+				<img src="../../assets/img/discover/icon_phone.png" alt="">
+				<div class="ct"><span class="black-lt">商务电话：</span><a href="tel:010-57835500" class="link purple">010-57835500</a></div>
+			</div>
+			<div class="row">
+				<img src="../../assets/img/discover/icon_QQ.png" alt="">
+				<div class="ct"><span class="black-lt">企业QQ：</span><span class="link blue" m-on:click="jumpToQQ">2885509595</span></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

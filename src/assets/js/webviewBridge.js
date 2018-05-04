@@ -22,6 +22,14 @@ require('./base64.js');
 		return 'CB_WEB_FUNCTION';
 		// return 'CB_' + Date.now() + '_' + Math.ceil(Math.random() * 10);
 	}
+	function isYuanteliCard(){//判断是否在远特i卡app中
+	    var ua = navigator.userAgent.toLowerCase();
+	    if (ua.match(/yuantelicard/i) == "yuantelicard") {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
 
 	function callHandler(props){
 		let callbackName=createFnName();
@@ -35,25 +43,26 @@ require('./base64.js');
 	}
 	a.Jsborya={
 		ready:function(cb){
-			let num=0;
-			let timer=setInterval(function(){
-				num++;
-				if(window.webviewBridge){
-					clearInterval(timer);
-					cb();
-				}else if(num/10>10){
-					alert('挂载webviewBridge超时');
-					clearInterval(timer);
-				}
-			},100);
-			// setTimeout(function(){
-			// 	window.webviewBridge={
-			// 		callHandler:function(){
+			if(isYuanteliCard()){
+				let num=0;
+				let timer=setInterval(function(){
+					num++;
+					if(window.webviewBridge){
+						clearInterval(timer);
+						cb();
+					}else if(num/10>10){
+						alert('挂载webviewBridge超时');
+						clearInterval(timer);
+					}
+				},100);
+			}else setTimeout(function(){
+				window.webviewBridge={
+					callHandler:function(){
 
-			// 		}
-			// 	};
-			// 	cb();
-			// },300);
+					}
+				};
+				cb();
+			},300);
 		},
 		getUserInfo:function(cb){//获取登录用户信息
 			// cb({
@@ -105,14 +114,23 @@ require('./base64.js');
 		pageJump:function(json){//页面跳转
 			json.url.indexOf("http")===-1 ? json.url=URL+json.url : void 0;
 			if(!json.hasOwnProperty('destroyed'))json.destroyed=true;//默认是销毁当前视图
-			//window.location.href=json.url;
-			callHandler({
-				name:'pageJump',
-				data:json,
-				callback:function(result){
-					console.log('jump');
+
+			if(isYuanteliCard()){
+				callHandler({
+					name:'pageJump',
+					data:json,
+					callback:function(result){
+						console.log('jump');
+					}
+				});
+			}else{
+				if(json.data&&json.data.subUrl){
+					window.location.href=json.data.subUrl;
+				}else if(json.url){
+					window.location.href=json.url;
 				}
-			});
+			}
+			
 		},
 		pageBack:function(json){//页面返回
 			json.url=URL+json.url;

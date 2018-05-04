@@ -85,8 +85,8 @@ export default{
          **/
         Moon.prototype.toBuyHelpPage=function(){
             Jsborya.pageJump({
-                url:'http://km.m10027.com/tf/buyCardHelp.html',
-                stepCode:800,
+                url:'../discover/buyCardHelp.html',
+                stepCode:999,
                 depiction:'购卡指引',
                 destroyed:false,
                 header:{
