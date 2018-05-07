@@ -19,7 +19,6 @@ require('./base64.js');
 	}
 	
 	function createFnName(){//生成函数名
-		//return 'CB_WEB_FUNCTION';
 		return 'CB_' + Date.now() + '_' + Math.ceil(Math.random() * 10);
 	}
 	function isYuanteliCard(){//判断是否在远特i卡app中
@@ -89,13 +88,14 @@ require('./base64.js');
 		},
 		getGuestInfo:function(cb){//获取新用户信息
 			// cb({
-			// 	"imsi":"",
+			// 	"imsi":"460010147813210",
 			// 	"smsp":"",
-			// 	"applicationID":"TF-1516003054260-48440280",
-			// 	"iccid":"89860117841022194607",
+			// 	"scanIccid":"",
+			// 	"applicationID":"TF-1525683312942-1325751751",
+			// 	"iccid":"89860117841022193963",
 			// 	"packageName":"com.yuantel.common.lite",
-			// 	"timestamp":"1516073570172",
-			// 	"token":"TmCyVptvK/vLl5onWkaZWAEf6hMKr+B36pfuwNDyiqjQWnrrljC497otIEF65zwmahMO1bl5hF0rkIBbXrsiMoMP7aGZS14Pk7DsTnAXWTg="
+			// 	"timestamp":"1525684349889",
+			// 	"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
 			// });
 			callHandler({
 				name:'getGuestInfo',
@@ -195,7 +195,7 @@ require('./base64.js');
 			// setTimeout(function(){
 			// 	cb({
 			// 		'status':'1',
-			// 		'iccid':'89860117841022194607',
+			// 		'iccid':'89860117841022193963',
 			// 	});
 			// },1000);
 			callHandler({
@@ -235,12 +235,11 @@ require('./base64.js');
 			// 		'status':'1',
 			// 	});
 			// },1000)
-			alert('action:callWriteCard'+'\n'+JSON.stringify(json))
 			callHandler({
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					alert('callWriteCard'+JSON.stringify(result));
+					//alert('callWriteCard'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});

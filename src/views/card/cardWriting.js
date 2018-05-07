@@ -164,7 +164,7 @@ var vm=new Moon({
 			Jsborya.callWriteCard({
 				imsi:vm.get('imsi'),
 				smsp:vm.get('smsp'),
-				iccid:vm.set('userInfo').iccid,
+				iccid:vm.get('userInfo').iccid,
 				complete:function(data){
 					switch(parseInt(data.status)){
 						case 1:
@@ -186,7 +186,6 @@ var vm=new Moon({
 				}
 			});
 		},
-		
 		submitOrder:function(){//开卡申请
 			vm.AJAX('/ka_tas/w/business/submitOrder',{
 				'userInfo':vm.get("userInfo"),

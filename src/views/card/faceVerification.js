@@ -40,15 +40,15 @@ var vm=new Moon({
 			let orderInfo=vm.getStore('ORDER_INFO');
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				if(orderInfo.similarity){//已经进行活体识别
-					var similarity=parseFloat(orderInfo.similarity);
-					vm.set('off.isFace',true);
-					vm.set('faceConfirmInfo.similarity',similarity);
-					var limitSimilarity=parseFloat(orderInfo.limitSimilarity);	
-					if(limitSimilarity<=similarity){//识别通过
-						vm.set('off.isPass',true);
-					}
-				}
+				// if(orderInfo.similarity){//已经进行活体识别
+				// 	var similarity=parseFloat(orderInfo.similarity);
+				// 	vm.set('off.isFace',true);
+				// 	vm.set('faceConfirmInfo.similarity',similarity);
+				// 	var limitSimilarity=parseFloat(orderInfo.limitSimilarity);	
+				// 	if(limitSimilarity<=similarity){//识别通过
+				// 		vm.set('off.isPass',true);
+				// 	}
+				// }
 				Jsborya.getGuestInfo(function(userInfo){
 					vm.set('userInfo',userInfo);
 
