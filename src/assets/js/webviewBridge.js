@@ -38,11 +38,11 @@ require('./base64.js');
 			if(result){
 				try{
 					result=JSON.parse(BASE64.decode(result));
-					alert(JSON.stringify(result))
 				}catch(error){
 					alert(error);
 				}
 			}
+			alert(props.callback)
 			props.callback(result);
 		};
 		if(window.webviewBridge.callHandler){
