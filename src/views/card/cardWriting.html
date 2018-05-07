@@ -56,7 +56,7 @@
 				<li class="border"><span class="left">卡槽卡号:</span>{{ userInfo.iccid }}</li>
 				<li><span class="left">IMSI:</span>
 					<span class="green" m-show="imsi">IMSI获取成功</span>
-					<span class="yellow" m-show="!imsi&&off.step!=3">
+					<span class="yellow" m-show="!imsi">
 						<span m-show="error.code!=1">--</span>
 						<span m-show="error.code==1">IMSI获取中···</span>
 					</span>
