@@ -56,14 +56,12 @@
     background-repeat:no-repeat;
 }
 .m-packageList>.active>.right{
-    top:0.1rem;
+    top:0.13rem;
 }
 .m-packageList>.active>.info{
     margin-top:0;
 }
-.m-packageList>.active>.right{
 
-}
 #packageList{
     position: relative;
     max-height: 3rem;
