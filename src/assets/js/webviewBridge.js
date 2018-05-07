@@ -34,7 +34,13 @@ require('./base64.js');
 	function callHandler(props){
 		let callbackName=createFnName();
 		a[callbackName]=function(result){
-			if(result)result=JSON.parse(BASE64.decode(result));
+			if(result){
+				try{
+					result=JSON.parse(BASE64.decode(result));
+				}catch(error){
+					alert(error);
+				}
+			}
 			props.callback(result);
 		};
 		if(window.webviewBridge.callHandler){
