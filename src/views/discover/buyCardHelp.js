@@ -49,6 +49,7 @@ var vm=new Moon({
 				depiction:'打开QQ',
 				destroyed:false,
 				data:{
+					packageName:'com.tencent.mobileqq',
 					schema:'mqqwpa://im/chat?chat_type=wpa&uin=2885509595&version=1&src_type=web&web_src=oicqzone.com',
 					subUrl:'http://wpa.qq.com/msgrd?v=3&uin=2885509595&site=qq&menu=yes'
 				}
@@ -61,6 +62,7 @@ var vm=new Moon({
 				depiction:'打开京东',
 				destroyed:false,
 				data:{
+					packageName:'com.jingdong.app.mall',
 					schema:'openapp.jdmobile://virtual?params=%7B%22sourceValue%22:%220_productDetail_97%22,%22des%22:%22productDetail%22,%22skuId%22:%27343092739%22,%22category%22:%22jump%22,%22sourceType%22:%22PCUBE_CHANNEL%22%7D',
 					subUrl:'https://item.m.jd.com/product/27343092739.html'
 				}
