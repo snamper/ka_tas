@@ -99,11 +99,8 @@ var vm=new Moon({
 			vm.set("off.step",1);
 			vm.set("error",{code:1,text:''});
 			Jsborya.readCardIMSI(function(data){
-				alert(JSON.stringify(data))
 				if(data.status==1){
-					alert('action:getGuestInfo')
 					Jsborya.getGuestInfo(function(userInfo){
-						alert(JSON.stringify(userInfo))
 						vm.set('userInfo',userInfo);
 						vm.callMethod("getImsi");
 					});

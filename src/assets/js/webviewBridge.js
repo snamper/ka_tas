@@ -19,8 +19,8 @@ require('./base64.js');
 	}
 	
 	function createFnName(){//生成函数名
-		return 'CB_WEB_FUNCTION';
-		// return 'CB_' + Date.now() + '_' + Math.ceil(Math.random() * 10);
+		//return 'CB_WEB_FUNCTION';
+		return 'CB_' + Date.now() + '_' + Math.ceil(Math.random() * 10);
 	}
 	function isYuanteliCard(){//判断是否在远特i卡app中
 	    var ua = navigator.userAgent.toLowerCase();
@@ -34,15 +34,13 @@ require('./base64.js');
 	function callHandler(props){
 		let callbackName=createFnName();
 		a[callbackName]=function(result){
-
 			if(result){
 				try{
 					result=JSON.parse(BASE64.decode(result));
 				}catch(error){
-					alert(error);
+					alert('交互数据解析错误');
 				}
 			}
-			alert(props.callback)
 			props.callback(result);
 		};
 		if(window.webviewBridge.callHandler){
