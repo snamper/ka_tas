@@ -34,10 +34,11 @@ require('./base64.js');
 	function callHandler(props){
 		let callbackName=createFnName();
 		a[callbackName]=function(result){
-			alert(result)
+
 			if(result){
 				try{
 					result=JSON.parse(BASE64.decode(result));
+					alert(JSON.stringify(result))
 				}catch(error){
 					alert(error);
 				}
@@ -102,6 +103,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:'',
 				callback:function(result){
+					alert(cb)
 					//alert('getGuestInfo'+JSON.stringify(result))
 					cb(result);
 				}
