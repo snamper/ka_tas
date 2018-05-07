@@ -34,6 +34,7 @@ require('./base64.js');
 	function callHandler(props){
 		let callbackName=createFnName();
 		a[callbackName]=function(result){
+			alert(result)
 			if(result){
 				try{
 					result=JSON.parse(BASE64.decode(result));
