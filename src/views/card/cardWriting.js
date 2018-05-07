@@ -8,7 +8,6 @@ var vm=new Moon({
 	data:{
 		off:{
 			step:1,//1读取ICCID中；2获取IMSI中；3写卡中+提交开卡申请
-			submitLoad:0,//开卡申请load
 		},
 		orderInfo: {
             "phoneNum":"00000000000",

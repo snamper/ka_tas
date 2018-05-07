@@ -235,11 +235,12 @@ require('./base64.js');
 			// 		'status':'1',
 			// 	});
 			// },1000)
+			alert('action:callWriteCard'+'\n'+JSON.stringify(json))
 			callHandler({
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					//alert('callWriteCard'+JSON.stringify(result));
+					alert('callWriteCard'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});

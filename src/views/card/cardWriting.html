@@ -81,7 +81,7 @@
 			
 		</section>
 		<section m-show="error.code==1">
-			<div m-on:click="callWriteCard" m-literal:class="{active:off.submitLoad,btn:true,btnDefault:off.step!=3,btny:imsi!=''}">
+			<div m-on:click="callWriteCard" m-literal:class="{active:off.step==3,btn:true,btnDefault:off.step!=3,btny:imsi!=''}">
 				<i m-show="off.step!=3">提交开卡申请</i>
 				<i m-show="off.step==3">开卡申请中，请稍后</i>
 				<b></b>
