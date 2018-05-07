@@ -306,7 +306,8 @@ var vm=new Moon({
 		            "prestoreMoney":selectPackage.prestore,//预存价格
 		            "pDiscount":selectPackage.discount,
 		            "similarity":0,
-		            "iccid":vm.get('userInfo').iccid
+		            "iccid":vm.get('userInfo').iccid,
+		            "deviceType":cardInfo.deviceType
 		        });
 				Jsborya.pageJump({
 					url:'certification.html',

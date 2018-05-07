@@ -95,7 +95,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:'',
 				callback:function(result){
-					alert('getGuestInfo'+JSON.stringify(result))
+					//alert('getGuestInfo'+JSON.stringify(result))
 					cb(result);
 				}
 			});
@@ -196,7 +196,7 @@ require('./base64.js');
 				name:'readCardICCID',
 				data:'',
 				callback:function(result){
-					alert('readCardICCID'+JSON.stringify(result));
+					//alert('readCardICCID'+JSON.stringify(result));
 					cb(result);
 				}
 			});
@@ -218,7 +218,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:'',
 				callback:function(result){
-					alert('readCardIMSI'+JSON.stringify(result));
+					//alert('readCardIMSI'+JSON.stringify(result));
 					cb(result);
 				}
 			});
@@ -233,7 +233,7 @@ require('./base64.js');
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					alert('callWriteCard'+JSON.stringify(result));
+					//alert('callWriteCard'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});

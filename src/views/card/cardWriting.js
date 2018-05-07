@@ -27,9 +27,9 @@ var vm=new Moon({
             "similarity":0,
             "packageName":"--",
             "packageCode":"0",
-            "iccid":"--"
+            "iccid":"--",
+            "deviceType":1,//卡类型
         },
-		deviceType:1,//卡类型
 		userInfo:{
 			iccid:'--'
 		},
@@ -58,19 +58,17 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO'),
-			deviceType=vm.getStore('CARD_INFO').deviceType;
+			let orderInfo=vm.getStore('ORDER_INFO');
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.set('deviceType',deviceType);
 				vm.callMethod('readCardICCID');
 				
 				Jsborya.registerMethods('headerLeftClick',function(){
 					vm.orderCancel(userInfo,orderInfo.sysOrderId);
 				});
 				Jsborya.registerMethods('headerRightClick',function(){
-					if(deviceType==1){
+					if(orderInfo.deviceType==1){
 						Jsborya.pageJump({
 							url:"simInfo.html",
 							stepCode:999,
@@ -81,7 +79,7 @@ var vm=new Moon({
 		                        backgroundColor:'#4b3887',
 		                    }
 						});
-					}else if(deviceType==2){
+					}else if(orderInfo.deviceType==2){
 						Jsborya.pageJump({
 							url:'',
 							stepCode:803,
@@ -109,7 +107,7 @@ var vm=new Moon({
 				}else{
 					vm.callMethod("filterConnectStatus",[data.status]);
 				}
-				let deviceType=vm.get('deviceType'),icon='';
+				let deviceType=vm.get('orderInfo').deviceType,icon='';
 				if(deviceType==1){
 					if(data.status==1){
 						icon='card_green';
