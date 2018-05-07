@@ -86,7 +86,8 @@ var vm=new Moon({
 		intervalGetResult:function(){
 			var vm=this;
 			vm.set("off.load",1);
-			window.Timer=setInterval(function(){
+
+			//window.Timer=setInterval(function(){
 				vm.AJAX('/ka_tas/w/business/getResult',{
 					userInfo:vm.get('userInfo'),
 					params:{
@@ -96,9 +97,9 @@ var vm=new Moon({
 					var status=data.data.orderStatus;
 					vm.set('orderStatus',status);
 					vm.set('desc',data.data.desc);
-					if(status!=1){
-						clearInterval(window.Timer);
-					}
+					// if(status!=1){
+					// 	clearInterval(window.Timer);
+					// }
 
 					if(status==2){
 						vm.set("off.load",2);
@@ -109,7 +110,7 @@ var vm=new Moon({
 					}
 
 				});
-			},2000);
+			//},2000);
 		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({
@@ -120,6 +121,9 @@ var vm=new Moon({
 		},
 		jumpToIndex:function(){
 			vm.toIndexPage();
+		},
+		jumpToHome:function(){
+			
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);

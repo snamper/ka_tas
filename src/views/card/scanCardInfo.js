@@ -212,6 +212,27 @@ var vm=new Moon({
                 }
             });
 		},
+		intervalGetResult:function(){
+
+			//window.Timer=setInterval(function(){
+				vm.AJAX('/ka_tas/w/business/getResult',{
+					userInfo:vm.get('userInfo'),
+					params:{
+						sysOrderId:vm.get('orderInfo').sysOrderId
+					}
+				},function(data){
+					var status=data.data.orderStatus;
+
+					if(status==2){//开卡成功
+						vm.set("off.status",3);
+					}else if(status==3||status==4){
+						vm.set("off.status",6);
+						vm.set("orderInfo.orderDesc",data.data.desc);
+					}
+
+				});
+			//},2000);
+		},
 		orderCancel:function(){
 			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
 		},

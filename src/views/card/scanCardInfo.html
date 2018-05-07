@@ -29,6 +29,8 @@
 				<span m-show="off.status==2" class="red">有未完成订单</span>
 				<span m-show="off.status==3" class="green">开卡成功</span>
 				<span m-show="off.status==4" class="red">无效卡</span>
+				<span m-show="off.status==5" class="yellow">进行中</span>
+				<span m-show="off.status==6" class="red">开卡失败</span>
 			</span>
 		</div>
 	</div>
@@ -83,7 +85,7 @@
 				<dd>2、开卡成功我们将以短信的形式进行通知。</dd>
 				<dd>3、您可以点击“重新获取”按钮获取开卡结果</dd>
 			</dl>
-			<div class="btn btny" m-show="off.status==5" m-on:click="continueOrder">重新获取</div>
+			<div class="btn btny" m-show="off.status==5" m-on:click="intervalGetResult">重新获取</div>
 
 			
 			<dl class="m-order-tips grey" m-show="off.status==6">
