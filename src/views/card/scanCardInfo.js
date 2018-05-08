@@ -79,6 +79,7 @@ var vm=new Moon({
 	methods:{
 		readCardICCID:function(){
 			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
+			alert('action:getGuestInfo')
 			Jsborya.getGuestInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
 				let scanIccid=vm.get('scanIccid'),

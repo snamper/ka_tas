@@ -33,6 +33,7 @@ require('./base64.js');
 	function callHandler(props){
 		let callbackName=createFnName();
 		a[callbackName]=function(result){
+			alert('callBack')
 			if(result){
 				try{
 					result=JSON.parse(BASE64.decode(result));
@@ -90,7 +91,6 @@ require('./base64.js');
 			// cb({
 			// 	"imsi":"460010147813210",
 			// 	"smsp":"",
-			// 	"scanIccid":"",
 			// 	"applicationID":"TF-1525683312942-1325751751",
 			// 	"iccid":"89860117841022193963",
 			// 	"packageName":"com.yuantel.common.lite",
@@ -101,7 +101,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:'',
 				callback:function(result){
-					//alert('getGuestInfo'+JSON.stringify(result))
+					alert('getGuestInfo'+JSON.stringify(result))
 					cb(result);
 				}
 			});
