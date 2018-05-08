@@ -33,7 +33,6 @@ require('./base64.js');
 	function callHandler(props){
 		let callbackName=createFnName();
 		a[callbackName]=function(result){
-			alert('callBack')
 			if(result){
 				try{
 					result=JSON.parse(BASE64.decode(result));
@@ -101,7 +100,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:'',
 				callback:function(result){
-					alert('getGuestInfo'+JSON.stringify(result))
+					//alert('getGuestInfo'+JSON.stringify(result))
 					cb(result);
 				}
 			});
@@ -224,7 +223,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:'',
 				callback:function(result){
-					alert('readCardIMSI'+JSON.stringify(result));
+					//alert('readCardIMSI'+JSON.stringify(result));
 					cb(result);
 				}
 			});

@@ -38,7 +38,7 @@ var vm=new Moon({
 	    	devInfo:'--',
 	    	livingSoftwareName:'旷视'
 	    },
-	    uploadType:1,//上传图片类型
+	    uploadType:1,//上传图片类型1,正面;2,反面;3,;4,手签名;
 	    imgName:{//上传后返回的图片地址
 	    	a:'',//正面
 	    	b:'',//反面
@@ -135,13 +135,12 @@ var vm=new Moon({
 				sysOrderId:vm.get('orderInfo').sysOrderId,
 				apiComplete:'uploadImgComplete',
 				complete:function(data){
-					if(type==3){//正面
+					if(type==1){//正面
 						document.getElementById("photo-front").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";
-						vm.set('uploadType',1);
-					}else if(type==4){//反面
-						document.getElementById("photo-back").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";
-						vm.set('uploadType',2);
+					}else if(type==2){//反面
+						document.getElementById("photo-back").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";	
 					}
+					vm.set('uploadType',type);
 				}
 			});
 		},
