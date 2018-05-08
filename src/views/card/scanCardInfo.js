@@ -97,6 +97,7 @@ var vm=new Moon({
 			                }
 			            });
 					}else {
+						alert('action:readCardIMSI')
 						Jsborya.readCardIMSI(function(data){
 							layer.close(index);
 							vm.set('deviceStatus',data.status);
@@ -111,7 +112,7 @@ var vm=new Moon({
 									icon='wcard_green';
 								}else icon='wcard_red';
 								Jsborya.setHeader({
-									title:'读取卡信息',
+									title:'卡信息',
 									frontColor:'#ffffff',
 									backgroundColor:'#4b3887',
 									left:{
@@ -130,6 +131,7 @@ var vm=new Moon({
 						});
 					}
 				}else if(scanIccid){
+					layer.close(index);
 					vm.callMethod('iccidCheck',['','',scanIccid]);
 				}else layer.close(index);
 			});

@@ -224,7 +224,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:'',
 				callback:function(result){
-					//alert('readCardIMSI'+JSON.stringify(result));
+					alert('readCardIMSI'+JSON.stringify(result));
 					cb(result);
 				}
 			});
