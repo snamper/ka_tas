@@ -135,12 +135,14 @@ var vm=new Moon({
 				sysOrderId:vm.get('orderInfo').sysOrderId,
 				apiComplete:'uploadImgComplete',
 				complete:function(data){
-					if(type==1){//正面
+					if(type==3){//正面
+						vm.set('uploadType',1);
 						document.getElementById("photo-front").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";
-					}else if(type==2){//反面
+					}else if(type==4){//反面
+						vm.set('uploadType',2);
 						document.getElementById("photo-back").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";	
 					}
-					vm.set('uploadType',type);
+					
 				}
 			});
 		},
