@@ -231,6 +231,10 @@ var vm=new Moon({
 						vm.set("orderInfo.orderDesc",data.data.desc);
 					}
 
+					if(status!=1){
+						vm.set('orderInfo.orderStatusCode','CARD_ACTIVE');
+					}
+
 				});
 			//},2000);
 		},
