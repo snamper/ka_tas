@@ -13,7 +13,7 @@ var vm=new Moon({
 		},
 		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		scanIccid:'',//扫描到的ICCID
-		deviceType:1,//1、手机卡；2、手表卡
+		deviceType:0,//1、手机卡；2、手表卡
 		userInfo:{
 			iccid:'--'
 		},

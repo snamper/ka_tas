@@ -174,12 +174,23 @@ var vm=new Moon({
 		filterConnectStatus:function(status){
 
 			if(status==2){
-				alert("读取失败");
+				layer.open({
+                    content:'读取失败',
+                    btn:['确定'],
+                    title:'提示'
+                });
 			}else if(status==3){
-				alert("未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽");
+				layer.open({
+                    content:'未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽',
+                    btn:['确定'],
+                    title:'提示'
+                });
 			}else{
-				alert("异常错误");
-				return false;
+				layer.open({
+                    content:'异常错误',
+                    btn:['确定'],
+                    title:'提示'
+                });
 			}
 		},
 		iccidCheck:function(imsi,smsp){//获取订单信息

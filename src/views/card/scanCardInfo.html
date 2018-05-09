@@ -97,44 +97,47 @@
 			<div class="btn btny" m-show="off.status==6" m-on:click="jumpToHome">确定</div>
 		</section>
 	</section>
-	<!--扫描卡与读取卡iccid不一致 || 没有读取到iccid-->
-	<section m-show="!off.isEqual">
-		<div class="m-tag"><i class="u-icon-tagnum_2"></i><span>读取卡槽中的SIM卡</span></div>
+	<div class="m-tips red" m-show="deviceType==0">温馨提示：当前开卡卡号状态为无效卡，请更换卡板</div>
+	<!--扫描卡与读取卡iccid不一致-->
+	<section m-show="deviceType!=0">
+		<section m-show="!off.isEqual">
+			<div class="m-tag"><i class="u-icon-tagnum_2"></i><span>读取卡槽中的SIM卡</span></div>
 
-		<div class="m-nocard-tips" m-show="deviceType==1">
-			<div class="left"><img src="../../assets/img/picture_phone_insert.png"></div>
-			<div class="right grey">温馨提示：<br>请将扫码卡板上的同一手机SIM卡插入当前手机的主卡槽。为提高开卡成功率，请确保手机连接无线局域网（WIFI）</div>
-		</div>
+			<div class="m-nocard-tips" m-show="deviceType==1">
+				<div class="left"><img src="../../assets/img/picture_phone_insert.png"></div>
+				<div class="right grey">温馨提示：<br>请将扫码卡板上的同一手机SIM卡插入当前手机的主卡槽。为提高开卡成功率，请确保手机连接无线局域网（WIFI）</div>
+			</div>
 
-		<div class="m-nocard-tips" m-show="deviceType==2">
-			<div class="left"><img src="../../assets/img/picture_watch_insert.png"></div>
-			<div class="right grey" style="margin-top: 0">
-				<p>温馨提示：<br>请打开蓝牙，连接到您的手表。当右上角状态为</p>
-				<div class="m-wacard-tips">
-					<div><i class="u-icon-wcg"></i>设备已连接</div>
-					<div><i class="u-icon-wcr"></i>设备未连接<span class="red">点击右上角连接设备</span></div>
+			<div class="m-nocard-tips" m-show="deviceType==2">
+				<div class="left"><img src="../../assets/img/picture_watch_insert.png"></div>
+				<div class="right grey" style="margin-top: 0">
+					<p>温馨提示：<br>请打开蓝牙，连接到您的手表。当右上角状态为</p>
+					<div class="m-wacard-tips">
+						<div><i class="u-icon-wcg"></i>设备已连接</div>
+						<div><i class="u-icon-wcr"></i>设备未连接<span class="red">点击右上角连接设备</span></div>
+					</div>
+					<p>将您所扫卡板上的同一SIM卡插入手表卡槽中，点击下方“读取SIM卡信息”按钮</p>
 				</div>
-				<p>将您所扫卡板上的同一SIM卡插入手表卡槽中，点击下方“读取SIM卡信息”按钮</p>
 			</div>
-		</div>
 
-		<div class="m-nocard-error">
-			<div class="iccid"><span class="grey">读取卡号</span><b>{{ userInfo.iccid }}</b></div>
-			<div m-show="deviceStatus==1">
-				<div class="m-tips red" m-show="!userInfo.iccid">提示：未读取到SIM卡，请插入有效的SIM卡重新读取</div>
-				<div class="m-tips red" m-show="!off.isEqual">提示：当前卡信息与扫码读取的卡信息不一致，请更换SIM卡后重新读取</div>
+			<div class="m-nocard-error">
+				<div class="iccid"><span class="grey">读取卡号</span><b>{{ userInfo.iccid }}</b></div>
+				<div m-show="deviceStatus==1">
+					<div class="m-tips red" m-show="!userInfo.iccid">提示：未读取到SIM卡，请插入有效的SIM卡重新读取</div>
+					<div class="m-tips red" m-show="!off.isEqual">提示：当前卡信息与扫码读取的卡信息不一致，请更换SIM卡后重新读取</div>
+				</div>
+				<div m-show="deviceStatus==2">
+					<div class="m-tips red" m-show="!userInfo.iccid">提示：读取失败，请插入有效的SIM卡重新读取</div>
+				</div>
+				<div m-show="deviceStatus==3">
+					<div class="m-tips red" m-show="!userInfo.iccid">提示：未插卡，请插入有效的SIM卡重新读取</div>
+				</div>
+				<div m-show="deviceStatus==4">
+					<div class="m-tips red" m-show="!userInfo.iccid">提示：设备未连接，请点击右上角进行设备连接，再重新读取</div>
+				</div>
 			</div>
-			<div m-show="deviceStatus==2">
-				<div class="m-tips red" m-show="!userInfo.iccid">提示：读取失败，请插入有效的SIM卡重新读取</div>
-			</div>
-			<div m-show="deviceStatus==3">
-				<div class="m-tips red" m-show="!userInfo.iccid">提示：未插卡，请插入有效的SIM卡重新读取</div>
-			</div>
-			<div m-show="deviceStatus==4">
-				<div class="m-tips red" m-show="!userInfo.iccid">提示：设备未连接，请点击右上角进行设备连接，再重新读取</div>
-			</div>
-		</div>
-		<div class="btn btny" m-on:click="readCardICCID">读取SIM卡信息</div>
+			<div class="btn btny" m-on:click="readCardICCID">读取SIM卡信息</div>
+		</section>
 	</section>
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

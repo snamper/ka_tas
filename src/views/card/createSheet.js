@@ -1,5 +1,5 @@
 require('../../public.js');
-//require('../../assets/js/slider.js');
+require('../../assets/js/slider.js');
 
 Jsborya.ready(function(){
 
@@ -45,7 +45,7 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			
 			let orderInfo=vm.getStore('ORDER_INFO');
-			//let orderInfo={"idCardName":"王兴璐","images":[{"imageName":"https://192.168.10.98:6051/tas/tfcardorder/20180412/89860117841022193963/TF18041214105644386_accept.png"}],"idCardNo":"511321198807295598","totalMoney":1,"limitSimilarity":10,"phoneNum":"17082880233","numberLevel":0,"cityName":"四川成都","createTime":1516612416100,"cardMoney":0,"similarity":92,"orderStatusCode":"CREATE_SHEET","validTime":1558651,"sysOrderId":"TF18012217133648258","prestoreMoney":20000};
+			//let orderInfo={"idCardName":"王兴璐","images":[{"imageName":"https://192.168.10.98:6051/tas/tfcardorder/20180509/89860117841022193963/TF18050910231494863_accept.png"}],"idCardNo":"511321198807295598","totalMoney":1,"limitSimilarity":10,"phoneNum":"17082880233","numberLevel":0,"cityName":"四川成都","createTime":1516612416100,"cardMoney":0,"similarity":92,"orderStatusCode":"CREATE_SHEET","validTime":1558651,"sysOrderId":"TF18012217133648258","prestoreMoney":20000};
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				Jsborya.getGuestInfo(function(userInfo){
@@ -74,9 +74,9 @@ var vm=new Moon({
 			vm.set('windowHeight',window_h||600);
 		},
 		setAcceptance:function(){
-			// Slider.init({
-			// 	index:vm.get('orderInfo').images.length
-			// });
+			Slider.init({
+				index:vm.get('orderInfo').images.length
+			});
 
 			setTimeout(function(){
 				new SmartPhoto(".slider",{
