@@ -144,14 +144,14 @@ var vm=new Moon({
 			
 			vm.set('selectLabel',{type:0,name:'',tag:''});
 			vm.set('off.isRecommend',false);
+			vm.callMethod('getCardList');
+
 			setTimeout(function(){
-				vm.callMethod('getCardList');
+				if(vm.get('off').showOrderMsg){
+					vm.callMethod('setPage',[126]);
+				}else vm.callMethod('setPage',[103]);
 			},300)
 			
-
-			if(vm.get('off').showOrderMsg){
-				vm.callMethod('setPage',[126]);
-			}else vm.callMethod('setPage',[103]);
 		},
 		inputClearClick:function(){//清除输入框
 			vm.set('inputValue','');
