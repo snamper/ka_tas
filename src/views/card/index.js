@@ -97,8 +97,8 @@ var vm=new Moon({
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 			let cardBox=document.getElementById("cardBox");
 
-			alert(otherHeight)
-			alert(window_h)
+			// alert(otherHeight)
+			// alert(window_h)
 			vm.set('boxHt','height:'+(window_h-otherHeight)+'px')
 			cardBox.scrollTop=0;
 		},
@@ -144,7 +144,10 @@ var vm=new Moon({
 			
 			vm.set('selectLabel',{type:0,name:'',tag:''});
 			vm.set('off.isRecommend',false);
-			vm.callMethod('getCardList');
+			setTimeout(function(){
+				vm.callMethod('getCardList');
+			},300)
+			
 
 			if(vm.get('off').showOrderMsg){
 				vm.callMethod('setPage',[126]);
