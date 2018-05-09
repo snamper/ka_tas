@@ -82,8 +82,7 @@ var vm=new Moon({
 				new SmartPhoto(".slider",{
 					resizeStyle: 'fit',
 					arrows:false,
-					nav:false,
-					useOrientationApi:false
+					nav:false
 				});
 			},300);
 		},

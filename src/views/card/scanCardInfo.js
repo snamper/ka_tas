@@ -86,49 +86,37 @@ var vm=new Moon({
 					isEqual=userInfo.iccid.indexOf(scanIccid)>-1;
 				vm.set('off.isEqual',isEqual);
 				if(isEqual){
-					if(deviceType==2&&vm.get('off').status==1){//手表可用卡
-						Jsborya.pageJump({
-			                url:'index.html',
-			                stepCode:999,
-			                depiction:'随心配',
-			                header:{
-			                    frontColor:'#ffffff',
-			                    backgroundColor:'#4b3887',
-			                }
-			            });
-					}else {
-						Jsborya.readCardIMSI(function(data){
-							layer.close(index);
-							vm.set('deviceStatus',data.status);
+					Jsborya.readCardIMSI(function(data){
+						layer.close(index);
+						vm.set('deviceStatus',data.status);
 
+						if(data.status==1){
+							vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+						}
+						
+						if(deviceType==2){
+							let icon='';
 							if(data.status==1){
-								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-							}
-							
-							if(deviceType==2){
-								let icon='';
-								if(data.status==1){
-									icon='wcard_green';
-								}else icon='wcard_red';
-								Jsborya.setHeader({
-									title:'卡信息',
-									frontColor:'#ffffff',
-									backgroundColor:'#4b3887',
-									left:{
-										icon:'back_white',
-										value:'',
-										callback:''
-									},
-									right:{
-										icon:icon,
-										value:'',
-										callback:'headerRightClick'
-									}
-								});
-							}
-							
-						});
-					}
+								icon='wcard_green';
+							}else icon='wcard_red';
+							Jsborya.setHeader({
+								title:'卡信息',
+								frontColor:'#ffffff',
+								backgroundColor:'#4b3887',
+								left:{
+									icon:'back_white',
+									value:'',
+									callback:''
+								},
+								right:{
+									icon:icon,
+									value:'',
+									callback:'headerRightClick'
+								}
+							});
+						}
+						
+					});
 				}else if(scanIccid){
 					layer.close(index);
 					vm.callMethod('iccidCheck',['','',scanIccid]);
@@ -136,6 +124,7 @@ var vm=new Moon({
 			});
 		},
 		iccidCheck:function(imsi,smsp,scanIccid){
+			let deviceType=vm.get('deviceType');
 			const json={
 	  			params:{
 	  				imsi:imsi||'',
@@ -149,6 +138,16 @@ var vm=new Moon({
 				let orderInfo=data.data.orderInfo;
 				if(orderInfo){
 					vm.set('orderInfo',orderInfo);
+				}else if(data.data.status==1&&!scanIccid){//没有订单 && 新卡 && 扫描卡与读取卡相等
+					Jsborya.pageJump({
+		                url:'index.html',
+		                stepCode:999,
+		                depiction:'号码搜索',
+		                header:{
+		                    frontColor:'#ffffff',
+		                    backgroundColor:'#4b3887',
+		                }
+		            });
 				}
 			});
 		},
@@ -241,8 +240,12 @@ var vm=new Moon({
 		orderCancel:function(){
 			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
 		},
-		jumpToIndex:function(){
-			vm.toIndexPage();
+		jumpToHome:function(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:806,
+				depiction:'首页',
+			});
 		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({

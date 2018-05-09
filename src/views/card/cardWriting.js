@@ -215,8 +215,12 @@ var vm=new Moon({
 				vm.set("error",{code:999,text:'异常错误'});
 			}
 		},
-		jumpToIndex:function(){
-			vm.toIndexPage();
+		jumpToHome:function(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:806,
+				depiction:'首页',
+			});
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
