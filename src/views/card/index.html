@@ -48,7 +48,7 @@
 			<div class="m-search-tag grey">搜索结果</div>
 		</section>
 		<div class="m-search-tag grey" m-show="off.isRecommend"><i class="u-icon-rcmd"></i>推荐号码</div>
-		<div id="cardBox" class="f-scroll f-mlr-15" m-on:scroll="pullLoad">
+		<div id="cardBox" m-literal:style="boxHt" class="f-scroll f-mlr-15" m-on:scroll="pullLoad">
 			<ul class="m-card-ul f-mlr-10">
 				<li m-for="todo,index in cardData.list" m-on:click="toPackage(index)">
 					<div class="number" m-html="filterNumber(todo.phoneNum)"></div>

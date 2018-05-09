@@ -26,6 +26,7 @@ var vm=new Moon({
 			ytDbOneCount:'-1',
 			list:[]
         },//号卡数据
+        boxHt:'height:400px'
 	},
 	hooks: {
 	    init: function() {
@@ -94,8 +95,9 @@ var vm=new Moon({
 	methods:{
 		setPage:function(otherHeight){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-			let cardBox=document.getElementById("cardBox")
-			cardBox.style.height=window_h-otherHeight+'px';
+			let cardBox=document.getElementById("cardBox");
+
+			vm.set('boxHt','height:'+(window_h-otherHeight)+'px')
 			cardBox.scrollTop=0;
 		},
 		cityClick:function(){//城市切换
