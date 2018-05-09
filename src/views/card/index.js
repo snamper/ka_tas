@@ -97,6 +97,8 @@ var vm=new Moon({
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 			let cardBox=document.getElementById("cardBox");
 
+			alert(otherHeight)
+			alert(window_h-otherHeight)
 			vm.set('boxHt','height:'+(window_h-otherHeight)+'px')
 			cardBox.scrollTop=0;
 		},
