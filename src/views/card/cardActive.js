@@ -120,6 +120,7 @@ var vm=new Moon({
 			});
 		},
 		jumpToHome:function(){
+			alert(1);
 			Jsborya.pageJump({
 				url:'',
 				stepCode:806,
