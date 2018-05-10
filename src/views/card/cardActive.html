@@ -171,8 +171,7 @@
 				<dd>2、该号卡板已不可再使用。</dd>
 				<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
 			</dl>
-			<div class="btn btny" m-on:click="jumpToIndex" m-show="off.load==1">确定</div>
-			<div class="btn btny" m-on:click="jumpToIndex" m-show="off.load==3">返回选号</div>
+			<div class="btn btny" m-on:click="jumpToHome" m-show="off.load!=2">确定</div>
 		</div>
 		<div class="m-success-set" m-show="off.load==2">
 			<div class="success">

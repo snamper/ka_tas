@@ -119,11 +119,12 @@ var vm=new Moon({
 				depiction:'登录',
 			});
 		},
-		jumpToIndex:function(){
-			vm.toIndexPage();
-		},
 		jumpToHome:function(){
-			
+			Jsborya.pageJump({
+				url:'',
+				stepCode:806,
+				depiction:'首页',
+			});
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
