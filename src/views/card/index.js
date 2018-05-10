@@ -87,18 +87,17 @@ var vm=new Moon({
 			});
 	    },
 	    mounted:function(){
-	    	vm.callMethod('setPage',[211]);
-	    	
+	    	setTimeout(function(){
+		    	vm.callMethod('setPage',[215]);
+		    })
 	    }
 	},
 	methods:{
 		setPage:function(otherHeight){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 			let cardBox=document.getElementById("cardBox");
-			setTimeout(function(){
-	    		vm.set('boxHt','height:'+(window_h-otherHeight)+'px')
-				cardBox.scrollTop=0;
-	    	},300);
+	    	vm.set('boxHt','height:'+(window_h-otherHeight)+'px');
+			cardBox.scrollTop=0;
 		},
 		cityClick:function(){//城市切换
 			vm.setStore('selectCity',vm.get('selectCity'));
@@ -140,41 +139,48 @@ var vm=new Moon({
                 return false;
 			}
 			
-			vm.set('selectLabel',{type:0,name:'',tag:''});
-			vm.set('off.isRecommend',false);
-			vm.callMethod('getCardList');
+			setTimeout(function(){
+				vm.set('selectLabel',{type:0,name:'',tag:''});
+				vm.set('off.isRecommend',false);
+				vm.callMethod('getCardList');
 
-			if(vm.get('off').showOrderMsg){
-				vm.callMethod('setPage',[126]);
-			}else vm.callMethod('setPage',[103]);
-			
+				if(vm.get('off').showOrderMsg){
+					vm.callMethod('setPage',[130]);
+				}else vm.callMethod('setPage',[105]);
+			},300);
 		},
 		inputClearClick:function(){//清除输入框
 			vm.set('inputValue','');
-			vm.callMethod('clearSelectLabel');
+			setTimeout(function(){
+				vm.callMethod('clearSelectLabel');
+			},300)
 		},
+
 		labelClick:function(e){//标签点击
 			let hotLabel=vm.get('hotLabel'),
 			index=e.target.title;
 			vm.set('selectLabel',{name:hotLabel[index].name,type:hotLabel[index].type,tag:hotLabel[index].tag});
 			vm.set('inputValue','');
-			
-			vm.set('off.isRecommend',false);
-			vm.callMethod('getCardList');
+			setTimeout(function(){
+				vm.set('off.isRecommend',false);
+				vm.callMethod('getCardList');
 
-			if(vm.get('off').showOrderMsg){
-				vm.callMethod('setPage',[172]);
-			}else vm.callMethod('setPage',[149]);
+				if(vm.get('off').showOrderMsg){
+					vm.callMethod('setPage',[175]);
+				}else vm.callMethod('setPage',[155]);
+			},300)
 		},
 		clearSelectLabel:function(){//清除选中标签
 			vm.set('selectLabel',{type:0,name:'',tag:''});
-		
-			vm.set('off.isRecommend',true);
-			vm.callMethod('getCardList');
+			
+			setTimeout(function(){
+				vm.set('off.isRecommend',true);
+				vm.callMethod('getCardList');
 
-			if(vm.get('off').showOrderMsg){
-				vm.callMethod('setPage',[234]);
-			}else vm.callMethod('setPage',[211]);
+				if(vm.get('off').showOrderMsg){
+					vm.callMethod('setPage',[240]);
+				}else vm.callMethod('setPage',[215]);
+			},300)
 		},
 		toOrderDetails:function(){
 			Jsborya.pageJump({
@@ -251,7 +257,7 @@ var vm=new Moon({
 			vm.AJAX('/ka_tas/w/source/iccidCheck',json,function(data){
 				if(data.data.status==2){
 					vm.set('off.showOrderMsg',true);
-					vm.callMethod('setPage',[234]);
+					vm.callMethod('setPage',[240]);
 					data.data.orderInfo.iccid=vm.get('userInfo').iccid;
 					vm.setStore('ORDER_INFO',data.data.orderInfo);
 				}else if(data.data.status==4){

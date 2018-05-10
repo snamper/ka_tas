@@ -249,8 +249,8 @@ var vm=new Moon({
 			let password1=vm.get('password1'),
 			    password2=vm.get('password2'),
 			    checkPwd=true;
-			checkPwd=password1.match(/^\d{6}$/);
-			checkPwd=password1===password2;
+			if(!password1.match(/^\d{6}$/))checkPwd=false;
+			if(password1!==password2)checkPwd=false;
 			
 			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree&&checkPwd){
 				vm.set('off.isJump',true);

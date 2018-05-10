@@ -67,7 +67,9 @@ body{
 }
 .m-hd{
 	width: 0.6rem;
-	line-height: 0.4rem;
+	height: 0.4rem;
+	line-height: 0.41rem;
+	font-size:0.15rem;
 	text-align: center;
 	margin-right:0.1rem;
 	white-space:nowrap;
