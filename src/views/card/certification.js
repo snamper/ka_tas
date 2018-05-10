@@ -246,7 +246,13 @@ var vm=new Moon({
 			let imgNameCheck=Object.values(vm.get('imgName')).filter((value)=>{
 				return value=='';
 			});
-			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree){
+			let password1=vm.get('password1'),
+			    password2=vm.get('password2'),
+			    checkPwd=true;
+			checkPwd=password1.match(/^\d{6}$/);
+			checkPwd=password1===password2;
+			
+			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree&&checkPwd){
 				vm.set('off.isJump',true);
 			}else{
 				vm.set('off.isJump',false);
