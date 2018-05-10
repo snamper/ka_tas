@@ -87,20 +87,18 @@ var vm=new Moon({
 			});
 	    },
 	    mounted:function(){
-	    	setTimeout(function(){
-	    		vm.callMethod('setPage',[211]);
-	    	},300);
+	    	vm.callMethod('setPage',[211]);
+	    	
 	    }
 	},
 	methods:{
 		setPage:function(otherHeight){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 			let cardBox=document.getElementById("cardBox");
-
-			// alert(otherHeight)
-			// alert(window_h)
-			vm.set('boxHt','height:'+(window_h-otherHeight)+'px')
-			cardBox.scrollTop=0;
+			setTimeout(function(){
+	    		vm.set('boxHt','height:'+(window_h-otherHeight)+'px')
+				cardBox.scrollTop=0;
+	    	},300);
 		},
 		cityClick:function(){//城市切换
 			vm.setStore('selectCity',vm.get('selectCity'));
@@ -146,11 +144,9 @@ var vm=new Moon({
 			vm.set('off.isRecommend',false);
 			vm.callMethod('getCardList');
 
-			setTimeout(function(){
-				if(vm.get('off').showOrderMsg){
-					vm.callMethod('setPage',[126]);
-				}else vm.callMethod('setPage',[103]);
-			},300)
+			if(vm.get('off').showOrderMsg){
+				vm.callMethod('setPage',[126]);
+			}else vm.callMethod('setPage',[103]);
 			
 		},
 		inputClearClick:function(){//清除输入框
