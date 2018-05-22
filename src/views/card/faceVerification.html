@@ -40,7 +40,7 @@
 			<li><div class="sub-line"><b></b><span></span></div></li>
 			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
-		<section m-show="!off.isFace">
+		<section m-show="!off.face">
 			<div class="m-verification-box">
 				<div class="inner">
 					<img src="../../assets/img/icon_shibie.png">
@@ -48,7 +48,7 @@
 			</div>
 		</section>
 		<div class="tipsBox">
-			<section class="m-verification-box" m-if="!off.isFace">
+			<section class="m-verification-box" m-if="!off.face">
 				<div>
 					<p class="f-w">开始人脸拍摄验证身份</p>
 					<p class="grey">请遵守以下要求，以便顺利通过验证</p>
@@ -59,21 +59,35 @@
 					<div href="javascript:void(0)" m-on:click="jumpToPrev" class="btn btny">上一步</div>
 				</div>
 			</section>
-			<section m-show="off.isFace">
-				<div class="m-verification-box">
-					<div class="inner">
-						<img src="../../assets/img/icon_shibie.png">
-						<div m-show="off.isPass" class="u-icon-success"></div>
+			<section m-show="off.face">
+				<section m-show="!checkInfoDesc">
+					<div class="m-verification-box">
+						<div class="inner">
+							<img src="../../assets/img/icon_shibie.png">
+							<div m-show="off.pass" class="u-icon-success"></div>
+						</div>
+						<div>
+							<p class="f-w red" m-show="!off.pass">人脸识别失败</p>
+							<p class="f-w green" m-show="off.pass">人脸识别通过验证</p>
+							
+							<p class="grey">与证件照片<span class="yellow">{{faceConfirmInfo.similarity}}%</span>相似度</p>
+						</div>
 					</div>
-					<div>
-						<p class="f-w red" m-show="!off.isPass">人脸识别失败</p>
-						<p class="f-w green" m-show="off.isPass">人脸识别通过验证</p>
-						
-						<p class="grey">与证件照片<span class="yellow">{{faceConfirmInfo.similarity}}%</span>相似度</p>
+					<div class="btn btnp" m-show="!off.pass" m-on:click="toFaceVerification">重新识别</div>
+					<div class="btn btny" m-show="off.pass" m-on:click="actionCheckInfo">提交开卡资料</div>
+				</section>
+				<section m-show="checkInfoDesc">
+					<div class="m-verification-box">
+						<div class="inner">
+							<img src="../../assets/img/icon_failure.png" style="width: 70%">
+						</div>
+						<div>
+							<p class="f-w red">资料提交失败</p>
+							<p class="grey">失败原因：<span class="red">{{ checkInfoDesc }}</span></p>
+						</div>
 					</div>
-				</div>
-				<div class="btn btnp" m-show="!off.isPass" m-on:click="toFaceVerification">重新识别</div>
-				<div class="btn btny" m-show="off.isPass" m-on:click="jumpToAudit">提交开卡资料</div>
+					<div class="btn btny" m-on:click="jumpToPrev">上一步</div>
+				</section>
 			</section>
 		</div>
 	</div>

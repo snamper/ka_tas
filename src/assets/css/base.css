@@ -84,6 +84,7 @@ textarea {
 .btn{
     width: 85%;
     margin:auto;
+    font-size:0.14rem;
     text-align: center;
     border:1px solid transparent;
     margin-top: 0.3rem;

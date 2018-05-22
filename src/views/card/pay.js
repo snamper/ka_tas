@@ -29,6 +29,18 @@ var vm=new Moon({
             "idCardName":"--",
             "idCardNo":"--"
         },
+        cardInfo:{//开卡信息
+			phone:'00000000000',
+			cityName:'未知',
+			cityCode:'100',
+			pretty:'1',
+			phoneMoney:0,
+			phoneLevel:0,
+			discount:10000,
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
         userInfo:'',//用户信息
 	},
 	hooks:{
@@ -49,19 +61,24 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO'),
+				cardInfo=vm.getStore('CARD_INFO');
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
+				vm.set('cardInfo',cardInfo);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
 
-					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
-					});
-					Jsborya.registerMethods('payComplete',function(data){
-						vm.callMethod('payComplete',[data.status]);
-					});
+						Jsborya.registerMethods('headerLeftClick',function(){
+							vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						});
+						Jsborya.registerMethods('payComplete',function(data){
+							vm.callMethod('payComplete',[data.status]);
+						});
+					}
 				});
 			}else{
 				alert('本地订单信息丢失');

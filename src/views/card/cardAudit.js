@@ -10,6 +10,18 @@ var vm=new Moon({
 			step:1,//1,订单审核中;2,审核成功;3,审核失败
 			load:1
 		},
+		cardInfo:{//开卡信息
+			phone:'00000000000',
+			cityName:'未知',
+			cityCode:'100',
+			pretty:'1',
+			phoneMoney:0,
+			phoneLevel:0,
+			discount:10000,
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 		orderInfo: {
             "phoneNum":"00000000000",
             "numberLevel":0,
@@ -52,23 +64,28 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO'),
+				cardInfo=vm.getStore('CARD_INFO');
 			
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
+				vm.set('cardInfo',cardInfo);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
 
-					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
-					});
-					if(orderInfo.orderStatusCode==='CARD_AUDIT'){//已审核通过
-						vm.set('off.step',2);
-						vm.set('off.load',0);
-					}else{
-						window.Timer=setInterval(function(){
-							vm.callMethod('getAuditInfo');
-						},2000);
+						Jsborya.registerMethods('headerLeftClick',function(){
+							vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						});
+						if(orderInfo.orderStatusCode==='CARD_AUDIT'){//已审核通过
+							vm.set('off.step',2);
+							vm.set('off.load',0);
+						}else{
+							window.Timer=setInterval(function(){
+								vm.callMethod('getAuditInfo');
+							},2000);
+						}
 					}
 				});
 			}else{

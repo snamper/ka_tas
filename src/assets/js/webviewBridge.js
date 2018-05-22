@@ -86,8 +86,8 @@ require('./base64.js');
 				}
 			});
 		},
-		getGuestInfo:function(cb){//获取新用户信息
-			// cb({
+		getGuestInfo:function(json){//获取新用户信息
+			// json.complete({
 			// 	"imsi":"460010147813210",
 			// 	"smsp":"",
 			// 	"applicationID":"TF-1525683312942-1325751751",
@@ -98,10 +98,10 @@ require('./base64.js');
 			// });
 			callHandler({
 				name:'getGuestInfo',
-				data:'',
+				data:json,
 				callback:function(result){
-					//alert('getGuestInfo'+JSON.stringify(result))
-					cb(result);
+					alert('getGuestInfo'+JSON.stringify(result))
+					json.complete(result);
 				}
 			});
 		},
@@ -190,19 +190,20 @@ require('./base64.js');
 				}
 			});
 		},
-		readCardICCID:function(cb){//读取ICCID
+		readCardICCID:function(json){//读取ICCID
+
 			// setTimeout(function(){
-			// 	cb({
+			// 	json.complete({
 			// 		'status':'1',
-			// 		'iccid':'89860117841022193963',
+			// 		'iccid':['89860117841022193963','40112445445141512'],
 			// 	});
 			// },1000);
 			callHandler({
 				name:'readCardICCID',
-				data:'',
+				data:json,
 				callback:function(result){
-					//alert('readCardICCID'+JSON.stringify(result));
-					cb(result);
+					alert('readCardICCID'+JSON.stringify(result));
+					json.complete(result);
 				}
 			});
 		},
@@ -212,19 +213,20 @@ require('./base64.js');
 				cb(result);
 			};
 		},
-		readCardIMSI:function(cb){//读取IMSI
+		readCardIMSI:function(json){//读取IMSI
 			// setTimeout(function(){
-			// 	cb({
+			// 	json.complete({
 			// 		'status':'1',
 			// 		'imsi':'',
+			// 		'smsp':''
 			// 	});
 			// },1000);
 			callHandler({
 				name:'readCardIMSI',
-				data:'',
+				data:json,
 				callback:function(result){
-					//alert('readCardIMSI'+JSON.stringify(result));
-					cb(result);
+					json.complete(result);
+					alert('readCardIMSI'+JSON.stringify(result));
 				}
 			});
 		},
@@ -238,7 +240,7 @@ require('./base64.js');
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					//alert('callWriteCard'+JSON.stringify(result));
+					alert('callWriteCard'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});

@@ -20,7 +20,10 @@ var vm=new Moon({
 			pretty:'1',
 			phoneMoney:0,
 			phoneLevel:0,
-			discount:10000
+			discount:10000,
+			slot:0,
+			deviceType:1,
+			iccid:''
 		},
 		selectPackage:{
 			name:'',
@@ -52,74 +55,77 @@ var vm=new Moon({
 				if(selectPackage){
 					vm.set('selectPackage',selectPackage);
 				}
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
 
-					let deviceType=cardInfo.deviceType,icon='',setRight;
-					if(cardInfo.deviceType==1){
-						if(cardInfo.deviceStatus==1){
-							icon='card_green';
-						}else icon='card_red';
-						
-					}else if(cardInfo.deviceType==2){
-						if(cardInfo.deviceStatus==1){
-							icon='wcard_green';
-						}else icon='wcard_red';
-						
-					}
-					setRight={
-						icon:icon,
-						value:'',
-						callback:'headerRightClick'
-					}
-					if(userInfo.iccid=='666666666666'){
+						let deviceType=cardInfo.deviceType,icon='',setRight;
+						if(cardInfo.deviceType==1){
+							if(cardInfo.deviceStatus==1){
+								icon='card_green';
+							}else icon='card_red';
+							
+						}else if(cardInfo.deviceType==2){
+							if(cardInfo.deviceStatus==1){
+								icon='wcard_green';
+							}else icon='wcard_red';
+							
+						}
 						setRight={
-							icon:'',
-							value:'购卡指引',
+							icon:icon,
+							value:'',
 							callback:'headerRightClick'
 						}
-						
-					}
-					
-					Jsborya.setHeader({
-						title:'号码搜索',
-						frontColor:'#ffffff',
-						backgroundColor:'#4b3887',
-						left:{
-							icon:'back_white',
-							value:'返回',
-							callback:''
-						},
-						right:setRight
-					});
-
-					vm.callMethod('getPackageList');
-
-					Jsborya.registerMethods('headerRightClick',function(){
 						if(userInfo.iccid=='666666666666'){
-							vm.toBuyHelpPage();
-							return false;
+							setRight={
+								icon:'',
+								value:'购卡指引',
+								callback:'headerRightClick'
+							}
+							
 						}
-						if(cardInfo.deviceType==1){
-							Jsborya.pageJump({
-								url:"simInfo.html",
-								stepCode:999,
-								depiction:'SIM卡信息',
-								destroyed:false,
-								header:{
-			                        frontColor:'#ffffff',
-			                        backgroundColor:'#4b3887',
-			                    }
-							});
-						}else if(cardInfo.deviceType==2){
-							Jsborya.pageJump({
-								url:'',
-								stepCode:803,
-								depiction:'设备管理',
-								destroyed:false,
-							});
-						}
-					});
+						
+						Jsborya.setHeader({
+							title:'号码搜索',
+							frontColor:'#ffffff',
+							backgroundColor:'#4b3887',
+							left:{
+								icon:'back_white',
+								value:'返回',
+								callback:''
+							},
+							right:setRight
+						});
+
+						vm.callMethod('getPackageList');
+
+						Jsborya.registerMethods('headerRightClick',function(){
+							if(userInfo.iccid=='666666666666'){
+								vm.toBuyHelpPage();
+								return false;
+							}
+							if(cardInfo.deviceType==1){
+								Jsborya.pageJump({
+									url:"simInfo.html",
+									stepCode:999,
+									depiction:'SIM卡信息',
+									destroyed:false,
+									header:{
+				                        frontColor:'#ffffff',
+				                        backgroundColor:'#4b3887',
+				                    }
+								});
+							}else if(cardInfo.deviceType==2){
+								Jsborya.pageJump({
+									url:'',
+									stepCode:803,
+									depiction:'设备管理',
+									destroyed:false,
+								});
+							}
+						});
+					}
 				});
 			}else{
 				alert('本地号卡信息错误');
@@ -158,16 +164,19 @@ var vm=new Moon({
 				return false;
 			}
 			vm.set("off.load",1);
-			Jsborya.readCardIMSI(function(data){
-				if(data.status==1){
-					vm.set('imsiInfo',{
-						imsi:data.imsi,
-						smsp:data.smsp
-					});
-					vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-				}else{
-					vm.set("off.load",false);
-					vm.callMethod("filterConnectStatus",[data.status]);
+			Jsborya.readCardIMSI({
+				slot:vm.get('cardInfo').slot,
+				complete:function(data){
+					if(data.status==1){
+						vm.set('imsiInfo',{
+							imsi:data.imsi,
+							smsp:data.smsp
+						});
+						vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+					}else{
+						vm.set("off.load",false);
+						vm.callMethod("filterConnectStatus",[data.status]);
+					}
 				}
 			});
 		},
@@ -318,7 +327,6 @@ var vm=new Moon({
 		            "pDiscount":selectPackage.discount,
 		            "similarity":0,
 		            "iccid":vm.get('userInfo').iccid,
-		            "deviceType":cardInfo.deviceType
 		        });
 				Jsborya.pageJump({
 					url:'certification.html',

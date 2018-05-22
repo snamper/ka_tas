@@ -9,14 +9,14 @@ var vm=new Moon({
 	data:{
 		off:{
 			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败
-			isEqual:false//扫描的卡与获取的卡是否相等
 		},
 		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
-		scanIccid:'',//扫描到的ICCID
-		deviceType:0,//1、手机卡；2、手表卡
-		userInfo:{
-			iccid:'--'
+		cardInfo:{//卡槽信息
+			slot:0,
+			deviceType:1,
+			iccid:''
 		},
+		deviceType:0,//1、手机卡；2、手表卡
 		orderInfo:{
             "phoneNum":"00000000000",
             "numberLevel":0,
@@ -51,76 +51,50 @@ var vm=new Moon({
 				right:{
 					icon:'',
 					value:'',
-					callback:'headerRightClick'
+					callback:''
 				}
 			});
 			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 		},
 		mounted:function(){
-			let scanIccid=vm.getUrlParam('scanIccid'),
-				deviceType=vm.getUrlParam('deviceType');
-			if(scanIccid){
-				vm.set('scanIccid',scanIccid);
-				vm.set('deviceType',deviceType);
-				vm.callMethod('readCardICCID');
-				Jsborya.registerMethods('headerRightClick',function(){
-					Jsborya.pageJump({
-						url:'',
-						stepCode:803,
-						depiction:'设备管理',
-						destroyed:false,
-					});
+			let cardInfo=vm.getStore('CARD_INFO'),
+				orderInfo=vm.getUrlParam('ORDER_INFO');
+			if(cardInfo&&orderInfo){
+				vm.set('off.status',orderInfo.status);
+				vm.set('cardInfo',cardInfo);
+				vm.set('orderInfo',orderInfo);
+				
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
+					}
 				});
-			}else alert('未扫描到卡板信息');
+			}else alert('本地信息错误');
 			
 		},
 	},
 	methods:{
 		readCardICCID:function(){
 			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
-			Jsborya.getGuestInfo(function(userInfo){
-				vm.set('userInfo',userInfo);
-				let scanIccid=vm.get('scanIccid'),
-					deviceType=vm.get('deviceType'),
-					isEqual=userInfo.iccid.indexOf(scanIccid)>-1;
-				vm.set('off.isEqual',isEqual);
-				if(isEqual){
-					Jsborya.readCardIMSI(function(data){
+			let slot = vm.get('cardInfo').slot;
+			Jsborya.readCardICCID({
+				slot:slot,
+				complete:function(result){
+					if(result.status==1){
+						Jsborya.readCardIMSI({
+							slot:slot,
+							complete:function(data){
+								layer.close(index);
+								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+							}
+						});
+					}else{
 						layer.close(index);
-						vm.set('deviceStatus',data.status);
-
-						if(data.status==1){
-							vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-						}
-						
-						if(deviceType==2){
-							let icon='';
-							if(data.status==1){
-								icon='wcard_green';
-							}else icon='wcard_red';
-							Jsborya.setHeader({
-								title:'卡信息',
-								frontColor:'#ffffff',
-								backgroundColor:'#4b3887',
-								left:{
-									icon:'back_white',
-									value:'',
-									callback:''
-								},
-								right:{
-									icon:icon,
-									value:'',
-									callback:'headerRightClick'
-								}
-							});
-						}
-						
-					});
-				}else if(scanIccid){
-					layer.close(index);
-					vm.callMethod('iccidCheck',['','',scanIccid]);
-				}else layer.close(index);
+						vm.callMethod('filterConnectStatus',result.status);
+					} 
+				}
 			});
 		},
 		iccidCheck:function(imsi,smsp,scanIccid){
@@ -135,20 +109,7 @@ var vm=new Moon({
 	  		};
 			vm.AJAX('/ka_tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
-				let orderInfo=data.data.orderInfo;
-				if(orderInfo){
-					vm.set('orderInfo',orderInfo);
-				}else if(data.data.status==1&&!scanIccid){//没有订单 && 新卡 && 扫描卡与读取卡相等
-					Jsborya.pageJump({
-		                url:'index.html',
-		                stepCode:999,
-		                depiction:'号码搜索',
-		                header:{
-		                    frontColor:'#ffffff',
-		                    backgroundColor:'#4b3887',
-		                }
-		            });
-				}
+				vm.set('orderInfo',orderInfo);
 			});
 		},
 		filterOrderStatus:function(orderStatusCode,similarity){
@@ -253,6 +214,24 @@ var vm=new Moon({
 				stepCode:801,
 				depiction:'登录',
 			});
+		},
+		filterConnectStatus:function(status){
+			let text='';
+			if(status==2){
+				text='读取SIM卡信息失败';
+			}else if(status==3){
+				text='未检测到SIM卡插入卡槽';
+			}else if(status==4){
+				text='设备未连接';
+			}else{
+				text='异常错误';
+			}
+			layer.open({
+                content:text,
+                btn:['确定'],
+                shadeClose:false,
+                title:'提示',
+            });
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);

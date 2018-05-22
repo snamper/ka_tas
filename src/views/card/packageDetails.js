@@ -10,6 +10,11 @@ var vm=new Moon({
 		off:{
 			prestore:0,//选择的预存
 		},
+		cardInfo:{//卡槽信息
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 		selectPackage:{
 			name:'',
 			packageCode:0,
@@ -67,14 +72,19 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			var code=vm.getUrlParam('code');
-			var phoneLevel=vm.getUrlParam('phoneLevel');
+			let code=vm.getUrlParam('code'),
+				phoneLevel=vm.getUrlParam('phoneLevel'),
+				cardInfo=vm.getStore('CARD_INFO');
+				
 			if(code&&phoneLevel){
 				var selectPackage=vm.getStore('selectPackage');
 				vm.set('selectPackage',selectPackage);
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
-					vm.callMethod('getPackageInfo',[code,phoneLevel]);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
+						vm.callMethod('getPackageInfo',[code,phoneLevel]);
+					}
 				});
 			}else{
 				alert('页面URL参数错误');

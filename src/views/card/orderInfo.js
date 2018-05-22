@@ -10,6 +10,11 @@ var vm=new Moon({
 			isFace:false,//是否进行活体识别
 			isPass:false//活体识别是否通过
 		},
+		cardInfo:{//卡槽信息
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 		orderInfo: {
             "phoneNum":"00000000000",
             "numberLevel":0,
@@ -47,9 +52,12 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO'),
+				cardInfo=vm.getStore('CARD_INFO');
+				
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
+				vm.set('cardInfo',cardInfo);
 				if(parseInt(orderInfo.similarity)){//已经进行活体识别
 					var similarity=parseFloat(orderInfo.similarity);
 					vm.set('off.isFace',true);
@@ -58,12 +66,15 @@ var vm=new Moon({
 						vm.set('off.isPass',true);
 					}
 				}
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
 
-					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
-					});
+						Jsborya.registerMethods('headerLeftClick',function(){
+							vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						});
+					}
 				});
 			}else{
 				alert('本地订单信息丢失');
@@ -109,12 +120,17 @@ var vm=new Moon({
                 next='写卡';
             }else if(orderStatusCode==='CARD_WRITING'){
                 url='cardActive.html';
-               	depiction='已写卡';
+               	depiction='写卡成功，等待开卡结果';
                	next='开卡受理';
             }else if(orderStatusCode==='CARD_ACTIVE'){
-                url='cardActive.html';
-                depiction='已获得开卡结果';
-                next='开卡受理';
+            	let orderStatus=vm.get('off').status;
+                url='';
+                next='';
+                if(orderStatus==3){
+                	depiction='开卡成功';
+                }else if(orderStatus==6){
+                	depiction='开卡失败';
+                }
             }else if(parseInt(similarity)){
             	url='cardAudit.html';
                 depiction='已上传资料';

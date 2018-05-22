@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>开卡方式</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+.hd-dp{
+	text-align: center;
+	margin:0.3rem auto;
+}
+.hd-dp>h2{
+	color: #212121;
+}
+.hd-dp>p{
+	color: #424242;
+	margin-top:5px;
+}
+.btn-gp{
+	width: 85%;
+	margin:auto;
+}
+.btn-gp>.row{
+	display: flex;
+	display: -webkit-flex;
+	background-color: #fff;
+	margin-bottom: 0.4rem;
+	border-radius: 3px;
+	color: #212121;
+	overflow: hidden;
+	box-shadow: 0 0 7px rgba(0,0,0,0.12);
+	transition: transform .25s;
+	-webkit-transition: transform .25s;
+}
+.btn-gp>.row:active{
+	transform: scale(0.9);
+	-webkit-transform: scale(0.9);
+}
+.btn-gp .lt{
+	-webkit-flex: 1;
+	flex: 1;
+	padding:0.1rem 0 0 0.1rem;
+	font-size: 0.17rem;
+	
+	letter-spacing: 1px;
+}
+.btn-gp .rt{
+	-webkit-flex:1;
+	flex: 1;
+}
+.btn-gp .rt>img{
+	width: 100%;
+	display: block;
+}
+.full-load{
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 9999;
+	background-color: #fff;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+.full-load>.hd{
+	
+	margin-bottom: 0.2rem;
+	margin-top: 50%;
+}
+.full-load>.hd>img{
+	width: 0.4rem;
+}
+.full-load>.ld{
+	position: relative;
+	width: 80%;
+	margin:auto;
+	height: 4px;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: #F1F1F1;
+}
+.full-load>.ld>span{
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 4px;
+  pointer-events: none;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  z-index: 888;
+  background: #4b3887;
+  
+}
+.full-load>.ld>.ft{
+	left: 0;
+	animation: LoadingBarForward 1.2s linear .2s infinite;
+  -webkit-animation: LoadingBarForward 1.2s linear .2s infinite
+}
+.full-load>.ld>.sd{
+	right: 0;
+	animation: LoadingBarForward 1.2s linear infinite;
+  -webkit-animation: LoadingBarForward 1.2s linear infinite
+}
+@keyframes LoadingBarForward {
+    0% {
+        transform: translateX(-200%)
+    }
+    to {
+        transform: translateX(200%)
+    }
+}
+@-webkit-keyframes LoadingBarForward {
+    0% {
+        -webkit-transform: translateX(-200%);
+    }
+
+    to {
+        -webkit-transform: translateX(200%);
+    }
+}
+.full-load>.grey{
+	margin-top: 0.1rem;
+}
+
+.m-btn-group>.btny{
+	width: 48% !important;
+}
+.m-btn-group>.rt{
+	margin-left: 2.5%;
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<section m-show="off.turn!=1">
+		<header class="hd-dp">
+			<h2>“ 请选择您的开卡方式 ”</h2>
+			<p>根据选择为您提供便捷的开卡服务</p>
+		</header>
+		<div class="btn-gp">
+			<div class="row" m-on:click="choiceDeviceType(1)">
+				<div class="lt">手机开卡</div>
+				<div class="rt"><img src="../../assets/img/picture_phone.jpg"></div>
+			</div>
+			<div class="row" m-on:click="choiceDeviceType(2)">
+				<div class="lt">手表开卡</div>
+				<div class="rt"><img src="../../assets/img/picture_watch.jpg"></div>
+			</div>
+		</div>
+	</section>
+	<section m-show="off.turn==1">
+		<div class="m-tag"><i class="u-icon-tagnum_1"></i><span>卡槽1</span></div>
+		<div class="g-col-2">
+			<div class="row line">
+				<span class="left">ICCID</span>
+				<span class="right">{{ iccid[0] }}</span>
+			</div>
+			<div class="row">
+				<span class="left">卡号</span>
+				<span class="right">
+					<span m-show="iccidsRes[0].status==1" class="green">新卡</span>
+					<span m-show="iccidsRes[0].status==2" class="yellow">开卡进行中</span>
+					<span m-show="iccidsRes[0].status==5" class="yellow">开卡进行中</span>
+				</span>
+			</div>
+		</div>
+		<div class="m-tag"><i class="u-icon-tagnum_2"></i><span>卡槽2</span></div>
+		<div class="g-col-2">
+			<div class="row line">
+				<span class="left">卡号</span>
+				<span class="right">{{ iccid[1] }}</span>
+			</div>
+			<div class="row">
+				<span class="left">卡状态</span>
+				<span class="right">
+					<span m-show="iccidsRes[1].status==1" class="green">新卡</span>
+					<span m-show="iccidsRes[1].status==2" class="yellow">开卡进行中</span>
+					<span m-show="iccidsRes[1].status==5" class="yellow">开卡进行中</span>
+				</span>
+			</div>
+		</div>
+		<div class="m-tips red">温馨提示：您当前手机卡槽中的两张SIM卡，都为远特卡，请选择一张进行相关操作。</div>
+		<div class="m-btn-group">
+			<span class="btn btny" m-on:click="choiceSlot('0')">卡槽1</span>
+			<span class="btn btny rt" m-on:click="choiceSlot('1')">卡槽2</span>
+		</div>
+	</section>
+	<div class="full-load" m-show="off.load">
+		<div class="hd"><img src="../../assets/img/icon_waiting.png" alt=""></div>
+		<div class="ld">
+			<span class="ft"></span>
+			<span class="sd"></span>
+		</div>
+		<p class="grey">正在读取，请耐心等待</p>
+	</div>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

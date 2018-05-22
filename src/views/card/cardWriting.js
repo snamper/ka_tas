@@ -27,8 +27,19 @@ var vm=new Moon({
             "packageName":"--",
             "packageCode":"0",
             "iccid":"--",
-            "deviceType":1,//卡类型
         },
+        cardInfo:{//开卡信息
+			phone:'00000000000',
+			cityName:'未知',
+			cityCode:'100',
+			pretty:'1',
+			phoneMoney:0,
+			phoneLevel:0,
+			discount:10000,
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 		userInfo:{
 			iccid:'--'
 		},
@@ -50,42 +61,38 @@ var vm=new Moon({
 					callback:'headerLeftClick'
 				},
 				right:{
-					icon:'card_green',
+					icon:'',
 					value:'',
 					callback:'headerRightClick'
 				}
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO'),
+				cardInfo=vm.getStore('CARD_INFO');
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				vm.callMethod('readCardICCID');
+				vm.set('cardInfo',cardInfo);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
+						vm.callMethod('readCardICCID');
+					}
+				});
+				
 				
 				Jsborya.registerMethods('headerLeftClick',function(){
 					vm.orderCancel(userInfo,orderInfo.sysOrderId);
 				});
 				Jsborya.registerMethods('headerRightClick',function(){
-					if(orderInfo.deviceType==1){
-						Jsborya.pageJump({
-							url:"simInfo.html",
-							stepCode:999,
-							depiction:'SIM卡信息',
-							destroyed:false,
-							header:{
-		                        frontColor:'#ffffff',
-		                        backgroundColor:'#4b3887',
-		                    }
-						});
-					}else if(orderInfo.deviceType==2){
-						Jsborya.pageJump({
-							url:'',
-							stepCode:803,
-							depiction:'设备管理',
-							destroyed:false,
-						});
-					}
+					Jsborya.pageJump({
+						url:'',
+						stepCode:803,
+						depiction:'设备管理',
+						destroyed:false,
+					});
 					
 				});
 			}else{
@@ -97,42 +104,37 @@ var vm=new Moon({
 		readCardICCID:function(){
 			vm.set("off.step",1);
 			vm.set("error",{code:1,text:''});
-			Jsborya.readCardIMSI(function(data){
-				if(data.status==1){
-					Jsborya.getGuestInfo(function(userInfo){
-						vm.set('userInfo',userInfo);
+			Jsborya.readCardIMSI({
+				slot:vm.get('cardInfo').slot,
+				complete:function(data){
+					if(data.status==1){
 						vm.callMethod("getImsi");
-					});
-				}else{
-					vm.callMethod("filterConnectStatus",[data.status]);
-				}
-				let deviceType=vm.get('orderInfo').deviceType,icon='';
-				if(deviceType==1){
-					if(data.status==1){
-						icon='card_green';
-					}else icon='card_red';
-					
-				}else if(deviceType==2){
-					if(data.status==1){
-						icon='wcard_green';
-					}else icon='wcard_red';
-					
-				}
-				Jsborya.setHeader({
-					title:'写卡',
-					frontColor:'#ffffff',
-					backgroundColor:'#4b3887',
-					left:{
-						icon:'back_white',
-						value:'',
-						callback:''
-					},
-					right:{
-						icon:icon,
-						value:'',
-						callback:'headerRightClick'
+					}else{
+						vm.callMethod("filterConnectStatus",[data.status]);
 					}
-				});
+
+					let deviceType=vm.get('cardInfo').deviceType,icon='';
+					if(deviceType==2){
+						if(data.status==1){
+							icon='wcard_green';
+						}else icon='wcard_red';
+						Jsborya.setHeader({
+							title:'写卡',
+							frontColor:'#ffffff',
+							backgroundColor:'#4b3887',
+							left:{
+								icon:'back_white',
+								value:'',
+								callback:''
+							},
+							right:{
+								icon:icon,
+								value:'',
+								callback:'headerRightClick'
+							}
+						});
+					}
+				}
 			});
 			
 		},
@@ -162,6 +164,7 @@ var vm=new Moon({
 		callWriteCard:function(){//写卡
 			vm.set("off.step",3);
 			Jsborya.callWriteCard({
+				slot:vm.get('cardInfo').slot,
 				imsi:vm.get('imsi'),
 				smsp:vm.get('smsp'),
 				iccid:vm.get('userInfo').iccid,

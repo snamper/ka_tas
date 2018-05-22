@@ -13,7 +13,12 @@ var vm=new Moon({
 		deviceStatus:3,//1、读取成功；2、读取失败；3、未插卡
 		userInfo:{
 			iccid:''
-		}
+		},
+		cardInfo:{//卡槽信息
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 	},
 	hooks:{
 		init:function(){
@@ -35,23 +40,45 @@ var vm=new Moon({
 			});
 			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
+			let cardInfo=vm.getStore('CARD_INFO');
+			vm.set('cardInfo',cardInfo);
+			Jsborya.getGuestInfo({
+				slot:cardInfo.slot,
+				complete:function(userInfo){
+					vm.set('userInfo',userInfo);
+				}
+			});
 		},
 		mounted:function(){
-			vm.callMethod('readCardICCID');
+			let turn = vm.getUrlParam('turn');
+			if(turn){
+				if(turn==4){
+					vm.set('deviceStatus',1);
+				}else if(turn==5){
+					vm.set('deviceStatus',3);
+				}
+			}else vm.callMethod('readCardICCID');
+			
 		},
 	},
 	methods:{
 		readCardICCID:function(){
 			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
-			Jsborya.getGuestInfo(function(userInfo){
-				vm.set('userInfo',userInfo);
-				Jsborya.readCardIMSI(function(data){
-					layer.close(index);
-					if(data.status==1){
-						vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-					}
-					vm.set('deviceStatus',data.status);
-				});
+			Jsborya.readCardICCID({
+				slot:vm.get('cardInfo').slot,
+				complete:function(result){
+					
+					Jsborya.readCardIMSI({
+						slot:vm.get('cardInfo').slot,
+						complete:function(data){
+							layer.close(index);
+							if(data.status==1){
+								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+							}
+							vm.set('deviceStatus',data.status);
+						}
+					});
+				}
 			});
 		},
 		iccidCheck:function(imsi,smsp){

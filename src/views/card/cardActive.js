@@ -28,6 +28,18 @@ var vm=new Moon({
             "packageName":"--",
             "packageCode":"0",
         },
+        cardInfo:{//开卡信息
+			phone:'00000000000',
+			cityName:'未知',
+			cityCode:'100',
+			pretty:'1',
+			phoneMoney:0,
+			phoneLevel:0,
+			discount:10000,
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
         orderStatus:'',
         desc:''//错误描述
 	},
@@ -49,33 +61,18 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			let orderInfo=vm.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO'),
+				cardInfo=vm.getStore('CARD_INFO');
 
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
-
-					// Jsborya.registerMethods('headerLeftClick',function(){
-					// 	let load=vm.get('off').load;
-					// 	if(load==1){
-					// 		layer.open({
-					// 			title:'提示',
-					// 			content:'还未拿到当前开卡结果，请您稍等~',
-					// 			btn:['确定']
-					// 		});
-					// 	}else{
-					// 		layer.open({
-					// 			title:'提示',
-					// 			content:'是否返回【号码搜索】页面',
-					// 			btn:['确定'],
-					// 			yes:function(){
-					// 				vm.toIndexPage();
-					// 			}
-					// 		});
-					// 	}
-					// });
-					vm.callMethod("intervalGetResult");
+				vm.set('cardInfo',cardInfo);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
+						vm.callMethod("intervalGetResult");
+					}
 				});
 			}else{
 				alert('本地订单信息丢失');

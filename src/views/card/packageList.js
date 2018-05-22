@@ -56,8 +56,11 @@ var vm=new Moon({
 			cityCode:'100',
 			pretty:'1',
 			phoneMoney:0,
-			phoneLevel:0
-		}
+			phoneLevel:0,
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 	},
 	hooks: {
 	    init: function() {
@@ -74,9 +77,12 @@ var vm=new Moon({
 				let cardInfo=this.getStore('CARD_INFO');
 				if(cardInfo){
 					vm.set('cardInfo',cardInfo);
-					Jsborya.getGuestInfo(function(userInfo){
-						vm.set('userInfo',userInfo);
-						vm.callMethod('getPackageList');
+					Jsborya.getGuestInfo({
+					slot:cardInfo.slot||'1',
+						complete:function(userInfo){
+							vm.set('userInfo',userInfo);
+							vm.callMethod('getPackageList');
+						}
 					});
 				}else{
 					alert('本地号卡信息丢失');

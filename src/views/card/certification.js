@@ -29,6 +29,18 @@ var vm=new Moon({
             "packageName":"--",
             "packageCode":"0"
         },
+       cardInfo:{//开卡信息
+			phone:'00000000000',
+			cityName:'未知',
+			cityCode:'100',
+			pretty:'1',
+			phoneMoney:0,
+			phoneLevel:0,
+			discount:10000,
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 	    idCardInfo:{
 	    	name:'',
 	    	address:'',
@@ -66,18 +78,24 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			
-			let orderInfo=vm.getStore('ORDER_INFO');
+			let orderInfo=vm.getStore('ORDER_INFO'),
+				cardInfo=vm.getStore('CARD_INFO');
+				
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
-				Jsborya.getGuestInfo(function(userInfo){
-					vm.set('userInfo',userInfo);
+				vm.set('cardInfo',cardInfo);
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
 
-					Jsborya.registerMethods('uploadImgComplete',function(data){//android 上传后回调
-						vm.callMethod("uploadImgComplete",[data]);
-				    });
-					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
-					});
+						Jsborya.registerMethods('uploadImgComplete',function(data){//android 上传后回调
+							vm.callMethod("uploadImgComplete",[data]);
+					    });
+						Jsborya.registerMethods('headerLeftClick',function(){
+							vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						});
+					}
 				});
 			}else{
 				alert('本地订单信息丢失');
@@ -131,6 +149,7 @@ var vm=new Moon({
 		},
 		takePhotos:function(type){//调用APP接口获取图片
 			Jsborya.takePhotos({
+				iccid:vm.get('cardInfo').iccid,
 				type:type,
 				sysOrderId:vm.get('orderInfo').sysOrderId,
 				apiComplete:'uploadImgComplete',
@@ -306,7 +325,7 @@ var vm=new Moon({
 				callLayer('请先同意入网服务协议');
                 return false;
 			}else{
-				var json={
+				const json={
 					userInfo:vm.get('userInfo'),
 					params:{
 						userName:idCardInfo.name,//身份证姓名
@@ -324,15 +343,16 @@ var vm=new Moon({
 						sysOrderId:orderInfo.sysOrderId,
 					}
 				}
-				vm.AJAX('/ka_tas/w/business/materialUpload',json,function(data){
+				Object.assign(orderInfo,{
+					idCardName:idCardInfo.name,
+					idCardNo:idCardInfo.number
+				});
+				
+				vm.setStore('ORDER_INFO',orderInfo);
+
+				vm.AJAX('/ka_tas/w/business/checkInfo',json,function(data){
 					
-					Object.assign(orderInfo,{
-						idCardName:idCardInfo.name,
-						idCardNo:idCardInfo.number
-					});
-					
-					vm.setStore('ORDER_INFO',orderInfo);
-					//alert(JSON.stringify(vm.getStore('ORDER_INFO')));
+					vm.setStore('USER_MUTIPLE_DATA',json.params);
 					Jsborya.pageJump({
 						url:'faceVerification.html',
 						stepCode:999,
@@ -343,6 +363,7 @@ var vm=new Moon({
 	                    }
 					});
 				});
+				
 			}
 		},
 		skimAgreement:function(){

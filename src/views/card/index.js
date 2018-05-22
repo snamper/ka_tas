@@ -13,7 +13,11 @@ var vm=new Moon({
 			showPullLoad:false,//上拉加载
 			showOrderMsg:false,//是否有订单
 		},
-		deviceType:1,//1、手机卡；2、手表卡
+		cardInfo:{//卡槽信息
+			slot:0,
+			deviceType:1,
+			iccid:''
+		},
 		deviceStatus:1,//设备状态0,异常状态;1,正常状态
 		cardBoxHeight:400,//号码容器高度
 		inputValue:'',//搜索框value
@@ -41,7 +45,7 @@ var vm=new Moon({
 					callback:''
 				},
 				right:{
-					icon:'card_green',
+					icon:'',
 					value:'',
 					callback:'headerRightClick'
 				}
@@ -51,39 +55,23 @@ var vm=new Moon({
 			const selectCity=vm.getStore('selectCity');
 			if(selectCity)vm.set('selectCity',selectCity);
 
-			vm.removeStore('ORDER_INFO');
-			vm.removeStore('CARD_INFO');
-			Jsborya.getGuestInfo(function(userInfo){
-				vm.set('userInfo',userInfo);
-				Jsborya.registerMethods('headerRightClick',function(){
-					if(userInfo.iccid=='666666666666'){
-						vm.toBuyHelpPage();
-						return false;
-					}
-					let deviceType=vm.get('deviceType');
-					if(deviceType==1){
-						Jsborya.pageJump({
-							url:"simInfo.html",
-							stepCode:999,
-							depiction:'SIM卡信息',
-							destroyed:false,
-							header:{
-		                        frontColor:'#ffffff',
-		                        backgroundColor:'#4b3887',
-		                    }
-						});
-					}else if(deviceType==2){
-						Jsborya.pageJump({
-							url:'',
-							stepCode:803,
-							depiction:'设备管理',
-							destroyed:false,
-						});
-					}
-				});
-				vm.callMethod('getLableList');
-				vm.callMethod('readCardICCID');
-				vm.callMethod('getCardList')
+			let cardInfo = vm.getStore('CARD_INFO');
+			vm.set('cardInfo',cardInfo);
+
+			Jsborya.getGuestInfo({
+				slot:cardInfo.slot||0,
+				complete:function(userInfo){
+					vm.set('userInfo',userInfo);
+					Jsborya.registerMethods('headerRightClick',function(){
+						if(userInfo.iccid=='666666666666'){
+							vm.toBuyHelpPage();
+							return false;
+						}
+					});
+					vm.callMethod('getLableList');
+					vm.callMethod('readCardICCID');
+					vm.callMethod('getCardList')
+				}
 			});
 	    },
 	    mounted:function(){
@@ -196,7 +184,7 @@ var vm=new Moon({
 		},
 		toPackage:function(index){
 			let phoneData=vm.get('cardData').list[parseInt(index)];
-			vm.setStore('CARD_INFO',{
+			vm.setStore('CARD_INFO',Object.assign({
 				phone:phoneData.phoneNum,
 				cityName:phoneData.cityName,
 				cityCode:phoneData.cityCode,
@@ -204,9 +192,8 @@ var vm=new Moon({
 				phoneMoney:phoneData.cardMoney,
 				phoneLevel:phoneData.numberLevel,
 				deviceStatus:vm.get('deviceStatus'),
-				deviceType:vm.get('deviceType'),
 				discount:10000
-			});
+			},vm.get('cardInfo')));
 			vm.removeStore('selectPackage');
 			Jsborya.pageJump({
                 url:'package.html',
@@ -263,35 +250,6 @@ var vm=new Moon({
 				}else if(data.data.status==4){
 					vm.set('deviceStatus',0);
 				}
-
-				let deviceType=data.data.deviceType,icon='';
-				vm.set('deviceType',deviceType);
-				if(deviceType==1){
-					if(data.data.status==1){
-						icon='card_green';
-					}else icon='card_red';
-					
-				}else if(deviceType==2){
-					if(data.data.status==1){
-						icon='wcard_green';
-					}else icon='wcard_red';
-					
-				}
-				Jsborya.setHeader({
-					title:'号码搜索',
-					frontColor:'#ffffff',
-					backgroundColor:'#4b3887',
-					left:{
-						icon:'back_white',
-						value:'返回',
-						callback:''
-					},
-					right:{
-						icon:icon,
-						value:'',
-						callback:'headerRightClick'
-					}
-				});
 			});
 		},
 		getLableList:function(){

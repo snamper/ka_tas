@@ -79,7 +79,7 @@ export default{
             Jsborya.pageJump({
                 url:'../discover/buyCardHelp.html',
                 stepCode:999,
-                depiction:'购卡指引',
+                depiction:'购卡指南',
                 destroyed:false,
                 header:{
                     frontColor:'#ffffff',
