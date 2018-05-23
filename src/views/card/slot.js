@@ -75,12 +75,12 @@ var vm=new Moon({
 															let iccidsInfo=[];
 															iccidsInfo[0]={
 																scanIccid:result.iccid[0],
-																smsp:_result.smsp,
+																smsp:_result.smsp||'',
 																imsi:_result.imsi
 															}
 															iccidsInfo[1]={
 																scanIccid:result.iccid[1],
-																smsp:__result.smsp,
+																smsp:__result.smsp||'',
 																imsi:__result.imsi
 															}
 															vm.callMethod('multipleIccidCheck',[iccidsInfo]);
