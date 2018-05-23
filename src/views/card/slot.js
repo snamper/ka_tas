@@ -167,7 +167,6 @@ var vm=new Moon({
 			let _slot=slot;
 			if(!_slot)_slot = vm.get('off').slot;
 
-			alert(_slot);
 			_slot=parseInt(_slot);
 
 			let status = vm.get('iccidsRes')[_slot].status;

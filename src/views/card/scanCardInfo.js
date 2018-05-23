@@ -59,7 +59,7 @@ var vm=new Moon({
 		},
 		mounted:function(){
 			let cardInfo=vm.getStore('CARD_INFO'),
-				orderInfo=vm.getUrlParam('ORDER_INFO');
+				orderInfo=vm.getStore('ORDER_INFO');
 			if(cardInfo&&orderInfo){
 				vm.set('off.status',orderInfo.status);
 				vm.set('cardInfo',cardInfo);
