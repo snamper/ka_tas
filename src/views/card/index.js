@@ -59,7 +59,7 @@ var vm=new Moon({
 			vm.set('cardInfo',cardInfo);
 
 			Jsborya.getGuestInfo({
-				slot:cardInfo.slot||0,
+				slot:cardInfo.slot||'-2',
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
 					Jsborya.registerMethods('headerRightClick',function(){

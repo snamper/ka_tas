@@ -20,7 +20,12 @@ var vm=new Moon({
 		},{
 			orderInfo:'',
 			status:1
-		}]
+		}],
+		userInfo:'',
+		checkMachine:{
+			type:0,//0机型无问题;1终止流程;2提示消息但继续流程
+			desc:''
+		},
 	},
 	hooks:{
 		init:function(){
@@ -41,6 +46,14 @@ var vm=new Moon({
 				}
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
+
+			Jsborya.getGuestInfo({
+				slot:'-2',
+				complete:function(userInfo){
+					vm.set('userInfo',userInfo);
+					vm.callMethod('getCheckMachine')
+				}
+			});
 			Jsborya.registerMethods('headerRightClick',function(){
 				vm.toBuyHelpPage();
 			});
@@ -51,9 +64,28 @@ var vm=new Moon({
 	    }
 	},
 	methods:{
+		getCheckMachine(iccidsInfo){//获取卡槽中的sim卡的状态
+			const json={
+	  			params:{
+	  				type:1
+	  			},
+	  			userInfo:vm.get('userInfo')
+	  		};
+			vm.AJAX('/ka_tas/w/source/checkMachine',json,function(data){
+				vm.set('checkMachine',{
+					type:data.data.dealType,
+					desc:data.data.desc
+				})
+			})
+		},
 		choiceDeviceType(deviceType){
+
+			if(vm.get('checkMachine').type==1){
+				return false;
+			}
+
 			vm.set('off.load',true);
-			vm.set('deviceType',deviceType)
+			vm.set('deviceType',deviceType);
 			Jsborya.setDeviceType({
 				deviceType:deviceType,
 				complete:function(result){
@@ -63,7 +95,7 @@ var vm=new Moon({
 							if(result.status==1){
 								if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
 									vm.set('iccid',result.iccid);
-
+									alert('afdas'+JSON.stringify(result))
 									Jsborya.readCardIMSI({//获取卡槽1，imsi信息
 										slot:'0',
 										complete(_result){
