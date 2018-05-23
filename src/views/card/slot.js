@@ -168,6 +168,7 @@ var vm=new Moon({
 			if(!_slot)_slot = vm.get('off').slot;
 
 			slot=parseInt(slot);
+			alert(slot);
 			let status = vm.get('iccidsRes')[_slot].status;
 
 			vm.setStore('CARD_INFO',{
