@@ -54,59 +54,64 @@ var vm=new Moon({
 		choiceDeviceType(deviceType){
 			vm.set('off.load',true);
 			vm.set('deviceType',deviceType)
+			Jsborya.setDeviceType({
+				deviceType:deviceType,
+				complete:function(result){
+					Jsborya.readCardICCID({
+						slot:'-1',
+						complete(result){
+							if(result.status==1){
+								if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
+									vm.set('iccid',result.iccid);
 
-			Jsborya.readCardICCID({
-				slot:'-1',
-				complete(result){
-					if(result.status==1){
-						if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
-							vm.set('iccid',result.iccid);
-
-							Jsborya.readCardIMSI({//获取卡槽1，imsi信息
-								slot:'0',
-								complete(_result){
-									if(_result.status==1){
-										Jsborya.readCardIMSI({//获取卡槽2，imsi信息
-											slot:'1',
-											complete(__result){
-												if(__result.status==1){
-													let iccidsInfo=[];
-													iccidsInfo[0]={
-														scanIccid:result.iccid[0],
-														smsp:_result.smsp,
-														imsi:_result.imsi
+									Jsborya.readCardIMSI({//获取卡槽1，imsi信息
+										slot:'0',
+										complete(_result){
+											if(_result.status==1){
+												Jsborya.readCardIMSI({//获取卡槽2，imsi信息
+													slot:'1',
+													complete(__result){
+														if(__result.status==1){
+															let iccidsInfo=[];
+															iccidsInfo[0]={
+																scanIccid:result.iccid[0],
+																smsp:_result.smsp,
+																imsi:_result.imsi
+															}
+															iccidsInfo[1]={
+																scanIccid:result.iccid[1],
+																smsp:__result.smsp,
+																imsi:__result.imsi
+															}
+															vm.callMethod('multipleIccidCheck',[iccidsInfo]);
+														}else vm.callMethod('filterConnectStatus',__result.status);
 													}
-													iccidsInfo[1]={
-														scanIccid:result.iccid[1],
-														smsp:__result.smsp,
-														imsi:__result.imsi
-													}
-													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
-												}else vm.callMethod('filterConnectStatus',__result.status);
-											}
-										})
-									}else vm.callMethod('filterConnectStatus',_result.status);
+												})
+											}else vm.callMethod('filterConnectStatus',_result.status);
+										}
+									})
+								}else{
+									vm.set('off.load',false);
+									vm.set('off.turn',5);
+									Jsborya.pageJump({
+						                url:'simInfo.html?turn=5',
+						                stepCode:999,
+						                depiction:'开卡信息',
+						                destroyed:false,
+						                header:{
+						                    frontColor:'#ffffff',
+						                    backgroundColor:'#4b3887',
+						                }
+						            });
 								}
-							})
-						}else{
-							vm.set('off.load',false);
-							vm.set('off.turn',5);
-							Jsborya.pageJump({
-				                url:'simInfo.html?turn=5',
-				                stepCode:999,
-				                depiction:'开卡信息',
-				                destroyed:false,
-				                header:{
-				                    frontColor:'#ffffff',
-				                    backgroundColor:'#4b3887',
-				                }
-				            });
+								
+								
+							}else vm.callMethod('filterConnectStatus',result.status);
 						}
-						
-						
-					}else vm.callMethod('filterConnectStatus',result.status);
+					})
 				}
-			})
+			});
+			
 			
 		},
 		multipleIccidCheck(iccidsInfo){//获取卡槽中的sim卡的状态

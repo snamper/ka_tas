@@ -246,12 +246,20 @@ require('./base64.js');
 			});
 		},
 		setHeader:function(json){//设置头部header
-			//alert('setHeader'+JSON.stringify(json));
 			callHandler({
 				name:'setHeader',
 				data:json,
 				callback:function(result){
 					console.log('success');
+				}
+			});
+		},
+		setDeviceType:function(json){//设置开卡方式
+			callHandler({
+				name:'setDeviceType',
+				data:json,
+				callback:function(result){
+					json.complete(result);
 				}
 			});
 		},
