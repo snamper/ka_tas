@@ -42,10 +42,8 @@ var vm=new Moon({
         },
         userInfo:'',//用户信息
         faceConfirmInfo:{//活体认证信息
-        	'img':'',
+        	'livingImageName':'',
         	'similarity':'0',
-        	'softwareName':'',
-        	'livingId':''
         }
 	},
 	hooks:{
@@ -103,7 +101,8 @@ var vm=new Moon({
 						if(limitSimilarity<=similarity){
 							vm.set('off.pass',true);
 						}
-						vm.set('faceConfirmInfo.similarity',similarity);
+
+						vm.set('faceConfirmInfo',data);
 						vm.set('off.face',true);
 					}else{
 						//失败
@@ -115,7 +114,10 @@ var vm=new Moon({
 		uploadMutipleData(){
 			const json={
 				userInfo:vm.get('userInfo'),
-				params:vm.getStore('USER_MUTIPLE_DATA')
+				params:Object.assign(vm.getStore('USER_MUTIPLE_DATA'),{
+					livingImageName:vm.get('faceConfirmInfo').livingImageName,
+					similarity:vm.get('faceConfirmInfo').similarity
+				})
 			}
 			vm.AJAX('/ka_tas/w/business/materialUpload',json,function(data){
 				Jsborya.pageJump({

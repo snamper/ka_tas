@@ -100,7 +100,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:json,
 				callback:function(result){
-					alert('getGuestInfo'+JSON.stringify(result))
+					//alert('getGuestInfo'+JSON.stringify(result))
 					json.complete(result);
 				}
 			});
