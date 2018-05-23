@@ -98,27 +98,23 @@ var vm=new Moon({
 									Jsborya.readCardIMSI({//获取卡槽1，imsi信息
 										slot:'0',
 										complete(_result){
-											if(_result.status==1){
-												Jsborya.readCardIMSI({//获取卡槽2，imsi信息
-													slot:'1',
-													complete(__result){
-														if(__result.status==1){
-															let iccidsInfo=[];
-															iccidsInfo[0]={
-																scanIccid:result.iccid[0],
-																smsp:_result.smsp||'',
-																imsi:_result.imsi
-															}
-															iccidsInfo[1]={
-																scanIccid:result.iccid[1],
-																smsp:__result.smsp||'',
-																imsi:__result.imsi
-															}
-															vm.callMethod('multipleIccidCheck',[iccidsInfo]);
-														}else vm.callMethod('filterConnectStatus',__result.status);
+											Jsborya.readCardIMSI({//获取卡槽2，imsi信息
+												slot:'1',
+												complete(__result){
+													let iccidsInfo=[];
+													iccidsInfo[0]={
+														scanIccid:result.iccid[0],
+														smsp:_result.smsp||'',
+														imsi:_result.imsi
 													}
-												})
-											}else vm.callMethod('filterConnectStatus',_result.status);
+													iccidsInfo[1]={
+														scanIccid:result.iccid[1],
+														smsp:__result.smsp||'',
+														imsi:__result.imsi
+													}
+													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
+												}
+											})
 										}
 									})
 								}else{
