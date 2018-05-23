@@ -121,58 +121,13 @@ var vm=new Moon({
 	  			},
 	  			userInfo:{}
 	  		};
-			//vm.AJAX('/ka_tas/w/source/iccidsCheck',json,function(data){
-				let data={
-					data:{
-						iccidsRes:[{
-							orderInfo:{
-								"phoneNum":"00000000000",
-					            "numberLevel":0,
-					            "cityName":"--",
-					            "createTime":"0",
-					            "cardMoney":"0",
-					            "cDiscount":10000,
-					            "orderStatusCode":"PACKAGE_SELECTION",
-					            "totalMoney":0,
-					            "limitSimilarity":0,
-					            "validTime":0,
-					            "sysOrderId":"00000000000000000",
-					            "prestoreMoney":0,
-					            "pDiscount":10000,
-					            "similarity":0,
-					            "packageName":"--",
-					            "packageCode":"0",
-							},
-							status:1
-						},{
-							orderInfo:{
-								"phoneNum":"11111111111",
-					            "numberLevel":0,
-					            "cityName":"--",
-					            "createTime":"0",
-					            "cardMoney":"0",
-					            "cDiscount":10000,
-					            "orderStatusCode":"PACKAGE_SELECTION",
-					            "totalMoney":0,
-					            "limitSimilarity":0,
-					            "validTime":0,
-					            "sysOrderId":"00000000000000000",
-					            "prestoreMoney":0,
-					            "pDiscount":10000,
-					            "similarity":0,
-					            "packageName":"--",
-					            "packageCode":"0",
-							},
-							status:5
-						},]
-					}
-				}
+			vm.AJAX('/ka_tas/w/source/iccidsCheck',json,function(data){
 				vm.set('off.load',false);
 				vm.set('iccidsRes',data.data.iccidsRes);
 				vm.callMethod('choiceTurnTo',[parseInt(data.data.iccidsRes[0].status), parseInt(data.data.iccidsRes[1].status)]);
-			// },function(){
-			// 	vm.set('off.load',false);
-			// })
+			},function(){
+				vm.set('off.load',false);
+			})
 		},
 		choiceTurnTo(simStatus,simStatus_){//卡槽1和卡槽2，状态
 			if([1,2,5].includes(simStatus)&&[1,2,5].includes(simStatus_)){
