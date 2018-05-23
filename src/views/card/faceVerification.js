@@ -74,7 +74,7 @@ var vm=new Moon({
 				vm.set('cardInfo',cardInfo);
 
 				Jsborya.getGuestInfo({
-					slot:cardInfo.slot||'1',
+					slot:cardInfo.slot,
 					complete:function(userInfo){
 						vm.set('userInfo',userInfo);
 
