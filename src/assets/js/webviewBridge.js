@@ -221,6 +221,7 @@ require('./base64.js');
 			// 		'smsp':''
 			// 	});
 			// },1000);
+			alert('call：readCardIMSI')
 			callHandler({
 				name:'readCardIMSI',
 				data:json,

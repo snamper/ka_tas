@@ -95,7 +95,6 @@ var vm=new Moon({
 							if(result.status==1){
 								if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
 									vm.set('iccid',result.iccid);
-									alert('afdas'+JSON.stringify(result))
 									Jsborya.readCardIMSI({//获取卡槽1，imsi信息
 										slot:'0',
 										complete(_result){
