@@ -142,7 +142,7 @@ var vm=new Moon({
 					params:vm.getStore('USER_MUTIPLE_DATA')
 				}
 				vm.AJAX('/ka_tas/w/business/checkInfoResult',json,function(data){
-					let flag = parseInt(data.flag);
+					let flag = parseInt(data.data.flag);
 
 					if(flag!=0){
 						clearInterval(window.Timer);
