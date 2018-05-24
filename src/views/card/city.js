@@ -22,19 +22,29 @@ var vm=new Moon({
 			{"cityName":"长春","cityCode":"901"}
 		],
 		letterList:{
-			B:[{"cityName":"北京","cityCode":"110"}],
+			A:[
+				{"cityName":"安顺","cityCode":"789"},
+			],
+			B:[
+				{"cityName":"北京","cityCode":"110"},
+				{"cityName":"白银","cityCode":"879"},
+				{"cityName":"北海","cityCode":"599"}
+			],
 			C:[
 				{cityName: "长春", cityCode: "901"},
 				{cityName: "长沙", cityCode: "741"},
 				{cityName: "沧州", cityCode: "180"},
 				{cityName: "常州", cityCode: "440"},
 				{cityName: "成都", cityCode: "810"},
-				{cityName: "重庆", cityCode: "831"}
+				{cityName: "重庆", cityCode: "831"},
+				{cityName: "潮州", cityCode: "531"}
 			],
 			D:[
 				{cityName: "大连", cityCode: "940"},
 				{cityName: "大庆", cityCode: "981"},
 				{cityName: "东莞", cityCode: "580"},
+				{cityName: "德阳", cityCode: "825"},
+				{cityName: "大理", cityCode: "862"},
 			],
 			F:[
 				{cityName: "佛山", cityCode: "530"},
@@ -42,7 +52,10 @@ var vm=new Moon({
 			],
 			G:[
 				{cityName: "广州", cityCode: "510"},
-				{cityName: "贵阳", cityCode: "850"}
+				{cityName: "贵阳", cityCode: "850"},
+				{cityName: "桂林", cityCode: "592"},
+				{cityName: "赣州", cityCode: "752"},
+				{cityName: "固原", cityCode: "885"}
 			],
 			H:[
 				{cityName: "哈尔滨", cityCode: "971"},
@@ -51,27 +64,41 @@ var vm=new Moon({
 				{cityName: "合肥", cityCode: "305"},
 				{cityName: "呼和浩特", cityCode: "101"},
 				{cityName: "湖州", cityCode: "362"},
-				{cityName: "惠州", cityCode: "570"}
+				{cityName: "惠州", cityCode: "570"},
+				{cityName: "淮安", cityCode: "354"},
+				{cityName: "黄石", cityCode: "715"}
 			],
 			J:[
 				{cityName: "济南", cityCode: "170"},
 				{cityName: "嘉兴", cityCode: "363"},
 				{cityName: "江门", cityCode: "550"},
-				{cityName: "金华", cityCode: "367"}
+				{cityName: "金华", cityCode: "367"},
+				{cityName: "酒泉", cityCode: "931"},
+				{cityName: "荆州", cityCode: "712"},
+				{cityName: "荆门", cityCode: "724"}
 			],
 			k:[
 				{cityName: "开封", cityCode: "762"},
 				{cityName: "昆明", cityCode: "860"}
 			],
 			L:[
-				{cityName: "丽水", cityCode: "469"}
+				{cityName: "丽水", cityCode: "469"},
+				{cityName: "泸州", cityCode: "815"},
+				{cityName: "兰州", cityCode: "870"},
+				{cityName: "柳州", cityCode: "593"},
+				{cityName: "乐山", cityCode: "814"}
 			],
 			N:[
 				{cityName: "南昌", cityCode: "750"},
 				{cityName: "南京", cityCode: "340"},
 				{cityName: "南宁", cityCode: "591"},
 				{cityName: "南通", cityCode: "358"},
-				{cityName: "宁波", cityCode: "370"}
+				{cityName: "宁波", cityCode: "370"},
+				{cityName: "南充", cityCode: "822"}
+			],
+			M:[
+				{cityName: "梅州", cityCode: "528"},
+				{cityName: "绵阳", cityCode: "824"},
 			],
 			P:[
 				{cityName: "平顶山", cityCode: "769"},
@@ -79,7 +106,8 @@ var vm=new Moon({
 			],
 			Q:[
 				{cityName: "衢州", cityCode: "468"},
-				{cityName: "泉州", cityCode: "480"}
+				{cityName: "泉州", cityCode: "480"},
+				{cityName: "清远", cityCode: "535"}
 			],
 			S:[
 				{cityName: "汕头", cityCode: "560"},
@@ -88,12 +116,16 @@ var vm=new Moon({
 				{cityName: "深圳", cityCode: "540"},
 				{cityName: "沈阳", cityCode: "910"},
 				{cityName: "石家庄", cityCode: "188"},
-				{cityName: "苏州", cityCode: "450"}
+				{cityName: "苏州", cityCode: "450"},
+				{cityName: "韶关", cityCode: "558"},
+				{cityName: "石嘴山", cityCode: "884"}
 			],
 			T:[
 				{cityName: "台州", cityCode: "476"},
 				{cityName: "泰州", cityCode: "445"},
-				{cityName: "天津", cityCode: "130"}
+				{cityName: "天津", cityCode: "130"},
+				{cityName: "天水", cityCode: "877"}
+
 			],
 			W:[
 				{cityName: "潍坊", cityCode: "155"},
@@ -101,24 +133,34 @@ var vm=new Moon({
 				{cityName: "乌鲁木齐", cityCode: "890"},
 				{cityName: "无锡", cityCode: "330"},
 				{cityName: "芜湖", cityCode: "303"},
-				{cityName: "武汉", cityCode: "710"}
+				{cityName: "武汉", cityCode: "710"},
+				{cityName: "吴忠", cityCode: "883"}	
 			],
 			X:[
 				{cityName: "西安", cityCode: "841"},
 				{cityName: "厦门", cityCode: "390"},
-				{cityName: "徐州", cityCode: "350"}
+				{cityName: "徐州", cityCode: "350"},
+				{cityName: "孝感", cityCode: "717"},
+				{cityName: "咸宁", cityCode: "719"}
 			],
 			Y:[
 				{cityName: "烟台", cityCode: "161"},
 				{cityName: "盐城", cityCode: "348"},
-				{cityName: "银川", cityCode: "880"}
+				{cityName: "银川", cityCode: "880"},
+				{cityName: "宜昌", cityCode: "711"},
+				{cityName: "宜宾", cityCode: "817"},
+				{cityName: "扬州", cityCode: "430"}
 			],
 			Z:[
 				{cityName: "珠海", cityCode: "620"},
 				{cityName: "镇江", cityCode: "343"},
 				{cityName: "中山", cityCode: "556"},
 				{cityName: "舟山", cityCode: "364"},
-				{cityName: "郑州", cityCode: "760"}
+				{cityName: "郑州", cityCode: "760"},
+				{cityName: "湛江", cityCode: "520"},
+				{cityName: "肇庆", cityCode: "536"},
+				{cityName: "中卫", cityCode: "886"},
+				{cityName: "资阳", cityCode: "830"}
 			]
 		}
 	},

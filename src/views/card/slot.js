@@ -41,7 +41,7 @@ var vm=new Moon({
 				},
 				right:{
 					icon:'',
-					value:'购卡指引',
+					value:'开卡指南',
 					callback:'headerRightClick'
 				}
 			});
@@ -55,12 +55,24 @@ var vm=new Moon({
 				}
 			});
 			Jsborya.registerMethods('headerRightClick',function(){
-				vm.toBuyHelpPage();
+				Jsborya.pageJump({
+	                url:'https://km.m10027.com/tf/help.html',
+	                stepCode:800,
+	                depiction:'开卡指南',
+	                destroyed:false,
+	                header:{
+	                    frontColor:'#ffffff',
+	                    backgroundColor:'#4b3887',
+	                }
+	            });
 			});
 		},
 	    mounted:function(){
 	    	vm.removeStore('ORDER_INFO');
 			vm.removeStore('CARD_INFO');
+
+			vm.callMethod('filterConnectStatus',[3]);
+
 	    }
 	},
 	methods:{
@@ -131,9 +143,7 @@ var vm=new Moon({
 						                }
 						            });
 								}
-								
-								
-							}else vm.callMethod('filterConnectStatus',result.status);
+							}else vm.callMethod('filterConnectStatus',[result.status]);
 						}
 					})
 				}
