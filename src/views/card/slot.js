@@ -70,9 +70,6 @@ var vm=new Moon({
 	    mounted:function(){
 	    	vm.removeStore('ORDER_INFO');
 			vm.removeStore('CARD_INFO');
-
-			vm.callMethod('filterConnectStatus',[3]);
-
 	    }
 	},
 	methods:{

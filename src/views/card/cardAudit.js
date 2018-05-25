@@ -118,19 +118,18 @@ var vm=new Moon({
 
 				if(status==3||status==4){
 					vm.set('off.step',2);
-				}else if(status==2){
-					vm.set('off.step',3);
-					vm.set('errorMsg','非常抱歉！审核未通过');
-					let text='<p><span>原因：</span>'+data.data.reason+'</p>';
-					if(data.data.remark)text+='<p><span>备注：</span>'+data.data.remark+'</p>';
-					vm.set('auditReason',text);
 				}else if(status==1){
 					//---
 				}else{
 					vm.set('off.step',3);
-					let text='';
-					status==8 ? text='订单已关闭' : '未知错误';
+
+					let title='';
+					status==8 ? title='订单已关闭' : status==2 ? title='非常抱歉！审核未通过' : '未知错误';
 					vm.set('errorMsg',text);
+
+					let text='<p><span>原因：</span>'+data.data.reason+'</p>';
+					if(data.data.remark)text+='<p><span>备注：</span>'+data.data.remark+'</p>';
+					vm.set('auditReason',text);
 				}
 			},true);
 		},
