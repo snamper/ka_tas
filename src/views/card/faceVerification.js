@@ -153,7 +153,7 @@ var vm=new Moon({
 					if(flag==1){
 						vm.callMethod('uploadMutipleData')
 					}else if(flag==2){
-						vm.set('off.checkInfo',2)
+						vm.set('checkInfoDesc',data.data.desc);
 					}
 				});
 			},1000);

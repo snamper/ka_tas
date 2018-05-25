@@ -123,9 +123,9 @@ var vm=new Moon({
 				}else{
 					vm.set('off.step',3);
 
-					let title='';
-					status==8 ? title='订单已关闭' : status==2 ? title='非常抱歉！审核未通过' : '未知错误';
-					vm.set('errorMsg',text);
+					// let title='';
+					// status==8 ? title='订单已关闭' : status==2 ? title='非常抱歉！审核未通过' : '未知错误';
+					vm.set('errorMsg','非常抱歉！审核未通过');
 
 					let text='<p><span>原因：</span>'+data.data.reason+'</p>';
 					if(data.data.remark)text+='<p><span>备注：</span>'+data.data.remark+'</p>';
