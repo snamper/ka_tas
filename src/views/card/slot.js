@@ -121,6 +121,7 @@ var vm=new Moon({
 														smsp:__result.smsp||'',
 														imsi:__result.imsi
 													}
+													alert('111'+JSON.stringify(iccidsInfo))
 													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
 												}
 											})
@@ -149,7 +150,7 @@ var vm=new Moon({
 			
 		},
 		multipleIccidCheck(iccidsInfo){//获取卡槽中的sim卡的状态
-			alert(JSON.stringify(iccidsInfo))
+
 			const json={
 	  			params:{
 	  				iccidsInfo:iccidsInfo
