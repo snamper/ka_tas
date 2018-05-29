@@ -149,6 +149,7 @@ var vm=new Moon({
 			
 		},
 		multipleIccidCheck(iccidsInfo){//获取卡槽中的sim卡的状态
+			alert(JSON.stringify(iccidsInfo))
 			const json={
 	  			params:{
 	  				iccidsInfo:iccidsInfo
