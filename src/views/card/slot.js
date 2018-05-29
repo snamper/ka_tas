@@ -121,7 +121,7 @@ var vm=new Moon({
 														smsp:__result.smsp||'',
 														imsi:__result.imsi
 													}
-													alert('111'+JSON.stringify(iccidsInfo))
+													alert(JSON.stringify(iccidsInfo))
 													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
 												}
 											})
