@@ -138,6 +138,7 @@ var vm=new Moon({
             });
 		},
 		actionCheckInfo:function(){
+			clearInterval(window.Timer);
 			window.Timer=setInterval(function(){
 				const json={
 					userInfo:vm.get('userInfo'),
@@ -156,7 +157,7 @@ var vm=new Moon({
 						vm.set('checkInfoDesc',data.data.desc);
 					}
 				});
-			},1000);
+			},2000);
 		}
 	}
 });
