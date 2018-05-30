@@ -12,6 +12,7 @@ var vm=new Moon({
 			turn:5,//1,选择卡槽页面;2,继续完成订单页面;3,首页;4,无效卡页面;5,未插卡页面;---显示哪个页面
 			slot:'1',//-1,都可用;0,卡槽1;1,卡槽2;---哪张卡槽可用
 		},
+		defaultSlot:false,//是否为默认卡槽
 		iccid:['',''],
 		deviceType:1,//1、手机卡；2、手表卡
 		iccidsRes:[{
@@ -102,6 +103,8 @@ var vm=new Moon({
 						slot:'-1',
 						complete(result){
 							if(result.status==1){
+								if(result.iccid.length == 1)vm.defaultSlot = true;//默认卡槽
+
 								if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
 									vm.set('iccid',result.iccid);
 									Jsborya.readCardIMSI({//获取卡槽1，imsi信息
@@ -208,7 +211,7 @@ var vm=new Moon({
 			let status = vm.get('iccidsRes')[_slot].status;
 
 			vm.setStore('CARD_INFO',{
-				slot:_slot,
+				slot:vm.defaultSlot ? '-1' : _slot,
 				iccid:vm.get('iccid')[_slot],
 				deviceType:vm.get('deviceType'),
 			});
