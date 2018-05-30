@@ -14,7 +14,7 @@ var vm=new Moon({
 			showOrderMsg:false,//是否有订单
 		},
 		cardInfo:{//卡槽信息
-			slot:0,
+			slot:'-2',
 			deviceType:1,
 			iccid:''
 		},
@@ -55,12 +55,18 @@ var vm=new Moon({
 			const selectCity=vm.getStore('selectCity');
 			if(selectCity)vm.set('selectCity',selectCity);
 
-			let cardInfo = vm.getStore('CARD_INFO');
-			vm.set('cardInfo',cardInfo);
+			let cardInfo = vm.getStore('CARD_INFO'),
+				slot = vm.getUrlParam('slot');
 
-			alert(`cardInfo：${JSON.stringify(cardInfo)}`)
+			if(cardInfo){
+				vm.set('cardInfo',cardInfo);
+			}
+			
+
+			// alert(`cardInfo：${JSON.stringify(cardInfo)}`)
+			alert(`url_slot：${slot}`)
 			Jsborya.getGuestInfo({
-				slot:cardInfo.slot||'-2',
+				slot:slot||'-2',
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
 					Jsborya.registerMethods('headerRightClick',function(){

@@ -121,7 +121,7 @@ var vm=new Moon({
 														smsp:__result.smsp||'',
 														imsi:__result.imsi
 													}
-													alert(JSON.stringify(iccidsInfo))
+													// alert(JSON.stringify(iccidsInfo))
 													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
 												}
 											})
@@ -213,11 +213,11 @@ var vm=new Moon({
 				deviceType:vm.get('deviceType'),
 			});
 
-			alert(`cardInfo：{slot:${_slot}}`)
+			// alert(`cardInfo：{slot:${_slot}}`)
 
 			if(status==1){
 				Jsborya.pageJump({
-	                url:'index.html',
+	                url:'index.html?slot='+_slot,
 	                stepCode:999,
 	                depiction:'号码搜索',
 	                header:{
