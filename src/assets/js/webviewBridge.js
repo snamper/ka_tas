@@ -96,12 +96,12 @@ require('./base64.js');
 			// 	"timestamp":"1525684349889",
 			// 	"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
 			// });
-			alert(`slot：${json.slot}`);
+			//alert(`slot：${json.slot}`);
 			callHandler({
 				name:'getGuestInfo',
 				data:json,
 				callback:function(result){
-					alert('getGuestInfo'+JSON.stringify(result))
+					//alert('getGuestInfo'+JSON.stringify(result))
 					json.complete(result);
 				}
 			});
@@ -203,7 +203,7 @@ require('./base64.js');
 				name:'readCardICCID',
 				data:json,
 				callback:function(result){
-					alert('readCardICCID'+JSON.stringify(result));
+					//alert('readCardICCID'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -226,7 +226,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:json,
 				callback:function(result){
-					alert('readCardIMSI'+JSON.stringify(result));
+					//alert('readCardIMSI'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -241,7 +241,7 @@ require('./base64.js');
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					alert('callWriteCard'+JSON.stringify(result));
+					//alert('callWriteCard'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});

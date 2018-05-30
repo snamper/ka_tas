@@ -64,7 +64,6 @@ var vm=new Moon({
 			
 
 			// alert(`cardInfo：${JSON.stringify(cardInfo)}`)
-			alert(`url_slot：${slot}`)
 			Jsborya.getGuestInfo({
 				slot:slot||'-2',
 				complete:function(userInfo){
