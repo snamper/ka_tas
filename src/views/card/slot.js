@@ -219,8 +219,9 @@ var vm=new Moon({
 			// alert(`cardInfo：{slot:${_slot}}`)
 
 			if(status==1){
+				let t = vm.defaultSlot ? '-1' : _slot
 				Jsborya.pageJump({
-	                url:'index.html?slot='+vm.defaultSlot ? '-1' : _slot,
+	                url:'index.html?slot='+t,
 	                stepCode:999,
 	                depiction:'号码搜索',
 	                header:{
