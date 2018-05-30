@@ -56,7 +56,7 @@ var vm=new Moon({
 			});
 			Jsborya.registerMethods('headerRightClick',function(){
 				Jsborya.pageJump({
-	                url:'https://km.m10027.com/tf/help.html',
+	                url:'https://km.m10027.com/tf/guide.html',
 	                stepCode:800,
 	                depiction:'开卡指南',
 	                destroyed:false,

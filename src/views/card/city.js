@@ -101,13 +101,13 @@ var vm=new Moon({
 				{cityName: "绵阳", cityCode: "824"},
 			],
 			P:[
-				{cityName: "平顶山", cityCode: "769"},
-				{cityName: "青岛", cityCode: "166"}
+				{cityName: "平顶山", cityCode: "769"}
 			],
 			Q:[
 				{cityName: "衢州", cityCode: "468"},
 				{cityName: "泉州", cityCode: "480"},
-				{cityName: "清远", cityCode: "535"}
+				{cityName: "清远", cityCode: "535"},
+				{cityName: "青岛", cityCode: "166"}
 			],
 			S:[
 				{cityName: "汕头", cityCode: "560"},

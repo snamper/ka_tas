@@ -121,7 +121,7 @@ var vm=new Moon({
 			var signatureDom=document.getElementById('signature'),//canvas dom对象
 			window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight,//视图高度
 			ratio=Math.max(window.devicePixelRatio || 1, 1);//DPR
-			signatureDom.height=(window_h-70-100)*ratio;
+			signatureDom.height=(window_h-100-100)*ratio;
 
 			const signaturePad=new SignaturePad(signatureDom, {
 			  backgroundColor: 'rgba(255, 255, 255, 0)',

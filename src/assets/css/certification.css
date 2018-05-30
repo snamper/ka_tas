@@ -281,11 +281,11 @@ body{
     padding-left: 0.2rem;
     font-size:0.14rem;
 }
-#save{
+/*#save{
     background-image: url(../img/save.png);
     background-position: left center;
     width: 0.5rem;
-}
+}*/
 #clear{
      background-image: url(../img/clear_grey.png);
      background-position:center;
