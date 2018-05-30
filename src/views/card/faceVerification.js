@@ -139,6 +139,7 @@ var vm=new Moon({
 		},
 		actionCheckInfo:function(){
 			clearInterval(window.Timer);
+			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
 			window.Timer=setInterval(function(){
 				const json={
 					userInfo:vm.get('userInfo'),
@@ -149,6 +150,7 @@ var vm=new Moon({
 
 					if(flag!=0){
 						clearInterval(window.Timer);
+						layer.close(index);
 					}
 
 					if(flag==1){
@@ -156,6 +158,9 @@ var vm=new Moon({
 					}else if(flag==2){
 						vm.set('checkInfoDesc',data.data.desc);
 					}
+				},true,function(){
+					clearInterval(window.Timer);
+					layer.close(index);
 				});
 			},2000);
 		}
