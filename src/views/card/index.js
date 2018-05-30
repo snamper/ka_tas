@@ -58,6 +58,7 @@ var vm=new Moon({
 			let cardInfo = vm.getStore('CARD_INFO');
 			vm.set('cardInfo',cardInfo);
 
+			alert(`cardInfo：${JSON.stringify(cardInfo)}`)
 			Jsborya.getGuestInfo({
 				slot:cardInfo.slot||'-2',
 				complete:function(userInfo){

@@ -213,6 +213,8 @@ var vm=new Moon({
 				deviceType:vm.get('deviceType'),
 			});
 
+			alert(`cardInfo：{slot:${_slot}}`)
+
 			if(status==1){
 				Jsborya.pageJump({
 	                url:'index.html',
