@@ -220,7 +220,7 @@ var vm=new Moon({
 
 			if(status==1){
 				Jsborya.pageJump({
-	                url:'index.html?slot='+_slot,
+	                url:'index.html?slot='+vm.defaultSlot ? '-1' : _slot,
 	                stepCode:999,
 	                depiction:'号码搜索',
 	                header:{
