@@ -287,8 +287,7 @@ var vm=new Moon({
 					}
 				});
 
-			},true,function(errorText){
-				vm.error(errorText);
+			},true,function(){
 				vm.set("off.load",false);
 			});
 		},
@@ -338,7 +337,8 @@ var vm=new Moon({
 	                    backgroundColor:'#4b3887',
 	                }
 				});
-			},true,function(){
+			},true,function(errorText){
+				vm.error(errorText);
 				vm.set("off.load",false);
 			});
 		},
