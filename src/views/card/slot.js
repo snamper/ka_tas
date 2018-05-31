@@ -124,7 +124,7 @@ var vm=new Moon({
 														smsp:__result.smsp||'',
 														imsi:__result.imsi
 													}
-													// alert(JSON.stringify(iccidsInfo))
+													alert('iccidsInfo：'+JSON.stringify(iccidsInfo))
 													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
 												}
 											})
@@ -216,7 +216,7 @@ var vm=new Moon({
 				deviceType:vm.get('deviceType'),
 			});
 
-			// alert(`cardInfo：{slot:${_slot}}`)
+			alert(`cardInfo：{slot:${_slot}}`)
 
 			if(status==1){
 				let t = vm.defaultSlot ? '-1' : _slot
