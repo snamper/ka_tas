@@ -287,7 +287,8 @@ var vm=new Moon({
 					}
 				});
 
-			},true,function(){
+			},true,function(errorText){
+				vm.error(errorText);
 				vm.set("off.load",false);
 			});
 		},
