@@ -248,7 +248,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/ka_tas/w/source/iccidCheck',json,function(data){
+			vm.AJAX('/tas/w/source/iccidCheck',json,function(data){
 				if(data.data.status==2){
 					vm.set('off.showOrderMsg',true);
 					vm.callMethod('setPage',[240]);
@@ -260,7 +260,7 @@ var vm=new Moon({
 			});
 		},
 		getLableList:function(){
-			vm.AJAX('/ka_tas/w/source/tagList',{
+			vm.AJAX('/tas/w/source/tagList',{
 	  			params:'',
 	  			userInfo:vm.get('userInfo')
 	  		},function(data){
@@ -284,7 +284,7 @@ var vm=new Moon({
 	  		if(!page)vm.set('cardData',{ytDbOneCount:'-1',list:[]});
 
 	  		vm.set('off.showNoMore',false);
-			vm.AJAX('/ka_tas/w/source/phoneList',json,function(data){
+			vm.AJAX('/tas/w/source/phoneList',json,function(data){
 				vm.set('page',json.params.page);
 				if(closeLoad){//上拉
 					vm.set('off.showPullLoad',false);

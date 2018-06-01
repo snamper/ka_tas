@@ -115,7 +115,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/ka_tas/w/source/packageList',json,function(data){
+			vm.AJAX('/tas/w/source/packageList',json,function(data){
 				vm.set('packageList',data.data.titleList);
 				for(let i=0,len=data.data.titleList.length;i<len;i++){
 					if(data.data.titleList[i].init==1)vm.set('off.select',i);

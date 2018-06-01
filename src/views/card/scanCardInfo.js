@@ -107,7 +107,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/ka_tas/w/source/iccidCheck',json,function(data){
+			vm.AJAX('/tas/w/source/iccidCheck',json,function(data){
 				vm.set('off.status',data.data.status);
 				vm.set('orderInfo',orderInfo);
 			});
@@ -176,7 +176,7 @@ var vm=new Moon({
 		intervalGetResult:function(){
 
 			//window.Timer=setInterval(function(){
-				vm.AJAX('/ka_tas/w/business/getResult',{
+				vm.AJAX('/tas/w/business/getResult',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId

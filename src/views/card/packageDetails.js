@@ -100,7 +100,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/ka_tas/w/source/packageInfo',json,function(data){
+			vm.AJAX('/tas/w/source/packageInfo',json,function(data){
 				let selectPackage=vm.get('selectPackage'),
 					prestoreMoneyList=data.data.prestoreMoneyList,
 					selPackage=data.data.selPackage;

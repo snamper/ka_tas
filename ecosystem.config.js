@@ -29,7 +29,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'https://github.com/thinkmix/ka_tas.git',
       path: '/home/nginx/html/ka_tas',
-      'post-deploy' : 'yarn install && yarn run build && pm2 reload ecosystem.config.js --env test'
+      'post-deploy' : 'yarn install && yarn build && pm2 reload ecosystem.config.js --env test'
     },    
     production: {
         user: 'root',
@@ -37,7 +37,7 @@ module.exports = {
         ref: 'origin/master',
         repo: 'https://github.com/thinkmix/ka_tas.git',
         path: '/usr/local/nginx/html/ka_tas',
-        'post-deploy' : 'yarn install && yarn run build && pm2 reload ecosystem.config.js --env production'
+        'post-deploy' : 'yarn install && yarn build && pm2 reload ecosystem.config.js --env production'
       }
   }
 };

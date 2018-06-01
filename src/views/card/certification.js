@@ -217,7 +217,7 @@ var vm=new Moon({
 					imgNo:index
 				}
 			};
-			vm.AJAX('/ka_tas/w/business/imgUpload',json,function(data){
+			vm.AJAX('/tas/w/business/imgUpload',json,function(data){
 				vm.callMethod('uploadImgComplete',[data]);
 			});
 		},
@@ -240,7 +240,7 @@ var vm=new Moon({
                 });
                 return false;
 			}else{
-				vm.AJAX('/ka_tas/w/business/setPwd',{
+				vm.AJAX('/tas/w/business/setPwd',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId,
@@ -350,7 +350,7 @@ var vm=new Moon({
 				
 				vm.setStore('ORDER_INFO',orderInfo);
 
-				vm.AJAX('/ka_tas/w/business/checkInfo',json,function(data){
+				vm.AJAX('/tas/w/business/checkInfo',json,function(data){
 					
 					vm.setStore('USER_MUTIPLE_DATA',json.params);
 					Jsborya.pageJump({

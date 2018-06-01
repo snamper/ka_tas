@@ -85,7 +85,7 @@ var vm=new Moon({
 			vm.set("off.load",1);
 
 			//window.Timer=setInterval(function(){
-				vm.AJAX('/ka_tas/w/business/getResult',{
+				vm.AJAX('/tas/w/business/getResult',{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId

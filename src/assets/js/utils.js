@@ -107,7 +107,7 @@ export default{
                         },
                         'userInfo':userInfo
                     };
-                    _self.AJAX('/ka_tas/w/business/orderCancell',json,function(data){
+                    _self.AJAX('/tas/w/business/orderCancell',json,function(data){
                         isJump&&_self.toIndexPage();
                     });
                     

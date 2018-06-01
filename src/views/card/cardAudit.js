@@ -101,7 +101,7 @@ var vm=new Moon({
 					sysOrderId:vm.get('orderInfo').sysOrderId
 				}
 			};
-			vm.AJAX('/ka_tas/w/business/payLaterStatus',json,function(data){
+			vm.AJAX('/tas/w/business/payLaterStatus',json,function(data){
 				var status=data.data.status;
 				// 1 等待审核结果
 				// 2 审核失败

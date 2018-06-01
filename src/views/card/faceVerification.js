@@ -119,7 +119,7 @@ var vm=new Moon({
 					similarity:vm.get('faceConfirmInfo').similarity
 				})
 			}
-			vm.AJAX('/ka_tas/w/business/materialUpload',json,function(data){
+			vm.AJAX('/tas/w/business/materialUpload',json,function(data){
 				Jsborya.pageJump({
 					url:'cardAudit.html',
 					stepCode:999,
@@ -145,7 +145,7 @@ var vm=new Moon({
 					userInfo:vm.get('userInfo'),
 					params:vm.getStore('USER_MUTIPLE_DATA')
 				}
-				vm.AJAX('/ka_tas/w/business/checkInfoResult',json,function(data){
+				vm.AJAX('/tas/w/business/checkInfoResult',json,function(data){
 					let flag = parseInt(data.data.flag);
 
 					if(flag!=0){

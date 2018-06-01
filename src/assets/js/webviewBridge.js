@@ -241,7 +241,7 @@ require('./base64.js');
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					//alert('callWriteCard'+JSON.stringify(result));
+					alert('callWriteCard'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});

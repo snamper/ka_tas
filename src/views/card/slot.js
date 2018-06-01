@@ -81,7 +81,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/ka_tas/w/source/checkMachine',json,function(data){
+			vm.AJAX('/tas/w/source/checkMachine',json,function(data){
 				vm.set('checkMachine',{
 					type:data.data.dealType,
 					desc:data.data.desc
@@ -124,7 +124,7 @@ var vm=new Moon({
 														smsp:__result.smsp||'',
 														imsi:__result.imsi
 													}
-													alert('iccidsInfo：'+JSON.stringify(iccidsInfo))
+													//alert('iccidsInfo：'+JSON.stringify(iccidsInfo))
 													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
 												}
 											})
@@ -160,7 +160,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:{}
 	  		};
-			vm.AJAX('/ka_tas/w/source/iccidsCheck',json,function(data){
+			vm.AJAX('/tas/w/source/iccidsCheck',json,function(data){
 				vm.set('off.load',false);
 				vm.set('iccidsRes',data.data.iccidsRes);
 				vm.callMethod('choiceTurnTo',[parseInt(data.data.iccidsRes[0].status), parseInt(data.data.iccidsRes[1].status)]);
@@ -216,7 +216,7 @@ var vm=new Moon({
 				deviceType:vm.get('deviceType'),
 			});
 
-			alert(`cardInfo：{slot:${_slot}}`)
+			//alert(`cardInfo：{slot:${_slot}}`)
 
 			if(status==1){
 				let t = vm.defaultSlot ? '-1' : _slot

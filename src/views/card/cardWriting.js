@@ -140,7 +140,7 @@ var vm=new Moon({
 		},
 		getImsi:function(){
 			vm.set("off.step",2);
-			vm.AJAX('/ka_tas/w/business/getImsi',{
+			vm.AJAX('/tas/w/business/getImsi',{
 				userInfo:vm.get("userInfo"),
 				params:{
 					sysOrderId:vm.get("orderInfo").sysOrderId,
@@ -190,7 +190,7 @@ var vm=new Moon({
 			});
 		},
 		submitOrder:function(){//开卡申请
-			vm.AJAX('/ka_tas/w/business/submitOrder',{
+			vm.AJAX('/tas/w/business/submitOrder',{
 				'userInfo':vm.get("userInfo"),
 				'params':{
 					sysOrderId:vm.get("orderInfo").sysOrderId,

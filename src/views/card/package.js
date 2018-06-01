@@ -211,7 +211,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/ka_tas/w/source/iccidCheck',json,function(data){
+			vm.AJAX('/tas/w/source/iccidCheck',json,function(data){
 				vm.set("off.load",false);
 				if(data.data.status==1){
 					vm.callMethod('savePackage');
@@ -235,7 +235,7 @@ var vm=new Moon({
                         },
                         no:function(){
                         	layer.closeAll();
-		                    vm.AJAX('/ka_tas/w/business/orderCancell',{
+		                    vm.AJAX('/tas/w/business/orderCancell',{
 		                        'params':{
 		                            'sysOrderId':data.data.orderInfo.sysOrderId,
 		                        },
@@ -307,7 +307,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/ka_tas/w/business/orderCreate',json,function(data){
+			vm.AJAX('/tas/w/business/orderCreate',json,function(data){
 				vm.set("off.load",false);
 				vm.setStore('ORDER_INFO',{
 		            "phoneNum":cardInfo.phone,
@@ -372,7 +372,7 @@ var vm=new Moon({
 	  		};
 
 	  		vm.set('off.loadPackage',true);
-			vm.AJAX('/ka_tas/w/source/packageList',json,function(data){
+			vm.AJAX('/tas/w/source/packageList',json,function(data){
 				let selectCode=vm.get('selectPackage').packageCode;
 				if(selectCode){
 					let arr=[],item={};
