@@ -331,9 +331,9 @@ var vm=new Moon({
                     phoneNum:cardInfo.phone,
                     imsi:vm.get('imsiInfo').imsi,
                     smsp:vm.get('imsiInfo').smsp,
-                    packageCode:packageInfo.code,
+                    packageCode:'',
                     selPackCode:selPackCodeArr.join('|'),
-                    prestoreMoney:packageInfo.prestoreMoney,
+                    prestoreMoney:'',
                     belongType:1,
                 },
                 userInfo:vm.get('userInfo')
