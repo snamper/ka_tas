@@ -38,8 +38,7 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层	
 
 			let cardInfo = vm.getStore('CARD_INFO'),
-				selectCity=vm.getStore('selectCity'),
-				slot = vm.getUrlParam('slot');
+				selectCity=vm.getStore('selectCity');
 
 			if(cardInfo) vm.set('cardInfo',cardInfo);
 			if(selectCity) vm.set('selectCity',selectCity);
@@ -48,7 +47,7 @@ var vm=new Moon({
 			// alert(`cardInfo：${JSON.stringify(cardInfo)}`)
 			// alert(`url_slot：${slot}`)
 			Jsborya.getGuestInfo({
-				slot:slot||'-2',
+				slot:cardInfo ? cardInfo.slot : '-2',
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
 

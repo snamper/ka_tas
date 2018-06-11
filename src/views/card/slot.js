@@ -205,27 +205,26 @@ var vm=new Moon({
 			}
 		},
 		choiceSlot(slot){//选择卡槽
-			let _slot=slot;
-			if(!_slot)_slot = vm.get('off').slot;
+			if(!slot)slot = vm.get('off').slot;
 
-			_slot=parseInt(_slot);
+			slot=parseInt(slot);
 
-			let status = vm.get('iccidsRes')[_slot].status,
-				hasPriPhone = vm.get('iccidsRes')[_slot].hasPriPhone,
-				realSlot = vm.get('defaultSlot') ? '-1' : _slot;//默认卡槽问题
+			let status = vm.get('iccidsRes')[slot].status,
+				hasPriPhone = vm.get('iccidsRes')[slot].hasPriPhone,
+				realSlot = vm.get('defaultSlot') ? '-1' : slot;//默认卡槽问题
 
 			vm.setStore('CARD_INFO',{
 				slot:realSlot,
-				iccid:vm.get('iccid')[_slot],
+				iccid:vm.get('iccid')[slot],
 				hasPriPhone:hasPriPhone,
 				deviceType:vm.get('deviceType'),
 			});
 
-			//alert(`cardInfo：{slot:${_slot}}`)
+			//alert(`cardInfo：{slot:${slot}}`)
 
 			if(status==1){
 				Jsborya.pageJump({
-	                url:'index.html?slot='+realSlot,
+	                url:'index.html',
 	                stepCode:999,
 	                depiction:'随心搜',
 	                header:{
@@ -234,7 +233,7 @@ var vm=new Moon({
 	                }
 	            });
 			}else{
-				let orderInfo=vm.get('iccidsRes')[_slot].orderInfo;
+				let orderInfo=vm.get('iccidsRes')[slot].orderInfo;
 				orderInfo.status=status;
 				vm.setStore('ORDER_INFO',orderInfo);
 

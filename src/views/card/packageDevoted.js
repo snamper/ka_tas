@@ -146,7 +146,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/tas/w/searchcard/privatePhoneInfo',json,function(data){
+			vm.AJAX('/tas/w/source/privatePhoneInfo',json,function(data){
 				vm.set('packageInfo',data.data);
 			})
 		},
