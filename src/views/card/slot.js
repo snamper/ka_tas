@@ -105,7 +105,7 @@ var vm=new Moon({
 						slot:'-1',
 						complete(result){
 							if(result.status==1){
-								if(result.iccid.length == 1)vm.defaultSlot = true;//默认卡槽
+								if(result.iccid.length == 1)vm.set('defaultSlot',true);//默认卡槽
 
 								if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
 									vm.set('iccid',result.iccid);
@@ -211,10 +211,11 @@ var vm=new Moon({
 			_slot=parseInt(_slot);
 
 			let status = vm.get('iccidsRes')[_slot].status,
-				hasPriPhone = vm.get('iccidsRes')[_slot].hasPriPhone;
+				hasPriPhone = vm.get('iccidsRes')[_slot].hasPriPhone,
+				realSlot = vm.get('defaultSlot') ? '-1' : _slot;//默认卡槽问题
 
 			vm.setStore('CARD_INFO',{
-				slot:vm.defaultSlot ? '-1' : _slot,
+				slot:realSlot,
 				iccid:vm.get('iccid')[_slot],
 				hasPriPhone:hasPriPhone,
 				deviceType:vm.get('deviceType'),
@@ -224,7 +225,7 @@ var vm=new Moon({
 
 			if(status==1){
 				Jsborya.pageJump({
-	                url:'index.html?slot='+vm.defaultSlot ? '-1' : _slot,
+	                url:'index.html?slot='+realSlot,
 	                stepCode:999,
 	                depiction:'随心搜',
 	                header:{

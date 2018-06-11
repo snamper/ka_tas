@@ -1,6 +1,15 @@
 #app.active{
     overflow: hidden;
 }
+.u-icon-success{
+    display: inline-block;
+    background-position: center;
+    background-size:100%;
+    background-repeat: no-repeat;
+    background-image: url(../img/success-full.png);
+}
+
+
 .m-verification-box{
     text-align: center;
 }
@@ -18,13 +27,9 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    display: inline-block;
-    width: 0.4rem;
-    height: 0.4rem;
-    background-position: center;
-    background-size:0.4rem;
-    background-repeat: no-repeat;
-    background-image: url(../img/icon_suc_a.png);
+    
+    width: 0.3rem;
+    height: 0.3rem;
 }
 .m-verification-box>div>.f-w{
     font-size: 0.17rem;
@@ -56,6 +61,21 @@
     background-size: 100%;
 }
 .m-spin-load>.text{
+    display: inline-block;
+    vertical-align: top;
+    color: rgba(0,0,0,0.65);
+}
+
+.checkInfo-success{
+    text-align: center;
+}
+.checkInfo-success>i{
+    vertical-align: top;
+    width: 0.18rem;
+    height: 0.18rem;
+    margin-right: 5px;
+}
+.checkInfo-success>.text{
     display: inline-block;
     vertical-align: top;
     color: rgba(0,0,0,0.65);
