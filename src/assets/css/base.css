@@ -203,6 +203,28 @@ textarea {
     background-size: 0.25rem;
 }
 
+.m-nodata-img{
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.m-nodata-img>.inner{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.m-nodata-img>.inner>img{
+    width: 1rem;
+    margin-bottom: 5px;
+}
+.m-nodata-img>.inner>div{
+    color: #BFBFBF;
+    margin-right: 0.1rem;
+}
+
 /*时间轴*/
 .m-time-axis{
     padding-top: 0.1rem;

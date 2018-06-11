@@ -226,7 +226,7 @@ var vm=new Moon({
 				Jsborya.pageJump({
 	                url:'index.html?slot='+vm.defaultSlot ? '-1' : _slot,
 	                stepCode:999,
-	                depiction:'号码搜索',
+	                depiction:'随心搜',
 	                header:{
 	                    frontColor:'#ffffff',
 	                    backgroundColor:'#4b3887',

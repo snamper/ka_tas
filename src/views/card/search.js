@@ -95,7 +95,7 @@ var vm=new Moon({
 				
 				vm.callMethod('getCardList');
 		    	vm.callMethod('setPage');
-		    })
+		    },0)
 	    }
 	},
 	methods:{

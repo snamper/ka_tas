@@ -41,6 +41,12 @@
 	</section>
 	<section class="bgw">
 		<div class="m-card-box">
+			<div class="m-nodata-img" m-literal:style="boxHt" m-show="!cardData.list.length">
+				<div class="inner">
+					<img src="../../assets/img/no-data.png" alt="">
+					<div>暂未搜索到数据</div>
+				</div>
+			</div>
 			<ul id="cardBox" class="m-card-ul f-scroll" m-literal:style="boxHt" m-on:scroll="pullLoad">
 				<li m-for="todo,index in cardData.list" m-on:click="toPackage(index)">
 					<div class="lt">

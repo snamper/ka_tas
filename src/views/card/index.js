@@ -80,7 +80,7 @@ var vm=new Moon({
 					});
 
 					vm.callMethod('getLableList');
-					
+					vm.callMethod('getCardList');
 				}
 			});
 	    },
@@ -100,9 +100,8 @@ var vm=new Moon({
 
 
 				
-				vm.callMethod('getCardList');
 		    	vm.callMethod('setPage');
-		    },300)
+		    },0)
 	    }
 	},
 	methods:{

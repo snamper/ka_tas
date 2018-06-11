@@ -43,6 +43,12 @@
 	<section class="bgw">
 		<div class="m-search-tag grey"><i class="u-icon-rcmd"></i>热门推荐<a m-on:click="jumpSearch" href="javascript:;" class="more purple">查看更多>></a></div>
 		<div class="m-card-box">
+			<div class="m-nodata-img" m-literal:style="boxHt" m-show="!cardData.list.length">
+				<div class="inner">
+					<img src="../../assets/img/no-data.png" alt="">
+					<div>暂未搜索到数据</div>
+				</div>
+			</div>
 			<ul id="cardBox" class="m-card-ul f-scroll" m-literal:style="boxHt" m-on:scroll="pullLoad">
 				<li m-for="todo,index in cardData.list" m-on:click="jumpPackage(index)">
 					<div class="lt">
