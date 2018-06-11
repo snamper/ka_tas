@@ -128,7 +128,7 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-	  		if(!page)vm.set('cardData',{ytDbOneCount:'-1', priDbOneCount:'-1', list:[]});
+	  		// if(!page)vm.set('cardData',{ytDbOneCount:'-1', priDbOneCount:'-1', list:[]});
 
 	  		vm.set('off.showNoMore',false);
 			vm.AJAX('/tas/w/source/phoneList',json,function(data){

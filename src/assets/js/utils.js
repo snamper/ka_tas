@@ -250,7 +250,7 @@ export default{
             var xhr=new XMLHttpRequest(),index,postData=data.params || {},_self=this;
             !load&&(index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'}));
 
-            alert('POST：'+JSON.stringify(data.params));
+            //alert('POST：'+JSON.stringify(data.params));
             Object.assign(postData,data.userInfo);
             postData=JSON.stringify(postData);
 
@@ -265,7 +265,7 @@ export default{
                     if(xhr.status>=200&&(xhr.status<300 || xhr.status===304)){
                         try{
                             var responseText=JSON.parse(xhr.responseText);
-                            alert('RECV：'+JSON.stringify(responseText));
+                            //alert('RECV：'+JSON.stringify(responseText));
                             if(responseText.code=='200'){
                                 success(responseText)
                             }else{
