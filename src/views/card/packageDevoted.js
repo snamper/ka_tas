@@ -319,8 +319,9 @@ var vm=new Moon({
         savePackage:function(){
             
             vm.set("off.load",2);
-            
-            const cardInfo=vm.get('cardInfo'),packageInfo=vm.get('packageInfo');
+            const cardInfo = vm.get('cardInfo'), packageInfo = vm.get('packageInfo');
+
+            let selPackCodeArr = [];
             packageInfo.optPackList.forEach((item)=>{
                 selPackCodeArr.push(item.code);
             })
