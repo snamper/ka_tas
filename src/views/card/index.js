@@ -126,6 +126,7 @@ var vm=new Moon({
 	  				priDbOneCount:'-1',
 	  				page:page||1,
 	  				pageSize:vm.get('pageSize'),
+	  				belongType:0,
 	  				type:vm.get('selectLabel').type,
 	  				tag:vm.get('selectLabel').tag,
 	  				typeRandStatus:1,

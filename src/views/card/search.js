@@ -122,6 +122,7 @@ var vm=new Moon({
 	  				priDbOneCount:type==1 ? vm.get('cardData').priDbOneCount : '-1',
 	  				page:page||1,
 	  				pageSize:vm.get('pageSize'),
+	  				belongType:type,
 	  				type:vm.get('selectLabel').type,
 	  				tag:vm.get('selectLabel').tag,
 	  				typeRandStatus:0,
