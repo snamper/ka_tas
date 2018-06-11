@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>随心搜</title>
+<title>号码搜索</title>
 <style type="text/css">
 [m-mask]{
 	opacity: 0
@@ -17,7 +17,7 @@
 <div id="app" m-mask>
 	<section>
 		<div class="m-search">
-			<div class="m-hd" m-on:click="cityClick">{{ selectCity.cityName }}</div>
+			<div class="m-hd yellow" m-on:click="cityClick">{{ selectCity.cityName }}</div>
 			<div class="m-sch">
 				<input id="searchInput"
 					autocomplete="off"
@@ -31,20 +31,18 @@
 			</div>
 		</div>
 	</section>
-	<section id="hotLabel">
+	<section id="hotLabel" m-show="off.type==0">
 		<ul class="m-hot-label">
 			<li
 			m-for="item,index in hotLabel"
 			m-literal:title="index"
-			m-literal:class="{active:selectLabel.tag == item.tag}"
 			m-on:click="labelClick">{{ item.name }}</li>
 		</ul>
 	</section>
 	<section class="bgw">
-		<div class="m-search-tag grey"><i class="u-icon-rcmd"></i>热门推荐<a m-on:click="jumpSearch" href="javascript:;" class="more purple">查看更多>></a></div>
 		<div class="m-card-box">
 			<ul id="cardBox" class="m-card-ul f-scroll" m-literal:style="boxHt" m-on:scroll="pullLoad">
-				<li m-for="todo,index in cardData.list" m-on:click="jumpPackage(index)">
+				<li m-for="todo,index in cardData.list" m-on:click="toPackage(index)">
 					<div class="lt">
 						<span class="u-icon-pretty" m-show="todo.pretty==1"></span>
 						<span class="u-icon-ordinary" m-show="todo.pretty==2"></span>
@@ -62,9 +60,6 @@
 				<span class="text">加载中···</span>
 			</div>
 		</div>
-	</section>
-	<section class="m-footer-entry" m-show="cardInfo.hasPriPhone==1">
-		<div class="item" m-on:click="jumpDevoted"><img src="../../assets/img/devoted_entry.jpg" alt=""></div>
 	</section>
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

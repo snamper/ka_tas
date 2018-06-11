@@ -41,3 +41,22 @@
     margin-left: 0.3rem;
     line-height: 1.65;
 }
+.m-spin-load{
+    text-align: center;
+}
+.m-spin-load>.load{
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 5px;
+    width: 0.18rem;
+    height: 0.18rem;
+    background-image: url(../img/tail-spin.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+.m-spin-load>.text{
+    display: inline-block;
+    vertical-align: top;
+    color: rgba(0,0,0,0.65);
+}

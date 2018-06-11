@@ -61,17 +61,17 @@ var vm=new Moon({
 						vm.set('userInfo',userInfo);
 
 						let deviceType=cardInfo.deviceType,icon='',setRight;
-						if(cardInfo.deviceType==1){
-							if(cardInfo.deviceStatus==1){
-								icon='card_green';
-							}else icon='card_red';
+						// if(cardInfo.deviceType==1){
+						// 	if(cardInfo.deviceStatus==1){
+						// 		icon='card_green';
+						// 	}else icon='card_red';
 							
-						}else if(cardInfo.deviceType==2){
-							if(cardInfo.deviceStatus==1){
-								icon='wcard_green';
-							}else icon='wcard_red';
+						// }else if(cardInfo.deviceType==2){
+						// 	if(cardInfo.deviceStatus==1){
+						// 		icon='wcard_green';
+						// 	}else icon='wcard_red';
 							
-						}
+						// }
 						setRight={
 							icon:icon,
 							value:'',
@@ -105,25 +105,25 @@ var vm=new Moon({
 								vm.toBuyHelpPage();
 								return false;
 							}
-							if(cardInfo.deviceType==1){
-								Jsborya.pageJump({
-									url:"simInfo.html",
-									stepCode:999,
-									depiction:'SIM卡信息',
-									destroyed:false,
-									header:{
-				                        frontColor:'#ffffff',
-				                        backgroundColor:'#4b3887',
-				                    }
-								});
-							}else if(cardInfo.deviceType==2){
-								Jsborya.pageJump({
-									url:'',
-									stepCode:803,
-									depiction:'设备管理',
-									destroyed:false,
-								});
-							}
+							// if(cardInfo.deviceType==1){
+							// 	Jsborya.pageJump({
+							// 		url:"simInfo.html",
+							// 		stepCode:999,
+							// 		depiction:'SIM卡信息',
+							// 		destroyed:false,
+							// 		header:{
+				   //                      frontColor:'#ffffff',
+				   //                      backgroundColor:'#4b3887',
+				   //                  }
+							// 	});
+							// }else if(cardInfo.deviceType==2){
+							// 	Jsborya.pageJump({
+							// 		url:'',
+							// 		stepCode:803,
+							// 		depiction:'设备管理',
+							// 		destroyed:false,
+							// 	});
+							// }
 						});
 					}
 				});
@@ -304,6 +304,7 @@ var vm=new Moon({
 	  				packageCode:selectPackage.packageCode,
 	  				selPackCode:selectPackage.selPackCode,
 	  				prestoreMoney:selectPackage.prestore,
+	  				belongType:0,
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};

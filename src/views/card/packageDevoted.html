@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>专营号码套餐</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}	
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+		<li class="active">
+			<div class="title">1.选号选套餐</div>
+		</li>
+		<li>
+			<div class="title">2.实名认证</div>
+		</li>
+		<li>
+			<div class="title">3.支付</div>
+		</li>
+		<li>
+			<div class="title">4.写卡</div>
+		</li>
+		<li>
+			<div class="title">5.开卡受理</div>
+		</li>
+	</ul>
+	<ol class="m-time-axis-sub clr">
+		<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span></span></div></li>
+		<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+	</ol>
+	<ul class="m-devoted-package">
+		<li class="number">
+			<div class="lt grey">开卡号码</div>
+			<div class="rt"><b class="purple">{{ phoneFormat(cardInfo.phone) }}</b><span>（{{ cardInfo.cityName }}）</span></div>
+		</li>
+		<li class="package">
+			<div class="lt grey">所选套餐</div>
+			<div class="rt">
+				<div class="hd clr">
+					<span class="fl">{{ packageInfo.packTitle }}</span>
+					<span class="fr blue" m-on:click="packageInfoClick">套餐资费说明</span>
+				</div>
+				<div class="text grey" m-html="packageInfo.standard"></div>
+			</div>
+		</li>
+		<li class="package bag" m-show="packageInfo.optPackList.length">
+			<div class="lt grey">可选包</div>
+			<div class="rt">
+				<div class="hd clr" m-for="todo,index in packageInfo.optPackList">
+					<span class="fl">{{ todo.title }}</span>
+					<span class="fr blue" m-on:click="bagInfoClick(index)">详情</span>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="lt grey">预存话费</div>
+			<div class="rt">{{ mathCentToYuan(packageInfo.prestoreMoney) }}元</div>
+		</li>
+	</ul>
+	<section class="m-btn-double">
+		<div m-on:click="readCardICCID" class="btn btny">
+			<span m-show="!off.load">下一步</span>
+			<span m-show="off.load==1">号卡校验中，请稍候<span class="pay-load">
+				<b class="f1"></b>
+				<b class="f2"></b>
+				<b></b>
+			</span></span>
+			<span m-show="off.load==2">保存套餐中<span class="pay-load">
+				<b class="f1"></b>
+				<b class="f2"></b>
+				<b></b>
+			</span></span>
+		</div>
+	</section>
+</div>
+<!-- CDN加载Vue库 -->
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

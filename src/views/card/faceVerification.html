@@ -59,8 +59,8 @@
 					<div href="javascript:void(0)" m-on:click="jumpToPrev" class="btn btny">上一步</div>
 				</div>
 			</section>
-			<section m-show="off.face">
-				<section m-show="!checkInfoDesc">
+			<section m-show="off.face"><!--通过人脸识别-->
+				<section m-show="!checkInfoDesc"><!--通过预审结果-->
 					<div class="m-verification-box">
 						<div class="inner">
 							<img src="../../assets/img/icon_shibie.png">
@@ -73,10 +73,18 @@
 							<p class="grey">与证件照片<span class="yellow">{{faceConfirmInfo.similarity}}%</span>相似度</p>
 						</div>
 					</div>
-					<div class="btn btnp" m-show="!off.pass" m-on:click="toFaceVerification">重新识别</div>
-					<div class="btn btny" m-show="off.pass" m-on:click="actionCheckInfo">提交开卡资料</div>
+					<section m-show="!load.checkInfo">
+						<div class="btn btnp" m-show="!off.pass" m-on:click="toFaceVerification">重新识别</div>
+						<div class="btn btny" m-show="off.pass" m-on:click="uploadMutipleData">提交开卡资料</div>
+					</section>
+					<section m-show="load.checkInfo">
+						<div class="m-spin-load">
+							<span class="load"></span>
+							<span class="text">正在获取预审结果</span>
+						</div>
+					</section>
 				</section>
-				<section m-show="checkInfoDesc">
+				<section m-show="checkInfoDesc"><!--预审结果错误-->
 					<div class="m-verification-box">
 						<div class="inner">
 							<img src="../../assets/img/icon_failure.png" style="width: 70%">

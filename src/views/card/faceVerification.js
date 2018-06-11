@@ -11,6 +11,9 @@ var vm=new Moon({
 			face:!1,
 			pass:!1,
 		},
+		load:{
+			checkInfo:false,//获取预提交结果
+		},
 		checkInfoDesc:'',//检查预提交错误描述
 		cardInfo:{//开卡信息
 			phone:'00000000000',
@@ -22,6 +25,7 @@ var vm=new Moon({
 			discount:10000,
 			slot:0,
 			deviceType:1,
+			belongType:0,
 			iccid:''
 		},
 		orderInfo: {
@@ -100,6 +104,7 @@ var vm=new Moon({
 						similarity=parseFloat(data.similarity);
 						if(limitSimilarity<=similarity){
 							vm.set('off.pass',true);
+							vm.callMethod('intervalCheckInfo');
 						}
 
 						vm.set('faceConfirmInfo',data);
@@ -137,9 +142,10 @@ var vm=new Moon({
                 isLoad:true
             });
 		},
-		actionCheckInfo:function(){
+		intervalCheckInfo:function(){
 			clearInterval(window.Timer);
-			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
+			vm.set('load.checkInfo',true);
+
 			window.Timer=setInterval(function(){
 				const json={
 					userInfo:vm.get('userInfo'),
@@ -150,17 +156,17 @@ var vm=new Moon({
 
 					if(flag!=0){
 						clearInterval(window.Timer);
-						layer.close(index);
+						vm.set('load.checkInfo',false);
 					}
 
 					if(flag==1){
-						vm.callMethod('uploadMutipleData')
+						//预审通过
 					}else if(flag==2){
 						vm.set('checkInfoDesc',data.data.desc);
 					}
 				},true,function(){
 					clearInterval(window.Timer);
-					layer.close(index);
+					vm.set('load.checkInfo',false);
 				});
 			},2000);
 		}

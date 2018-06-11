@@ -87,24 +87,24 @@ require('./base64.js');
 			});
 		},
 		getGuestInfo:function(json){//获取新用户信息
-			// json.complete({
-			// 	"imsi":"460010147813210",
-			// 	"smsp":"",
-			// 	"applicationID":"TF-1525683312942-1325751751",
-			// 	"iccid":"89860117841022193963",
-			// 	"packageName":"com.yuantel.common.lite",
-			// 	"timestamp":"1525684349889",
-			// 	"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
-			// });
-			//alert(`slot：${json.slot}`);
-			callHandler({
-				name:'getGuestInfo',
-				data:json,
-				callback:function(result){
-					//alert('getGuestInfo'+JSON.stringify(result))
-					json.complete(result);
-				}
+			json.complete({
+				"imsi":"460010147813210",
+				"smsp":"",
+				"applicationID":"TF-1525683312942-1325751751",
+				"iccid":"89860117841022193963",
+				"packageName":"com.yuantel.common.lite",
+				"timestamp":"1525684349889",
+				"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
 			});
+			//alert(`slot：${json.slot}`);
+			// callHandler({
+			// 	name:'getGuestInfo',
+			// 	data:json,
+			// 	callback:function(result){
+			// 		//alert('getGuestInfo'+JSON.stringify(result))
+			// 		json.complete(result);
+			// 	}
+			// });
 		},
 		webviewLoading:function(json){//loading
 			callHandler({
@@ -140,14 +140,14 @@ require('./base64.js');
 		},
 		pageBack:function(json){//页面返回
 			json.url=URL+json.url;
-			//window.location.href=json.url;
-			callHandler({
-				name:'pageBack',
-				data:json,
-				callback:function(result){
-					console.log('back');
-				}
-			});
+			window.location.href=json.url;
+			// callHandler({
+			// 	name:'pageBack',
+			// 	data:json,
+			// 	callback:function(result){
+			// 		console.log('back');
+			// 	}
+			// });
 		},
 		updateVersion:function(json){//app弹出版本更新
 			callHandler({

@@ -200,8 +200,9 @@ var vm=new Moon({
 		},
 		selectCity:function(code,name){//选择城市
 			vm.setStore('selectCity',{"cityCode":code,"cityName":name});
+
 			Jsborya.pageBack({
-				url:'index.html',
+				url:`${vm.getUrlParam('back')}.html?type=${vm.getUrlParam('type') || ''}`,
 				isLoad:true,
 			});
 		},

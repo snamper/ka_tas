@@ -96,7 +96,7 @@
     width: 10px;
     height: 10px;
     border-radius: 100%;
-    background-color:#FFC107;
+    background-color:#F99B38;
     -webkit-animation: pay-loading 1.4s infinite ease-in-out;
     animation: pay-loading 1.4s infinite ease-in-out;
     -webkit-animation-fill-mode: both;

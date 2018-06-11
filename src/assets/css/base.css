@@ -66,7 +66,7 @@ textarea {
     /*2ecc71*/
 }
 .yellow {
-    color: #FFC107!important
+    color: #F99B38!important
 }
 .purple {
     color: #4b3887!important
@@ -107,8 +107,11 @@ textarea {
     color: #fff;
 }
 .bgy {
-    background: #FFC107;
+    background: #F99B38;
     color: #fff;
+}
+.bgw{
+    background: #fff;
 }
 .btnDefault{
     color: #ACA9A9;
@@ -121,11 +124,11 @@ textarea {
     border-color: #CECECE
 }
 .btny{
-    border-color: #FFC107!important;
-    color: #FFC107;
+    border-color: #F99B38!important;
+    color: #F99B38;
 }
 .btny:active{
-    background-color: #FFC107;
+    background-color: #F99B38;
     color: #fff
 }
 .btnp{
@@ -166,6 +169,9 @@ textarea {
 .f-tal{
     text-align: left !important;
 }
+.f-fts-12{
+    font-size: 0.12rem;
+}
 .f-fts-18{
     font-size: 0.18rem;
 }
@@ -178,7 +184,8 @@ textarea {
     background-color: rgba(0,0,0,0.5);
 }
 /*icon*/
-.u-icon-pretty{background-image: url(../img/sprite_icons.png);}
+.u-icon-pretty{background-image: url(../img/icon_beautiful.png);}
+.u-icon-ordinary{background-image: url(../img/icon_common.png);}
 .u-icon-tag{background-image: url(../img/shiming_title_icon.png);}
 .u-icon-cancel{background-image: url(../img/cancel.png);}
 /*layer-loading*/
@@ -236,9 +243,9 @@ textarea {
 .m-time-axis>.passed>.title{color: #000;}
 .m-time-axis-sub>.passed>.sub-line>b{background-color:#000 !important;}
 .m-time-axis-sub>.passed>.sub-line>span{border-color:#000 !important;}
-.m-time-axis>.active>.title{color: #FFC107;}
-.m-time-axis-sub>.active>.sub-line>b{background-color:#FFC107 !important;}
-.m-time-axis-sub>.active>.sub-line>span{border-color:#FFC107 !important;/*#6c71c4*/}
+.m-time-axis>.active>.title{color: #F99B38;}
+.m-time-axis-sub>.active>.sub-line>b{background-color:#F99B38 !important;}
+.m-time-axis-sub>.active>.sub-line>span{border-color:#F99B38 !important;/*#6c71c4*/}
 
 @media screen and (max-width: 340px){
     .m-time-axis>li>.title{font-size: 0.1rem;}

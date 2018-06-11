@@ -17,6 +17,7 @@ var vm=new Moon({
 			discount:10000,
 			slot:0,
 			deviceType:1,
+			belongType:0,
 			iccid:''
 		},
 		orderInfo: {

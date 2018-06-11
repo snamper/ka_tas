@@ -13,7 +13,7 @@
     line-height: 0.57rem;
     border-radius: 50%;
     border:2px solid transparent;
-    border-color:#FFC107;
+    border-color:#F99B38;
 }
 .verification-box>.load>.loaded{
     background-image: url(../img/picture_writecard.png);
@@ -47,7 +47,7 @@
     height: 10px;
     margin-left: 5px;
     display: inline-block;
-    background-color: #FFC107;
+    background-color: #F99B38;
     border-radius: 100%;
     -webkit-animation: layui-m-anim-loading 1.4s infinite ease-in-out;
     animation: layui-m-anim-loading 1.4s infinite ease-in-out;

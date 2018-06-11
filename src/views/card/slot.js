@@ -17,10 +17,12 @@ var vm=new Moon({
 		deviceType:1,//1、手机卡；2、手表卡
 		iccidsRes:[{
 			orderInfo:'',
-			status:1
+			status:1,
+			hasPriPhone:1,//是否有专营号，1是2否 
 		},{
 			orderInfo:'',
-			status:1
+			status:1,
+			hasPriPhone:1,//是否有专营号
 		}],
 		userInfo:'',
 		checkMachine:{
@@ -208,20 +210,21 @@ var vm=new Moon({
 
 			_slot=parseInt(_slot);
 
-			let status = vm.get('iccidsRes')[_slot].status;
+			let status = vm.get('iccidsRes')[_slot].status,
+				hasPriPhone = vm.get('iccidsRes')[_slot].hasPriPhone;
 
 			vm.setStore('CARD_INFO',{
 				slot:vm.defaultSlot ? '-1' : _slot,
 				iccid:vm.get('iccid')[_slot],
+				hasPriPhone:hasPriPhone,
 				deviceType:vm.get('deviceType'),
 			});
 
 			//alert(`cardInfo：{slot:${_slot}}`)
 
 			if(status==1){
-				let t = vm.defaultSlot ? '-1' : _slot
 				Jsborya.pageJump({
-	                url:'index.html?slot='+t,
+	                url:'index.html?slot='+vm.defaultSlot ? '-1' : _slot,
 	                stepCode:999,
 	                depiction:'号码搜索',
 	                header:{

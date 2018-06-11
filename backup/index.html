@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>号码搜索</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<section>
+		<div class="m-msg" m-show="off.showOrderMsg" m-on:click="toOrderDetails">您当前有未完成的订单，点击查看详情>></div>
+		<div class="m-search">
+			<div class="m-hd yellow" m-on:click="cityClick">{{ selectCity.cityName }}</div>
+			<div class="m-sch">
+				<input id="searchInput"
+					autocomplete="off"
+					m-on:keyup="inputKeyup"
+					m-model="inputValue"
+					type="tel" placeholder="输入生日或幸运数字" maxlength="11"
+				/>
+				<span class="u-icon-cancel" m-on:click="inputClearClick" m-show="inputValue.length"></span>
+				<span class="u-icon-search" m-on:click="inputSearchClick"></span>
+				
+			</div>
+		</div>
+	</section>
+	<section id="hotLabel" m-show="off.isRecommend">
+		<ul class="m-hot-label">
+			<li
+			m-for="item,index in hotLabel"
+			m-literal:title="index"
+			m-on:click="labelClick">{{ item.name }}</li>
+		</ul>
+	</section>
+	<section>
+		<section m-show="!off.isRecommend">
+			<div class="m-search-label f-mlr-15" m-show="selectLabel.name">
+				<span class="m-slt-lb" m-on:click="clearSelectLabel">{{ selectLabel.name }}<i class="u-icon-clear"></i></span>
+			</div>
+			<div class="m-search-tag grey">搜索结果</div>
+		</section>
+		<div class="m-search-tag grey" m-show="off.isRecommend"><i class="u-icon-rcmd"></i>推荐号码</div>
+		<div id="cardBox" m-literal:style="boxHt" class="f-scroll f-mlr-15" m-on:scroll="pullLoad">
+			<ul class="m-card-ul f-mlr-10">
+				<li m-for="todo,index in cardData.list" m-on:click="toPackage(index)">
+					<div class="number" m-html="filterNumber(todo.phoneNum)"></div>
+					<span class="city">（{{ todo.cityName }}）<i class="u-icon-pretty" m-show="todo.pretty==1"></i></span>
+				</li>
+			</ul>
+			<div class="m-load-tag">
+				<span class="no-more grey" m-show="off.showNoMore">暂无更多</span>
+				<span class="m-loading" m-show="off.showPullLoad">
+					<span class="u-icon-loading"></span>
+					<span class="text">加载中···</span>
+				</span>
+			</div>
+		</div>
+	</section>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

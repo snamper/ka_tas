@@ -1,0 +1,149 @@
+@charset "utf-8";
+body{
+    background-color:#F8F8F8;
+}
+#app{
+    height:100%;
+    width: 100%;
+    position:absolute;
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    overflow:auto;
+    padding-bottom:0.3rem;
+    -webkit-overflow-scrolling : touch;
+}
+
+/*专营号码套餐*/
+.m-devoted-package{
+    background-color: #fff;
+}
+.m-devoted-package>li{
+    display: flex;
+    display:-webkit-flex;
+    margin-left:0.1rem;
+    padding:0.1rem 0;
+    border-bottom: 1px solid #eee;
+}
+.m-devoted-package>li:last-child{
+    border-bottom: none;
+}
+.m-devoted-package>li>.lt{
+    width: 0.7rem;
+}
+.m-devoted-package>li>.rt{
+    flex: 1;
+    -webkit-flex:1;
+}
+.m-devoted-package .number .lt{
+    line-height: 0.22rem;
+}
+.m-devoted-package .number .purple{
+    font-size: 0.17rem;
+}
+.m-devoted-package>li>.package{
+    
+}
+.m-devoted-package .package .hd{
+    padding-bottom: 0.1rem;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+.m-devoted-package .package .hd>.fr{
+    margin-right:0.1rem;
+}
+.m-devoted-package .package .text{
+    line-height: 1.65;
+    font-size: 0.1rem;
+}
+.m-devoted-package .bag{
+    padding-bottom: 0;
+}
+.m-devoted-package .bag .hd:last-child{
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+
+.select-info {
+    text-align: left;
+    max-height: 320px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling : touch;
+    font-size: .13rem;
+    word-break: break-word;
+    word-wrap: break-word;
+    white-space: normal
+}
+.select-info>dl {
+    margin-bottom: .1rem
+}
+
+.select-info>dl:last-child {
+    margin-bottom: 0
+}
+
+.select-info>dl>dt {
+    font-size: #2e3e4e;
+    margin-bottom: 3px
+}
+
+.select-info>dl>dd {
+    line-height: 1.6;
+    color: #555;
+    font-size: .12rem
+}
+
+.select-info>dl>.b {
+    font-weight: 700;
+    color: #232425
+}
+
+.pay-load{}
+.pay-load>b{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color:#F99B38;
+    -webkit-animation: pay-loading 1.4s infinite ease-in-out;
+    animation: pay-loading 1.4s infinite ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+.pay-load>b.f1 {
+    margin-left: 0;
+    -webkit-animation-delay: -.32s;
+    animation-delay: -.32s
+}
+
+.pay-load>b.f2 {
+    -webkit-animation-delay: -.16s;
+    animation-delay: -.16s
+}
+@-webkit-keyframes pay-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes pay-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}

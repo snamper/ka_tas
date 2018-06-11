@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/ka_tas/':{
+        '/tas/':{
             target:'http://192.168.10.5:6085',
             changeOrigin:true,
             pathRewrite:{

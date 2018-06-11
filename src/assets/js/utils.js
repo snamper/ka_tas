@@ -53,7 +53,7 @@ export default{
          *@return {Number} 元
          **/
         Moon.prototype.mathCentToYuan=function(value){
-            return (parseFloat(value)/100).toFixed(2);
+            return value ? (parseFloat(value)/100).toFixed(2) : '0.00';
         },
         /**
          *@describe 计算折扣
