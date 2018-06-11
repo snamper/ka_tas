@@ -78,36 +78,36 @@ var vm=new Moon({
 						}
 					});
 
-					vm.callMethod('getLableList');
+					vm.callMethod('setPage');
 					vm.callMethod('getCardList');
+					vm.callMethod('getLableList');
 				}
 			});
 	    },
 	    mounted:function(){
-	    	setTimeout(function(){
-	    		const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-				const window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
+	    	
+	    }
+	},
+	methods:{
+		setPage:function(){
+			setTimeout(function(){
+	    		let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
+				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
 
 				let otherHeight = 60 + 50 + 30, btmImgH = window_w * 323/1242;
 				if(vm.get('userInfo').iccid != '666666666666' || vm.get('cardInfo').hasPriPhone ==2 ){
 					otherHeight += btmImgH;
 				}
 
-				// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
-				vm.set('otherHeight',parseInt(otherHeight));
-				vm.set('windowHeight',parseInt(window_h));
-
-
+				otherHeight = parseInt(otherHeight);
 				
-		    	vm.callMethod('setPage');
+		    	vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
+				document.getElementById("cardBox").scrollTop=0;
+				vm.set('otherHeight',otherHeight);
+				vm.set('windowHeight',window_h);
+				// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
 		    },0)
-	    }
-	},
-	methods:{
-		setPage:function(){
-			// console.log(vm.get('windowHeight'),vm.get('otherHeight'))
-	    	vm.set('boxHt',`height:${(vm.get('windowHeight') - vm.get('otherHeight')) - 1 }px`);
-			document.getElementById("cardBox").scrollTop=0;
+	    	
 		},
 		getLableList:function(){
 			vm.AJAX('/tas/w/source/tagList',{

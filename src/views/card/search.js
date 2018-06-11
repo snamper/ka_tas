@@ -31,7 +31,7 @@ var vm=new Moon({
         },//号卡数据
         windowHeight:600,//屏幕高度
         otherHeight:140,//除去号码容器的高度
-        boxHt:'height:400px'
+        boxHt:'height:500px'
 	},
 	hooks: {
 	    init: function() {
@@ -76,33 +76,33 @@ var vm=new Moon({
 					vm.set('userInfo',userInfo);
 
 					if(vm.get('off').type == 0) vm.callMethod('getLableList');//非专营号有标签
+					
+		    		vm.callMethod('setPage');
+		    		vm.callMethod('getCardList');
 				}
 			});
 	    },
 	    mounted:function(){
-	    	setTimeout(function(){
-		    	const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-				const window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
-
-				let otherHeight = 60;
-
-				if(vm.get('off').type == 0) otherHeight += 50;//非专营号有标签
-
-				// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
-				vm.set('otherHeight',parseInt(otherHeight));
-				vm.set('windowHeight',parseInt(window_h));
-
-				
-				vm.callMethod('getCardList');
-		    	vm.callMethod('setPage');
-		    },0)
+	    	
 	    }
 	},
 	methods:{
 		setPage:function(){
-			// console.log(vm.get('windowHeight'),vm.get('otherHeight'))
-	    	vm.set('boxHt',`height:${(vm.get('windowHeight') - vm.get('otherHeight')) - 1 }px`);
-			document.getElementById("cardBox").scrollTop=0;
+			setTimeout(function(){
+		    	let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
+				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
+
+				let otherHeight = 60;
+				if(vm.get('off').type == 0) otherHeight += 50;//非专营号有标签
+
+				vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
+				document.getElementById("cardBox").scrollTop=0;
+				
+		    	// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
+				vm.set('otherHeight',otherHeight);
+				vm.set('windowHeight',window_h);
+		    },0)
+	    	
 		},
 		getLableList:function(){
 			vm.AJAX('/tas/w/source/tagList',{
