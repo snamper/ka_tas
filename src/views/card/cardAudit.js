@@ -159,34 +159,45 @@ var vm=new Moon({
 		createSheet:function(){//生成受理单
 			var orderInfo=vm.get('orderInfo');
 
-			vm.AJAX('/tas/w/business/acceptance',{//获取受理单图片
+			vm.AJAX('/tas/w/business/pay',{
 				userInfo:vm.get('userInfo'),
 				params:{
 					sysOrderId:orderInfo.sysOrderId,
+					payType:1
 				}
 			},function(data){
-				var imgArray=data.data.images;
-				for(let i =0;i<imgArray.length;i++){
-					imgArray[i].imageName=imgArray[i].imageName.replace(/\\/g,"/");
-				}
 
-				Object.assign(orderInfo,{
-					images:imgArray,
+				vm.AJAX('/tas/w/business/acceptance',{//获取受理单图片
+					userInfo:vm.get('userInfo'),
+					params:{
+						sysOrderId:orderInfo.sysOrderId,
+					}
+				},function(data){
+
+					var imgArray=data.data.images;
+					for(let i =0;i<imgArray.length;i++){
+						imgArray[i].imageName=imgArray[i].imageName.replace(/\\/g,"/");
+					}
+
+					Object.assign(orderInfo,{
+						images:imgArray,
+					});
+					
+					vm.setStore('ORDER_INFO',orderInfo);
+
+					Jsborya.pageJump({
+						url:'createSheet.html',
+						stepCode:999,
+						depiction:'确认受理单',
+						header:{
+	                        frontColor:'#ffffff',
+	                        backgroundColor:'#4b3887',
+	                    }
+					});
+
 				});
-				
-				vm.setStore('ORDER_INFO',orderInfo);
 
-				Jsborya.pageJump({
-					url:'createSheet.html',
-					stepCode:999,
-					depiction:'确认受理单',
-					header:{
-                        frontColor:'#ffffff',
-                        backgroundColor:'#4b3887',
-                    }
-				});
-
-			});
+			});	
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
