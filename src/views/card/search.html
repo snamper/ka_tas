@@ -48,7 +48,7 @@
 				</div>
 			</div>
 			<ul id="cardBox" class="m-card-ul f-scroll" m-literal:style="boxHt" m-on:scroll="pullLoad">
-				<li m-for="todo,index in cardData.list" m-on:click="toPackage(index)">
+				<li m-for="todo,index in cardData.list" m-on:click="jumpPackage(index)">
 					<div class="lt">
 						<span class="u-icon-pretty" m-show="todo.pretty==1"></span>
 						<span class="u-icon-ordinary" m-show="todo.pretty==2"></span>

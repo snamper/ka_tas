@@ -115,7 +115,7 @@ var vm=new Moon({
 	  			userInfo:vm.get('userInfo')
 	  		},function(data){
 				vm.set('hotLabel',data.data.list);
-			});
+			},true);
 		},
 		getCardList:function(page,closeLoad){//获取数据
 			const json={

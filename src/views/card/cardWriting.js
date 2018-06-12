@@ -126,7 +126,7 @@ var vm=new Moon({
 							left:{
 								icon:'back_white',
 								value:'',
-								callback:''
+								callback:'headerLeftClick'
 							},
 							right:{
 								icon:icon,
