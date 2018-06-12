@@ -201,7 +201,12 @@ var vm=new Moon({
 		labelClick:function(e){//标签点击
 			let hotLabel=vm.get('hotLabel'),
 			index=e.target.title;
-			vm.set('selectLabel',{name:hotLabel[index].name,type:hotLabel[index].type,tag:hotLabel[index].tag});
+			
+			if(hotLabel[index].name == vm.get('selectLabel').name){
+				vm.set('selectLabel',{name:hotLabel[0].name,type:hotLabel[0].type,tag:hotLabel[0].tag});
+			}else{
+				vm.set('selectLabel',{name:hotLabel[index].name,type:hotLabel[index].type,tag:hotLabel[index].tag});
+			}
 			vm.set('inputValue','');
 
 			vm.callMethod('getCardList');

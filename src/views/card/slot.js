@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/scanCardInfo.css');
+require('../../assets/css/slotInfo.css');
 
 Jsborya.ready(function(){
 
@@ -9,7 +9,7 @@ var vm=new Moon({
 	data:{
 		off:{
 			load:false,
-			turn:5,//1,选择卡槽页面;2,继续完成订单页面;3,首页;4,无效卡页面;5,未插卡页面;---显示哪个页面
+			turn:0,//0,初始化页面;1,选择卡槽页面;2,继续完成订单页面;3,首页;4,无效卡页面;5,未插卡页面;---显示哪个页面
 			slot:'1',//-1,都可用;0,卡槽1;1,卡槽2;---哪张卡槽可用
 		},
 		defaultSlot:false,//是否为默认卡槽
@@ -97,7 +97,10 @@ var vm=new Moon({
 			}
 
 			vm.set('off.load',true);
-			vm.set('deviceType',deviceType);
+			if(deviceType){
+				vm.set('deviceType',deviceType);
+			}else deviceType = vm.get('deviceType');
+
 			Jsborya.setDeviceType({
 				deviceType:deviceType,
 				complete:function(result){
@@ -135,16 +138,6 @@ var vm=new Moon({
 								}else{
 									vm.set('off.load',false);
 									vm.set('off.turn',5);
-									Jsborya.pageJump({
-						                url:'simInfo.html?turn=5',
-						                stepCode:999,
-						                depiction:'开卡信息',
-						                destroyed:false,
-						                header:{
-						                    frontColor:'#ffffff',
-						                    backgroundColor:'#4b3887',
-						                }
-						            });
 								}
 							}else vm.callMethod('filterConnectStatus',[result.status]);
 						}
@@ -176,7 +169,7 @@ var vm=new Moon({
 				vm.set('off.turn',1);
 				vm.set('off.slot','-1');
 
-			}else if( ([4].includes(simStatus)&&[2,5].includes(simStatus_)) || ([2,5].includes(simStatus)&&[4].includes(simStatus_)) ){
+			}else if( ([4].includes(simStatus)&&[2,3,5].includes(simStatus_)) || ([2,3,5].includes(simStatus)&&[4].includes(simStatus_)) ){
 				vm.set('off.turn',2);
 
 				if([4].includes(simStatus)){
@@ -191,17 +184,7 @@ var vm=new Moon({
 				}else vm.set('off.slot','1');
 				vm.callMethod('choiceSlot');
 			}else if([4,6].includes(simStatus)&&[4,6].includes(simStatus_)){
-				vm.set('off.turn',4);
-				Jsborya.pageJump({
-	                url:'simInfo.html?turn=4',
-	                stepCode:999,
-	                depiction:'开卡信息',
-	                destroyed:false,
-	                header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
-	            });
+				vm.set('off.turn',4);//两张都为无效卡
 			}
 		},
 		choiceSlot(slot){//选择卡槽
@@ -238,7 +221,7 @@ var vm=new Moon({
 				vm.setStore('ORDER_INFO',orderInfo);
 
 				Jsborya.pageJump({
-	                url:'scanCardInfo.html',
+	                url:'slotInfo.html',
 	                stepCode:999,
 	                depiction:'开卡信息',
 	                header:{

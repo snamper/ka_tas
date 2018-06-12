@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/scanCardInfo.css');
+require('../../assets/css/slotInfo.css');
 
 Jsborya.ready(function(){
 
