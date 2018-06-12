@@ -105,7 +105,7 @@ var vm=new Moon({
 	    mounted:function(){
 	    	setTimeout(function(){
 	    		vm.callMethod('setPage');
-	    	},0);
+	    	},300);
 	    }
 	},
 	methods:{
