@@ -264,6 +264,15 @@ require('./base64.js');
 				}
 			});
 		},
+		freeCache:function(json){//清除APP缓存
+			callHandler({
+				name:'freeCache',
+				data:json,
+				callback:function(result){
+					console.log('freeCache')
+				}
+			});
+		},
 		httpRequest:function(json){
 			// setTimeout(function(){
 			// 	json.complete(JSON.stringify({

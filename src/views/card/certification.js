@@ -354,6 +354,10 @@ var vm=new Moon({
 				vm.AJAX('/tas/w/business/checkInfo',json,function(data){
 					
 					vm.setStore('USER_MUTIPLE_DATA',json.params);
+
+					Jsborya.freeCache({//清除拍摄照片缓存
+						type:'PHOTO'
+					});
 					Jsborya.pageJump({
 						url:'faceVerification.html',
 						stepCode:999,
