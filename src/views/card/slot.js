@@ -196,6 +196,8 @@ var vm=new Moon({
 				hasPriPhone = vm.get('iccidsRes')[slot].hasPriPhone,
 				realSlot = vm.get('defaultSlot') ? '-1' : slot;//默认卡槽问题
 
+			if(vm.callMethod('isMiCliet')) realSlot = '-1';//小米手机
+
 			vm.setStore('CARD_INFO',{
 				slot:realSlot,
 				iccid:vm.get('iccid')[slot],
@@ -229,6 +231,14 @@ var vm=new Moon({
 	                    backgroundColor:'#4b3887',
 	                }
 	            });
+			}
+		},
+		isMiCliet(){
+			let e = navigator.userAgent;
+			if(e.indexOf('XiaoMi')>-1){
+				return true;
+			}else{
+				return false;
 			}
 		},
 		filterConnectStatus:function(status){
