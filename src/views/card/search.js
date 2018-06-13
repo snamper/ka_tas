@@ -96,7 +96,6 @@ var vm=new Moon({
 				if(vm.get('off').type == 0) otherHeight += 50;//非专营号有标签
 
 				vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
-				document.getElementById("cardBox").scrollTop=0;
 				
 		    	// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
 				vm.set('otherHeight',otherHeight);
@@ -129,8 +128,11 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-	  		// if(!page)vm.set('cardData',{ytDbOneCount:'-1', priDbOneCount:'-1', list:[]});
-
+	  		if(!page){
+	  			//vm.set('cardData',{ytDbOneCount:'-1', priDbOneCount:'-1', list:[]});
+		  		document.getElementById("cardBox").scrollTop=0;
+		  	}
+		  	
 	  		vm.set('off.showNoMore',false);
 			vm.AJAX('/tas/w/source/phoneList',json,function(data){
 				vm.set('page',json.params.page);
