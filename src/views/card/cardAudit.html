@@ -77,8 +77,8 @@ body{
 		
 		<div m-on:click="jumpToPay" m-literal:class="{btny:off.step!=1,btn:true,btnDefault:true}">
 			<span m-show="off.step!=3">
-				<span m-show="cardInfo.belongType==1">生成受理单</span>
-				<span m-show="cardInfo.belongType==0">去支付</span>
+				<span m-show="orderInfo.belongType==1">生成受理单</span>
+				<span m-show="orderInfo.belongType==0">去支付</span>
 			</span>
 			<span m-show="off.step==3">返回首页</span>
 		</div>
