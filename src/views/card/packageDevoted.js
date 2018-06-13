@@ -341,6 +341,7 @@ var vm=new Moon({
             vm.AJAX('/tas/w/business/orderCreate',json,function(data){
                 vm.set("off.load",false);
                 vm.setStore('ORDER_INFO',{
+                    "belongType":1,
                     "phoneNum":cardInfo.phone,
                     "numberLevel":cardInfo.phoneLevel,
                     "cityName":cardInfo.cityName,
@@ -355,7 +356,7 @@ var vm=new Moon({
                     "packageName":packageInfo.packTitle,
                     "packageCode":packageInfo.code,
                     "prestoreMoney":packageInfo.prestoreMoney,//预存价格
-                    "pDiscount":packageInfo.discount,
+                    "pDiscount":10000,
                     "similarity":0,
                     "iccid":vm.get('userInfo').iccid,
                 });

@@ -22,6 +22,7 @@ var vm=new Moon({
 			phoneLevel:0,
 			discount:10000,
 			slot:0,
+			belongType:0,
 			deviceType:1,
 			iccid:''
 		},
@@ -311,6 +312,7 @@ var vm=new Moon({
 			vm.AJAX('/tas/w/business/orderCreate',json,function(data){
 				vm.set("off.load",false);
 				vm.setStore('ORDER_INFO',{
+					"belongType":cardInfo.belongType,
 		            "phoneNum":cardInfo.phone,
 		            "numberLevel":cardInfo.phoneLevel,
 		            "cityName":cardInfo.cityName,
