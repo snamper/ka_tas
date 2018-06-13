@@ -215,7 +215,7 @@ var vm=new Moon({
 		},
 		jumpPackage:function(index){
 			let phoneData=vm.get('cardData').list[parseInt(index)];
-			vm.setStore('CARD_INFO',Object.assign({
+			vm.setStore('CARD_INFO',Object.assign(vm.get('cardInfo'),{
 				phone:phoneData.phoneNum,
 				cityName:phoneData.cityName,
 				cityCode:phoneData.cityCode,
@@ -224,7 +224,7 @@ var vm=new Moon({
 				phoneLevel:phoneData.numberLevel,
 				belongType:phoneData.belongType,
 				discount:10000
-			},vm.get('cardInfo')));
+			}));
 			vm.removeStore('selectPackage');
 
 			if(phoneData.belongType == 1){
