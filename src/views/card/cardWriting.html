@@ -17,16 +17,16 @@
 	<div id="app" m-mask>
 		<ul class="m-time-axis clr">
 			<li>
-				<div class="title">1.选号选套餐</div>
+				<div class="title">1.号码详情</div>
 			</li>
 			<li>
 				<div class="title">2.实名认证</div>
 			</li>
 			<li>
-				<div class="title">3.支付</div>
+				<div class="title">3.签署受理单</div>
 			</li>
 			<li class="active">
-				<div class="title">4.写卡</div>
+				<div class="title">4.提交开卡申请</div>
 			</li>
 			<li>
 				<div class="title">5.开卡受理</div>
@@ -83,7 +83,7 @@
 		<section m-show="error.code==1">
 			<div m-on:click="callWriteCard" m-literal:class="{active:off.step==3,btn:true,btnDefault:off.step!=3,btny:imsi!=''}">
 				<i m-show="off.step!=3">提交开卡申请</i>
-				<i m-show="off.step==3">开卡申请中，请稍后</i>
+				<i m-show="off.step==3">开卡申请中，请稍候</i>
 				<b></b>
 			</div>
 		</section>

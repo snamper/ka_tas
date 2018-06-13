@@ -88,7 +88,7 @@ var vm=new Moon({
 						}
 						
 						Jsborya.setHeader({
-							title:'号码搜索',
+							title:'套餐选择',
 							frontColor:'#ffffff',
 							backgroundColor:'#4b3887',
 							left:{

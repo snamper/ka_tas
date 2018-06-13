@@ -16,7 +16,19 @@ body{
 .u-icon-wcr{
     background-image: url(../img/picture_watch_ununited.png);
 }
+.btnDefault_dp{
 
+}
+.btnDefault_dp{
+    color: #777;
+    background-color: #FFF;
+    border-color: #BBB
+}
+.btnDefault_dp:active{
+    color: #ACA9A9;
+    background-color: #ececec;
+    border-color: #CECECE
+}
 .m-tag{
     padding: 0.1rem;
 }
@@ -106,7 +118,7 @@ body{
 .m-btn-group>.btny{
     width: 63%;
 }
-.m-btn-group>.btnDefault{
+.m-btn-group>.btnDefault_dp{
     width: 32%;
     margin-right:3%; 
 }

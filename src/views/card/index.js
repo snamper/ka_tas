@@ -30,7 +30,8 @@ var vm=new Moon({
         },//号卡数据
         windowHeight:600,//屏幕高度
         otherHeight:140,//除去号码容器的高度
-        boxHt:'height:400px'
+        boxHt:'height:400px',
+        hotWide:'width:1000px',
 	},
 	hooks: {
 	    init: function() {
@@ -42,7 +43,6 @@ var vm=new Moon({
 
 			if(cardInfo) vm.set('cardInfo',cardInfo);
 			if(selectCity) vm.set('selectCity',selectCity);
-			
 
 			// alert(`cardInfo：${JSON.stringify(cardInfo)}`)
 			// alert(`url_slot：${slot}`)
@@ -113,6 +113,12 @@ var vm=new Moon({
 	  			userInfo:vm.get('userInfo')
 	  		},function(data){
 				vm.set('hotLabel',data.data.list);
+				let w = 0;
+				data.data.list.forEach((val)=>{
+					w+=val.name.length;
+				});
+				
+				vm.set('hotWide',`width:${ w * 13 + data.data.list.length * (20+10)}px`);
 			},true);
 		},
 		getCardList:function(page,closeLoad){//获取数据

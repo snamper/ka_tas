@@ -159,7 +159,10 @@ var vm=new Moon({
 					vm.set("error",{code:5,text:'无可用的IMSI'});
 				}else if(data.code==685){
 					vm.set("error",{code:6,text:'该订单已结束'});
+				}else if(data.code==688){
+					vm.set("error",{code:4,text:'当前SIM卡与获取ICCID不一致，请重新插入对应SIM卡'});
 				}
+
 			});
 		},
 		callWriteCard:function(){//写卡
