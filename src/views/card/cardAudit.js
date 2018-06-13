@@ -135,7 +135,7 @@ var vm=new Moon({
 			},true);
 		},
 		jumpToPay:function(){
-			let step=vm.get('off').step, belongType = vm.get('cardInfo').belongType;
+			let step=vm.get('off').step, belongType = vm.get('orderInfo').belongType;
 			if(step==2){
 
 				if(belongType==1){//专营号码,不需要支付
