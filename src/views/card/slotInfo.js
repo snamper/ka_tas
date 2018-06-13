@@ -112,18 +112,28 @@ var vm=new Moon({
 				vm.set('orderInfo',orderInfo);
 			});
 		},
-		filterOrderStatus:function(orderStatusCode,similarity){
-			let url='',depiction='',next='';
+		filterOrderStatus:function(){
+			let url='',depiction='',next='', orderInfo = vm.get('orderInfo');
+			let orderStatusCode = orderInfo.orderStatusCode,
+				similarity = orderInfo.similarity,
+				belongType = orderInfo.belongType;
+
 			if(orderStatusCode==='PACKAGE_SELECTION'){
                 url='certification.html';
                 depiction='已选择套餐';
                 next='实名认证';
             }else if(orderStatusCode==='CARD_PAY'){
-                url='pay.html';
+                if(belongType==1){
+                	url='cardAudit.html';
+                }else url='pay.html';
+
                 depiction='已支付';
                 next='生成受理单';
             }else if(orderStatusCode==='CARD_AUDIT'){
-                url='pay.html';
+                if(belongType==1){
+                	url='cardAudit.html';
+                }else url='pay.html';
+                
                 depiction='已审核';
                 next='支付';
             }else if(orderStatusCode==='CREATE_SHEET'){
@@ -160,7 +170,7 @@ var vm=new Moon({
 		},
 		continueOrder:function(){
 			let orderInfo=vm.get('orderInfo');
-			let todo=vm.callMethod('filterOrderStatus',[orderInfo.orderStatusCode,orderInfo.similarity]);
+			let todo=vm.callMethod('filterOrderStatus');
 			orderInfo.iccid=vm.get('userInfo').iccid;
             vm.setStore('ORDER_INFO',orderInfo);
             Jsborya.pageJump({
