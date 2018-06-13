@@ -36,6 +36,7 @@
 			<li
 			m-for="item,index in hotLabel"
 			m-literal:title="index"
+			m-literal:class="{active:selectLabel.tag == item.tag}"
 			m-on:click="labelClick">{{ item.name }}</li>
 		</ul>
 	</section>

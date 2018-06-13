@@ -53,7 +53,6 @@ var vm=new Moon({
 
 					if(userInfo.iccid=='666666666666'){
 						vm.set('cardInfo.hasPriPhone',2);
-
 						Jsborya.setHeader({
 							title:'随心搜',
 							frontColor:'#ffffff',
@@ -95,14 +94,13 @@ var vm=new Moon({
 				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
 
 				let otherHeight = 60 + 50 + 30, btmImgH = window_w * 323/1242;
-				if(vm.get('userInfo').iccid != '666666666666' || vm.get('cardInfo').hasPriPhone ==2 ){
+				if(vm.get('userInfo').iccid != '666666666666' || vm.get('cardInfo').hasPriPhone ==1 ){
 					otherHeight += btmImgH;
 				}
 
 				otherHeight = parseInt(otherHeight);
 				
 		    	vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
-				document.getElementById("cardBox").scrollTop=0;
 				vm.set('otherHeight',otherHeight);
 				vm.set('windowHeight',window_h);
 				// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
@@ -133,7 +131,10 @@ var vm=new Moon({
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-	  		// if(!page)vm.set('cardData',{ytDbOneCount:'-1', priDbOneCount:'-1', list:[]});
+	  		if(!page){
+	  			//vm.set('cardData',{ytDbOneCount:'-1', priDbOneCount:'-1', list:[]});
+	  			document.getElementById("cardBox").scrollTop=0;
+	  		}
 
 	  		vm.set('off.showNoMore',false);
 			vm.AJAX('/tas/w/source/phoneList',json,function(data){
@@ -230,7 +231,7 @@ var vm=new Moon({
 		},
 		jumpPackage:function(index){
 			let phoneData=vm.get('cardData').list[parseInt(index)];
-			vm.setStore('CARD_INFO',Object.assign({
+			vm.setStore('CARD_INFO',Object.assign(vm.get('cardInfo'),{
 				phone:phoneData.phoneNum,
 				cityName:phoneData.cityName,
 				cityCode:phoneData.cityCode,
@@ -239,7 +240,7 @@ var vm=new Moon({
 				phoneLevel:phoneData.numberLevel,
 				discount:10000,
 				belongType:phoneData.belongType,
-			},vm.get('cardInfo')));
+			}));
 
 			vm.removeStore('selectPackage');
 

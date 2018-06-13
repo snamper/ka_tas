@@ -61,7 +61,7 @@ body{
     top: 0;
     display: inline-block;
     height: 0.3rem;
-    line-height: 0.3rem;
+    line-height: 0.31rem;
     padding-right: 0.1rem;
 }
 .m-search{
@@ -72,10 +72,11 @@ body{
 }
 .m-hd{
 	width: 0.6rem;
-	height: 0.4rem;
-	line-height: 0.41rem;
+	height: 0.38rem;
+	line-height: 0.39rem;
 	font-size:0.15rem;
 	text-align: center;
+	margin-top: 1px;
 	margin-right:0.1rem;
 	white-space:nowrap;
     text-overflow: ellipsis;
@@ -105,16 +106,16 @@ body{
 	display: none;
 }
 .m-sch>input::-webkit-input-placeholder { 
-  line-height: 1.5em;
+  line-height: 1.6em;
 }
 .m-sch>input:-moz-placeholder {
-  line-height: 1.5em;
+  line-height: 1.6em;
 }
 .m-sch>input::-moz-placeholder {
-  line-height: 1.5em;
+  line-height: 1.6em;
 }
 .m-sch>input:-ms-input-placeholder {
-  line-height: 1.5em;
+  line-height: 1.6em;
 }
 .m-sch>span{
 	position: absolute;
@@ -161,7 +162,7 @@ body{
 }
 .m-hot-label>li{
 	display: inline-block;
-	padding:7px 10px 5px 10px;
+	padding:5px 10px 5px 10px;
 	border-radius: 3px;
 	border:1px solid transparent;
 	border-color:#DFDFDF;
