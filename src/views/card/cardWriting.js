@@ -79,22 +79,22 @@ var vm=new Moon({
 					slot:cardInfo.slot,
 					complete:function(userInfo){
 						vm.set('userInfo',userInfo);
+
 						vm.callMethod('readCardICCID');
+
+						Jsborya.registerMethods('headerLeftClick',function(){
+							vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						});
+						Jsborya.registerMethods('headerRightClick',function(){
+							Jsborya.pageJump({
+								url:'',
+								stepCode:803,
+								depiction:'设备管理',
+								destroyed:false,
+							});
+							
+						});
 					}
-				});
-				
-				
-				Jsborya.registerMethods('headerLeftClick',function(){
-					vm.orderCancel(userInfo,orderInfo.sysOrderId);
-				});
-				Jsborya.registerMethods('headerRightClick',function(){
-					Jsborya.pageJump({
-						url:'',
-						stepCode:803,
-						depiction:'设备管理',
-						destroyed:false,
-					});
-					
 				});
 			}else{
 				alert('本地订单信息丢失');
