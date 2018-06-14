@@ -72,9 +72,19 @@ var vm=new Moon({
 						vm.set('userInfo',userInfo);
 
 						if(orderInfo.setPwd==0){
-							window.Timer=setInterval(function(){
+							vm.callMethod('intervalGetResult',[true]);
+
+							setTimeout(function(){
 								vm.callMethod('intervalGetResult',[true]);
-							},2000);
+							},1000*30);
+
+							setTimeout(function(){
+								vm.callMethod('intervalGetResult',[true]);
+							},1000*30*2);
+
+							setTimeout(function(){
+								vm.callMethod('intervalGetResult',[true]);
+							},1000*30*3);
 						}
 
 					}
@@ -208,7 +218,6 @@ var vm=new Moon({
 						vm.set("off.status",3);
 						vm.set("orderInfo.setPwd",data.data.setPwd);
 					}else if(status==3||status==4){
-						clearInterval(window.Timer);
 						vm.set("off.status",6);
 						vm.set("orderInfo.orderDesc",data.data.desc);
 					}
