@@ -212,7 +212,7 @@ var vm=new Moon({
 						vm.set("off.status",3);
 
 						vm.set("orderInfo.setPwd",data.data.setPwd);
-						if(data.data.setPwd)clearInterval(Timer);
+						if(data.data.setPwd)clearInterval(window.Timer);
 					}else if(status==3||status==4){
 						vm.set("off.status",6);
 						vm.set("orderInfo.orderDesc",data.data.desc);
