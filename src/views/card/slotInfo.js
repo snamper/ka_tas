@@ -71,20 +71,14 @@ var vm=new Moon({
 					complete:function(userInfo){
 						vm.set('userInfo',userInfo);
 
-						if(orderInfo.setPwd==0){
+						if(orderInfo.setPwd==0 && orderInfo.status==3){
 							vm.callMethod('intervalGetResult',[true]);
 
-							setTimeout(function(){
+							window.Timer = setInterval(function(){
 								vm.callMethod('intervalGetResult',[true]);
-							},1000*30);
+							},1000*20);
 
-							setTimeout(function(){
-								vm.callMethod('intervalGetResult',[true]);
-							},1000*30*2);
 
-							setTimeout(function(){
-								vm.callMethod('intervalGetResult',[true]);
-							},1000*30*3);
 						}
 
 					}
@@ -216,7 +210,9 @@ var vm=new Moon({
 
 					if(status==2){//开卡成功
 						vm.set("off.status",3);
+
 						vm.set("orderInfo.setPwd",data.data.setPwd);
+						if(data.data.setPwd)clearInterval(Timer);
 					}else if(status==3||status==4){
 						vm.set("off.status",6);
 						vm.set("orderInfo.orderDesc",data.data.desc);
