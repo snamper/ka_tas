@@ -34,7 +34,8 @@ var vm=new Moon({
             "similarity":0,
             "packageName":"--",
             "packageCode":"0",
-        }
+            "setPwd":0,//0、未设置密码；1、设置成功；2、设置失败；
+        },
 	},
 	hooks:{
 		init:function(){
@@ -69,9 +70,18 @@ var vm=new Moon({
 					slot:cardInfo.slot,
 					complete:function(userInfo){
 						vm.set('userInfo',userInfo);
+
+						if(orderInfo.setPwd==0){
+							window.Timer=setInterval(function(){
+								vm.callMethod('intervalGetResult',[true]);
+							},2000);
+						}
+
 					}
 				});
-			}else alert('本地信息错误');
+			}else{
+				//alert('本地信息错误');
+			}
 			
 		},
 	},
@@ -183,7 +193,7 @@ var vm=new Moon({
                 }
             });
 		},
-		intervalGetResult:function(){
+		intervalGetResult:function(closeLoad){
 
 			//window.Timer=setInterval(function(){
 				vm.AJAX('/tas/w/business/getResult',{
@@ -196,7 +206,9 @@ var vm=new Moon({
 
 					if(status==2){//开卡成功
 						vm.set("off.status",3);
+						vm.set("orderInfo.setPwd",data.data.setPwd);
 					}else if(status==3||status==4){
+						clearInterval(window.Timer);
 						vm.set("off.status",6);
 						vm.set("orderInfo.orderDesc",data.data.desc);
 					}
@@ -205,7 +217,7 @@ var vm=new Moon({
 						vm.set('orderInfo.orderStatusCode','CARD_ACTIVE');
 					}
 
-				});
+				},closeLoad);
 			//},2000);
 		},
 		orderCancel:function(){

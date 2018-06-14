@@ -70,70 +70,54 @@
 				<span class="btn btnDefault_dp" m-on:click="orderCancel">放弃</span>
 				<span class="btn btny" m-on:click="continueOrder">继续开卡</span>
 			</div>
+			<!--开卡成功-->
+			<section m-show="off.status==3">
+				<dl class="m-order-tips grey" m-show="orderInfo.setPwd==0">
+					<dt>温馨提示:</dt>
+					<dd>1、<span class="green">已开卡成功</span>;</dd>
+					<dd>2、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+				</dl>
+				<div class="m-spin-load" m-show="orderInfo.setPwd==0">
+					<span class="load"></span>
+					<span class="text purple">我们将为您做最后的配置</span>
+				</div>
 
-			<div class="m-tips grey" m-show="off.status==3">温馨提示：开卡成功，您可以登录“远特i卡”掌上营业厅，可进行充值，查询实时话费、我的套餐、套餐余量等业务;</div>
-			<div class="btn btny" m-show="off.status==3" m-on:click="jumpToLogin">去登录</div>
+				<dl class="m-order-tips grey" m-show="orderInfo.setPwd==1">
+					<dt>温馨提示:</dt>
+					<dd>1、<span class="green">已开卡成功</span>;</dd>
+					<dd>2、您可以登录“远特i卡”掌上营业厅，可进行充值，查询实时话费、我的套餐、套餐余量等业务;</dd>
+					<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+				</dl>
+				<div class="btn btny" m-show="orderInfo.setPwd==1" m-on:click="jumpToLogin">去登录</div>
 
+				<dl class="m-order-tips grey" m-show="orderInfo.setPwd==2">
+					<dt>温馨提示:</dt>
+					<dd>1、<span class="green">已开卡成功</span>;</dd>
+					<dd>2、<span class="red">密码设置失败，登录时请选择‘短信验证码’登录</span>;</dd>
+					<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+				</dl>
+				<div class="btn btny" m-show="orderInfo.setPwd==2" m-on:click="jumpToLogin">去登录</div>
+			</section>
+			
+			<!--写卡等待开卡结果-->
 			<dl class="m-order-tips grey" m-show="off.status==5">
 				<dt>温馨提示:</dt>
 				<dd>1、您的开卡申请已受理，请耐心等待开卡结果</dd>
 				<dd>2、开卡成功我们将以短信的形式进行通知。</dd>
 				<dd>3、您可以点击“重新获取”按钮获取开卡结果</dd>
 			</dl>
-			<div class="btn btny" m-show="off.status==5" m-on:click="intervalGetResult">重新获取</div>
+			<div class="btn btny" m-show="off.status==5" m-on:click="intervalGetResult()">重新获取</div>
 
-			
+			<!--已写卡开卡失败-->
 			<dl class="m-order-tips grey" m-show="off.status==6">
 				<dt>温馨提示:</dt>
-				<dd class="red">1、失败原因：{{ orderInfo.orderDesc }}</dd>
+				<dd>1、失败原因：<span class="red">{{ orderInfo.orderDesc }}</span></dd>
 				<dd>2、支付的金额我们将在24小时内退回到您的账户。</dd>
 				<dd>3、马上联系客服：语音自助服务10027 客服电话4000410027</dd>
 			</dl>
 			<div class="btn btny" m-show="off.status==6" m-on:click="jumpToHome">确定</div>
 		</section>
 	</section>
-	<!-- <div class="m-tips red" m-show="deviceType==0">温馨提示：当前开卡卡号状态为无效卡，请更换卡板</div> -->
-	<!--扫描卡与读取卡iccid不一致-->
-	<!-- <section m-show="deviceType!=0">
-		<section m-show="!off.isEqual">
-			<div class="m-tag"><i class="u-icon-tagnum_2"></i><span>读取卡槽中的SIM卡</span></div>
-
-			<div class="m-nocard-tips" m-show="deviceType==1">
-				<div class="left"><img src="../../assets/img/picture_phone_insert.png"></div>
-				<div class="right grey">温馨提示：<br>请将扫码卡板上的同一手机SIM卡插入当前手机的主卡槽。为提高开卡成功率，请确保手机连接无线局域网（WIFI）</div>
-			</div>
-
-			<div class="m-nocard-tips" m-show="deviceType==2">
-				<div class="left"><img src="../../assets/img/picture_watch_insert.png"></div>
-				<div class="right grey" style="margin-top: 0">
-					<p>温馨提示：<br>请打开蓝牙，连接到您的手表。当右上角状态为</p>
-					<div class="m-wacard-tips">
-						<div><i class="u-icon-wcg"></i>设备已连接</div>
-						<div><i class="u-icon-wcr"></i>设备未连接<span class="red">点击右上角连接设备</span></div>
-					</div>
-					<p>将您所扫卡板上的同一SIM卡插入手表卡槽中，点击下方“读取SIM卡信息”按钮</p>
-				</div>
-			</div>
-
-			<div class="m-nocard-error">
-				<div class="iccid"><span class="grey">读取卡号</span><b>{{ cardInfo.iccid }}</b></div>
-				<div m-show="deviceStatus==1">
-					<div class="m-tips red" m-show="!cardInfo.iccid">提示：未读取到SIM卡，请插入有效的SIM卡重新读取</div>
-					<div class="m-tips red" m-show="!off.isEqual">提示：当前卡信息与扫码读取的卡信息不一致，请更换SIM卡后重新读取</div>
-				</div>
-				<div m-show="deviceStatus==2">
-					<div class="m-tips red" m-show="!cardInfo.iccid">提示：读取失败，请插入有效的SIM卡重新读取</div>
-				</div>
-				<div m-show="deviceStatus==3">
-					<div class="m-tips red" m-show="!cardInfo.iccid">提示：未插卡，请插入有效的SIM卡重新读取</div>
-				</div>
-				<div m-show="deviceStatus==4">
-					<div class="m-tips red" m-show="!cardInfo.iccid">提示：设备未连接，请点击右上角进行设备连接，再重新读取</div>
-				</div>
-			</div>
-			<div class="btn btny" m-on:click="readCardICCID">读取SIM卡信息</div>
-		</section>
-	</section> -->
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
 </body>

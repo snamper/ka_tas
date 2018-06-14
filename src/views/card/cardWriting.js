@@ -75,26 +75,18 @@ var vm=new Moon({
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
 
-						vm.callMethod('readCardICCID');
-
-						Jsborya.registerMethods('headerLeftClick',function(){
-							vm.orderCancel(userInfo,orderInfo.sysOrderId);
-						});
-						Jsborya.registerMethods('headerRightClick',function(){
-							Jsborya.pageJump({
-								url:'',
-								stepCode:803,
-								depiction:'设备管理',
-								destroyed:false,
-							});
-							
-						});
-					}
+				Jsborya.registerMethods('headerLeftClick',function(){
+					vm.orderCancel(vm.get('userInfo'),orderInfo.sysOrderId);
+				});
+				Jsborya.registerMethods('headerRightClick',function(){
+					Jsborya.pageJump({
+						url:'',
+						stepCode:803,
+						depiction:'设备管理',
+						destroyed:false,
+					});
+					
 				});
 			}else{
 				alert('本地订单信息丢失');
@@ -103,40 +95,50 @@ var vm=new Moon({
 	},
 	methods:{
 		readCardICCID:function(){
+			let cardInfo = vm.get('cardInfo');
+
 			vm.set("off.step",1);
 			vm.set("error",{code:1,text:''});
-			Jsborya.readCardIMSI({
-				slot:vm.get('cardInfo').slot,
-				complete:function(data){
-					if(data.status==1){
-						vm.callMethod("getImsi");
-					}else{
-						vm.callMethod("filterConnectStatus",[data.status]);
-					}
+			Jsborya.getGuestInfo({
+				slot:cardInfo.slot,
+				complete:function(userInfo){
+					vm.set('userInfo',userInfo);
 
-					let deviceType=vm.get('cardInfo').deviceType,icon='';
-					if(deviceType==2){
-						if(data.status==1){
-							icon='wcard_green';
-						}else icon='wcard_red';
-						Jsborya.setHeader({
-							title:'写卡',
-							frontColor:'#ffffff',
-							backgroundColor:'#4b3887',
-							left:{
-								icon:'back_white',
-								value:'',
-								callback:'headerLeftClick'
-							},
-							right:{
-								icon:icon,
-								value:'',
-								callback:'headerRightClick'
+					Jsborya.readCardIMSI({
+						slot:cardInfo.slot,
+						complete:function(data){
+							if(data.status==1){
+								vm.callMethod("getImsi");
+							}else{
+								vm.callMethod("filterConnectStatus",[data.status]);
 							}
-						});
-					}
+
+							let deviceType=cardInfo.deviceType,icon='';
+							if(deviceType==2){
+								if(data.status==1){
+									icon='wcard_green';
+								}else icon='wcard_red';
+								Jsborya.setHeader({
+									title:'写卡',
+									frontColor:'#ffffff',
+									backgroundColor:'#4b3887',
+									left:{
+										icon:'back_white',
+										value:'',
+										callback:'headerLeftClick'
+									},
+									right:{
+										icon:icon,
+										value:'',
+										callback:'headerRightClick'
+									}
+								});
+							}
+						}
+					});
 				}
-			});
+			})
+			
 			
 		},
 		getImsi:function(){
@@ -166,6 +168,7 @@ var vm=new Moon({
 			});
 		},
 		callWriteCard:function(){//写卡
+			if(!vm.get('imsi'))return false;
 			vm.set("off.step",3);
 			Jsborya.callWriteCard({
 				slot:vm.get('cardInfo').slot,
