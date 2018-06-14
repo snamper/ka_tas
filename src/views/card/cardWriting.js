@@ -76,6 +76,8 @@ var vm=new Moon({
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
 
+				vm.callMethod('readCardICCID');
+
 				Jsborya.registerMethods('headerLeftClick',function(){
 					vm.orderCancel(vm.get('userInfo'),orderInfo.sysOrderId);
 				});
