@@ -129,9 +129,28 @@ var vm=new Moon({
 			});
 		},
 		shiftSelPackage:function(e){
-			var btn,index=parseInt(e.target.title);
-			var selPackage=vm.get('packageInfo').selPackage[index];
-			selPackage.init==2 ? btn=['关闭'] : e.target.className=='active' ? btn=['不选择','关闭'] : btn=['选择','关闭'];
+			var btn, index = parseInt(e.target.title), isSelect;
+			var selPackage = vm.get('packageInfo').selPackage[index];
+			//selPackage.init==2 ? btn=['关闭'] : e.target.className=='active' ? btn=['不选择','关闭'] : btn=['选择','关闭'];
+
+			if(selPackage.init==2){
+				var result={type:'NOT_OPTIONAL'};
+			}else{
+				if(e.target.className=='active'){
+					isSelect=true;
+				}else{
+					isSelect=false;
+				}
+				var result=vm.callMethod('filerSelectInfo',[index,isSelect]);
+			}
+
+			if(result.type=='SELECT'){
+				btn=['选择','关闭'];
+			}else if(result.type=='NOT_SELECT'){
+				btn=['不选择','关闭'];
+			}else if(result.type=='NOT_OPTIONAL'){
+				btn=['关闭'];
+			}else btn=['选择','关闭'];
 
 			layer.open({
 				content:'<div class="select-info f-scroll"><dl><dt>可选包名称</dt><dd class="b">'+selPackage.title+'</dd></dl><dl><dt>资费标准</dt><dd>'+selPackage.standard+'</dd></dl><dl><dt>资费说明</dt><dd>'+selPackage.feeDescribe+'</dd></dl></div>',
@@ -139,13 +158,132 @@ var vm=new Moon({
 				style:'width:95%;max-width:540px;',
 				type:1,
 				yes:function(){
-					selPackage.init!=2&&(e.target.className=='active' ? e.target.className='' : e.target.className='active');
+					if(result.type=='SELECT'){
+						e.target.className='active';
+					}else if(result.type=='NOT_SELECT'){
+						e.target.className='';
+					}
+					if(typeof result.callback=='function')result.callback();
+
+					//selPackage.init!=2&&(e.target.className=='active' ? e.target.className='' : e.target.className='active');
 					layer.closeAll();
 				},
 				no:function(){
 					layer.closeAll();
 				}
 			})
+		},
+		filerSelectInfo:function(clickIndex,isSelect){//判断当前可选包选择状态
+			let selPackage = vm.get('packageInfo').selPackage;//当前所在的可选包组
+			let bagUl=document.getElementById('selPackageUl');
+			let selectedArr=[];//当前已选中的所有可选包
+			let ruleSelected=[];//规则内已选
+			let ruleNoSelect=[];//规则内未选
+
+			if(selPackage[clickIndex].relevantList[0]){
+				var ruleStr=selPackage[clickIndex].relevantList[0].relevantOptPacks+','+selPackage[clickIndex].code;//组装规则
+			}else if(isSelect){
+				return {type:'NOT_SELECT'};
+			}else return {type:'SELECT'};
+
+			let ruleCodeArr=ruleStr.split(',');//规则内的code
+			let min=parseInt(selPackage[clickIndex].relevantList[0].minNums);//最小可选数
+			let max=parseInt(selPackage[clickIndex].relevantList[0].maxNums);//最大可选数
+
+			//获取已选中的所有可选包
+			for(let i=0;i<bagUl.childNodes.length;i++){
+				if(bagUl.childNodes[i].nodeType===1&&bagUl.childNodes[i].className!=''){
+					let index=bagUl.childNodes[i].title;
+					selectedArr.push({code:selPackage[index].code,key:index});
+				}
+			}
+			//获取规则内已选和未选
+
+			ruleCodeArr.forEach((val_i,i)=>{
+				// let c=selectedArr.findIndex((val_j,j)=>{兼容问题放弃此写法
+				// 	return val_i==val_j.code;
+				// });
+				let c = -1;
+				for(let j = 0,len = selectedArr.length;j<len;j++){
+					if(val_i==selectedArr[j].code){
+						c = j;
+						break;
+					}
+				}
+				
+				if(c!=-1){
+					ruleSelected.push(selectedArr[c]);
+				}else{
+					ruleNoSelect.push({code:ruleCodeArr[i]});
+				}
+			});
+
+			//获取规则内未选的key
+			selPackage.forEach((val_i,i)=>{
+				ruleNoSelect.forEach((val_j,j)=>{
+					if(val_j==val_i)ruleNoSelect[j].key=i;
+				});
+			});
+			//console.log(ruleSelected,ruleNoSelect,ruleCodeArr);
+			let selectNums=ruleSelected.length;//已选中数
+
+			if(min==0){
+				if(isSelect){
+					return {type:'NOT_SELECT'};
+				}else{
+					if(selectNums>=max){
+						return {type:'NOT_OPTIONAL'};
+					}else return {type:'SELECT'};
+				}
+			}else if(min==max){
+				if(isSelect){
+					if(selectNums>=max){
+						return {type:'NOT_OPTIONAL'};
+					}else return {
+						type:'NOT_SELECT',
+						callback:function(){
+							for(let i=0;i<max;i++){
+								vm.callMethod('setClass',[ruleNoSelect[i].key,1]);
+							}
+						}
+					}
+					
+				}else return {
+						type:'SELECT',
+						callback:function(){
+							vm.callMethod('setClass',[ruleSelected[0].key,2]);
+						}
+					}
+			}else if(max>min){
+				if(selectNums==min){
+					if(isSelect){
+						return {type:'NOT_OPTIONAL'};
+					}else return {type:'SELECT'};
+				}else if(selectNums>min&&selectNums<max){
+					if(isSelect){
+						return {type:'NOT_SELECT'};
+					}else return {type:'SELECT'};
+				}else if(selectNums==max){
+					if(isSelect){
+						return {type:'NOT_SELECT'};
+					}else return {
+							type:'SELECT',
+							callback:function(){
+								vm.callMethod('setClass',[ruleSelected[0].key,2]);
+							}
+						}
+				}else return {type:'NOT_OPTIONAL'};
+			}
+		},
+		setClass:function(index,type){//设置在index位置的元素,type:1,新增class;2,移除class
+			let bagUl=document.getElementById('selPackageUl');
+
+			for(let i=0;i<bagUl.childNodes.length;i++){
+				if(bagUl.childNodes[i].nodeType===1&&index==i){
+					if(type==1)bagUl.childNodes[i].className='active';
+					if(type==2)bagUl.childNodes[i].className='';
+				}
+			}
 		},
 		makeSure:function(){
 			if(vm.get('packageInfo').code=="0")return false;
