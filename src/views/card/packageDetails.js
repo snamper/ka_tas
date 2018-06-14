@@ -104,6 +104,7 @@ var vm=new Moon({
 				let selectPackage=vm.get('selectPackage'),
 					prestoreMoneyList=data.data.prestoreMoneyList,
 					selPackage=data.data.selPackage;
+
 				if(selectPackage.packageCode==data.data.code){
 					for(let i=0,len=prestoreMoneyList.length;i<len;i++){
 						if(prestoreMoneyList[i].prestoreMoney==selectPackage.prestore){
@@ -123,6 +124,10 @@ var vm=new Moon({
 							}
 						}else data.data.selPackage[i].init=0;//未选中任何可选包
 					}
+				}else{
+					prestoreMoneyList.forEach((item,index)=>{
+						if(item.init==1) vm.set('off.prestore',index);
+					});
 				}
 				
 				vm.set('packageInfo',data.data);
