@@ -98,7 +98,7 @@ var vm=new Moon({
 
 			if(deviceType==2){
 				layer.open({
-	                content:'功能正在开发中...<br>尽请期待!',
+	                content:'功能即将推出...<br>敬请期待!',
 	                btn:['确定'],
 	                title:'提示',
 	            });
