@@ -71,7 +71,7 @@ var vm=new Moon({
 					complete:function(userInfo){
 						vm.set('userInfo',userInfo);
 
-						if(orderInfo.setPwd==0 && orderInfo.status==3){
+						if(!parseInt(orderInfo.setPwd) && orderInfo.status==3){
 							vm.callMethod('intervalGetResult',[true]);
 
 							window.Timer = setInterval(function(){
