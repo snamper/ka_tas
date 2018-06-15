@@ -14,65 +14,19 @@
 .order-tips{text-align: center;margin-top: 0.3rem;margin-bottom:0.2rem;}
 .order-tips .success{width: 0.7rem;}
 .order-tips .error{width: 0.7rem;}
-.order-tips>.dp>b{font-size: 0.16rem;padding: 0.1rem 0;display: inline-block;font-weight: bold;}
-.order-tips>.tips{
-	width: 90%;
+.order-tips .dp>b{font-size: 0.16rem;padding: 0.1rem 0;display: inline-block;font-weight: bold;}
+.order-tips .tips{
+	width: 88%;
 	margin:auto;
 	margin-top:0.1rem;
 }
-.order-tips>.tips>dt{
+.order-tips .tips>dt{
 	margin-bottom:5px;
 }
-.order-tips>.tips>dd{
+.order-tips .tips>dd{
 	margin-bottom:3px;
 }
-.pay-load{}
-.pay-load>b{
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    background-color:#10CD6E;
-    -webkit-animation: pay-loading 1.4s infinite ease-in-out;
-    animation: pay-loading 1.4s infinite ease-in-out;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both
-}
-.pay-load>b.f1 {
-    margin-left: 0;
-    -webkit-animation-delay: -.32s;
-    animation-delay: -.32s
-}
 
-.pay-load>b.f2 {
-    -webkit-animation-delay: -.16s;
-    animation-delay: -.16s
-}
-@-webkit-keyframes pay-loading {
-    0%,
-    100%,
-    80% {
-        transform: scale(0);
-        -webkit-transform: scale(0)
-    }
-    40% {
-        transform: scale(1);
-        -webkit-transform: scale(1)
-    }
-}
-
-@keyframes pay-loading {
-    0%,
-    100%,
-    80% {
-        transform: scale(0);
-        -webkit-transform: scale(0)
-    }
-    40% {
-        transform: scale(1);
-        -webkit-transform: scale(1)
-    }
-}
 .o-success{
 	position: relative;
 }
@@ -152,25 +106,33 @@
 				<img class="success" m-show="off.load==1" src="../../assets/img/icon_suc_a.png">
 				<img class="error" m-show="off.load==3" src="../../assets/img/icon_failure.png">
 			</div>
-			<div class="dp">
-				<b class="green" m-show="off.load==1">开卡申请已受理，请等待开卡结果</b>
-				<p class="black-lt" m-show="off.load==1">开卡成功，我们将以短信的方式通知您<br>您也可选择“手机开卡”入口，查看开卡实时进度</p>
-				<b class="red" m-show="off.load==3">
-					<span m-show="orderStatus==3">开卡失败</span>
-					<span m-show="orderStatus==4">订单已关闭</span>
-				</b>
-			</div>
-			<!-- <div m-show="off.load==1"><span class="pay-load">
-				<b class="f1"></b>
-				<b class="f2"></b>
-				<b></b>
-			</span></div> -->
-			<dl class="tips f-tal grey" m-show="off.load==3">
-				<dt>温馨提示:</dt>
-				<dd class="red">1、失败原因：{{ desc }}</dd>
-				<dd>2、该号卡板已不可再使用。</dd>
-				<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
-			</dl>
+			
+			<section m-show="off.load==1">
+				<div class="dp">
+					<b class="green">开卡申请已受理，请等待开卡结果</b>
+				</div>
+				<dl class="tips f-tal grey">
+					<dt>温馨提示:</dt>
+					<dd>1、为确保您的SIM卡可以正常使用，请重启您的手机；</dd>
+					<dd>2、您可以通过“手机开卡”入口，查看开通进度；</dd>
+					<dd>3、开卡成功，我们将以短信的方式通知您。</dd>
+				</dl>
+			</section>
+			<section m-show="off.load==3">
+				<div class="dp">
+					<b class="red">
+						<span m-show="orderStatus==3">开卡失败</span>
+						<span m-show="orderStatus==4">订单已关闭</span>
+					</b>
+				</div>
+				<dl class="tips f-tal grey">
+					<dt>温馨提示:</dt>
+					<dd class="red">1、失败原因：{{ desc }}</dd>
+					<dd>2、该号卡板已不可再使用。</dd>
+					<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
+				</dl>
+			</section>
+			
 			<div class="btn btny" m-on:click="jumpToHome" m-show="off.load!=2">确定</div>
 		</div>
 		<div class="m-success-set" m-show="off.load==2">

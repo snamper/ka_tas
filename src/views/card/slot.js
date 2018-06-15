@@ -96,6 +96,15 @@ var vm=new Moon({
 				return false;
 			}
 
+			if(deviceType==2){
+				layer.open({
+	                content:'功能正在开发中...<br>尽请期待!',
+	                btn:['确定'],
+	                title:'提示',
+	            });
+				return false;
+			}
+
 			vm.set('off.load',true);
 			if(deviceType){
 				vm.set('deviceType',deviceType);
