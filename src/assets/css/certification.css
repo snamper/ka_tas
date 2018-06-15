@@ -80,7 +80,7 @@ body{
     -webkit-flex: 1;
     margin:5px 10px;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     position: relative;
     border:1px dashed #333;

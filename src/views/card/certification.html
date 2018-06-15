@@ -47,11 +47,11 @@
 				<span>请上传开卡人的有效身份证照片</span>
 			</div>
 			<div class="m-takePhoto">
-				<div class="box" id="photo-front">
-					<a href="javascript:void(0)" m-on:click="takePhotos(3)" class="u-icon-photo"></a>
+				<div class="box" id="photo-front" m-on:click="takePhotos(3)">
+					<a href="javascript:void(0)" class="u-icon-photo" m-show="!imgName.a"></a>
 				</div>
-				<div class="box" id="photo-back">
-					<a href="javascript:void(0)" m-on:click="takePhotos(4)" class="u-icon-photo"></a>
+				<div class="box" id="photo-back" m-on:click="takePhotos(4)">
+					<a href="javascript:void(0)" class="u-icon-photo" m-show="!imgName.b"></a>
 				</div>
 			</div>
 			<div class="photo-tag">
