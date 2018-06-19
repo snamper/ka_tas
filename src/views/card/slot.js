@@ -207,7 +207,6 @@ var vm=new Moon({
 
 			if(vm.callMethod('isMiCliet')) realSlot = '-1';//小米手机
 
-			alert(hasPriPhone)
 			vm.setStore('CARD_INFO',{
 				slot:realSlot,
 				iccid:vm.get('iccid')[slot],
@@ -218,15 +217,15 @@ var vm=new Moon({
 			//alert(`cardInfo：{slot:${slot}}`)
 
 			if(status==1){
-				// Jsborya.pageJump({
-	   //              url:'index.html',
-	   //              stepCode:999,
-	   //              depiction:'随心搜',
-	   //              header:{
-	   //                  frontColor:'#ffffff',
-	   //                  backgroundColor:'#4b3887',
-	   //              }
-	   //          });
+				Jsborya.pageJump({
+	                url:'index.html',
+	                stepCode:999,
+	                depiction:'随心搜',
+	                header:{
+	                    frontColor:'#ffffff',
+	                    backgroundColor:'#4b3887',
+	                }
+	            });
 			}else{
 				let orderInfo=vm.get('iccidsRes')[slot].orderInfo;
 				orderInfo.status=status;

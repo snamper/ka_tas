@@ -44,6 +44,8 @@ var vm=new Moon({
 			if(cardInfo) vm.set('cardInfo',cardInfo);
 			if(selectCity) vm.set('selectCity',selectCity);
 
+			alert(JSON.stringify(cardInfo));
+
 			// alert(`cardInfo：${JSON.stringify(cardInfo)}`)
 			// alert(`url_slot：${slot}`)
 			Jsborya.getGuestInfo({
@@ -97,6 +99,7 @@ var vm=new Moon({
 				if(vm.get('userInfo').iccid != '666666666666' || vm.get('cardInfo').hasPriPhone ==1 ){
 					otherHeight += btmImgH;
 				}
+				alert(otherHeight)
 
 				otherHeight = parseInt(otherHeight);
 				
