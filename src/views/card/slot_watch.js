@@ -9,21 +9,18 @@ var vm=new Moon({
 	data:{
 		off:{
 			load:false,
-			turn:0,//0,初始化页面;1,选择卡槽页面;2,继续完成订单页面;3,首页;4,无效卡页面;5,未插卡页面;---显示哪个页面
-			slot:'1',//-1,都可用;0,卡槽1;1,卡槽2;---哪张卡槽可用
 		},
-		defaultSlot:false,//是否为默认卡槽
-		iccid:['',''],
-		deviceType:1,//1、手机卡；2、手表卡
-		iccidsRes:[{
-			orderInfo:'',
-			status:1,
+		load:{
+			
+		},
+		deviceInfo:{
+			name:'',
+			status:1,//1,读取成功2,读取失败3,未插卡4,未连接设备
+			power:0,
+			type:1,//1、手机卡；2、手表卡；3、亿能eSIM
+			orderInfo:'',//订单信息
 			hasPriPhone:1,//是否有专营号，1是2否 
-		},{
-			orderInfo:'',
-			status:1,
-			hasPriPhone:1,//是否有专营号
-		}],
+		},
 		userInfo:'',
 		checkMachine:{
 			type:0,//0机型无问题;1终止流程;2提示消息但继续流程
@@ -207,7 +204,6 @@ var vm=new Moon({
 
 			if(vm.callMethod('isMiCliet')) realSlot = '-1';//小米手机
 
-			alert(hasPriPhone)
 			vm.setStore('CARD_INFO',{
 				slot:realSlot,
 				iccid:vm.get('iccid')[slot],

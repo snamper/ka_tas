@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>读取设备信息</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<header class="m-device">
+		<div class="lt"></div>
+		<div class="rt info">
+			<div class="name">
+				<h2>{{ deviceInfo.name }}</h2>
+				<div class="tip">您可点击刷新设备状态</div>
+			</div>
+			<div class="bluetooth">
+				<i class="u-icon-bluetooth"></i>
+				<span class="red">未连接</span>
+			</div>
+			<div class="power">
+				<i class="u-icon-power"></i>
+				<span>85%</span>
+			</div>
+			<div class="tip">
+				<p>远特eSIM服务开通过程中，请确保：</p>
+				<p>1、手机与手表蓝牙连接正常;</p>
+				<p>2、手表电量不低于30%;</p>
+			</div>
+		</div>
+	</header>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

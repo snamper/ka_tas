@@ -212,9 +212,11 @@ var vm=new Moon({
 						vm.set("off.status",3);
 						vm.set("orderInfo.setPwd",data.data.setPwd);
 
-						window.Timer = setInterval(function(){
-							vm.callMethod('intervalGetResult',[true]);
-						},1000*20);
+						if(!closeLoad){
+							window.Timer = setInterval(function(){
+								vm.callMethod('intervalGetResult',[true]);
+							},1000*20);
+						}
 	
 						if(parseInt(data.data.setPwd))clearInterval(window.Timer);
 					}else if(status==3||status==4){
