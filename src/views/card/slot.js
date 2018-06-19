@@ -218,15 +218,15 @@ var vm=new Moon({
 			//alert(`cardInfo：{slot:${slot}}`)
 
 			if(status==1){
-				Jsborya.pageJump({
-	                url:'index.html',
-	                stepCode:999,
-	                depiction:'随心搜',
-	                header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
-	            });
+				// Jsborya.pageJump({
+	   //              url:'index.html',
+	   //              stepCode:999,
+	   //              depiction:'随心搜',
+	   //              header:{
+	   //                  frontColor:'#ffffff',
+	   //                  backgroundColor:'#4b3887',
+	   //              }
+	   //          });
 			}else{
 				let orderInfo=vm.get('iccidsRes')[slot].orderInfo;
 				orderInfo.status=status;
