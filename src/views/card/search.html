@@ -58,7 +58,11 @@
 						<span class="number" m-html="filterNumber(todo.phoneNum)"></span>
 						<span class="city grey">{{ todo.cityName }}<i class="u-icon-devoted" m-show="todo.belongType==1"></i></span>
 					</div>
-					<div class="rt yellow"><em class="f-fts-12">￥</em><span>{{ mathCentToYuan(todo.cardMoney) }}</span></div>
+					<div class="rt yellow">
+						<span>{{ mathCentToYuan(todo.cardMoney) }}</span>
+						<em class="f-fts-12" m-show="belongType=='0'">元</em>
+						<em class="f-fts-12" m-show="belongType==1">卡</em>
+					</div>
 				</li>
 			</ul>
 			<div class="m-no-more grey" m-show="off.showNoMore">暂无更多</div>
