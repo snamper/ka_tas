@@ -60,6 +60,7 @@ var vm=new Moon({
 	    },
 	    password1:'',
 		password2:'',
+		linkPhone:'',//联系电话
 	},
 	hooks:{
 		init:function(){
@@ -85,6 +86,8 @@ var vm=new Moon({
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
+				if(cardInfo.deviceType!=3) vm.set("linkPhone",orderInfo.phoneNum);
+
 				Jsborya.getGuestInfo({
 					slot:cardInfo.slot,
 					complete:function(userInfo){
@@ -272,7 +275,7 @@ var vm=new Moon({
 			if(!password1.match(/^\d{6}$/))checkPwd=false;
 			if(password1!==password2)checkPwd=false;
 			
-			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree&&checkPwd){
+			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree&&checkPwd&&vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{11}$/)){
 				vm.set('off.isJump',true);
 			}else{
 				vm.set('off.isJump',false);
@@ -313,6 +316,9 @@ var vm=new Moon({
 			}else if(null==idCardInfo.period.match(/^(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})-(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})$/)){
 				callLayer('证件有效期格式错误');
                 return false;
+			}else if(vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{11}$/)){
+				callLayer('手机号码格式错误');
+                return false;
 			}else if(!password1.match(/^\d{6}$/)){
 				callLayer('密码格式错误');
                 return false;
@@ -342,6 +348,7 @@ var vm=new Moon({
 						// 'handImageName':vm.get('imgName').c,//手持照片
 						signImageName:imgName.d,//手签名
 						sysOrderId:orderInfo.sysOrderId,
+						linkPhone:vm.get("linkPhone")
 					}
 				}
 				Object.assign(orderInfo,{

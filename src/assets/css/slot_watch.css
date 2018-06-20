@@ -10,12 +10,37 @@
 .u-icon-power{
     background-image: url(../img/power.png);
 }
+.u-icon-warning{
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    width: 0.15rem;
+    height: 0.15rem;
+    margin-left:5px;
+    margin-top: -2px;
+
+    background-image: url(../img/icon_error.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.m-spin-load{
+    margin:0;
+}
 
 .m-device{
     display: flex;
+    background-image:url(../img/watch_read_bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .m-device>.lt{
     flex: 1;
+    background-image:url(../img/watch_read_icon.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
 }
 .m-device>.rt{
     flex: 2;
@@ -43,11 +68,11 @@
     
 }
 .m-device>.info>.name>.tip{
-    color: #C2C4D9;
+    color: #777;
     font-size: 0.11rem;
 }
-.m-device>.info>.name>h3{
-    font-weight: bold;
+.m-device>.info>.name>h2{
+    font-weight: normal;
 }
 .m-device>.info>.bluetooth{
     margin:0.1rem 0;
@@ -56,6 +81,8 @@
     
 }
 .m-device>.info>.tip{
-    margin-top: 0.2rem;
+    padding: 0.2rem 0;
     font-size: 0.12rem;
+    color: #777;
+    /*color: #6D7BBF;*/
 }

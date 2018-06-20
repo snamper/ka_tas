@@ -90,42 +90,7 @@ var vm=new Moon({
 		},
 	},
 	methods:{
-		readCardICCID:function(){
-			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
-			let slot = vm.get('cardInfo').slot;
-			Jsborya.readCardICCID({
-				slot:slot,
-				complete:function(result){
-					if(result.status==1){
-						Jsborya.readCardIMSI({
-							slot:slot,
-							complete:function(data){
-								layer.close(index);
-								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-							}
-						});
-					}else{
-						layer.close(index);
-						vm.callMethod('filterConnectStatus',result.status);
-					} 
-				}
-			});
-		},
-		iccidCheck:function(imsi,smsp,scanIccid){
-			let deviceType=vm.get('deviceType');
-			const json={
-	  			params:{
-	  				imsi:imsi||'',
-	  				smsp:smsp||'',
-	  				scanIccid:scanIccid||''
-	  			},
-	  			userInfo:vm.get('userInfo')
-	  		};
-			vm.AJAX('/tas/w/source/iccidCheck',json,function(data){
-				vm.set('off.status',data.data.status);
-				vm.set('orderInfo',orderInfo);
-			});
-		},
+		
 		filterOrderStatus:function(){
 			let url='',depiction='',next='', orderInfo = vm.get('orderInfo');
 			let orderStatusCode = orderInfo.orderStatusCode,
@@ -183,10 +148,13 @@ var vm=new Moon({
             return {url:url,depiction:depiction,next:next};
 		},
 		continueOrder:function(){
-			let orderInfo=vm.get('orderInfo');
-			let todo=vm.callMethod('filterOrderStatus');
-			orderInfo.iccid=vm.get('userInfo').iccid;
+			let orderInfo=vm.get('orderInfo'),
+				todo=vm.callMethod('filterOrderStatus');
+
+			orderInfo.iccid=vm.get('cardInfo').iccid;
             vm.setStore('ORDER_INFO',orderInfo);
+            vm.setStore("CARD_INFO",vm.get("cardInfo"));
+
             Jsborya.pageJump({
                 url:todo.url,
                 stepCode:999,

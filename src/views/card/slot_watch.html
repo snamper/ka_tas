@@ -15,20 +15,21 @@
 </head>
 <body>
 <div id="app" m-mask>
-	<header class="m-device">
+	<header class="m-device" m-on:click="readCardICCID">
 		<div class="lt"></div>
 		<div class="rt info">
 			<div class="name">
-				<h3>{{ deviceName }}</h3>
-				<div class="tip">您可点击刷新设备状态</div>
+				<h2>{{ deviceName }}</h2>
+				<div class="tip">点击刷新设备状态</div>
 			</div>
 			<div class="bluetooth">
 				<i class="u-icon-bluetooth"></i>
-				<span class="red">未连接</span>
+				<span class="red" m-show="deviceStatus==4">未连接</span>
+				<span class="green" m-show="deviceStatus!=4">已连接</span>
 			</div>
 			<div class="power">
 				<i class="u-icon-power"></i>
-				<span>85%</span>
+				<span m-literal:class="{red:devicePower<30}">{{ devicePower }}%</span>
 			</div>
 			<div class="tip">
 				<p>远特eSIM服务开通过程中，请确保：</p>
@@ -37,23 +38,44 @@
 			</div>
 		</div>
 	</header>
-	<div class="m-tips red">提示：当前手机未与手表连接，请点击刷新手表状态。如未连接成功，请返回APP进行设备管理，待连接成功，可继续开卡操作。</div>
-	<section>
+	<!--未连接-->
+	<section m-show="deviceStatus==4">
+		<div class="m-tips red">提示：当前手机未与手表连接，请点击刷新手表状态。如未连接成功，请返回APP进行设备管理，待连接成功，可继续开卡操作。</div>
+		<div class="btn btnp" m-on:click="jumpToHome">返回APP</div>
+	</section>
+
+	<section m-show="deviceStatus!=4">
 		<div class="m-tag"><i class="u-icon-sim"></i><span>SIM卡信息</span></div>
 		<div class="g-col-2">
 			<div class="row line">
 				<span class="left">SIM卡号</span>
-				<span class="right">{{ cardInfo.iccid }}</span>
+				
+				<span class="right" m-show="load.read">
+					<div class="m-spin-load">
+						<span class="text purple">正在读取中</span>
+						<span class="load"></span>
+					</div>
+				</span>
+				<span class="right" m-show="!load.read">
+					<span class="red" m-show="deviceStatus==2">读取SIM卡信息失败<i class="u-icon-warning"></i></span>
+					<span class="red" m-show="deviceStatus==3">手表卡槽内无卡<i class="u-icon-warning"></i></span>
+					<span class="red" m-show="off.status==4">卡槽中为无效卡<i class="u-icon-warning"></i></span>
+					<span m-show="off.status!=4">{{ cardInfo.iccid }}</span>
+				</span>
 			</div>
-			<div class="row">
+			<!--订单信息-->
+			<div class="row" m-show="off.status==2 || off.status==3 || off.status==5 || off.status==6">
 				<span class="left">开通状态</span>
 				<span class="right">
 					<span m-literal:class="{yellow:off.status==2||off.status==5,green:off.status==3,red:off.status==6,right:true}">{{ filterOrderStatus().depiction }}</span>
 				</span>
 			</div>
 		</div>
+		<div m-show="deviceStatus!=1" class="btn btnp" m-on:click="readCardICCID">重新读取SIM卡信息</div>
 	</section>
-	<section>
+
+	<!--订单信息-->
+	<section m-show="off.status==2 || off.status==3 || off.status==5 || off.status==6">
 		<div class="m-tag"><i class="u-icon-order"></i><span>订单信息</span></div>
 		<div class="g-col-2">
 			<div class="row line">

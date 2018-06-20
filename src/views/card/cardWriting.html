@@ -49,12 +49,19 @@
 			</li>
 			<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
 		</ul>
-		<section class="m-all-tag">
+		<section class="m-all-tag" m-if="cardInfo.deviceType!=3">
 			<div class="tag purple"><span>SIM卡信息</span></div>
 			<ul class="m-order-info clr grey">
-				<li><span class="left">开卡卡号:</span>{{ orderInfo.iccid }}</li>
-				<li class="border"><span class="left">卡槽卡号:</span>{{ userInfo.iccid }}</li>
-				<li><span class="left">IMSI:</span>
+				<li>
+					<span class="left">开卡卡号:</span>
+					<span class="black">{{ orderInfo.iccid }}</span>
+				</li>
+				<li class="border">
+					<span class="left">卡槽卡号:</span>
+					<span class="black">{{ deviceIccid }}</span>
+				</li>
+				<li>
+					<span class="left" m-show="cardInfo.deviceType!=3">IMSI:</span>
 					<span class="green" m-show="imsi">IMSI获取成功</span>
 					<span class="yellow" m-show="!imsi">
 						<span m-show="error.code!=1">--</span>
@@ -63,8 +70,40 @@
 				</li>
 			</ul>
 		</section>
+		
+		<section m-if="cardInfo.deviceType==3">
+			<div class="m-all-tag">
+				<div class="tag purple"><span>SIM卡信息</span></div>
+				<ul class="m-order-info clr grey">
+					<li>
+						<span class="left">手表状态:</span>
+						<span class="green">{{ deviceName }}</span>
+						<span class="green" m-show="error.code!=9">已连接</span>
+						<span class="red" m-show="error.code==9">手机未与手表连接</span>
+					</li>
+					<li class="border">
+						<span class="left">SIM卡号:</span>
+						<span class="black">{{ deviceIccid }}</span>
+					</li>
+					<li>
+						<span class="left">码号信息:</span>
+						<span class="green" m-show="imsi">码号信息获取成功</span>
+						<span class="yellow" m-show="!imsi">
+							<span m-show="error.code!=1">--</span>
+							<span m-show="error.code==1">IMSI获取中···</span>
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div class="m-tips red" m-show="error.code==9">提示：当前手机未与手表连接，请点击刷新手表状态。如未连接成功，请返回APP进行设备管理，待连接成功，可继续开卡操作。</div>
+			<div class="m-btn-group" m-show="error.code==9">
+				<span class="btn btnDefault_dp" m-on:click="jumpToHome">返回APP</span>
+				<span class="btn btny" m-on:click="readCardICCID">刷新手表状态</span>
+			</div>
+		</section>
+
 		<section class="m-error" m-show="error.code!=1">
-			<div class="tips grey" m-show="error.code==2||error.code==6">
+			<div class="tips grey" m-show="error.code==2||error.code==6||error.code==10">
 				<div>温馨提示：</div>
 				<p class="red">1、{{ error.text }}</p>
 				<p>2、支付的金额我们将在24小时内退回到您的账户</p>

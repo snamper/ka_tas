@@ -120,6 +120,7 @@ var vm=new Moon({
 			const json={
 				userInfo:vm.get('userInfo'),
 				params:Object.assign(vm.getStore('USER_MUTIPLE_DATA'),{
+					deviceType:vm.get("cardInfo").deviceType,
 					livingImageName:vm.get('faceConfirmInfo').livingImageName,
 					similarity:vm.get('faceConfirmInfo').similarity
 				})

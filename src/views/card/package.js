@@ -306,6 +306,7 @@ var vm=new Moon({
 	  				selPackCode:selectPackage.selPackCode,
 	  				prestoreMoney:selectPackage.prestore,
 	  				belongType:0,
+	  				deviceType:cardInfo.deviceType
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};

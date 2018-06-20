@@ -11,19 +11,18 @@ var vm=new Moon({
 		off:{
 			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败
 		},
-		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
+		deviceStatus:4,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		cardInfo:{//卡槽信息
-			slot:0,
-			deviceType:1,
+			slot:'-1',
+			deviceType:3,//1、手机卡；2、手表卡；3、亿能eSIM
 			iccid:'',
 			hasPriPhone:1,//是否有专营号，1是2否 
 		},
 		load:{
-
+			read:false
 		},
-		deviceName:'LAOLE2018-003520F',
+		deviceName:'--',
 		devicePower:0,
-		deviceType:0,//1、手机卡；2、手表卡；3、亿能eSIM
 		orderInfo:{
             "phoneNum":"00000000000",
             "numberLevel":0,
@@ -66,60 +65,39 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 		},
 		mounted:function(){
-			let cardInfo=vm.getStore('CARD_INFO'),
-				orderInfo=vm.getStore('ORDER_INFO');
-			if(cardInfo&&orderInfo){
-				vm.set('off.status',orderInfo.status);
-				vm.set('cardInfo',cardInfo);
-				vm.set('orderInfo',orderInfo);
-				
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
-
-						if(!parseInt(orderInfo.setPwd) && orderInfo.status==3){
-							vm.callMethod('intervalGetResult',[true]);
-
-							window.Timer = setInterval(function(){
-								vm.callMethod('intervalGetResult',[true]);
-							},1000*20);
-
-
-						}
-
-					}
-				});
-			}else{
-				//alert('本地信息错误');
-			}
-			
+			Jsborya.getGuestInfo({
+				slot:'-2',
+				complete:function(userInfo){
+					vm.set('userInfo',userInfo);
+				}
+			});
 		},
 	},
 	methods:{
 		readCardICCID:function(){
-			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
-			let slot = vm.get('cardInfo').slot;
+			vm.set("load.read",false);
 			Jsborya.readCardICCID({
-				slot:slot,
+				slot:'-1',
 				complete:function(result){
 					if(result.status==1){
+						vm.set("cardInfo.iccid",result.iccid[0]);
+						vm.set("devicePower",result.power);
+						vm.set("deviceName",result.deviceName);
+
 						Jsborya.readCardIMSI({
-							slot:slot,
+							slot:'-1',
 							complete:function(data){
-								layer.close(index);
 								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
 							}
 						});
 					}else{
-						layer.close(index);
+						vm.set("load.read",false);
 						vm.callMethod('filterConnectStatus',result.status);
 					} 
 				}
 			});
 		},
 		iccidCheck:function(imsi,smsp,scanIccid){
-			let deviceType=vm.get('deviceType');
 			const json={
 	  			params:{
 	  				imsi:imsi||'',
@@ -129,8 +107,37 @@ var vm=new Moon({
 	  			userInfo:vm.get('userInfo')
 	  		};
 			vm.AJAX('/tas/w/source/iccidCheck',json,function(data){
+				vm.set("load.read",false);
 				vm.set('off.status',data.data.status);
-				vm.set('orderInfo',orderInfo);
+
+				if(data.data.status == 1){
+					Jsborya.pageJump({
+		                url:'index.html',
+		                stepCode:999,
+		                depiction:'随心搜',
+		                header:{
+		                    frontColor:'#ffffff',
+		                    backgroundColor:'#4b3887',
+		                }
+		            });
+				}
+
+				if(data.data.orderInfo){
+					vm.set('orderInfo',data.data.orderInfo);
+					vm.set("cardInfo.hasPriPhone",data.data.orderInfo.hasPriPhone);
+
+					if(!parseInt(data.data.orderInfo.setPwd) && data.data.status==3){
+						vm.callMethod('intervalGetResult',[true]);
+
+						window.Timer = setInterval(function(){
+							vm.callMethod('intervalGetResult',[true]);
+						},1000*20);
+					}
+				}
+				
+
+			},true,function(){
+				vm.set("load.read",false);
 			});
 		},
 		filterOrderStatus:function(){
@@ -190,10 +197,13 @@ var vm=new Moon({
             return {url:url,depiction:depiction,next:next};
 		},
 		continueOrder:function(){
-			let orderInfo=vm.get('orderInfo');
-			let todo=vm.callMethod('filterOrderStatus');
-			orderInfo.iccid=vm.get('userInfo').iccid;
+			let orderInfo=vm.get('orderInfo'),
+				todo=vm.callMethod('filterOrderStatus');
+
+			orderInfo.iccid=vm.get('cardInfo').iccid;
             vm.setStore('ORDER_INFO',orderInfo);
+            vm.setStore("CARD_INFO",vm.get("cardInfo"));
+
             Jsborya.pageJump({
                 url:todo.url,
                 stepCode:999,

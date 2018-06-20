@@ -180,7 +180,7 @@ body{
     background-image: url(../img/tail-spin.svg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100%;
+    background-size: 0.17rem;
 }
 .m-spin-load>.text{
     display: inline-block;

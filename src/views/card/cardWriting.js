@@ -41,13 +41,13 @@ var vm=new Moon({
 			belongType:0,
 			iccid:''
 		},
-		userInfo:{
-			iccid:'--'
-		},
+		userInfo:'',
 		error:{code:1,text:''},//错误描述
 	    imsi:'',//imsi
 	    imsiSubstr:'',//imsi
 	    smsp:'',//短信中心号
+	    deviceIccid:'--',//卡槽中的iccid
+	    deviceName:'--',
 	},
 	hooks:{
 		init:function(){
@@ -76,7 +76,16 @@ var vm=new Moon({
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
 
-				vm.callMethod('readCardICCID');
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
+
+						vm.callMethod('readCardICCID');
+					}
+				});
+
+				
 
 				Jsborya.registerMethods('headerLeftClick',function(){
 					vm.orderCancel(vm.get('userInfo'),orderInfo.sysOrderId);
@@ -101,43 +110,48 @@ var vm=new Moon({
 
 			vm.set("off.step",1);
 			vm.set("error",{code:1,text:''});
-			Jsborya.getGuestInfo({
+			Jsborya.readCardICCID({
 				slot:cardInfo.slot,
-				complete:function(userInfo){
-					vm.set('userInfo',userInfo);
+				complete:function(result){
+					if(result.status==1){
+						vm.set("deviceIccid",result.iccid[0]);
+						vm.set("deviceName",result.deviceName);
 
-					Jsborya.readCardIMSI({
-						slot:cardInfo.slot,
-						complete:function(data){
-							if(data.status==1){
-								vm.callMethod("getImsi");
-							}else{
-								vm.callMethod("filterConnectStatus",[data.status]);
-							}
-
-							let deviceType=cardInfo.deviceType,icon='';
-							if(deviceType==2){
+						Jsborya.readCardIMSI({
+							slot:cardInfo.slot,
+							complete:function(data){
 								if(data.status==1){
-									icon='wcard_green';
-								}else icon='wcard_red';
-								Jsborya.setHeader({
-									title:'写卡',
-									frontColor:'#ffffff',
-									backgroundColor:'#4b3887',
-									left:{
-										icon:'back_white',
-										value:'',
-										callback:'headerLeftClick'
-									},
-									right:{
-										icon:icon,
-										value:'',
-										callback:'headerRightClick'
-									}
-								});
+									vm.callMethod("getImsi");
+								}else{
+									vm.callMethod("filterConnectStatus",[data.status]);
+								}
+
+								let deviceType=cardInfo.deviceType,icon='';
+								if(deviceType==2){
+									if(data.status==1){
+										icon='wcard_green';
+									}else icon='wcard_red';
+									Jsborya.setHeader({
+										title:'写卡',
+										frontColor:'#ffffff',
+										backgroundColor:'#4b3887',
+										left:{
+											icon:'back_white',
+											value:'',
+											callback:'headerLeftClick'
+										},
+										right:{
+											icon:icon,
+											value:'',
+											callback:'headerRightClick'
+										}
+									});
+								}
 							}
-						}
-					});
+						});
+					}else{
+						vm.callMethod("filterConnectStatus",[result.status]);
+					}
 				}
 			})
 			
@@ -178,7 +192,7 @@ var vm=new Moon({
 				slot:vm.get('cardInfo').slot,
 				imsi:vm.get('imsi'),
 				smsp:vm.get('smsp'),
-				iccid:vm.get('userInfo').iccid,
+				iccid:vm.get('deviceIccid'),
 				complete:function(data){
 					switch(parseInt(data.status)){
 						case 1:
@@ -217,7 +231,7 @@ var vm=new Moon({
                     }
 				});
 			},function(){
-				vm.set("error",{code:9,text:'开卡申请失败'});
+				vm.set("error",{code:10,text:'开卡申请失败'});
 			});
 		},
 		filterConnectStatus:function(status){
@@ -225,6 +239,8 @@ var vm=new Moon({
 				vm.set("error",{code:7,text:'读取SIM卡信息失败'});
 			}else if(status==3){
 				vm.set("error",{code:8,text:'未检测到SIM卡插入卡槽'});
+			}else if(status==4){
+				vm.set("error",{code:9,text:'未连接'});
 			}else{
 				vm.set("error",{code:999,text:'异常错误'});
 			}
