@@ -1,0 +1,60 @@
+.u-icon-sim{
+    background-image: url(../img/sim_black.png);
+}
+.u-icon-order{
+    background-image: url(../img/order.png);
+}
+.u-icon-bluetooth{
+    background-image: url(../img/bluetooth.png);
+}
+.u-icon-power{
+    background-image: url(../img/power.png);
+}
+
+.m-device{
+    display: flex;
+}
+.m-device>.lt{
+    flex: 1;
+}
+.m-device>.rt{
+    flex: 2;
+}
+.m-device>.info{
+    
+}
+.m-device>.info>.bluetooth>i, .m-device>.info>.power>i{
+    display: inline-block;
+    vertical-align: top;
+    width: 0.2rem;
+    height: 0.2rem;
+    margin-right:5px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0.2rem;
+}
+.m-device>.info>.bluetooth>span, .m-device>.info>.power>span{
+    display: inline-block;
+    vertical-align: top;
+    line-height: 0.2rem;
+}
+.m-device>.info>.name{
+    
+}
+.m-device>.info>.name>.tip{
+    color: #C2C4D9;
+    font-size: 0.11rem;
+}
+.m-device>.info>.name>h3{
+    font-weight: bold;
+}
+.m-device>.info>.bluetooth{
+    
+}
+.m-device>.info>.power{
+    
+}
+.m-device>.info>.tip{
+    
+}

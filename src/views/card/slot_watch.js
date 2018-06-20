@@ -1,5 +1,6 @@
 require('../../public.js');
 require('../../assets/css/slotInfo.css');
+require('../../assets/css/slot_watch.css');
 
 Jsborya.ready(function(){
 
@@ -8,32 +9,48 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:false,
+			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败
 		},
-		load:{
-			
-		},
-		deviceInfo:{
-			name:'',
-			status:1,//1,读取成功2,读取失败3,未插卡4,未连接设备
-			power:0,
-			type:1,//1、手机卡；2、手表卡；3、亿能eSIM
-			orderInfo:'',//订单信息
+		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
+		cardInfo:{//卡槽信息
+			slot:0,
+			deviceType:1,
+			iccid:'',
 			hasPriPhone:1,//是否有专营号，1是2否 
 		},
-		userInfo:'',
-		checkMachine:{
-			type:0,//0机型无问题;1终止流程;2提示消息但继续流程
-			desc:''
+		load:{
+
 		},
+		deviceName:'LAOLE2018-003520F',
+		devicePower:0,
+		deviceType:0,//1、手机卡；2、手表卡；3、亿能eSIM
+		orderInfo:{
+            "phoneNum":"00000000000",
+            "numberLevel":0,
+            "cityName":"--",
+            "createTime":"0",
+            "cardMoney":"0",
+            "cDiscount":10000,
+            "orderStatusCode":"PACKAGE_SELECTION",
+            "totalMoney":0,
+            "limitSimilarity":0,
+            "validTime":0,
+            "sysOrderId":"00000000000000000",
+            "prestoreMoney":0,
+            "pDiscount":10000,
+            "similarity":0,
+            "packageName":"--",
+            "packageCode":"0",
+            "setPwd":0,//0、未设置密码；1、设置成功；2、设置失败；
+        },
 	},
 	hooks:{
 		init:function(){
 			vm=this;
 			Jsborya.setHeader({
-				title:'开卡方式',
-				frontColor:'#000000',
-				backgroundColor:'#ffffff',
+				title:'读取卡信息',
+				frontColor:'#ffffff',
+				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',
@@ -41,211 +58,202 @@ var vm=new Moon({
 				},
 				right:{
 					icon:'',
-					value:'开卡指南',
-					callback:'headerRightClick'
+					value:'',
+					callback:''
 				}
 			});
+			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
-
-			Jsborya.getGuestInfo({
-				slot:'-2',
-				complete:function(userInfo){
-					vm.set('userInfo',userInfo);
-					vm.callMethod('getCheckMachine')
-				}
-			});
-			Jsborya.registerMethods('headerRightClick',function(){
-				Jsborya.pageJump({
-	                url:'https://km.m10027.com/tf/guide.html',
-	                stepCode:800,
-	                depiction:'开卡指南',
-	                destroyed:false,
-	                header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
-	            });
-			});
 		},
-	    mounted:function(){
-	    	vm.removeStore('ORDER_INFO');
-			vm.removeStore('CARD_INFO');
-	    }
+		mounted:function(){
+			let cardInfo=vm.getStore('CARD_INFO'),
+				orderInfo=vm.getStore('ORDER_INFO');
+			if(cardInfo&&orderInfo){
+				vm.set('off.status',orderInfo.status);
+				vm.set('cardInfo',cardInfo);
+				vm.set('orderInfo',orderInfo);
+				
+				Jsborya.getGuestInfo({
+					slot:cardInfo.slot,
+					complete:function(userInfo){
+						vm.set('userInfo',userInfo);
+
+						if(!parseInt(orderInfo.setPwd) && orderInfo.status==3){
+							vm.callMethod('intervalGetResult',[true]);
+
+							window.Timer = setInterval(function(){
+								vm.callMethod('intervalGetResult',[true]);
+							},1000*20);
+
+
+						}
+
+					}
+				});
+			}else{
+				//alert('本地信息错误');
+			}
+			
+		},
 	},
 	methods:{
-		getCheckMachine(iccidsInfo){//获取卡槽中的sim卡的状态
+		readCardICCID:function(){
+			var index=layer.open({type: 2,shadeClose:false,shade: 'background-color: rgba(255,255,255,0)'});
+			let slot = vm.get('cardInfo').slot;
+			Jsborya.readCardICCID({
+				slot:slot,
+				complete:function(result){
+					if(result.status==1){
+						Jsborya.readCardIMSI({
+							slot:slot,
+							complete:function(data){
+								layer.close(index);
+								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+							}
+						});
+					}else{
+						layer.close(index);
+						vm.callMethod('filterConnectStatus',result.status);
+					} 
+				}
+			});
+		},
+		iccidCheck:function(imsi,smsp,scanIccid){
+			let deviceType=vm.get('deviceType');
 			const json={
 	  			params:{
-	  				type:1
+	  				imsi:imsi||'',
+	  				smsp:smsp||'',
+	  				scanIccid:scanIccid||''
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
-			vm.AJAX('/tas/w/source/checkMachine',json,function(data){
-				vm.set('checkMachine',{
-					type:data.data.dealType,
-					desc:data.data.desc
-				})
-			})
+			vm.AJAX('/tas/w/source/iccidCheck',json,function(data){
+				vm.set('off.status',data.data.status);
+				vm.set('orderInfo',orderInfo);
+			});
 		},
-		choiceDeviceType(deviceType){
+		filterOrderStatus:function(){
+			let url='',depiction='',next='', orderInfo = vm.get('orderInfo');
+			let orderStatusCode = orderInfo.orderStatusCode,
+				similarity = orderInfo.similarity,
+				belongType = orderInfo.belongType;
 
-			if(vm.get('checkMachine').type==1){
-				return false;
-			}
+			if(orderStatusCode==='PACKAGE_SELECTION'){
+                url='certification.html';
+                depiction='已选择套餐';
+                next='实名认证';
+            }else if(orderStatusCode==='CARD_PAY'){
+                if(belongType==1){
+                	url='cardAudit.html';
+                }else url='pay.html';
 
-			if(deviceType==2){
-				layer.open({
-	                content:'功能即将推出...<br>敬请期待!',
-	                btn:['确定'],
-	                title:'提示',
-	            });
-				return false;
-			}
+                depiction='已支付';
+                next='生成受理单';
+            }else if(orderStatusCode==='CARD_AUDIT'){
+                if(belongType==1){
+                	url='cardAudit.html';
+                }else url='pay.html';
+                
+                depiction='已审核';
+                next='支付';
+            }else if(orderStatusCode==='CREATE_SHEET'){
+                url='createSheet.html';
+                depiction='已生成受理单';
+                next='确认受理单';
+            }else if(orderStatusCode==='CARD_IMSI'){
+                url='cardWriting.html';
+                depiction='已获取IMSI';
+                next='写卡';
+            }else if(orderStatusCode==='CARD_WRITING'){
+                url='cardActive.html';
+               	depiction='写卡成功，等待开卡结果';
+               	next='开卡受理';
+            }else if(orderStatusCode==='CARD_ACTIVE'){
+            	let orderStatus=vm.get('off').status;
+                url='';
+                next='';
+                if(orderStatus==3){
+                	depiction='开卡成功';
+                }else if(orderStatus==6){
+                	depiction='开卡失败';
+                }
+            }else if(parseInt(similarity)){
+            	url='cardAudit.html';
+                depiction='已上传资料';
+                next='订单审核';
+            }else if(orderStatusCode==='UPLOAD_DATA'){
+                url='faceVerification.html';
+                depiction='已上传资料';
+                next='活体识别';
+            }
+            return {url:url,depiction:depiction,next:next};
+		},
+		continueOrder:function(){
+			let orderInfo=vm.get('orderInfo');
+			let todo=vm.callMethod('filterOrderStatus');
+			orderInfo.iccid=vm.get('userInfo').iccid;
+            vm.setStore('ORDER_INFO',orderInfo);
+            Jsborya.pageJump({
+                url:todo.url,
+                stepCode:999,
+                depiction:todo.next,
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
+            });
+		},
+		intervalGetResult:function(closeLoad){
 
-			vm.set('off.load',true);
-			if(deviceType){
-				vm.set('deviceType',deviceType);
-			}else deviceType = vm.get('deviceType');
+			//window.Timer=setInterval(function(){
+				vm.AJAX('/tas/w/business/getResult',{
+					userInfo:vm.get('userInfo'),
+					params:{
+						sysOrderId:vm.get('orderInfo').sysOrderId
+					}
+				},function(data){
+					var status=data.data.orderStatus;
 
-			Jsborya.setDeviceType({
-				deviceType:deviceType,
-				complete:function(result){
-					Jsborya.readCardICCID({
-						slot:'-1',
-						complete(result){
-							if(result.status==1){
-								if(result.iccid.length == 1)vm.set('defaultSlot',true);//默认卡槽
+					if(status==2){//开卡成功
+						vm.set("off.status",3);
+						vm.set("orderInfo.setPwd",data.data.setPwd);
 
-								if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
-									vm.set('iccid',result.iccid);
-									Jsborya.readCardIMSI({//获取卡槽1，imsi信息
-										slot:'0',
-										complete(_result){
-											Jsborya.readCardIMSI({//获取卡槽2，imsi信息
-												slot:'1',
-												complete(__result){
-													let iccidsInfo=[];
-													iccidsInfo[0]={
-														scanIccid:result.iccid[0]||'',
-														smsp:_result.smsp||'',
-														imsi:_result.imsi
-													}
-													iccidsInfo[1]={
-														scanIccid:result.iccid[1]||'',
-														smsp:__result.smsp||'',
-														imsi:__result.imsi
-													}
-													//alert('iccidsInfo：'+JSON.stringify(iccidsInfo))
-													vm.callMethod('multipleIccidCheck',[iccidsInfo]);
-												}
-											})
-										}
-									})
-								}else{
-									vm.set('off.load',false);
-									vm.set('off.turn',5);
-								}
-							}else vm.callMethod('filterConnectStatus',[result.status]);
+						if(!closeLoad){
+							window.Timer = setInterval(function(){
+								vm.callMethod('intervalGetResult',[true]);
+							},1000*20);
 						}
-					})
-				}
+	
+						if(parseInt(data.data.setPwd))clearInterval(window.Timer);
+					}else if(status==3||status==4){
+						vm.set("off.status",6);
+						vm.set("orderInfo.orderDesc",data.data.desc);
+					}
+
+					if(status!=1){
+						vm.set('orderInfo.orderStatusCode','CARD_ACTIVE');
+					}
+
+				},closeLoad);
+			//},2000);
+		},
+		orderCancel:function(){
+			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
+		},
+		jumpToHome:function(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:806,
+				depiction:'首页',
 			});
-			
-			
 		},
-		multipleIccidCheck(iccidsInfo){//获取卡槽中的sim卡的状态
-
-			const json={
-	  			params:{
-	  				iccidsInfo:iccidsInfo
-	  			},
-	  			userInfo:{}
-	  		};
-			vm.AJAX('/tas/w/source/iccidsCheck',json,function(data){
-				vm.set('off.load',false);
-				vm.set('iccidsRes',data.data.iccidsRes);
-				vm.callMethod('choiceTurnTo',[parseInt(data.data.iccidsRes[0].status), parseInt(data.data.iccidsRes[1].status)]);
-			},function(){
-				vm.set('off.load',false);
-			})
-		},
-		choiceTurnTo(simStatus,simStatus_){//卡槽1和卡槽2，状态
-			if([1,2,5].includes(simStatus)&&[1,2,5].includes(simStatus_)){
-
-				vm.set('off.turn',1);
-				vm.set('off.slot','-1');
-
-			}else if( ([4].includes(simStatus)&&[2,3,5].includes(simStatus_)) || ([2,3,5].includes(simStatus)&&[4].includes(simStatus_)) ){
-				vm.set('off.turn',2);
-
-				if([4].includes(simStatus)){
-					vm.set('off.slot','1');
-				}else vm.set('off.slot','0');
-				vm.callMethod('choiceSlot');
-			}else if( ([1].includes(simStatus)&&[3,4,6].includes(simStatus_)) || ([3,4,6].includes(simStatus)&&[1].includes(simStatus_)) ){
-				vm.set('off.turn',3);
-
-				if([1].includes(simStatus)){
-					vm.set('off.slot','0');
-				}else vm.set('off.slot','1');
-				vm.callMethod('choiceSlot');
-			}else if([4,6].includes(simStatus)&&[4,6].includes(simStatus_)){
-				vm.set('off.turn',4);//两张都为无效卡
-			}
-		},
-		choiceSlot(slot){//选择卡槽
-			if(!slot)slot = vm.get('off').slot;
-
-			slot=parseInt(slot);
-
-			let status = vm.get('iccidsRes')[slot].status,
-				hasPriPhone = vm.get('iccidsRes')[slot].hasPriPhone,
-				realSlot = vm.get('defaultSlot') ? '-1' : slot;//默认卡槽问题
-
-			if(vm.callMethod('isMiCliet')) realSlot = '-1';//小米手机
-
-			vm.setStore('CARD_INFO',{
-				slot:realSlot,
-				iccid:vm.get('iccid')[slot],
-				hasPriPhone:hasPriPhone,
-				deviceType:vm.get('deviceType'),
+		jumpToLogin:function(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:801,
+				depiction:'登录',
 			});
-
-			//alert(`cardInfo：{slot:${slot}}`)
-
-			if(status==1){
-				Jsborya.pageJump({
-	                url:'index.html',
-	                stepCode:999,
-	                depiction:'随心搜',
-	                header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
-	            });
-			}else{
-				let orderInfo=vm.get('iccidsRes')[slot].orderInfo;
-				orderInfo.status=status;
-				vm.setStore('ORDER_INFO',orderInfo);
-
-				Jsborya.pageJump({
-	                url:'slotInfo.html',
-	                stepCode:999,
-	                depiction:'开卡信息',
-	                header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
-	            });
-			}
-		},
-		isMiCliet(){
-			let e = navigator.userAgent;
-			if(e.indexOf('XiaoMi')>-1){
-				return true;
-			}else{
-				return false;
-			}
 		},
 		filterConnectStatus:function(status){
 			let text='';
@@ -258,13 +266,21 @@ var vm=new Moon({
 			}else{
 				text='异常错误';
 			}
-			vm.set('off.load',false);
 			layer.open({
                 content:text,
                 btn:['确定'],
                 shadeClose:false,
                 title:'提示',
             });
+		},
+		mathCentToYuan:function(value){
+	    	return this.mathCentToYuan(value);
+	    },
+		mathDiscount:function(money,discount){
+			return vm.mathDiscount(money,discount);
+		},
+	    phoneFormat:function(phone){
+			return this.phoneFormat(phone);
 		},
 	}
 });

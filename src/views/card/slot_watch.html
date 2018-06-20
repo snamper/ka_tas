@@ -11,7 +11,6 @@
 [m-mask]{
 	opacity: 0
 }
-
 </style>
 </head>
 <body>
@@ -20,7 +19,7 @@
 		<div class="lt"></div>
 		<div class="rt info">
 			<div class="name">
-				<h2>{{ deviceInfo.name }}</h2>
+				<h3>{{ deviceName }}</h3>
 				<div class="tip">您可点击刷新设备状态</div>
 			</div>
 			<div class="bluetooth">
@@ -38,6 +37,100 @@
 			</div>
 		</div>
 	</header>
+	<div class="m-tips red">提示：当前手机未与手表连接，请点击刷新手表状态。如未连接成功，请返回APP进行设备管理，待连接成功，可继续开卡操作。</div>
+	<section>
+		<div class="m-tag"><i class="u-icon-sim"></i><span>SIM卡信息</span></div>
+		<div class="g-col-2">
+			<div class="row line">
+				<span class="left">SIM卡号</span>
+				<span class="right">{{ cardInfo.iccid }}</span>
+			</div>
+			<div class="row">
+				<span class="left">开通状态</span>
+				<span class="right">
+					<span m-literal:class="{yellow:off.status==2||off.status==5,green:off.status==3,red:off.status==6,right:true}">{{ filterOrderStatus().depiction }}</span>
+				</span>
+			</div>
+		</div>
+	</section>
+	<section>
+		<div class="m-tag"><i class="u-icon-order"></i><span>订单信息</span></div>
+		<div class="g-col-2">
+			<div class="row line">
+				<span class="left">订单号</span>
+				<span class="right">{{ orderInfo.sysOrderId }}</span>
+			</div>
+			<div class="row line">
+				<span class="left">所选号码</span>
+				<span class="right">{{ phoneFormat(orderInfo.phoneNum) }}</span>
+			</div>
+			<div class="row line">
+				<span class="left">所选套餐</span>
+				<span class="right">{{ orderInfo.packageName }}</span>
+			</div>
+			<div class="row">
+				<span class="left">已付金额</span>
+				<span class="right">￥{{ mathCentToYuan(orderInfo.totalMoney) }}</span>
+			</div>
+		</div>
+
+		<div class="m-btn-group" m-show="off.status==2">
+			<span class="btn btnDefault_dp" m-on:click="orderCancel">放弃</span>
+			<span class="btn btny" m-on:click="continueOrder">继续开卡</span>
+		</div>
+		<!--开卡成功-->
+		<section m-show="off.status==3">
+			<dl class="m-order-tips grey" m-show="orderInfo.setPwd==0">
+				<dt>温馨提示:</dt>
+				<dd>1、<span class="green">已开卡成功</span>;</dd>
+				<dd>2、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+			</dl>
+			<div class="m-spin-load" m-show="orderInfo.setPwd=='0'">
+				<span class="load"></span>
+				<span class="text purple">我们将为您做最后的配置</span>
+			</div>
+
+			<dl class="m-order-tips grey" m-show="orderInfo.setPwd==1">
+				<dt>温馨提示:</dt>
+				<dd>1、<span class="green">已开卡成功</span>;</dd>
+				<dd>2、您可以登录“远特i卡”掌上营业厅，可进行充值，查询实时话费、我的套餐、套餐余量等业务;</dd>
+				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+			</dl>
+			<div class="m-btn-group" m-show="orderInfo.setPwd==1">
+				<span class="btn btnDefault_dp" m-on:click="jumpToHome">返回APP</span>
+				<span class="btn btny" m-on:click="jumpToLogin">登录远特eSIM掌厅</span>
+			</div>
+
+			<dl class="m-order-tips grey" m-show="orderInfo.setPwd==2">
+				<dt>温馨提示:</dt>
+				<dd>1、<span class="green">已开卡成功</span>;</dd>
+				<dd>2、<span class="red">密码设置失败，登录时请选择‘短信验证码’登录</span>;</dd>
+				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+			</dl>
+			<div class="m-btn-group" m-show="orderInfo.setPwd==2">
+				<span class="btn btnDefault_dp" m-on:click="jumpToHome">返回APP</span>
+				<span class="btn btny" m-on:click="jumpToLogin">登录远特eSIM掌厅</span>
+			</div>
+		</section>
+		
+		<!--写卡等待开卡结果-->
+		<dl class="m-order-tips grey" m-show="off.status==5">
+			<dt>温馨提示:</dt>
+			<dd>1、您的开卡申请已受理，请耐心等待开卡结果</dd>
+			<dd>2、开卡成功我们将以短信的形式进行通知。</dd>
+			<dd>3、您可以点击“重新获取”按钮获取开卡结果</dd>
+		</dl>
+		<div class="btn btny" m-show="off.status==5" m-on:click="intervalGetResult()">重新获取</div>
+
+		<!--已写卡开卡失败-->
+		<dl class="m-order-tips grey" m-show="off.status==6">
+			<dt>温馨提示:</dt>
+			<dd>1、失败原因：<span class="red">{{ orderInfo.orderDesc }}</span></dd>
+			<dd>2、支付的金额我们将在24小时内退回到您的账户。</dd>
+			<dd>3、马上联系客服：语音自助服务10027 客服电话4000410027</dd>
+		</dl>
+		<div class="btn btny" m-show="off.status==6" m-on:click="jumpToHome">确定</div>
+	</section>
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
 </body>
