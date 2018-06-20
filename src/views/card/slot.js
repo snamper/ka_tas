@@ -192,8 +192,13 @@ var vm=new Moon({
 					vm.set('off.slot','0');
 				}else vm.set('off.slot','1');
 				vm.callMethod('choiceSlot');
-			}else if([4,6].includes(simStatus)&&[4,6].includes(simStatus_)){
+			}else if([4].includes(simStatus)&&[4].includes(simStatus_)){
 				vm.set('off.turn',4);//两张都为无效卡
+			}else if([6].includes(simStatus) || [6].includes(simStatus_)){//有一张为开卡失败的卡
+				if([6].includes(simStatus)){
+					vm.set('off.slot','0');
+				}else vm.set('off.slot','1');
+				vm.callMethod('choiceSlot');
 			}
 		},
 		choiceSlot(slot){//选择卡槽
