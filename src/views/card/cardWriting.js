@@ -165,6 +165,8 @@ var vm=new Moon({
 					vm.set("error",{code:6,text:'该订单已结束'});
 				}else if(data.code==688){
 					vm.set("error",{code:4,text:'当前SIM卡与获取ICCID不一致，请重新插入对应SIM卡'});
+				}else if(data.code==3000){
+					vm.set("error",{code:6,text:'号码已不归属于您，现已将订单关闭，请尝试其他号码'});
 				}
 
 			});

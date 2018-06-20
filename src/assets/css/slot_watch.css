@@ -50,11 +50,12 @@
     font-weight: bold;
 }
 .m-device>.info>.bluetooth{
-    
+    margin:0.1rem 0;
 }
 .m-device>.info>.power{
     
 }
 .m-device>.info>.tip{
-    
+    margin-top: 0.2rem;
+    font-size: 0.12rem;
 }
