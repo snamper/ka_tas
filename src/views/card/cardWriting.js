@@ -110,50 +110,64 @@ var vm=new Moon({
 
 			vm.set("off.step",1);
 			vm.set("error",{code:1,text:''});
-			Jsborya.readCardICCID({
-				slot:cardInfo.slot,
-				complete:function(result){
-					if(result.status==1){
-						vm.set("deviceIccid",result.iccid[0]);
-						vm.set("deviceName",result.deviceName);
 
-						Jsborya.readCardIMSI({
+			Jsborya.readWatchInfo({//读取手表信息
+				deviceType:cardInfo.deviceType,
+				complete:function(watchInfo){
+					if(watchInfo.status == 1){
+						vm.set("devicePower",watchInfo.power);
+						vm.set("deviceName",watchInfo.deviceName);
+
+						Jsborya.readCardICCID({//读取iccid
 							slot:cardInfo.slot,
-							complete:function(data){
-								if(data.status==1){
-									vm.callMethod("getImsi");
-								}else{
-									vm.callMethod("filterConnectStatus",[data.status]);
-								}
+							complete:function(result){
+								if(result.status==1){
+									vm.set("deviceIccid",result.iccid[0]);
+									vm.set("deviceName",result.deviceName);
 
-								let deviceType=cardInfo.deviceType,icon='';
-								if(deviceType==2){
-									if(data.status==1){
-										icon='wcard_green';
-									}else icon='wcard_red';
-									Jsborya.setHeader({
-										title:'写卡',
-										frontColor:'#ffffff',
-										backgroundColor:'#4b3887',
-										left:{
-											icon:'back_white',
-											value:'',
-											callback:'headerLeftClick'
-										},
-										right:{
-											icon:icon,
-											value:'',
-											callback:'headerRightClick'
+									Jsborya.readCardIMSI({//读取imsi
+										slot:cardInfo.slot,
+										complete:function(data){
+											if(data.status==1){
+												vm.callMethod("getImsi");
+											}else{
+												vm.callMethod("filterConnectStatus",[data.status]);
+											}
+
+											let deviceType=cardInfo.deviceType,icon='';
+											if(deviceType==2){
+												if(data.status==1){
+													icon='wcard_green';
+												}else icon='wcard_red';
+												Jsborya.setHeader({
+													title:'写卡',
+													frontColor:'#ffffff',
+													backgroundColor:'#4b3887',
+													left:{
+														icon:'back_white',
+														value:'',
+														callback:'headerLeftClick'
+													},
+													right:{
+														icon:icon,
+														value:'',
+														callback:'headerRightClick'
+													}
+												});
+											}
 										}
 									});
+								}else{
+									vm.callMethod("filterConnectStatus",[result.status]);
 								}
 							}
 						});
 					}else{
-						vm.callMethod("filterConnectStatus",[result.status]);
+						if(watchInfo.status == 3) watchInfo.status = 4;
+						vm.callMethod('filterConnectStatus',watchInfo.status);
 					}
 				}
-			})
+			});
 			
 			
 		},

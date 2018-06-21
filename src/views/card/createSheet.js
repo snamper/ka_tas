@@ -1,5 +1,5 @@
 require('../../public.js');
-//require('../../assets/js/slider.js');
+require('../../assets/js/album.js');
 
 Jsborya.ready(function(){
 
@@ -59,7 +59,7 @@ var vm=new Moon({
 			
 			let orderInfo=vm.getStore('ORDER_INFO'),
 				cardInfo=vm.getStore('CARD_INFO');
-			// let orderInfo={
+			// orderInfo={
 			// 	"idCardName":"王兴璐",
 			// 	"images":[{"imageName":"https://192.168.10.98:6051/tas/tfcardorder/20180509/89860117841022193963/TF18050910231494863_accept.png"}],
 			// 	"idCardNo":"511321198807295598","totalMoney":1,
@@ -79,14 +79,13 @@ var vm=new Moon({
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
 				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
+					slot:cardInfo.slot || '-1',
 					complete:function(userInfo){
 						vm.set('userInfo',userInfo);
 
 						Jsborya.registerMethods('headerLeftClick',function(){
 							vm.orderCancel(userInfo,orderInfo.sysOrderId);
 						});
-						vm.callMethod("setAcceptance");
 					}
 				});
 			}else{
@@ -102,21 +101,10 @@ var vm=new Moon({
 	methods:{
 		setPage:function(){
 			var window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;//视图高度
-			document.getElementById("slider-box").style.height=window_h-105+"px";//设置轮播盒子高度
+			document.getElementById("albumBox").style.height=window_h-105+"px";//设置轮播盒子高度
 
 			vm.set('windowHeight',window_h||600);
-		},
-		setAcceptance:function(){
-			// Slider.init({
-			// 	index:vm.get('orderInfo').images.length
-			// });
-
-			setTimeout(function(){
-				new SmartPhoto(".slider",{
-					arrows:true,
-					nav:false
-				});
-			},300);
+			Album.init();//相册模块初始化
 		},
 		setImgHeight:function(){
 			return 'height:'+(parseInt(vm.get('windowHeight'))-105)+'px';

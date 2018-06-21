@@ -246,6 +246,24 @@ require('./base64.js');
 				}
 			});
 		},
+		readWatchInfo:function(json){
+
+			if(json.deviceType!=1){
+				callHandler({
+					name:'readWatchInfo',
+					data:'',
+					callback:function(result){
+						alert('readWatchInfo'+JSON.stringify(result));
+						json.complete(result);
+					}
+				});
+			}else json.complete({//非手表直接返回
+				status:1,
+				power:'',
+				deviceName:''
+			})
+			
+		},
 		setHeader:function(json){//设置头部header
 			callHandler({
 				name:'setHeader',

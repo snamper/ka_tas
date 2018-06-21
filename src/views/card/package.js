@@ -182,26 +182,23 @@ var vm=new Moon({
 			});
 		},
 		filterConnectStatus:function(status){
+			let text = '';
 
 			if(status==2){
-				layer.open({
-                    content:'读取失败',
-                    btn:['确定'],
-                    title:'提示'
-                });
+                text = '读取失败';
 			}else if(status==3){
-				layer.open({
-                    content:'未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽',
-                    btn:['确定'],
-                    title:'提示'
-                });
+				text = '未检测到SIM卡插入卡槽，请将SIM卡以正确的方式插入卡槽';
+			}else if(status==4){
+				text = '设备未连接';
 			}else{
-				layer.open({
-                    content:'异常错误',
-                    btn:['确定'],
-                    title:'提示'
-                });
+				text = '异常错误';
 			}
+
+			layer.open({
+                content:text,
+                btn:['确定'],
+                title:'提示'
+            });
 		},
 		iccidCheck:function(imsi,smsp){//获取订单信息
 			const json={

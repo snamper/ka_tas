@@ -75,27 +75,42 @@ var vm=new Moon({
 	},
 	methods:{
 		readCardICCID:function(){
-			vm.set("load.read",false);
-			Jsborya.readCardICCID({
-				slot:'-1',
-				complete:function(result){
-					if(result.status==1){
-						vm.set("cardInfo.iccid",result.iccid[0]);
-						vm.set("devicePower",result.power);
-						vm.set("deviceName",result.deviceName);
+			vm.set("load.read",true);
 
-						Jsborya.readCardIMSI({
+			Jsborya.readWatchInfo({//读取手表信息
+				deviceType:vm.get("cardInfo").deviceType,
+				complete:function(watchInfo){
+					if(watchInfo.status == 1){
+						vm.set("devicePower",watchInfo.power);
+						vm.set("deviceName",watchInfo.deviceName);
+
+						Jsborya.readCardICCID({//读取iccid
 							slot:'-1',
-							complete:function(data){
-								vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+							complete:function(result){
+								if(result.status==1){
+									vm.set("cardInfo.iccid",result.iccid[0]);
+									
+
+									Jsborya.readCardIMSI({//读取imsi
+										slot:'-1',
+										complete:function(data){
+											vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+										}
+									});
+								}else{
+									vm.set("load.read",false);
+									vm.callMethod('filterConnectStatus',result.status);
+								} 
 							}
 						});
 					}else{
 						vm.set("load.read",false);
-						vm.callMethod('filterConnectStatus',result.status);
-					} 
+						if(watchInfo.status == 3) watchInfo.status = 4;
+						vm.callMethod('filterConnectStatus',watchInfo.status);
+					}
 				}
-			});
+			})
+			
 		},
 		iccidCheck:function(imsi,smsp,scanIccid){
 			const json={
