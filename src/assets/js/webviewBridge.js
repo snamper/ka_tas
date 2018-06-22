@@ -43,6 +43,7 @@ require('./base64.js');
 			props.callback(result);
 		};
 		if(window.webviewBridge.callHandler){
+			alert('callHandler')
 			window.webviewBridge.callHandler(props.name,BASE64.encode(JSON.stringify(props.data)),callbackName);
 		}
 	}
