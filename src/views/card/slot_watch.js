@@ -94,11 +94,10 @@ var vm=new Moon({
 								if(result.status==1){
 									vm.set("cardInfo.iccid",result.iccid[0]);
 									
-
 									Jsborya.readCardIMSI({//读取imsi
 										slot:'-1',
 										complete:function(data){
-											vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+											vm.callMethod("iccidCheck",[data.imsi,data.smsp,result.iccid[0]]);
 										}
 									});
 								}else{
