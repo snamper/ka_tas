@@ -82,6 +82,8 @@ var vm=new Moon({
 			Jsborya.readWatchInfo({//读取手表信息
 				deviceType:vm.get("cardInfo").deviceType,
 				complete:function(watchInfo){
+					vm.set("deviceStatus",watchInfo.status==3 ? 4 : watchInfo.status);
+
 					if(watchInfo.status == 1){
 						vm.set("devicePower",watchInfo.power);
 						vm.set("deviceName",watchInfo.deviceName);
