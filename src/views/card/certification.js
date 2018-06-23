@@ -154,7 +154,7 @@ var vm=new Moon({
 		takePhotos:function(type){//调用APP接口获取图片
 			Jsborya.takePhotos({
 				iccid:vm.get('cardInfo').iccid,
-				type:type,
+				type:String(type),
 				sysOrderId:vm.get('orderInfo').sysOrderId,
 				apiComplete:'uploadImgComplete',
 				complete:function(data){
