@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>已办理业务</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+.tabSwitch{display: flex;width: 100%;}
+.tabSwitch span{display: inline-block;flex:1;height: .5rem;line-height: .5rem;text-align: center;background:#EBEBEB;color: rgb(46, 46, 46);font-size: 14px;}
+.tabSwitch span:nth-of-type(2){border-left: 1px solid #DDD;border-right: 1px solid #DDD;border-bottom: none}
+.tabSwitch span.isChecked{background: #fff;border-top: 2px solid #E98400;color: #E98400}
+.packageDiv{width: 100%}
+.m-realTime-info li span{display: inline-block;width: .8rem;}
+div.packgeInfo{
+  background:#fff;
+  display: flex;
+  /* width: 100%; */
+  padding-top: .1rem;
+  padding-bottom: .3rem;
+}
+div.packageInfoTitle{
+  white-space:nowrap;
+  /* flex-wrap: nowrap; */
+  width: 1rem;
+  line-height: .2rem;
+  padding-right: 0.1rem;
+  margin-left: 0.15rem;
+
+}
+div.packageInfoDetails{
+  width: 100%;
+  line-height: .2rem;
+  padding-right:5px; 
+}
+
+.packageJichu .m-realTime-info {
+  border-top:none !important;
+}
+.packageKexuan .m-realTime-info {
+  border-top:none !important;
+}.packageQita .m-realTime-info {
+  border-top:none !important;
+}
+.packageJichu .m-realTime-info>li:last-child {
+  border-bottom:1px solid #ececec !important;
+}
+.packageKexuan .m-realTime-info:not(:first-of-type),.packageJichu .m-realTime-info:not(:first-of-type),.packageQita .m-realTime-info:not(:first-of-type){margin-top: 20px;}
+div.packageDiv div.noData{ width: 200px;height: 300px;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto}
+div.packageDiv div.noData>div{text-align: center;font-size: 16px;color: #a5a5a5}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+  <header class="tabSwitch"><span m-literal:class="{'isChecked':isJichu}" m-on:click="tabClick(1)">基础套餐</span><span m-literal:class="{'isChecked':isKexuan}" m-on:click="tabClick(2)">可选包</span><span m-literal:class="{'isChecked':isQita}" m-on:click="tabClick(3)">其他业务</span></header>
+  <div class="packageDiv">
+    <div m-if="isJichu" class="packageJichu">
+      <ul m-if="responseDataJichu.length!=0" class="m-realTime-info" m-for="v,i in responseDataJichu">
+        <li class="clr"><span>套餐名称</span>{{responseDataJichu[i].prodOfferName}}</li>
+        <li class="clr"><span>生效时间</span>{{responseDataJichu[i].effDate}}</li>
+        <li class="clr"><span>失效时间</span>{{responseDataJichu[i].expDate}}</li>
+        <!-- <li class="clr"><span>状态</span></li> -->
+        <div class="packgeInfo">
+          <div class="packageInfoTitle">套餐描述</div>
+          <div class="packageInfoDetails">
+            {{responseDataJichu[i].prodOfferDesc}}
+          </div>
+        </div>
+      </ul>
+      <div class="noData" m-if="responseDataJichu.length==0">
+        <img src="../../assets/img/no-data.png" alt="">
+			  <div>暂未搜索到数据</div>
+      </div>
+    </div>
+    <div m-if="isKexuan" class="packageKexuan">
+      <ul m-if="responseDataKexuan.length!=0" class="m-realTime-info" m-for="v,i in responseDataKexuan">
+        <li class="clr"><span>套餐名称</span>{{responseDataKexuan[i].prodOfferName}}</li>
+        <li class="clr"><span>生效时间</span>{{responseDataKexuan[i].effDate}}</li>
+        <li class="clr"><span>失效时间</span>{{responseDataKexuan[i].expDate}}</li>
+        <!-- <li class="clr"><span>状态</span></li> -->
+        <div class="packgeInfo">
+          <div class="packageInfoTitle">套餐描述</div>
+          <div class="packageInfoDetails">
+            {{responseDataKexuan[i].prodOfferDesc}}
+          </div>
+        </div>
+      </ul>
+      <div class="noData" m-if="responseDataKexuan.length==0">
+        <img src="../../assets/img/no-data.png" alt="">
+			  <div>暂未搜索到数据</div>
+      </div>
+    </div>
+    <div m-if="isQita" class="packageQita">
+      <ul m-if="responseDataQita.length!=0" class="m-realTime-info" m-for="v,i in responseDataQita" >
+        <li class="clr"><span>套餐名称</span>{{responseDataQita[i].prodOfferName}}</li>
+        <li class="clr"><span>生效时间</span>{{responseDataQita[i].effDate}}</li>
+        <li class="clr"><span>失效时间</span>{{responseDataQita[i].expDate}}</li>
+        <!-- <li class="clr"><span>状态</span></li> -->
+        <li class="clr"><span>套餐描述</span>{{responseDataQita[i].prodOfferDesc}}</li>
+      </ul>
+      <div class="noData" m-if="responseDataQita.length==0">
+        <img src="../../assets/img/no-data.png" alt="">
+			  <div>暂未搜索到数据</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

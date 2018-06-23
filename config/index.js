@@ -6,22 +6,28 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
         '/tas/':{
-            target:'http://192.168.10.21:6085',
+            target:'http://192.168.10.117:6058',
             changeOrigin:true,
             pathRewrite:{
                 '^/tas/':'/tas/'
             }
-        }
+        },
+        // '/tms/':{
+        //   target:'http://192.168.10.167:6058',
+        //   changeOrigin:true,
+        //   pathRewrite:{
+        //       '^/tms/':'/tms/'
+        //   }
+      }
     },
 
     // Various Dev Server settings
-    host: '192.168.10.21', // can be overwritten by process.env.HOST
+    host: '192.168.10.66', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

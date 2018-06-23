@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>实时话费</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<div class="m-top-head purple t-a-c"><b>当前号码：{{ phoneFormat(userInfo.phone) }}</b><br>当前套餐使用情况如下</div>
+	<ul class="packageRemainderList">
+    <li m-for="v,i in responseData">
+      <p class="packageRemainderDetails">
+        <label class="f-s-14">{{v.productName}}</label>
+        <label class="remainderAndused">
+          <span class="remain">
+            <span m-if="v.unitName=='M'">剩余流量：</span>
+            <span m-if="v.unitName=='分钟'">剩余时长：</span><br>
+            <a class="f-c-green">{{v.restCount}}{{v.unitName}}</a>
+          </span>
+          <span class="used">
+            <span m-if="v.unitName=='M'">已用流量：</span>
+            <span m-if="v.unitName=='分钟'">已用时长：</span><br>
+            <a class="f-c-orange">{{v.userdCount}}{{v.unitName}}</a>
+          </span>
+        </label>
+        <label>{{v.expireDate}}</label>
+      </p>
+      <p class="dashboard">
+        <span class="bg">
+          <label>{{packageReaminderPercent(v.userdCount,v.totalCount)}}%</label>  
+        </span>
+        <span class="arrow"></span>
+      </p>
+    </li>
+  </ul>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

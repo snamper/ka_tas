@@ -72,12 +72,32 @@ require('./base64.js');
 		getUserInfo:function(cb){//获取登录用户信息
 			// cb({
 			// 	"userId":"00000000000",
-			// 	"phone":"",
-			// 	"applicationID":"123",
-			// 	"token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",
-			// 	"timestamp":"1509608023665",
-			// 	"packageName":"xxx.apk",
-			// });
+      //   "phone":"",
+      //   "applicationID":"123",     
+      //   "token":"BWsGzl9zLJk0QbLqzOWLLEVxcjX3KP+xx/hASMxWU26n6REchLNqU6RR9zY9H9he",      
+      //   "timestamp":"1509608023665",    
+      //   "packageName":"xxx.apk",   
+      // });
+
+      // cb({
+      //   "appVersion": "2017122800",
+      //   "phoneType": "VTR-AL00",
+      //   "authCode": "234680",
+      //   "latitude": "30.591936",
+      //   "type": "0",
+      //   "userId": "17092510264",
+      //   "host_id": "192.168.10.12",
+      //   "token": "eMlFCoe3i2pR9jyJ+JFgPxkix6VKz1DBgQ7kGL1/XTWgG+cnKW3CDbhgEBqE8/paVU2EnpG0tXtGWc4gBtLAkeqyTtIYT1QHjzAKKieXLLAVfsYRt7AKWjm2Tob6rlQw1an7J6N4cf1U8P45xDNtnA==",
+      //   "osVersion": "8.0.0",
+      //   "phone": "17092510264",
+      //   "osType": "2",
+      //   "imei": "864600035504846",
+      //   "packageName": "com.yuantel.common.lite",
+      //   "applicationID": "TF-1525772531434-829851885",
+      //   "net": "WIFI",
+      //   "timestamp": "1525773551533",
+      //   "longitude": "104.062499"
+      // })
 			callHandler({
 				name:'getUserInfo',
 				data:'',
