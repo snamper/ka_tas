@@ -49,7 +49,6 @@ var vm=new Moon({
 	    	period:'',
 	    	devMac:'--',
 	    	devInfo:'--',
-	    	livingSoftwareName:'旷视'
 	    },
 	    uploadType:1,//上传图片类型1,正面;2,反面;3,;4,手签名;
 	    imgName:{//上传后返回的图片地址
@@ -154,7 +153,7 @@ var vm=new Moon({
 		takePhotos:function(type){//调用APP接口获取图片
 			Jsborya.takePhotos({
 				iccid:vm.get('cardInfo').iccid,
-				type:type,
+				type:String(type),
 				sysOrderId:vm.get('orderInfo').sysOrderId,
 				apiComplete:'uploadImgComplete',
 				complete:function(data){
@@ -341,7 +340,7 @@ var vm=new Moon({
 						period:idCardInfo.period,//有效期
 						devInfo:idCardInfo.devInfo,//设备信息
 						devMac:idCardInfo.devMac,//设备MAC地址
-						livingSoftwareName:idCardInfo.livingSoftwareName,
+						livingSoftwareName:vm.get('cardInfo').deviceType == 3 ? '真信' : '旷视',
 						imageName:imgName.a,//正面照片
 						backImageName:imgName.b,//反面照片
 						pwd:password2,//密码

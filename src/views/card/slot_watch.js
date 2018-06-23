@@ -69,6 +69,8 @@ var vm=new Moon({
 				slot:'-2',
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
+
+					vm.callMethod("readCardICCID");
 				}
 			});
 		},
@@ -80,6 +82,8 @@ var vm=new Moon({
 			Jsborya.readWatchInfo({//读取手表信息
 				deviceType:vm.get("cardInfo").deviceType,
 				complete:function(watchInfo){
+					vm.set("deviceStatus",watchInfo.status==3 ? 4 : watchInfo.status);
+
 					if(watchInfo.status == 1){
 						vm.set("devicePower",watchInfo.power);
 						vm.set("deviceName",watchInfo.deviceName);
@@ -90,11 +94,10 @@ var vm=new Moon({
 								if(result.status==1){
 									vm.set("cardInfo.iccid",result.iccid[0]);
 									
-
 									Jsborya.readCardIMSI({//读取imsi
 										slot:'-1',
 										complete:function(data){
-											vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
+											vm.callMethod("iccidCheck",[data.imsi,data.smsp,result.iccid[0]]);
 										}
 									});
 								}else{
@@ -126,6 +129,8 @@ var vm=new Moon({
 				vm.set('off.status',data.data.status);
 
 				if(data.data.status == 1){
+					vm.setStore("CARD_INFO",vm.get("cardInfo"));
+					
 					Jsborya.pageJump({
 		                url:'index.html',
 		                stepCode:999,

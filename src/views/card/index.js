@@ -36,7 +36,9 @@ var vm=new Moon({
 	hooks: {
 	    init: function() {
 			vm=this;
-			Jsborya.webviewLoading({isLoad:false});//关闭app加载层	
+			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
+
+			try{
 
 			let cardInfo = vm.getStore('CARD_INFO'),
 				selectCity=vm.getStore('selectCity');
@@ -82,6 +84,9 @@ var vm=new Moon({
 					vm.callMethod('getLableList');
 				}
 			});
+		}catch(e){
+			alert(e);
+		}
 	    },
 	    mounted:function(){
 	    	
