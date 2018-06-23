@@ -129,6 +129,8 @@ var vm=new Moon({
 				vm.set('off.status',data.data.status);
 
 				if(data.data.status == 1){
+					vm.setStore("CARD_INFO",vm.get("cardInfo"));
+					
 					Jsborya.pageJump({
 		                url:'index.html',
 		                stepCode:999,
