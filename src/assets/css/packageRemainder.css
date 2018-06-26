@@ -8,6 +8,10 @@
 	font-size: 0.18rem;
 	padding-right: 5px;
 }
+.m-bottom-tips {
+  font-size: 0.1rem;
+  margin: 5px 10px;
+}
 .packageRemainderList{width: 100%}
 .packageRemainderList li{display: flex;margin-top: .1rem;padding:.1rem;background: #fff;border-top:1px solid #ededed;border-bottom:1px solid #ededed  }
 .packageRemainderList li p:nth-of-type(1){width: 55%}
