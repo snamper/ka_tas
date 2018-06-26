@@ -129,8 +129,12 @@ var vm=new Moon({
 				vm.set("load.read",false);
 				vm.set('off.status',data.data.status);
 
+				let cardInfo = vm.get("cardInfo");
+				cardInfo.hasPriPhone = data.data.hasPriPhone;
+				vm.set("cardInfo",cardInfo);
+
 				if(data.data.status == 1){
-					vm.setStore("CARD_INFO",vm.get("cardInfo"));
+					vm.setStore("CARD_INFO",cardInfo);
 					
 					Jsborya.pageJump({
 		                url:'index.html',
@@ -145,7 +149,6 @@ var vm=new Moon({
 
 				if(data.data.orderInfo){
 					vm.set('orderInfo',data.data.orderInfo);
-					vm.set("cardInfo.hasPriPhone",data.data.hasPriPhone);
 
 					if(!parseInt(data.data.orderInfo.setPwd) && data.data.status==3){
 						vm.callMethod('intervalGetResult',[true]);

@@ -123,7 +123,6 @@ var vm=new Moon({
 							complete:function(result){
 								if(result.status==1){
 									vm.set("deviceIccid",result.iccid[0]);
-									vm.set("deviceName",result.deviceName);
 
 									Jsborya.readCardIMSI({//读取imsi
 										slot:cardInfo.slot,
