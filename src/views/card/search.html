@@ -31,14 +31,16 @@
 			</div>
 		</div>
 	</section>
-	<section id="hotLabel" m-show="off.type==0">
-		<ul class="m-hot-label" m-literal:style="hotWide">
-			<li
-			m-for="item,index in hotLabel"
-			m-literal:title="index"
-			m-literal:class="{active:selectLabel.tag == item.tag}"
-			m-on:click="labelClick">{{ item.name }}</li>
-		</ul>
+	<section m-show="cardInfo.deviceType!=3">
+		<section id="hotLabel" m-show="off.type==0">
+			<ul class="m-hot-label" m-literal:style="hotWide">
+				<li
+				m-for="item,index in hotLabel"
+				m-literal:title="index"
+				m-literal:class="{active:selectLabel.tag == item.tag}"
+				m-on:click="labelClick">{{ item.name }}</li>
+			</ul>
+		</section>
 	</section>
 	<section class="bgw">
 		<div class="m-card-box">
