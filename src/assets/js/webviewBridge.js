@@ -221,8 +221,7 @@ require('./base64.js');
 		},
 		registerMethods:function(name,cb){//提供APP直接调用的方法注册接口
 			a[name]=function(result){
-				alert('registerMethods_callback：'+JSON.stringify(result));
-				if(result)result=JSON.parse(BASE64.decode(result));
+				if(result && result!='null')result=JSON.parse(BASE64.decode(result));
 				cb(result);
 			};
 		},

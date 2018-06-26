@@ -65,14 +65,7 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 		},
 		mounted:function(){
-			Jsborya.getGuestInfo({
-				slot:'-2',
-				complete:function(userInfo){
-					vm.set('userInfo',userInfo);
-
-					vm.callMethod("readCardICCID");
-				}
-			});
+			vm.callMethod("readCardICCID");
 		},
 	},
 	methods:{
@@ -93,13 +86,21 @@ var vm=new Moon({
 							complete:function(result){
 								if(result.status==1){
 									vm.set("cardInfo.iccid",result.iccid[0]);
-									
-									Jsborya.readCardIMSI({//读取imsi
+
+									Jsborya.getGuestInfo({
 										slot:'-1',
-										complete:function(data){
-											vm.callMethod("iccidCheck",[data.imsi,data.smsp,result.iccid[0]]);
+										complete:function(userInfo){
+											vm.set('userInfo',userInfo);
+
+											Jsborya.readCardIMSI({//读取imsi
+												slot:'-1',
+												complete:function(data){
+													vm.callMethod("iccidCheck",[data.imsi,data.smsp,result.iccid[0]]);
+												}
+											});
 										}
 									});
+									
 								}else{
 									vm.set("load.read",false);
 									vm.callMethod('filterConnectStatus',result.status);
