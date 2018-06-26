@@ -45,8 +45,8 @@ var vm=new Moon({
 		}
 	},
 	methods:{
-		mathCentToYuan:function(value){
-      return this.mathCentToYuan(value);
+		transLateYuan:function(value){
+      return this.transLateYuan(value);
     },
 	  phoneFormat:function(phone){
 			return this.phoneFormat(phone);
