@@ -116,7 +116,7 @@ var vm=new Moon({
 				complete:function(watchInfo){
 					if(watchInfo.status == 1){
 						// vm.set("devicePower",watchInfo.power);
-						vm.set("deviceName",deviceName);
+						vm.set("deviceName",watchInfo.deviceName);
 
 						Jsborya.readCardICCID({//读取iccid
 							slot:cardInfo.slot,

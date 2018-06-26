@@ -145,7 +145,7 @@ var vm=new Moon({
 
 				if(data.data.orderInfo){
 					vm.set('orderInfo',data.data.orderInfo);
-					vm.set("cardInfo.hasPriPhone",data.data.orderInfo.hasPriPhone);
+					vm.set("cardInfo.hasPriPhone",data.data.hasPriPhone);
 
 					if(!parseInt(data.data.orderInfo.setPwd) && data.data.status==3){
 						vm.callMethod('intervalGetResult',[true]);

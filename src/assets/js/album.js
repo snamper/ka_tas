@@ -63,12 +63,17 @@
 				let x = e.touches[0].clientX - this.p.x, y = e.touches[0].clientY - this.p.y,
 				direction=Math.abs(x) < Math.abs(y) ? 0 : 1;//0,竖向;1,横向;
 
-				this.transformStyle.x += x;
-				this.transformStyle.y += y;
-				this.p.x = e.touches[0].clientX;
-				this.p.y = e.touches[0].clientY;
+				let t_x = this.transformStyle.x + x,
+					t_y = this.transformStyle.y + y;
+				if(Math.abs(t_x) < parseInt(this.w / 2) && Math.abs(t_y) < this.w){
+					this.transformStyle.x = t_x;
+					this.transformStyle.y = t_y;
+					this.p.x = e.touches[0].clientX;
+					this.p.y = e.touches[0].clientY;
+					
+					this.set();
+				}
 				
-				this.set();
 			}
 		},
 		end:function(e){

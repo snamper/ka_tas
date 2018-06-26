@@ -59,22 +59,22 @@ var vm=new Moon({
 			
 			let orderInfo=vm.getStore('ORDER_INFO'),
 				cardInfo=vm.getStore('CARD_INFO');
-			// orderInfo={
-			// 	"idCardName":"王兴璐",
-			// 	"images":[{"imageName":"https://192.168.10.98:6051/tas/tfcardorder/20180509/89860117841022193963/TF18050910231494863_accept.png"}],
-			// 	"idCardNo":"511321198807295598","totalMoney":1,
-			// 	"limitSimilarity":10,
-			// 	"phoneNum":"17082880233",
-			// 	"numberLevel":0,
-			// 	"cityName":"四川成都",
-			// 	"createTime":1516612416100,
-			// 	"cardMoney":0,
-			// 	"similarity":92,
-			// 	"orderStatusCode":"CREATE_SHEET",
-			// 	"validTime":1558651,
-			// 	"sysOrderId":"TF18012217133648258",
-			// 	"prestoreMoney":20000
-			// };
+			orderInfo={
+				"idCardName":"王兴璐",
+				"images":[{"imageName":"https://192.168.10.98:6051/tas/tfcardorder/20180509/89860117841022193963/TF18050910231494863_accept.png"}],
+				"idCardNo":"511321198807295598","totalMoney":1,
+				"limitSimilarity":10,
+				"phoneNum":"17082880233",
+				"numberLevel":0,
+				"cityName":"四川成都",
+				"createTime":1516612416100,
+				"cardMoney":0,
+				"similarity":92,
+				"orderStatusCode":"CREATE_SHEET",
+				"validTime":1558651,
+				"sysOrderId":"TF18012217133648258",
+				"prestoreMoney":20000
+			};
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
