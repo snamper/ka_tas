@@ -274,7 +274,7 @@ var vm=new Moon({
 			if(!password1.match(/^\d{6}$/))checkPwd=false;
 			if(password1!==password2)checkPwd=false;
 			
-			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree&&checkPwd&&vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{11}$/)){
+			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree&&checkPwd&&vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{9}$/)){
 				vm.set('off.isJump',true);
 			}else{
 				vm.set('off.isJump',false);
@@ -294,6 +294,7 @@ var vm=new Moon({
 				orderInfo=vm.get('orderInfo'),
 				password1=vm.get('password1'),
 			    password2=vm.get('password2');
+
 			if(!imgName.a){
 				callLayer('请上传身份证正面照片');
 	            return false;
@@ -315,7 +316,7 @@ var vm=new Moon({
 			}else if(null==idCardInfo.period.match(/^(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})-(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})$/)){
 				callLayer('证件有效期格式错误');
                 return false;
-			}else if(vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{11}$/)){
+			}else if(!vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{9}$/)){
 				callLayer('手机号码格式错误');
                 return false;
 			}else if(!password1.match(/^\d{6}$/)){
