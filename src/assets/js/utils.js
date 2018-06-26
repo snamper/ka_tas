@@ -266,7 +266,6 @@ export default{
                 if(xhr.readyState===4){
                     load ? typeof load==='function'&&load() : layer.close(index);
                     if(xhr.status>=200&&(xhr.status<300 || xhr.status===304)){
-                      alert(xhr);
                         try{
                             var responseText=JSON.parse(xhr.responseText);
                             //alert('RECV：'+JSON.stringify(responseText));

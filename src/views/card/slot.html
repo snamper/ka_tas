@@ -173,28 +173,28 @@
     position: relative;
 }
 .m-inner-box>img{
-    width: 5rem;
+    width: 4rem;
 }
 @media screen and (max-width: 375px){
     .m-inner-box>img{
-        width:2.8rem; 
+        width:2.2rem; 
     }
 }
 @media screen and (min-width: 376px) and (max-width: 540px){
     .m-inner-box>img{
-        width:3.5rem; 
+        width:2.5rem; 
     }
 }
 @media screen and (min-width: 541px) and (max-width: 640px){
     .m-inner-box>img{
-        width:4rem; 
+        width:3rem; 
     }
 }
 </style>
 </head>
 <body>
 <div id="app" m-mask>
-	<section m-show="!off.turn">
+	<!-- <section m-show="!off.turn">
 		<header class="hd-dp">
 			<h2>“ 请选择您的开卡方式 ”</h2>
 			<p>根据选择为您提供便捷的开卡服务</p>
@@ -218,17 +218,17 @@
 				<div class="bt green">点击进入手表开卡</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 
 	<section class="m-insert-card" m-show="off.turn==4 || off.turn==5"><!--无效卡或未插卡-->
 		<header class="m-top-msg">
 			<p class="red ftb" m-show="off.turn==4">抱歉，当前SIM卡为无效卡！</p>
 			<p class="red ftb" m-show="off.turn==5">未检测到SIM卡插入卡槽</p>
-			<span>请将远特SIM卡插入手机卡槽</span>
+			<span>请将“远特信时空”SIM卡插入手机卡槽</span>
 		</header>
 		<div class="m-card-box">
 			<div class="m-inner-box">
-				<img src="../../assets/img/picture_phone_insert.png">
+				<img src="../../assets/img/picture_phone.png">
 			</div>
 		</div>
 		<div class="grey">插入后请点击“确定，SIM卡已插入”按钮</div>

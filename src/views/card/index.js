@@ -66,7 +66,7 @@ var vm=new Moon({
 							},
 							right:{
 								icon:'',
-								value:'购卡指引',
+								value:'去购卡',
 								callback:'headerRightClick'
 							}
 						});
@@ -101,6 +101,10 @@ var vm=new Moon({
 				let otherHeight = 60 + 50 + 30, btmImgH = window_w * 323/1242;
 				if(vm.get('cardInfo').hasPriPhone ==1 ){
 					otherHeight += btmImgH;
+				}
+
+				if(vm.get('cardInfo').deviceType == 3){
+					otherHeight -= 50;
 				}
 
 				otherHeight = parseInt(otherHeight);

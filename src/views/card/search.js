@@ -95,6 +95,10 @@ var vm=new Moon({
 				let otherHeight = 60;
 				if(vm.get('off').type == 0) otherHeight += 50;//非专营号有标签
 
+				if(vm.get('cardInfo').deviceType == 3){
+					otherHeight -= 50;
+				}
+
 				vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
 				
 		    	// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );

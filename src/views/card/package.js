@@ -81,7 +81,7 @@ var vm=new Moon({
 						if(userInfo.iccid=='666666666666'){
 							setRight={
 								icon:'',
-								value:'购卡指引',
+								value:'去购卡',
 								callback:'headerRightClick'
 							}
 							
@@ -151,8 +151,8 @@ var vm=new Moon({
 			
 			if(vm.get('userInfo').iccid=='666666666666'){
 				layer.open({
-                    content:'无卡将无法进行下一步操作，如您需要购卡，请点击购卡指引',
-                    btn:['购卡指引','关闭'],
+                    content:'无卡将无法进行下一步操作，如您需要购卡，请点击去购卡',
+                    btn:['去购卡','关闭'],
                     shadeClose:false,
                     title:'提示',
                     yes:function(){

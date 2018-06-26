@@ -54,7 +54,8 @@ var vm=new Moon({
 				slot:'-2',
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
-					vm.callMethod('getCheckMachine')
+					vm.callMethod('getCheckMachine');
+					vm.callMethod('choiceDeviceType',[1]);
 				}
 			});
 			Jsborya.registerMethods('headerRightClick',function(){
