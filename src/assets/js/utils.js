@@ -267,19 +267,19 @@ export default{
                     load ? typeof load==='function'&&load() : layer.close(index);
                     if(xhr.status>=200&&(xhr.status<300 || xhr.status===304)){
                         try{
-                            var responseText=JSON.parse(xhr.responseText);
-                            //alert('RECV：'+JSON.stringify(responseText));
-                            if(responseText.code=='200'){
-                                success(responseText)
-                            }else{
-                                if(typeof fail==='function'){
-                                    fail(responseText);
-                                }else _self.error(responseText);
-                            }
+                          var responseText=JSON.parse(xhr.responseText);
+                          //alert('RECV：'+JSON.stringify(responseText));
+                          if(responseText.code=='200'){
+                              success(responseText)
+                          }else{
+                              if(typeof fail==='function'){
+                                  fail(responseText);
+                              }else _self.error(responseText);
+                          }
                         }catch(e){
-                            typeof fail==='function'&&fail();
-                            alert(e);
-                            _self.error('数据解析错误');
+                          typeof fail==='function'&&fail();
+                          alert(e);
+                          _self.error('数据解析错误');
                         }
                         
                     }else{
