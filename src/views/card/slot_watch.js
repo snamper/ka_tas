@@ -199,7 +199,7 @@ var vm=new Moon({
             }else if(orderStatusCode==='CARD_WRITING'){
                 url='cardActive.html';
                	depiction='写卡成功，等待开卡结果';
-               	next='开卡受理';
+               	next='申请受理';
             }else if(orderStatusCode==='CARD_ACTIVE'){
             	let orderStatus=vm.get('off').status;
                 url='';
