@@ -60,6 +60,7 @@ var vm=new Moon({
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
+				alert(cardInfo.deviceType)
 				Jsborya.setHeader({
 					title:cardInfo.deviceType == 3 ? '号码开通' : '写卡',
 					frontColor:'#ffffff',

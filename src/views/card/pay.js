@@ -79,6 +79,7 @@ var vm=new Moon({
 							vm.orderCancel(userInfo,orderInfo.sysOrderId);
 						});
 						Jsborya.registerMethods('payComplete',function(data){
+							// alert(`payComplete:${JSON.stringify(data)}`);
 							vm.callMethod('payComplete',[data.status]);
 						});
 					}
@@ -90,9 +91,8 @@ var vm=new Moon({
 	},
 	methods:{
 		payComplete:function(status){//支付完成
-			//alert(status)
+			
 			layer.closeAll();
-			alert(`payComplete:${status}`);
 			vm.set('off.load',false);
 			if(status==1){//支付成功
 				const json={
