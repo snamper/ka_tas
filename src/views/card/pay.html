@@ -65,7 +65,7 @@
 			</ul>
 
 			<ul class="m-pay-choose">
-				<li class="m-form-radio">
+				<li m-show="cardInfo.deviceType!=3" class="m-form-radio">
 					<div class="clr" m-on:click="shiftPayType(2)">
 						<span class="text u-icon-wechat"></span>
 						<span class="radio fr"><input type="radio" value="2"><span m-literal:class="{active:off.payType==2}"></span></span>

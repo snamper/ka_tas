@@ -8,7 +8,7 @@ var vm=new Moon({
 	data:{
 		off:{
 			load:!1,
-			payType:"2",
+			payType:"3",
 			payStatus:0,//0,未支付;1,支付成功;2,支付失败;3,订单关闭;
 		},
 		orderInfo: {

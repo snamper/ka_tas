@@ -259,11 +259,7 @@ var vm=new Moon({
 			}
 		},
 		jumpToHome:function(){
-			Jsborya.pageJump({
-				url:'',
-				stepCode:806,
-				depiction:'首页',
-			});
+			vm.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId);
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
