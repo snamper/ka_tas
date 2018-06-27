@@ -68,6 +68,8 @@ var vm=new Moon({
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
+
+				if(orderInfo.orderStatusCode == "CARD_PAY") vm.set("off.payStatus",1);
 				Jsborya.getGuestInfo({
 					slot:cardInfo.slot,
 					complete:function(userInfo){
