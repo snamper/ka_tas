@@ -52,21 +52,6 @@ var vm=new Moon({
 	hooks:{
 		init:function(){
 			vm=this;
-			Jsborya.setHeader({
-				title:'写卡',
-				frontColor:'#ffffff',
-                backgroundColor:'#4b3887',
-				left:{
-					icon:'back_white',
-					value:'返回',
-					callback:'headerLeftClick'
-				},
-				right:{
-					icon:'',
-					value:'',
-					callback:'headerRightClick'
-				}
-			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			let orderInfo=vm.getStore('ORDER_INFO'),
@@ -75,7 +60,21 @@ var vm=new Moon({
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
-
+				Jsborya.setHeader({
+					title:cardInfo.deviceType == 3 ? '号码开通' : '写卡',
+					frontColor:'#ffffff',
+	                backgroundColor:'#4b3887',
+					left:{
+						icon:'back_white',
+						value:'返回',
+						callback:'headerLeftClick'
+					},
+					right:{
+						icon:'',
+						value:'',
+						callback:'headerRightClick'
+					}
+				});
 				Jsborya.getGuestInfo({
 					slot:cardInfo.slot,
 					complete:function(userInfo){

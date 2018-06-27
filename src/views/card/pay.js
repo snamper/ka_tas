@@ -168,16 +168,16 @@ var vm=new Moon({
 				if(data.data.payStatusOld){
 					vm.callMethod('payComplete',[1]);
 				}else{
-					setTimeout(function(){
-						layer.open({
-							title:'支付操作确认',
-							content:'如果您已完成支付操作，请点击【已支付】按钮;如果您未支付请重新发起支付',
-							btn:['已支付','未支付'],
-							yes:function(){
-								vm.callMethod('payComplete',[1]);
-							},
-						});
-					},1500);
+					// setTimeout(function(){
+					// 	layer.open({
+					// 		title:'支付操作确认',
+					// 		content:'如果您已完成支付操作，请点击【已支付】按钮;如果您未支付请重新发起支付',
+					// 		btn:['已支付','未支付'],
+					// 		yes:function(){
+					// 			vm.callMethod('payComplete',[1]);
+					// 		},
+					// 	});
+					// },1500);
 					Jsborya.pageJump({
 						url:'',
 						stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
