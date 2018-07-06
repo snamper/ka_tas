@@ -73,10 +73,9 @@ export default{
          *@describe 返回号码搜索
          **/
         Moon.prototype.toIndexPage=function(){
-            Jsborya.pageJump({
-                url:'',
-                stepCode:806,
-                depiction:'首页',
+            Jsborya.pageBack({
+                url:'index.html',
+                isLoad:true,
             });
         },
         /**

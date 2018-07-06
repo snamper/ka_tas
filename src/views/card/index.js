@@ -9,6 +9,7 @@ var vm=new Moon({
 		off:{
 			showNoMore:false,//暂无更多
 			showPullLoad:false,//上拉加载
+			showBtmEntry:true,//显示底部入口
 		},
 		cardInfo:{//卡槽信息
 			slot:'-2',
@@ -54,7 +55,7 @@ var vm=new Moon({
 					vm.set('userInfo',userInfo);
 
 					if(userInfo.iccid=='666666666666'){
-						vm.set('cardInfo.hasPriPhone',2);
+						vm.set('off.showBtmEntry',false);
 						Jsborya.setHeader({
 							title:'随心搜',
 							frontColor:'#ffffff',
@@ -98,14 +99,16 @@ var vm=new Moon({
 	    		let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
 
-				let otherHeight = 60 + 50 + 30, btmImgH = window_w * 323/1242;
-				if(vm.get('cardInfo').hasPriPhone ==1 ){
-					otherHeight += btmImgH;
-				}
-
+				let otherHeight = 60 + 50 + 30,
+					btmImgH = window_w * 323/1242,
+					showBtmEntry = vm.get('off').showBtmEntry;
 				if(vm.get('cardInfo').deviceType == 3){
 					otherHeight -= 50;
+					showBtmEntry = false;
 				}
+				if(showBtmEntry)otherHeight += btmImgH;
+
+				
 
 				otherHeight = parseInt(otherHeight);
 				
@@ -297,16 +300,24 @@ var vm=new Moon({
             });
 		},
 		jumpDevoted(){
-			Jsborya.pageJump({
-                url:'search.html?type=devoted',
-                stepCode:'999',
-                depiction:'专营号码',
-                destroyed:false,
-                header:{
-                    frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
-                }
-            });
+			// Jsborya.pageJump({
+   //              url:'search.html?type=devoted',
+   //              stepCode:'999',
+   //              depiction:'专营号码',
+   //              destroyed:false,
+   //              header:{
+   //                  frontColor:'#ffffff',
+   //                  backgroundColor:'#4b3887',
+   //              }
+   //          });
+   			Jsborya.pageJump({
+				url:'',
+				stepCode:801,
+				depiction:'登录',
+				data:{
+					phone:''
+				}
+			});
 		},
 		filterNumber:function(number){
 			//未知BUG：inputValue和selectLabel的值改变会触发此函数

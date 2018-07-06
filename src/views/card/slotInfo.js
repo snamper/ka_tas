@@ -204,16 +204,23 @@ var vm=new Moon({
 		},
 		jumpToHome:function(){
 			Jsborya.pageJump({
-				url:'',
-				stepCode:806,
-				depiction:'首页',
-			});
+                url:'index.html',
+                stepCode:999,
+                depiction:'号码搜索',
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
+            });
 		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({
 				url:'',
 				stepCode:801,
 				depiction:'登录',
+				data:{
+					phone:vm.get('orderInfo').phoneNum
+				}
 			});
 		},
 		filterConnectStatus:function(status){
