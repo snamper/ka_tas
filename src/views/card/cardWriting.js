@@ -106,7 +106,6 @@ var vm=new Moon({
 	},
 	methods:{
 		readCardICCID:function(){
-			alert(2222222222222)
 			let cardInfo = vm.get('cardInfo');
 
 			vm.set("off.step",1);
@@ -164,7 +163,7 @@ var vm=new Moon({
 						});
 					}else{
 						if(watchInfo.status == 3) watchInfo.status = 4;
-						vm.callMethod('filterConnectStatus',watchInfo.status);
+						vm.callMethod('filterConnectStatus',[watchInfo.status]);
 					}
 				}
 			});

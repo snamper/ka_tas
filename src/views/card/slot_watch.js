@@ -103,14 +103,14 @@ var vm=new Moon({
 									
 								}else{
 									vm.set("load.read",false);
-									vm.callMethod('filterConnectStatus',result.status);
+									vm.callMethod('filterConnectStatus',[result.status]);
 								} 
 							}
 						});
 					}else{
 						vm.set("load.read",false);
 						if(watchInfo.status == 3) watchInfo.status = 4;
-						vm.callMethod('filterConnectStatus',watchInfo.status);
+						vm.callMethod('filterConnectStatus',[watchInfo.status]);
 					}
 				}
 			})

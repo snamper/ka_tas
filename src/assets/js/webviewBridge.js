@@ -203,7 +203,7 @@ require('./base64.js');
 			});
 		},
 		readCardICCID:function(json){//读取ICCID
-alert('调用readCardICCID')
+
 			// setTimeout(function(){
 			// 	json.complete({
 			// 		'status':'1',
@@ -214,7 +214,7 @@ alert('调用readCardICCID')
 				name:'readCardICCID',
 				data:json,
 				callback:function(result){
-					alert('readCardICCID'+JSON.stringify(result));
+					//alert('readCardICCID'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -233,12 +233,11 @@ alert('调用readCardICCID')
 			// 		'smsp':''
 			// 	});
 			// },1000);
-			alert('调用readCardIMSI')
 			callHandler({
 				name:'readCardIMSI',
 				data:json,
 				callback:function(result){
-					alert('readCardIMSI'+JSON.stringify(result));
+					//alert('readCardIMSI'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -253,19 +252,19 @@ alert('调用readCardICCID')
 				name:'callWriteCard',
 				data:json,
 				callback:function(result){
-					alert('callWriteCard'+JSON.stringify(result));
+					//alert('callWriteCard'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
 		},
 		readWatchInfo:function(json){
-alert('调用readWatchInfo')
+
 			if(json.deviceType!=1){
 				callHandler({
 					name:'readWatchInfo',
 					data:'',
 					callback:function(result){
-						alert('readWatchInfo'+JSON.stringify(result));
+						//alert('readWatchInfo'+JSON.stringify(result));
 						json.complete(result);
 					}
 				});
