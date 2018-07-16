@@ -80,7 +80,7 @@ var vm=new Moon({
 					slot:cardInfo.slot,
 					complete:function(userInfo){
 						vm.set('userInfo',userInfo);
-
+alert(1111111111111111)
 						vm.callMethod('readCardICCID');
 					}
 				});
