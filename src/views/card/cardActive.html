@@ -90,7 +90,7 @@
 			<li><div class="sub-line"><b></b><span></span></div></li>
 			<li class="active"><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
-		<ul class="m-order-info clr grey">
+		<ul class="m-order-info clr grey" m-show="cardInfo.deviceType!=3">
 			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
 			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
 			<li class="o-success">
@@ -108,29 +108,58 @@
 			</div>
 			
 			<section m-show="off.load==1">
-				<div class="dp">
-					<b class="green">开卡申请已受理，请等待开卡结果</b>
+				<div m-show="cardInfo.deviceType!=3">
+					<div class="dp">
+						<b class="green">开卡申请已受理，请等待开卡结果</b>
+					</div>
+					<dl class="tips f-tal grey">
+						<dt>温馨提示:</dt>
+						<dd>1、为确保您的SIM卡可以正常使用，请重启您的手机；</dd>
+						<dd>2、您可以通过“手机开卡”入口，查看开通进度；</dd>
+						<dd>3、开卡成功，我们将以短信的方式通知您。</dd>
+					</dl>
 				</div>
-				<dl class="tips f-tal grey">
-					<dt>温馨提示:</dt>
-					<dd>1、为确保您的SIM卡可以正常使用，请重启您的手机；</dd>
-					<dd>2、您可以通过“手机开卡”入口，查看开通进度；</dd>
-					<dd>3、开卡成功，我们将以短信的方式通知您。</dd>
-				</dl>
+				<div m-show="cardInfo.deviceType==3">
+					<div class="dp">
+						<b class="green">码号申请已受理，请等待号码开通结果</b>
+					</div>
+					<dl class="tips f-tal grey">
+						<dt>温馨提示:</dt>
+						<dd>1、码号开通结果，将以短信形式通知您预留的联系电话；</dd>
+						<dd>2、若短信告知开通成功，请重启您的终端；</dd>
+						<dd>3、若短信告知开通失败，请联系客服400-631-5234。</dd>
+					</dl>
+				</div>
 			</section>
 			<section m-show="off.load==3">
-				<div class="dp">
-					<b class="red">
-						<span m-show="orderStatus==3">开卡失败</span>
-						<span m-show="orderStatus==4">订单已关闭</span>
-					</b>
+				<div m-show="cardInfo.deviceType!=3">
+					<div class="dp">
+						<b class="red">
+							<span m-show="orderStatus==3">开卡失败</span>
+							<span m-show="orderStatus==4">订单已关闭</span>
+						</b>
+					</div>
+					<dl class="tips f-tal grey">
+						<dt>温馨提示:</dt>
+						<dd class="red">1、失败原因：{{ desc }}</dd>
+						<dd>2、该号卡板已不可再使用。</dd>
+						<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
+					</dl>
 				</div>
-				<dl class="tips f-tal grey">
-					<dt>温馨提示:</dt>
-					<dd class="red">1、失败原因：{{ desc }}</dd>
-					<dd>2、该号卡板已不可再使用。</dd>
-					<dd>3、您可以更换卡片重新选择号码进行开卡。</dd>
-				</dl>
+				<div m-show="cardInfo.deviceType==3">
+					<div class="dp">
+						<b class="red">
+							<span m-show="orderStatus==3">开通失败</span>
+							<span m-show="orderStatus==4">订单已关闭</span>
+						</b>
+					</div>
+					<dl class="tips f-tal grey">
+						<dt>温馨提示:</dt>
+						<dd class="red">1、失败原因：{{ desc }}</dd>
+						<dd>2、该手表中的卡已不可再使用。</dd>
+						<dd>3、您可以更换卡片重新选择号码进行码号申请。</dd>
+					</dl>
+				</div>
 			</section>
 			
 			<div class="btn btny" m-on:click="jumpToHome" m-show="off.load!=2">确定</div>
@@ -138,10 +167,16 @@
 		<div class="m-success-set" m-show="off.load==2">
 			<div class="success">
 				<img src="../../assets/img/icon_suc_a.png">
-				<h3 class="green">开卡成功</h3>
+				<h3 class="green">
+					<span m-show="cardInfo.deviceType!=3">开卡成功</span>
+					<span m-show="cardInfo.deviceType==3">开通成功</span>
+				</h3>
 			</div>
-			<div class="grey">
-				温馨提示：<br>1、恭喜您成为远特用户;<br>2、马上设置服务密码，可直接登录“远特i卡”掌上营业厅，可直接进行充值，查询实时话费、我的套餐、套餐余量等业务;<br>3、有疑问请拨打：语音自助服务10027  客服电话4000410027
+			<div class="grey" m-show="cardInfo.deviceType!=3">
+				温馨提示：<br>1、恭喜您成为远特用户;<br>2、马上设置服务密码，可直接登录“远特i卡”掌上营业厅，可直接进行充值，查询实时话费、我的套餐、套餐余量等业务;<br>3、有疑问请拨打：语音自助服务10027  客服电话400-041-0027
+			</div>
+			<div class="grey" m-show="cardInfo.deviceType==3">
+				温馨提示：<br>1、您可以登录“远特eSIM”掌上营业厅，可进行充值，查询实时话费、我的套餐、套餐余量等业务;<br>2、如有其它疑问请联系客服：语音自助服务10027 客服电话400-631-5234。
 			</div>
 			
 			<div class="btn btny" m-on:click="jumpToLogin">马上去查查</div>

@@ -14,7 +14,7 @@ var vm=new Moon({
 		},
 		defaultSlot:false,//是否为默认卡槽
 		iccid:['',''],
-		deviceType:1,//1、手机卡；2、手表卡
+		deviceType:1,//1、手机卡；2、手表卡；3、eSIM手表
 		iccidsRes:[{
 			orderInfo:'',
 			status:1,
@@ -22,7 +22,7 @@ var vm=new Moon({
 		},{
 			orderInfo:'',
 			status:1,
-			hasPriPhone:1,//是否有专营号
+			hasPriPhone:1,
 		}],
 		userInfo:'',
 		checkMachine:{
@@ -35,8 +35,6 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.setHeader({
 				title:'开卡方式',
-				frontColor:'#000000',
-				backgroundColor:'#ffffff',
 				left:{
 					icon:'back_white',
 					value:'',

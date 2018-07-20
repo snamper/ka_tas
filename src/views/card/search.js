@@ -55,8 +55,6 @@ var vm=new Moon({
 
 			Jsborya.setHeader({
 				title:title,
-				frontColor:'#ffffff',
-                backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'返回',
@@ -178,7 +176,7 @@ var vm=new Moon({
                 destroyed:false,
                 header:{
                     frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
+                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                 }
             });
 		},
@@ -245,7 +243,7 @@ var vm=new Moon({
 	                destroyed:false,
 	                header:{
 	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
+	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                }
 	            });
 			}else{
@@ -256,7 +254,7 @@ var vm=new Moon({
 	                destroyed:false,
 	                header:{
 	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
+	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                }
 	            });
 			}

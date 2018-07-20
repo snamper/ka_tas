@@ -63,8 +63,6 @@ var vm=new Moon({
 				
 				Jsborya.setHeader({
 					title:cardInfo.deviceType == 3 ? '号码开通' : '写卡',
-					frontColor:'#ffffff',
-	                backgroundColor:'#4b3887',
 					left:{
 						icon:'back_white',
 						value:'返回',
@@ -138,10 +136,9 @@ var vm=new Moon({
 												if(data.status==1){
 													icon='wcard_green';
 												}else icon='wcard_red';
+												
 												Jsborya.setHeader({
 													title:'写卡',
-													frontColor:'#ffffff',
-													backgroundColor:'#4b3887',
 													left:{
 														icon:'back_white',
 														value:'',
@@ -240,7 +237,7 @@ var vm=new Moon({
 					depiction:'开卡受理',
 					header:{
                         frontColor:'#ffffff',
-                        backgroundColor:'#4b3887',
+                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                     }
 				});
 			},function(){

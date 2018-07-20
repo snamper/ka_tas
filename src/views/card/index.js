@@ -39,7 +39,6 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
-			try{
 
 			let cardInfo = vm.getStore('CARD_INFO'),
 				selectCity=vm.getStore('selectCity');
@@ -47,8 +46,6 @@ var vm=new Moon({
 			if(cardInfo) vm.set('cardInfo',cardInfo);
 			if(selectCity) vm.set('selectCity',selectCity);
 
-			// alert(`cardInfo：${JSON.stringify(cardInfo)}`)
-			// alert(`url_slot：${slot}`)
 			Jsborya.getGuestInfo({
 				slot:cardInfo ? cardInfo.slot : '-2',
 				complete:function(userInfo){
@@ -58,8 +55,6 @@ var vm=new Moon({
 						vm.set('off.showBtmEntry',false);
 						Jsborya.setHeader({
 							title:'随心搜',
-							frontColor:'#ffffff',
-							backgroundColor:'#4b3887',
 							left:{
 								icon:'back_white',
 								value:'返回',
@@ -85,9 +80,6 @@ var vm=new Moon({
 					vm.callMethod('getLableList');
 				}
 			});
-		}catch(e){
-			alert(e);
-		}
 	    },
 	    mounted:function(){
 	    	
@@ -102,7 +94,7 @@ var vm=new Moon({
 				let otherHeight = 60 + 50 + 30,
 					btmImgH = window_w * 323/1242,
 					showBtmEntry = vm.get('off').showBtmEntry;
-				if(vm.get('cardInfo').deviceType == 3){
+				if(vm.get('cardInfo').deviceType == 3){//eSIM手表
 					otherHeight -= 50;
 					showBtmEntry = false;
 				}
@@ -188,7 +180,7 @@ var vm=new Moon({
                 destroyed:false,
                 header:{
                     frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
+                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                 }
             });
 		},
@@ -223,7 +215,7 @@ var vm=new Moon({
 	                destroyed:false,
 	                header:{
 	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
+	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                }
 	            });
 	            vm.callMethod('inputClearClick')
@@ -270,7 +262,7 @@ var vm=new Moon({
 	                destroyed:false,
 	                header:{
 	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
+	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                }
 	            });
 			}else{
@@ -281,7 +273,7 @@ var vm=new Moon({
 	                destroyed:false,
 	                header:{
 	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
+	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                }
 	            });
 			}
@@ -295,7 +287,7 @@ var vm=new Moon({
                 destroyed:false,
                 header:{
                     frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
+                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                 }
             });
 		},
@@ -307,7 +299,7 @@ var vm=new Moon({
    //              destroyed:false,
    //              header:{
    //                  frontColor:'#ffffff',
-   //                  backgroundColor:'#4b3887',
+   //                  backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
    //              }
    //          });
    			Jsborya.pageJump({

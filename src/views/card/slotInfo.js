@@ -42,8 +42,6 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.setHeader({
 				title:'读取卡信息',
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',

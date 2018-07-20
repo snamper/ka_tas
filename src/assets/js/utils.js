@@ -69,13 +69,29 @@ export default{
         Moon.prototype.mathDiscount=function(price,discount){
             return (parseFloat(price)/100*parseFloat(discount)/10000).toFixed(2);
         },
+         /**
+         *@describe 头部颜色
+         **/
+        Moon.prototype.getHeaderColor=function(deviceType){
+            let color = '';
+            switch (parseInt(deviceType)){
+              case 0: case 1: case 2:
+                color = '#4b3887';
+                break;
+              case 3:
+                color = '#00923f';
+                break;
+            }
+            return color;
+        },
         /**
          *@describe 返回号码搜索
          **/
-        Moon.prototype.toIndexPage=function(){
-            Jsborya.pageBack({
-                url:'index.html',
-                isLoad:true,
+        Moon.prototype.jumpToHome=function(){
+            Jsborya.pageJump({
+              url:'',
+              stepCode:806,
+              depiction:'首页',
             });
         },
         /**
@@ -113,7 +129,7 @@ export default{
                         'userInfo':userInfo
                     };
                     _self.AJAX('/tas/w/business/orderCancell',json,function(data){
-                        isJump&&_self.toIndexPage();
+                        isJump&&_self.jumpToHome();
                     });
                     
                 }
@@ -167,7 +183,7 @@ export default{
                 shadeClose:false,
                 title:'提示',
                 yes:function(){
-                    _self.toIndexPage();
+                    _self.jumpToHome();
                 }
             });
             switch(parseInt(data.code)){
@@ -180,7 +196,7 @@ export default{
                         yes:function(){
                             window.localStorage.setItem('ORDER_INFO',JSON.stringify(data.data));
                             Jsborya.pageJump({
-                                url:'orderDetails.html',
+                                url:'orderInfo.html',
                                 stepCode:999,
                                 depiction:'订单详情',
                                 header:{
@@ -216,7 +232,7 @@ export default{
                             _self.toBuyHelpPage();
                         },
                         no:function(){
-                            _self.toIndexPage();
+                            _self.jumpToHome();
                         }
                     });
                     

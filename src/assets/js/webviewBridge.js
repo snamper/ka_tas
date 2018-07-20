@@ -107,7 +107,6 @@ require('./base64.js');
 			// 	"timestamp":"1525684349889",
 			// 	"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
 			// });
-			//alert(`slot：${json.slot}`);
 			callHandler({
 				name:'getGuestInfo',
 				data:json,
@@ -272,7 +271,7 @@ require('./base64.js');
 				status:1,
 				power:'',
 				deviceName:''
-			})
+			});
 			
 		},
 		setHeader:function(json){//设置头部header
@@ -298,7 +297,7 @@ require('./base64.js');
 				name:'freeCache',
 				data:json,
 				callback:function(result){
-					console.log('freeCache')
+					console.log('freeCache');
 				}
 			});
 		},

@@ -139,7 +139,15 @@ body{
     display: inline-block;
     position: relative;
     vertical-align: middle;
-    margin-right: 3px;
+    padding-right: 3px; 
+}
+.m-form-checkbox>div>.checkbox, .m-form-checkbox>div>.text>span{
+    height: 0.3rem;
+}
+.m-form-checkbox>div>.text, .m-form-checkbox>div>.text>span, .m-form-checkbox>div>.text>a{
+    display: inline-block;
+    height: 0.3rem;
+    vertical-align: middle;
 }
 
 .m-form-checkbox>div>.checkbox>span{

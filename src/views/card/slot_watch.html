@@ -98,14 +98,14 @@
 
 		<div class="m-btn-group" m-show="off.status==2">
 			<span class="btn btnDefault_dp" m-on:click="orderCancel">放弃</span>
-			<span class="btn btny" m-on:click="continueOrder">继续开卡</span>
+			<span class="btn btny" m-on:click="continueOrder">继续开通</span>
 		</div>
 		<!--开卡成功-->
 		<section m-show="off.status==3">
 			<dl class="m-order-tips grey" m-show="orderInfo.setPwd==0">
 				<dt>温馨提示:</dt>
-				<dd>1、<span class="green">已开卡成功</span>;</dd>
-				<dd>2、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+				<dd>1、<span class="green">已开通成功</span>;</dd>
+				<dd>2、如有其它疑问请联系客服：语音自助服务10027 客服电话400-631-5234。</dd>
 			</dl>
 			<div class="m-spin-load" m-show="orderInfo.setPwd=='0'">
 				<span class="load"></span>
@@ -114,9 +114,9 @@
 
 			<dl class="m-order-tips grey" m-show="orderInfo.setPwd==1">
 				<dt>温馨提示:</dt>
-				<dd>1、<span class="green">已开卡成功</span>;</dd>
-				<dd>2、您可以登录“远特i卡”掌上营业厅，可进行充值，查询实时话费、我的套餐、套餐余量等业务;</dd>
-				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+				<dd>1、<span class="green">已开通成功</span>;</dd>
+				<dd>2、您可以登录“远特eSIM”掌上营业厅，可进行充值，查询实时话费、我的套餐、套餐余量等业务;</dd>
+				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话400-631-5234。</dd>
 			</dl>
 			<div class="m-btn-group" m-show="orderInfo.setPwd==1">
 				<span class="btn btnDefault_dp" m-on:click="jumpToHome">返回APP</span>
@@ -125,9 +125,9 @@
 
 			<dl class="m-order-tips grey" m-show="orderInfo.setPwd==2">
 				<dt>温馨提示:</dt>
-				<dd>1、<span class="green">已开卡成功</span>;</dd>
+				<dd>1、<span class="green">已开通成功</span>;</dd>
 				<dd>2、<span class="red">密码设置失败，登录时请选择‘短信验证码’登录</span>;</dd>
-				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话4000410027。</dd>
+				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话400-631-5234。</dd>
 			</dl>
 			<div class="m-btn-group" m-show="orderInfo.setPwd==2">
 				<span class="btn btnDefault_dp" m-on:click="jumpToHome">返回APP</span>
@@ -138,8 +138,8 @@
 		<!--写卡等待开卡结果-->
 		<dl class="m-order-tips grey" m-show="off.status==5">
 			<dt>温馨提示:</dt>
-			<dd>1、您的开卡申请已受理，请耐心等待开卡结果</dd>
-			<dd>2、开卡成功我们将以短信的形式进行通知。</dd>
+			<dd>1、您的开卡申请已受理，请耐心等待开通结果</dd>
+			<dd>2、开通成功我们将以短信的形式进行通知。</dd>
 			<dd>3、您可以点击“重新获取”按钮获取开卡结果</dd>
 		</dl>
 		<div class="btn btny" m-show="off.status==5" m-on:click="intervalGetResult()">重新获取</div>
@@ -149,7 +149,7 @@
 			<dt>温馨提示:</dt>
 			<dd>1、失败原因：<span class="red">{{ orderInfo.orderDesc }}</span></dd>
 			<dd>2、支付的金额我们将在24小时内退回到您的账户。</dd>
-			<dd>3、马上联系客服：语音自助服务10027 客服电话4000410027</dd>
+			<dd>3、马上联系客服：语音自助服务10027 客服电话400-631-5234</dd>
 		</dl>
 		<div class="btn btny" m-show="off.status==6" m-on:click="jumpToHome">确定</div>
 	</section>

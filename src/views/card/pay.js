@@ -189,7 +189,7 @@ var vm=new Moon({
 						destroyed:false,
 						header:{
 	                        frontColor:'#ffffff',
-	                        backgroundColor:'#4b3887',
+	                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                    }
 					});
 				}
@@ -223,17 +223,17 @@ var vm=new Moon({
 				Jsborya.pageJump({
 					url:'createSheet.html',
 					stepCode:999,
-					depiction:'确认受理单',
+					depiction:'受理单',
 					header:{
                         frontColor:'#ffffff',
-                        backgroundColor:'#4b3887',
+                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                     }
 				});
 
 			});
 		},
-		jumpToIndex:function(){
-			vm.toIndexPage();
+		jumpToHome:function(){
+			vm.jumpToHome();
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);

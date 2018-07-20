@@ -48,8 +48,6 @@ var vm=new Moon({
 			vm=this;
 			Jsborya.setHeader({
 				title:'读取卡信息',
-				frontColor:'#ffffff',
-				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
 					value:'',
@@ -142,7 +140,7 @@ var vm=new Moon({
 		                depiction:'随心搜',
 		                header:{
 		                    frontColor:'#ffffff',
-		                    backgroundColor:'#4b3887',
+		                    backgroundColor:'#00923f',
 		                }
 		            });
 				}
@@ -173,33 +171,33 @@ var vm=new Moon({
 			if(orderStatusCode==='PACKAGE_SELECTION'){
                 url='certification.html';
                 depiction='已选择套餐';
-                next='实名认证';
+                next='号码开通';
             }else if(orderStatusCode==='CARD_PAY'){
                 if(belongType==1){
                 	url='cardAudit.html';
                 }else url='pay.html';
 
                 depiction='已支付';
-                next='生成受理单';
+                next='号码开通';
             }else if(orderStatusCode==='CARD_AUDIT'){
                 if(belongType==1){
                 	url='cardAudit.html';
                 }else url='pay.html';
                 
                 depiction='已审核';
-                next='支付';
+                next='号码开通';
             }else if(orderStatusCode==='CREATE_SHEET'){
                 url='createSheet.html';
                 depiction='已生成受理单';
-                next='确认受理单';
+                next='受理单';
             }else if(orderStatusCode==='CARD_IMSI'){
                 url='cardWriting.html';
                 depiction='已获取IMSI';
-                next='写卡';
+                next='号码开通';
             }else if(orderStatusCode==='CARD_WRITING'){
                 url='cardActive.html';
-               	depiction='写卡成功，等待开卡结果';
-               	next='申请受理';
+               	depiction='码号信息写入成功，等待开通结果';
+               	next='号码开通';
             }else if(orderStatusCode==='CARD_ACTIVE'){
             	let orderStatus=vm.get('off').status;
                 url='';
@@ -212,11 +210,11 @@ var vm=new Moon({
             }else if(parseInt(similarity)){
             	url='cardAudit.html';
                 depiction='已上传资料';
-                next='订单审核';
+                next='号码开通';
             }else if(orderStatusCode==='UPLOAD_DATA'){
                 url='faceVerification.html';
                 depiction='已上传资料';
-                next='活体识别';
+                next='号码开通';
             }
             return {url:url,depiction:depiction,next:next};
 		},
@@ -234,7 +232,7 @@ var vm=new Moon({
                 depiction:todo.next,
                 header:{
                     frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
+                    backgroundColor:'#00923f',
                 }
             });
 		},
@@ -276,11 +274,7 @@ var vm=new Moon({
 			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
 		},
 		jumpToHome:function(){
-			Jsborya.pageJump({
-				url:'',
-				stepCode:806,
-				depiction:'首页',
-			});
+			vm.jumpToHome();
 		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({

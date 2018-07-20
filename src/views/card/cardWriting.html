@@ -61,7 +61,7 @@
 					<span class="black">{{ deviceIccid }}</span>
 				</li>
 				<li>
-					<span class="left" m-show="cardInfo.deviceType!=3">IMSI:</span>
+					<span class="left">IMSI:</span>
 					<span class="green" m-show="imsi">IMSI获取成功</span>
 					<span class="yellow" m-show="!imsi">
 						<span m-show="error.code!=1">--</span>
@@ -120,9 +120,20 @@
 			
 		</section>
 		<section m-show="error.code==1">
-			<div m-on:click="callWriteCard" m-literal:class="{active:off.step==3,btn:true,btnDefault:off.step!=3,btny:imsi!=''}">
+			<div
+				m-if="cardInfo.deviceType!=3"
+				m-on:click="callWriteCard"
+				m-literal:class="{active:off.step==3,btn:true,btnDefault:off.step!=3,btny:imsi!=''}">
 				<i m-show="off.step!=3">提交开卡申请</i>
 				<i m-show="off.step==3">开卡申请中，请稍候</i>
+				<b></b>
+			</div>
+			<div
+				m-if="cardInfo.deviceType==3"
+				m-on:click="callWriteCard"
+				m-literal:class="{active:off.step==3,btn:true,btnDefault:off.step!=3,btny:imsi!=''}">
+				<i m-show="off.step!=3">提交写号申请</i>
+				<i m-show="off.step==3">码号申请中，请稍候</i>
 				<b></b>
 			</div>
 		</section>

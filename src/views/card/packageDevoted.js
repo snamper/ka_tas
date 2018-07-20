@@ -62,36 +62,21 @@ var vm=new Moon({
                     complete:function(userInfo){
                         vm.set('userInfo',userInfo);
 
-                        let deviceType = cardInfo.deviceType, icon = '', setRight;
-                        // if(cardInfo.deviceType==1){
-                        //  if(cardInfo.deviceStatus==1){
-                        //      icon='card_green';
-                        //  }else icon='card_red';
-                            
-                        // }else if(cardInfo.deviceType==2){
-                        //  if(cardInfo.deviceStatus==1){
-                        //      icon='wcard_green';
-                        //  }else icon='wcard_red';
-                            
-                        // }
-                        setRight = {
-                            icon:icon,
+                        let setRight = {
+                            icon:'',
                             value:'',
                             callback:'headerRightClick'
-                        }
+                        };
                         if(userInfo.iccid=='666666666666'){
                             setRight={
                                 icon:'',
                                 value:'购卡指引',
                                 callback:'headerRightClick'
-                            }
-                            
+                            };
                         }
                         
                         Jsborya.setHeader({
                             title:'号码搜索',
-                            frontColor:'#ffffff',
-                            backgroundColor:'#4b3887',
                             left:{
                                 icon:'back_white',
                                 value:'返回',
@@ -107,25 +92,6 @@ var vm=new Moon({
                                 vm.toBuyHelpPage();
                                 return false;
                             }
-                            // if(cardInfo.deviceType==1){
-                            //  Jsborya.pageJump({
-                            //      url:"simInfo.html",
-                            //      stepCode:999,
-                            //      depiction:'SIM卡信息',
-                            //      destroyed:false,
-                            //      header:{
-                   //                      frontColor:'#ffffff',
-                   //                      backgroundColor:'#4b3887',
-                   //                  }
-                            //  });
-                            // }else if(cardInfo.deviceType==2){
-                            //  Jsborya.pageJump({
-                            //      url:'',
-                            //      stepCode:803,
-                            //      depiction:'设备管理',
-                            //      destroyed:false,
-                            //  });
-                            // }
                         });
                     }
                 });
@@ -184,7 +150,7 @@ var vm=new Moon({
                         vm.toBuyHelpPage();
                     },
                     no:function(){
-                        vm.toIndexPage();
+                        vm.jumpToHome();
                     }
                 });
                 return false;
@@ -255,7 +221,7 @@ var vm=new Moon({
                                 depiction:'订单详情',
                                 header:{
                                     frontColor:'#ffffff',
-                                    backgroundColor:'#4b3887',
+                                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                                 }
                             });
                         },
@@ -284,33 +250,6 @@ var vm=new Moon({
                         title:'提示'
                     });
                 }
-
-                let deviceType=data.data.deviceType,icon='';
-                if(deviceType==1){
-                    if(data.data.status==1){
-                        icon='card_green';
-                    }else icon='card_red';
-                    
-                }else if(deviceType==2){
-                    if(data.data.status==1){
-                        icon='wcard_green';
-                    }else icon='wcard_red';
-                }
-                Jsborya.setHeader({
-                    title:'选择套餐',
-                    frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
-                    left:{
-                        icon:'back_white',
-                        value:'',
-                        callback:''
-                    },
-                    right:{
-                        icon:icon,
-                        value:'',
-                        callback:'headerRightClick'
-                    }
-                });
 
             },true,function(){
                 vm.set("off.load",false);
@@ -366,7 +305,7 @@ var vm=new Moon({
                     depiction:'实名认证',
                     header:{
                         frontColor:'#ffffff',
-                        backgroundColor:'#4b3887',
+                        backgroundColor:vm.getHeaderColor(cardInfo.deviceType),
                     }
                 });
             },true,function(errorText){

@@ -372,7 +372,7 @@ var vm=new Moon({
 						destroyed:false,
 						header:{
 	                        frontColor:'#ffffff',
-	                        backgroundColor:'#4b3887',
+	                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                    }
 					});
 				});
@@ -387,7 +387,7 @@ var vm=new Moon({
 				destroyed:false,
 				header:{
                     frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
+                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                 }
 			});
 		},

@@ -147,13 +147,13 @@ var vm=new Moon({
 						depiction:'支付',
 						header:{
 		                    frontColor:'#ffffff',
-		                    backgroundColor:'#4b3887',
+		                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 		                }
 					});
 				}
 				
 			}else if(step==3){
-				vm.toIndexPage();
+				vm.jumpToHome();
 			}
 		},
 		createSheet:function(){//生成受理单
@@ -188,10 +188,10 @@ var vm=new Moon({
 					Jsborya.pageJump({
 						url:'createSheet.html',
 						stepCode:999,
-						depiction:'确认受理单',
+						depiction:'受理单',
 						header:{
 	                        frontColor:'#ffffff',
-	                        backgroundColor:'#4b3887',
+	                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                    }
 					});
 

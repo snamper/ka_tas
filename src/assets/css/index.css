@@ -65,10 +65,15 @@ body{
     padding-right: 0.1rem;
 }
 .m-search{
-	background-color:#4b3887;
 	padding:0.1rem;
 	display: flex;
 	display: -webkit-flex;
+}
+.eSIM{
+	background-color:#00923f;
+}
+.iCard{
+	background-color:#4b3887;
 }
 .m-hd{
 	width: 0.6rem;
