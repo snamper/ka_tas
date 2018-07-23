@@ -75,34 +75,34 @@ var vm=new Moon({
 						}
 					});
 
-					vm.callMethod('setPage');
 					vm.callMethod('getCardList');
 					vm.callMethod('getLableList');
 				}
 			});
 	    },
 	    mounted:function(){
-	    	
+	    	setTimeout(function(){
+	    		vm.callMethod('setPage');
+	    	},300);
 	    }
 	},
 	methods:{
 		setPage:function(){
-			setTimeout(function(){
-	    		let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
 
-				let otherHeight = 60 + 50 + 30,
-					btmImgH = window_w * 323/1242,
-					showBtmEntry = vm.get('off').showBtmEntry;
-				if(showBtmEntry)otherHeight += btmImgH;
-				
-				otherHeight = parseInt(otherHeight);
-				
-		    	vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
-				vm.set('otherHeight',otherHeight);
-				vm.set('windowHeight',window_h);
-				// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
-		    },300);
+    		let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
+			let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
+
+			let otherHeight = 60 + 50 + 30,
+				btmImgH = window_w * 323/1242,
+				showBtmEntry = vm.get('off').showBtmEntry;
+			if(showBtmEntry)otherHeight += btmImgH;
+			
+			otherHeight = parseInt(otherHeight);
+			
+	    	vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
+			vm.set('otherHeight',otherHeight);
+			vm.set('windowHeight',window_h);
+			// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
 	    	
 		},
 		getLableList:function(){
