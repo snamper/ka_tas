@@ -56,12 +56,6 @@ export default{
             return value ? (parseFloat(value)/100).toFixed(2) : '0.00';
         },
         /**
-         *@describe 元转换成精确到两位小数
-         **/
-        Moon.prototype.transLateYuan=function(value){
-          return value ? (parseFloat(value)).toFixed(2) : '0.00';
-        },
-        /**
          *@describe 计算折扣
          *@param {String/Number} (n) 分
          *@return {Number} 元

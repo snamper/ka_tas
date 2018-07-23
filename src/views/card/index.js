@@ -94,10 +94,6 @@ var vm=new Moon({
 				let otherHeight = 60 + 50 + 30,
 					btmImgH = window_w * 323/1242,
 					showBtmEntry = vm.get('off').showBtmEntry;
-				if(vm.get('cardInfo').deviceType == 3){//eSIM手表
-					otherHeight -= 50;
-					showBtmEntry = false;
-				}
 				if(showBtmEntry)otherHeight += btmImgH;
 
 				
@@ -108,7 +104,7 @@ var vm=new Moon({
 				vm.set('otherHeight',otherHeight);
 				vm.set('windowHeight',window_h);
 				// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
-		    },0)
+		    },0);
 	    	
 		},
 		getLableList:function(){

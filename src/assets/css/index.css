@@ -103,7 +103,6 @@ body{
     line-height:normal;
     padding-left: 0.15rem;
     border:1px solid transparent;
-    border-color: #515151;
     border-radius: 7px;
     transition:border-color .3s;
 }
