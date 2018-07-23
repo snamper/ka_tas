@@ -73,7 +73,7 @@ export default{
                 color = '#4b3887';
                 break;
               case 3:
-                color = '#00923f';
+                color = '#66B92A';
                 break;
             }
             return color;

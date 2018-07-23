@@ -95,16 +95,14 @@ var vm=new Moon({
 					btmImgH = window_w * 323/1242,
 					showBtmEntry = vm.get('off').showBtmEntry;
 				if(showBtmEntry)otherHeight += btmImgH;
-
 				
-
 				otherHeight = parseInt(otherHeight);
 				
 		    	vm.set('boxHt',`height:${ window_h - otherHeight - 1 }px`);
 				vm.set('otherHeight',otherHeight);
 				vm.set('windowHeight',window_h);
 				// vm.set('pageSize',Math.floor( (window_h - otherHeight) / 40) );
-		    },0);
+		    },300);
 	    	
 		},
 		getLableList:function(){
