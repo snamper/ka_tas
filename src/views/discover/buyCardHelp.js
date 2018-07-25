@@ -31,7 +31,7 @@ var vm=new Moon({
 			Jsborya.registerMethods('headerRightClick',function(){
 				Jsborya.pageJump({
 					url:'',
-					stepCode:804,
+					stepCode:'804',
 					depiction:'分享',
 					destroyed:false,
 					data:{

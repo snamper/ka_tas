@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/index.css');
+require('./css/index.css');
 
 Jsborya.ready(function(){
 
@@ -13,7 +13,7 @@ var vm=new Moon({
 		},
 		cardInfo:{//卡槽信息
 			slot:'-2',
-			deviceType:3,
+			deviceType:1,
 			iccid:'',
 			hasPriPhone:1,//是否有专营号，1是2否 
 		},
@@ -37,20 +37,6 @@ var vm=new Moon({
 	hooks: {
 	    init: function() {
 			vm=this;
-			Jsborya.setHeader({
-				title:'随心搜',
-				backgroundColor:'#4b3887',
-				left:{
-					icon:'back_white',
-					value:'返回',
-					callback:''
-				},
-				right:{
-					icon:'',
-					value:'',
-					callback:''
-				}
-			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 
@@ -65,23 +51,36 @@ var vm=new Moon({
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
 
+					let left = {
+							icon:'',
+							value:'',
+							callback:''
+						}, right = {
+							icon:'',
+							value:'',
+							callback:''
+						};
 					if(userInfo.iccid=='666666666666'){
 						vm.set('off.showBtmEntry',false);
-						Jsborya.setHeader({
-							title:'随心搜',
-							backgroundColor:'#4b3887',
-							left:{
-								icon:'back_white',
-								value:'返回',
-								callback:''
-							},
-							right:{
-								icon:'',
-								value:'去购卡',
-								callback:'headerRightClick'
-							}
-						});
+						right = {
+							icon:'',
+							value:'去购卡',
+							callback:'headerRightClick'
+						};
 					}
+					if(cardInfo.deviceType == 3){//eSIM手表
+						left = {
+							icon:'back_white',
+							value:'返回',
+							callback:''
+						};
+					}
+					Jsborya.setHeader({
+						title:'随心搜',
+						backgroundColor:'#4b3887',
+						left:left,
+						right:right
+					});
 
 					Jsborya.registerMethods('headerRightClick',function(){
 						if(userInfo.iccid=='666666666666'){//无卡找号
@@ -319,7 +318,7 @@ var vm=new Moon({
    //          });
    			Jsborya.pageJump({
 				url:'',
-				stepCode:801,
+				stepCode:'801',
 				depiction:'登录',
 				data:{
 					phone:''

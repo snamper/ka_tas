@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/cardAudit.css');
+require('./css/cardAudit.css');
 Jsborya.ready(function(){
 
 
@@ -143,7 +143,7 @@ var vm=new Moon({
 				}else{
 					Jsborya.pageJump({
 						url:'pay.html',
-						stepCode:999,
+						stepCode:'999',
 						depiction:'支付',
 						header:{
 		                    frontColor:'#ffffff',
@@ -187,7 +187,7 @@ var vm=new Moon({
 
 					Jsborya.pageJump({
 						url:'createSheet.html',
-						stepCode:999,
+						stepCode:'999',
 						depiction:'受理单',
 						header:{
 	                        frontColor:'#ffffff',

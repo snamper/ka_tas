@@ -112,7 +112,7 @@ var vm=new Moon({
 		submitSheet:function(){
 			Jsborya.pageJump({
 				url:'cardWriting.html',
-				stepCode:999,
+				stepCode:'999',
 				depiction:'写卡',
 				header:{
                     frontColor:'#ffffff',

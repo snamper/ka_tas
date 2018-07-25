@@ -1,4 +1,4 @@
-.u-icon-right{background-image:url(../img/icon-right.png);}
+.u-icon-right{background-image:url(../../../assets/img/icon-right.png);}
 
 /*可选包*/
 .m-col-double>li{
@@ -43,10 +43,10 @@
     bottom: 0;
     width: .25rem;
     height: .25rem;
-    background-image: url(../img/ic_checked.png);
+    background-image: url(../../../assets/img/ic_checked.png);
 }
 .m-col-double>.active2:after {
-    background-image: url(../img/ic_checked2.png);
+    background-image: url(../../../assets/img/ic_checked2.png);
     width: .25rem;
     height: .25rem;
     bottom: -1px

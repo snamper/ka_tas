@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/cardWriting.css');
+require('./css/cardWriting.css');
 Jsborya.ready(function(){
 
 
@@ -91,7 +91,7 @@ var vm=new Moon({
 				Jsborya.registerMethods('headerRightClick',function(){
 					Jsborya.pageJump({
 						url:'',
-						stepCode:803,
+						stepCode:'803',
 						depiction:'设备管理',
 						destroyed:false,
 					});
@@ -233,14 +233,14 @@ var vm=new Moon({
 			},function(data){
 				Jsborya.pageJump({
 					url:"cardActive.html",
-					stepCode:999,
+					stepCode:'999',
 					depiction:'开卡受理',
 					header:{
                         frontColor:'#ffffff',
                         backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
                     }
 				});
-			},function(){
+			},true,function(){
 				vm.set("error",{code:10,text:'开卡申请失败'});
 			});
 		},

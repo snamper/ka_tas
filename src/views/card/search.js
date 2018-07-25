@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/index.css');
+require('./css/index.css');
 
 Jsborya.ready(function(){
 

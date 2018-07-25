@@ -6,7 +6,7 @@
     background-position: center;
     background-size:100%;
     background-repeat: no-repeat;
-    background-image: url(../img/success-full.png);
+    background-image: url(../../../assets/img/success-full.png);
 }
 
 
@@ -55,7 +55,7 @@
     margin-right: 5px;
     width: 0.18rem;
     height: 0.18rem;
-    background-image: url(../img/tail-spin.svg);
+    background-image: url(../../../assets/img/tail-spin.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;

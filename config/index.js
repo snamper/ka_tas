@@ -12,10 +12,17 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/tas/':{
-            target:'http://192.168.10.26:6085',
+            target:'http://192.168.10.167:6085',
             changeOrigin:true,
             pathRewrite:{
                 '^/tas/':'/tas/'
+            }
+        },
+        '/tms/':{
+            target:'http://192.168.10.167:6058',
+            changeOrigin:true,
+            pathRewrite:{
+                '^/tms/':'/tms/'
             }
         }
     },

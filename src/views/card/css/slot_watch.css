@@ -1,14 +1,14 @@
 .u-icon-sim{
-    background-image: url(../img/sim_black.png);
+    background-image: url(../../../assets/img/sim_black.png);
 }
 .u-icon-order{
-    background-image: url(../img/order.png);
+    background-image: url(../../../assets/img/order.png);
 }
 .u-icon-bluetooth{
-    background-image: url(../img/bluetooth.png);
+    background-image: url(../../../assets/img/bluetooth.png);
 }
 .u-icon-power{
-    background-image: url(../img/power.png);
+    background-image: url(../../../assets/img/power.png);
 }
 .u-icon-warning{
     display: inline-block;
@@ -19,7 +19,7 @@
     margin-left:5px;
     margin-top: -2px;
 
-    background-image: url(../img/icon_error.png);
+    background-image: url(../../../assets/img/icon_error.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100%;
@@ -30,14 +30,14 @@
 
 .m-device{
     display: flex;
-    background-image:url(../img/watch_read_bg.jpg);
+    background-image:url(../../../assets/img/watch_read_bg.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 .m-device>.lt{
     flex: 1;
-    background-image:url(../img/watch_read_icon.png);
+    background-image:url(../../../assets/img/watch_read_icon.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 80%;

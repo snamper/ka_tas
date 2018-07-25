@@ -102,7 +102,7 @@ var vm=new Moon({
 		jumpToLogin:function(){
 			Jsborya.pageJump({
 				url:'',
-				stepCode:801,
+				stepCode:'801',
 				depiction:'登录',
 				data:{
 					phone:vm.get("orderInfo").phoneNum
@@ -112,7 +112,7 @@ var vm=new Moon({
 		jumpToHome:function(){
 			Jsborya.pageJump({
 				url:'',
-				stepCode:806,
+				stepCode:'806',
 				depiction:'首页',
 			});
 		},

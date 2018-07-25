@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/packageDevoted.css');
+require('./css/packageDevoted.css');
 
 Jsborya.ready(function(){
 
@@ -217,7 +217,7 @@ var vm=new Moon({
                             vm.setStore('ORDER_INFO',data.data.orderInfo);
                             Jsborya.pageJump({
                                 url:'orderInfo.html',
-                                stepCode:999,
+                                stepCode:'999',
                                 depiction:'订单详情',
                                 header:{
                                     frontColor:'#ffffff',
@@ -301,7 +301,7 @@ var vm=new Moon({
                 });
                 Jsborya.pageJump({
                     url:'certification.html',
-                    stepCode:999,
+                    stepCode:'999',
                     depiction:'实名认证',
                     header:{
                         frontColor:'#ffffff',

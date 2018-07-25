@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/faceVerification.css');
+require('./css/faceVerification.css');
 var icon_shibie=require('../../assets/img/icon_shibie.png');
 Jsborya.ready(function(){
 
@@ -128,7 +128,7 @@ var vm=new Moon({
 			vm.AJAX('/tas/w/business/materialUpload',json,function(data){
 				Jsborya.pageJump({
 					url:'cardAudit.html',
-					stepCode:999,
+					stepCode:'999',
 					depiction:'订单审核',
 					header:{
 	                    frontColor:'#ffffff',

@@ -48,6 +48,23 @@ export default{
             return w;
         },
         /**
+         *@describe 节流函数
+         *@param {Number} (time) 节流时间
+         *@param {Function} (action) 节流回调
+         *@return {Function} 
+         **/
+        Moon.prototype.debounce = function(time,action){
+          let last;
+          return function(){
+            let ctx=this, args=arguments;
+
+            clearTimeout(window.LastDebounce);
+            window.LastDebounce=setTimeout(function(){
+                action.apply(ctx,args);
+            },time);
+          };
+        },
+        /**
          *@describe 分转元
          *@param {String/Number} (n) 分
          *@return {Number} 元
@@ -84,7 +101,7 @@ export default{
         Moon.prototype.jumpToHome=function(){
             Jsborya.pageJump({
               url:'',
-              stepCode:806,
+              stepCode:'806',
               depiction:'首页',
             });
         },
@@ -94,7 +111,7 @@ export default{
         Moon.prototype.toBuyHelpPage=function(){
             Jsborya.pageJump({
                 url:'../discover/buyCardHelp.html',
-                stepCode:999,
+                stepCode:'999',
                 depiction:'购卡指南',
                 destroyed:false,
                 header:{
@@ -191,7 +208,7 @@ export default{
                             window.localStorage.setItem('ORDER_INFO',JSON.stringify(data.data));
                             Jsborya.pageJump({
                                 url:'orderInfo.html',
-                                stepCode:999,
+                                stepCode:'999',
                                 depiction:'订单详情',
                                 header:{
                                     frontColor:'#ffffff',

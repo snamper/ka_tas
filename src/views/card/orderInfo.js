@@ -88,7 +88,7 @@ var vm=new Moon({
             vm.setStore('ORDER_INFO',vm.get('orderInfo'));
             Jsborya.pageJump({
                 url:todo.url,
-                stepCode:999,
+                stepCode:'999',
                 depiction:todo.next,
                 header:{
                     frontColor:'#ffffff',

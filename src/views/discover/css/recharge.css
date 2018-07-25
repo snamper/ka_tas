@@ -2,7 +2,7 @@
 .m-pay-choose>li:first-child{
     border-bottom: 1px solid #ececec;
 }
-.m-pay-choose, .m-input-money>.clr{
+.m-pay-choose{
     border-top: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
     background-color: #fff;
@@ -17,10 +17,10 @@
     height: 0.3rem;
 }
 .u-icon-alipay{
-    background-image: url(../img/alipay.png);
+    background-image: url(../../../assets/img/alipay.png);
 }
 .u-icon-wechat{
-    background-image: url(../img/wechat_pay.png);
+    background-image: url(../../../assets/img/wechat_pay.png);
 }
 .m-form-radio{
     position: relative;
@@ -50,7 +50,7 @@
     display: inline-block;
 }
 .m-form-radio>div>.radio>span:active{
-    border-color: #4b3887
+    border-color: #4B3887
 }
 .m-form-radio>div>.radio>span:after{
     width: 11px;height: 11px;
@@ -64,10 +64,10 @@
     opacity: 0;outline: none;position: absolute;z-index: -1;top: 0;left: 0;right: 0;bottom: 0;margin: 0
 }
 .m-form-radio>div>.radio>.active{
-    border-color: #4b3887
+    border-color: #4B3887
 }
 .m-form-radio>div>.radio>.active:after{
-    background: #4b3887;
+    background: #4B3887;
     transform: translate(-50%, -50%) scale(1);-webkit-transform: translate(-50%, -50%) scale(1);
     -moz-transform: translate(-50%, -50%) scale(1)
 }
@@ -127,7 +127,7 @@
         -webkit-transform: scale(1)
     }
 }
-
+/*支付后状态*/
 .m-pay-status{
     text-align: center;
     margin-top: 0.2rem;
@@ -138,4 +138,141 @@
 .m-pay-status>p{
     margin-top: 5px;
     font-size: 0.15rem;
+}
+/*头部输入*/
+.m-input-phone{
+    background-color: #fff;
+    padding-top: 0.15rem;
+    border-bottom: 1px solid #eee;
+}
+.m-input-phone>.box{
+    position: relative;
+    margin: 0 0.1rem;
+}
+.m-input-phone>.box>input{
+    display: block;
+    width: 100%;
+    border:none;
+    outline: none;
+    font-size: 0.2rem;
+    height: 0.35rem;
+    line-height: normal;
+    letter-spacing: 1px;
+}
+.m-input-phone>.box>input::-webkit-input-placeholder { 
+  line-height: 1.5em;
+}
+.m-input-phone>.box>input:-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-input-phone>.box>input::-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-input-phone>.box>.u-icon-cancel{
+    position: absolute;
+    width: 0.35rem;
+    height: 0.35rem;
+    right: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size:0.2rem;
+    background-image: url(../../../assets/img/cancel_grey.png);
+}
+.m-input-phone>.msg{
+    padding-left: 0.1rem;
+    padding-bottom: 5px;
+    height: 0.15rem;
+}
+/**/
+.m-face-box{
+    background-color: #fff;
+}
+.m-face-box>header{
+    padding:0.15rem 0 0.1rem 0.1rem;
+}
+.m-face-box>ul{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-wrap:wrap;
+    
+    margin:0 0.1rem;
+    border-bottom: 1px solid #eee;
+}
+.m-face-box>ul>li{
+    padding:0.1rem 0;
+    margin-bottom: 0.1rem;
+    position: relative;
+    border-radius: 2px;
+    text-align: center;
+    border:1px solid transparent;
+    border-color: #666;
+    width: 32%;
+}
+.m-face-box>ul>li:nth-child(3n-1){
+    margin:0 2%;
+    margin-bottom: 0.1rem;
+}
+.m-face-box>ul>li>.face{
+    font-size: 0.16rem;
+    margin-bottom: 5px;
+}
+.m-face-box>ul>.active{
+    border-color:#F99B38;
+    color:#F99B38;
+}
+.m-face-box>ul>.active:after{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 0.25rem;
+    height: 0.25rem;
+    right: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size:0.25rem;
+    background-image: url(../../../assets/img/icon_choose.png);
+}
+.m-face-box>ul>.noselect{
+    color: #999;
+    border-color: #eee;
+}
+/**/
+.m-input-money{
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding:5px 0;
+}
+.m-input-money>.lt{
+    width: 0.7rem;
+    text-align: center;
+}
+.m-input-money>.rt{
+    flex:1;
+}
+.m-input-money>.rt>input{
+    display: block;
+    width: 100%;
+    border:none;
+    outline: none;
+    font-size: 0.16rem;
+    height: 0.3rem;
+    line-height: normal;
+    letter-spacing: 1px;
+    text-indent: 5px;
+}
+.m-input-money>.rt>input::-webkit-input-placeholder { 
+  line-height: 1.5em;
+}
+.m-input-money>.rt>input:-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-input-money>.rt>input::-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-tag{
+    padding:0.1rem;
 }

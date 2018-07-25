@@ -16,7 +16,7 @@
     border-color:#F99B38;
 }
 .verification-box>.load>.loaded{
-    background-image: url(../img/picture_writecard.png);
+    background-image: url(../../../assets/img/picture_writecard.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size:0.6rem;

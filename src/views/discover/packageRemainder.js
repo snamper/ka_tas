@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/packageRemainder.css');
+require('./css/packageRemainder.css');
 
 Jsborya.ready(function(){
 

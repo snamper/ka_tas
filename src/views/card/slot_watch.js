@@ -1,6 +1,6 @@
 require('../../public.js');
-require('../../assets/css/slotInfo.css');
-require('../../assets/css/slot_watch.css');
+require('./css/slotInfo.css');
+require('./css/slot_watch.css');
 
 Jsborya.ready(function(){
 
@@ -136,7 +136,7 @@ var vm=new Moon({
 					
 					Jsborya.pageJump({
 		                url:'index.html',
-		                stepCode:999,
+		                stepCode:'999',
 		                depiction:'随心搜',
 		                header:{
 		                    frontColor:'#ffffff',
@@ -203,9 +203,9 @@ var vm=new Moon({
                 url='';
                 next='';
                 if(orderStatus==3){
-                	depiction='开卡成功';
+                	depiction='开通成功';
                 }else if(orderStatus==6){
-                	depiction='开卡失败';
+                	depiction='开通失败';
                 }
             }else if(parseInt(similarity)){
             	url='cardAudit.html';
@@ -228,7 +228,7 @@ var vm=new Moon({
 
             Jsborya.pageJump({
                 url:todo.url,
-                stepCode:999,
+                stepCode:'999',
                 depiction:todo.next,
                 header:{
                     frontColor:'#ffffff',
@@ -279,7 +279,7 @@ var vm=new Moon({
 		jumpToLogin:function(){
 			Jsborya.pageJump({
 				url:'',
-				stepCode:801,
+				stepCode:'801',
 				depiction:'登录',
 			});
 		},

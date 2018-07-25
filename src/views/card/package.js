@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/package.css');
+require('./css/package.css');
 
 Jsborya.ready(function(){
 
@@ -189,7 +189,7 @@ var vm=new Moon({
                         	vm.setStore('ORDER_INFO',data.data.orderInfo);
 						    Jsborya.pageJump({
 				                url:'orderInfo.html',
-				                stepCode:999,
+				                stepCode:'999',
 				                depiction:'订单详情',
 				                header:{
 				                    frontColor:'#ffffff',
@@ -269,7 +269,7 @@ var vm=new Moon({
 		        });
 				Jsborya.pageJump({
 					url:'certification.html',
-					stepCode:999,
+					stepCode:'999',
 					depiction:'实名认证',
 					header:{
 	                    frontColor:'#ffffff',
@@ -284,7 +284,7 @@ var vm=new Moon({
 		// jumpToPackageList:function(type,name){
 		// 	Jsborya.pageJump({
 		// 		url:'packageList.html?type='+BASE64.encode(JSON.stringify({val:type,name:name})),
-		// 		stepCode:999,
+		// 		stepCode:'999',
 		// 		depiction:'套餐列表',
 		// 		destroyed:false,
 		// 		header:{
@@ -338,7 +338,7 @@ var vm=new Moon({
 		jumpToPackageDetails:function(code){
 			Jsborya.pageJump({
 				url:'packageDetails.html?code='+code+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
-				stepCode:999,
+				stepCode:'999',
 				depiction:'套餐详情',
 				destroyed:false,
 				header:{

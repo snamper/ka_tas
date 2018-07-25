@@ -2,19 +2,19 @@ body{
     padding-bottom: 0.3rem;
 }
 .u-icon-tagnum_1{
-    background-image: url(../img/icon_no1.png);
+    background-image: url(../../../assets/img/icon_no1.png);
 }
 .u-icon-tagnum_2{
-    background-image: url(../img/icon_no2.png);
+    background-image: url(../../../assets/img/icon_no2.png);
 }
 .u-icon-tagnum_3{
-    background-image: url(../img/icon_no3.png);
+    background-image: url(../../../assets/img/icon_no3.png);
 }
 .u-icon-wcg{
-    background-image: url(../img/picture_watch_connected.png);
+    background-image: url(../../../assets/img/picture_watch_connected.png);
 }
 .u-icon-wcr{
-    background-image: url(../img/picture_watch_ununited.png);
+    background-image: url(../../../assets/img/picture_watch_ununited.png);
 }
 .btnDefault_dp{
 
@@ -177,7 +177,7 @@ body{
     margin-right: 5px;
     width: 0.2rem;
     height: 0.2rem;
-    background-image: url(../img/tail-spin.svg);
+    background-image: url(../../../assets/img/tail-spin.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 0.17rem;

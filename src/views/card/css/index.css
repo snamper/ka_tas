@@ -1,10 +1,10 @@
 @charset "utf-8";
-.u-icon-search{background-image: url(../img/icon_search.png);}
-.u-icon-clear{background-image: url(../img/icon_search_lable_clear.png);}
-.u-icon-rcmd{background-image: url(../img/recommend.png);}
-.u-icon-devoted{background-image: url(../img/icon_monopoly_number.png);}
+.u-icon-search{background-image: url(../../../assets/img/icon_search.png);}
+.u-icon-clear{background-image: url(../../../assets/img/icon_search_lable_clear.png);}
+.u-icon-rcmd{background-image: url(../../../assets/img/recommend.png);}
+.u-icon-devoted{background-image: url(../../../assets/img/icon_monopoly_number.png);}
 
-body{
+body, #app{
 	position: absolute;
 	width:100%;
 	height: 100%;
@@ -297,7 +297,7 @@ body{
     top: 3px;
     width: 0.16rem;
     background-size: 0.16rem;
-    background-image: url(../img/re.png);
+    background-image: url(../../../assets/img/re.png);
     background-repeat: no-repeat;
     background-position:center;
     -webkit-transform-origin: center;

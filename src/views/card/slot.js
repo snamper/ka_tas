@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/slotInfo.css');
+require('./css/slotInfo.css');
 
 Jsborya.ready(function(){
 
@@ -59,7 +59,7 @@ var vm=new Moon({
 			Jsborya.registerMethods('headerRightClick',function(){
 				Jsborya.pageJump({
 	                url:'https://km.m10027.com/tf/guide.html',
-	                stepCode:800,
+	                stepCode:'800',
 	                depiction:'开卡指南',
 	                destroyed:false,
 	                header:{
@@ -223,7 +223,7 @@ var vm=new Moon({
 			if(status==1){
 				Jsborya.pageJump({
 	                url:'index.html',
-	                stepCode:999,
+	                stepCode:'999',
 	                depiction:'随心搜',
 	                header:{
 	                    frontColor:'#ffffff',
@@ -237,7 +237,7 @@ var vm=new Moon({
 
 				Jsborya.pageJump({
 	                url:'slotInfo.html',
-	                stepCode:999,
+	                stepCode:'999',
 	                depiction:'开卡信息',
 	                header:{
 	                    frontColor:'#ffffff',

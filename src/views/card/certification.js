@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/certification.css');
+require('./css/certification.css');
 var imgToBase64=require('../../assets/js/imgToBase64.js');
 Jsborya.ready(function(){
 
@@ -252,7 +252,7 @@ var vm=new Moon({
 				},function(data){
 					Jsborya.pageJump({
 						url:'',
-						stepCode:802,
+						stepCode:'802',
 						depiction:'',
 						data:data.data
 					});
@@ -367,7 +367,7 @@ var vm=new Moon({
 					});
 					Jsborya.pageJump({
 						url:'faceVerification.html',
-						stepCode:999,
+						stepCode:'999',
 						depiction:'活体识别',
 						destroyed:false,
 						header:{
@@ -382,7 +382,7 @@ var vm=new Moon({
 		skimAgreement:function(){
 			Jsborya.pageJump({
 				url:"http://km.m10027.com/yt-rwxy.html",
-				stepCode:800,
+				stepCode:'800',
 				depiction:'远特客户入网服务协议',
 				destroyed:false,
 				header:{

@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/realTimeCharge.css');
+require('./css/realTimeCharge.css');
 
 Jsborya.ready(function(){
 

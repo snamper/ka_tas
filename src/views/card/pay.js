@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/pay.css');
+require('./css/pay.css');
 Jsborya.ready(function(){
 
 
@@ -222,7 +222,7 @@ var vm=new Moon({
 
 				Jsborya.pageJump({
 					url:'createSheet.html',
-					stepCode:999,
+					stepCode:'999',
 					depiction:'受理单',
 					header:{
                         frontColor:'#ffffff',

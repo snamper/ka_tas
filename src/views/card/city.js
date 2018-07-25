@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/city.css');
+require('./css/city.css');
 
 Jsborya.ready(function(){
 

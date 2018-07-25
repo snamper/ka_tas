@@ -1,0 +1,98 @@
+.m-card-box{
+	position: relative;
+	
+}
+.m-card-ul{
+	padding-bottom: 0.27rem;
+}
+.m-card-ul>li{
+	padding:5px 0.1rem;
+	background-color: #fff;
+	
+	margin-bottom: 0.15rem;
+}
+.m-card-ul>li>.row{
+	display: flex;
+	align-items: center;
+	padding: 3px 0;
+}
+.m-card-ul>li>.row>.lt{
+	flex: 3;
+}
+.m-card-ul>li>.row>.rt{
+	flex: 1;
+	text-align: right;
+}
+.m-card-ul>li>.pay b{
+	font-size: 0.16rem;
+}
+.m-card-ul>li>.pay i{
+	display: inline-block;
+	vertical-align: middle;
+	width: 0.15rem;
+	height: 0.15rem;
+	position: relative;
+	margin-top: -3px;
+
+	background-size: 0.15rem;
+    background-repeat: no-repeat;
+    background-position:center;
+}
+.m-card-ul>li>.pay .u-icon-alipay{
+	background-image: url(../../../assets/img/icon_alipay.png);
+}
+.m-card-ul>li>.pay .u-icon-wechat{
+	background-image: url(../../../assets/img/icon_wechat.png);
+}
+
+/*loading*/
+.m-no-more{
+	text-align: center;
+	font-size: 0.1rem;
+}
+.m-loading {
+	display: inline-block;
+	position: absolute;
+	width: 100%;
+	bottom:0;
+	left: 0;
+    text-align: center;
+    height: .25rem;
+}
+.m-loading>.u-icon-loading{
+    position: relative;
+    display: inline-block;
+    top: 3px;
+    width: 0.16rem;
+    background-size: 0.16rem;
+    background-image: url(../../../assets/img/re.png);
+    background-repeat: no-repeat;
+    background-position:center;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    animation: loading-rotate .9s linear infinite;
+    -webkit-animation: loading-rotate .9s linear infinite
+}
+.m-loading>span{
+    height: 0.16rem;
+}
+.m-loading>.text{
+    color: #bfbfbf;
+}
+@keyframes loading-rotate {
+    0%{
+        transform: rotate(0deg)
+    }
+    100%{
+        transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes loading-rotate {
+    0%{
+        -webkit-transform: rotate(0deg)
+    }
+    100%{
+        -webkit-transform: rotate(360deg)
+    }
+}

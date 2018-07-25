@@ -1,5 +1,5 @@
 require('../../public.js');
-require('../../assets/css/slotInfo.css');
+require('./css/slotInfo.css');
 
 Jsborya.ready(function(){
 
@@ -155,7 +155,7 @@ var vm=new Moon({
 
             Jsborya.pageJump({
                 url:todo.url,
-                stepCode:999,
+                stepCode:'999',
                 depiction:todo.next,
                 header:{
                     frontColor:'#ffffff',
@@ -203,7 +203,7 @@ var vm=new Moon({
 		jumpToHome:function(){
 			Jsborya.pageJump({
                 url:'index.html',
-                stepCode:999,
+                stepCode:'999',
                 depiction:'号码搜索',
                 header:{
                     frontColor:'#ffffff',
@@ -214,7 +214,7 @@ var vm=new Moon({
 		jumpToLogin:function(){
 			Jsborya.pageJump({
 				url:'',
-				stepCode:801,
+				stepCode:'801',
 				depiction:'登录',
 				data:{
 					phone:vm.get('orderInfo').phoneNum
