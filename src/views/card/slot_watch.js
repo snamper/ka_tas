@@ -281,6 +281,9 @@ var vm=new Moon({
 				url:'',
 				stepCode:'801',
 				depiction:'登录',
+				data:{
+					phone:vm.get('orderInfo').phoneNum,
+				}
 			});
 		},
 		filterConnectStatus:function(status){
