@@ -15,6 +15,7 @@
 </head>
 <body>
 <div id="app" m-mask>
+	<div>
 	<section m-literal:class="{eSIM:cardInfo.deviceType==3,iCard:cardInfo.deviceType!=3}">
 		<div class="m-search">
 			<div class="m-hd" m-on:click="cityClick">{{ selectCity.cityName }}</div>
@@ -72,6 +73,7 @@
 			</div>
 		</div>
 	</section>
+	</div>
 	<section class="m-footer-entry" m-show="off.showBtmEntry">
 		<div class="item" m-on:click="jumpDevoted"><img src="../../assets/img/devoted_entry.jpg" alt=""></div>
 	</section>

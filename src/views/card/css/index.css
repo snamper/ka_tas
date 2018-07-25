@@ -4,15 +4,17 @@
 .u-icon-rcmd{background-image: url(../../../assets/img/recommend.png);}
 .u-icon-devoted{background-image: url(../../../assets/img/icon_monopoly_number.png);}
 
-body, #app{
-	position: absolute;
-	width:100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	margin:auto;
+#app{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction:column;
+    width: 100%;
+    
+}
+#app>div{
+    flex: 1;
+    -webkit-flex: 1;
 }
 .m-sch>span, .m-slt-lb>.u-icon-clear, .m-card-ul .u-icon-pretty{
 	background-repeat: no-repeat;
@@ -264,7 +266,7 @@ body, #app{
 
 /*底部入口*/
 .m-footer-entry{
-	position: absolute;
+	position: relative;
     bottom: 0;
     left: 0;
     right: 0;

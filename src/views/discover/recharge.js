@@ -35,6 +35,7 @@ var vm=new Moon({
 		},
 		minFee:10,//最小充值金额
 		inputMoney:'',
+		orderId:'',
 	},
 	hooks:{
 		init:function(){
@@ -187,7 +188,7 @@ var vm=new Moon({
 				const json={
 					userInfo:vm.get('userInfo'),
 					params:{
-						sysOrderId:vm.get('orderInfo').sysOrderId,
+						orderId:vm.get('orderId'),
 					}
 				};
 				vm.set('off.load',2);
@@ -258,35 +259,33 @@ var vm=new Moon({
 					deviceType:deviceType,
 				}
 			},function(data){
+				vm.set('orderId',data.data.orderId);
 				//alert(JSON.stringify(data));
-				if(data.data.payStatusOld){
-					vm.callMethod('payComplete',[1]);
-				}else{
-					// if(deviceType == 3){
-					// 	setTimeout(function(){
-					// 		layer.open({
-					// 			title:'支付操作确认',
-					// 			content:'如果您已完成支付操作，请点击【已支付】按钮;如果您未支付请重新发起支付',
-					// 			btn:['已支付','未支付'],
-					// 			yes:function(){
-					// 				vm.callMethod('payComplete',[1]);
-					// 			},
-					// 		});
-					// 	},1500);
-					// }
-					
-					Jsborya.pageJump({
-						url:'',
-						stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
-						data:data.data,
-						depiction:payType==2 ? "微信支付" : "支付宝支付",
-						destroyed:false,
-						header:{
-	                        frontColor:'#ffffff',
-	                        backgroundColor:vm.getHeaderColor(deviceType),
-	                    }
-					});
-				}
+
+				// if(deviceType == 3){
+				// 	setTimeout(function(){
+				// 		layer.open({
+				// 			title:'支付操作确认',
+				// 			content:'如果您已完成支付操作，请点击【已支付】按钮;如果您未支付请重新发起支付',
+				// 			btn:['已支付','未支付'],
+				// 			yes:function(){
+				// 				vm.callMethod('payComplete',[1]);
+				// 			},
+				// 		});
+				// 	},1500);
+				// }
+				
+				Jsborya.pageJump({
+					url:'',
+					stepCode:payType==2 ? "WECHAT_PAY" : "ALI_PAY",
+					data:data.data,
+					depiction:payType==2 ? "微信支付" : "支付宝支付",
+					destroyed:false,
+					header:{
+                        frontColor:'#ffffff',
+                        backgroundColor:vm.getHeaderColor(deviceType),
+                    }
+				});
 					
 			},function(){
 				vm.set('off.load',false);
