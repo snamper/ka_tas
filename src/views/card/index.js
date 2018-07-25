@@ -75,6 +75,7 @@ var vm=new Moon({
 							callback:''
 						};
 					}
+					alert(`left:${JSON.stringify(left)}`);
 					Jsborya.setHeader({
 						title:'随心搜',
 						backgroundColor:'#4b3887',

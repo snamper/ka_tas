@@ -132,10 +132,12 @@ var vm=new Moon({
 		},
 		clearInput(){
 			vm.set('recharge',{
-				phone:'',
+				phone:vm.get('userInfo').phone,
 				isp:0,
 				city:''
 			});
+			vm.set('off.payStatus',1);
+			vm.set('off.select',999);
 			vm.set('faceList',[{
 				fee:1000,discount:1000,status:0
 			},{
@@ -207,7 +209,6 @@ var vm=new Moon({
 					});
 				},2000);
 			}else if(status==2){
-				vm.set('off.load',false);
 				layer.open({
 					title:'支付失败',
 					content:'如果您想重新发起支付，请点击【去支付】按钮',
@@ -215,7 +216,6 @@ var vm=new Moon({
 					shadeClose:false,
 				});
 			}else if(status==3){
-				vm.set('off.load',false);
 				layer.open({
 					title:'支付取消',
 					content:'您已取消支付，如果想重新发起支付，请点击【去支付】按钮',

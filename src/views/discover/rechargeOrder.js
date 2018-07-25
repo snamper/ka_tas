@@ -26,7 +26,7 @@ var vm=new Moon({
 				vm.set('userInfo',userInfo);
 
 				vm.callMethod('setPage');
-				//vm.callMethod('getList');
+				vm.callMethod('getList');
 			});
 		}
 	},
