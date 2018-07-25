@@ -42,7 +42,7 @@ var vm=new Moon({
 		getList:function(page,closeLoad){//获取数据
 			const json={
 	  			params:{
-	  				page:page||1,
+	  				pageNum:page||1,
 	  				pageSize:vm.get('pageSize'),
 	  			},
 	  			userInfo:vm.get('userInfo')
