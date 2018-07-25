@@ -74,8 +74,10 @@ var vm=new Moon({
 							value:'返回',
 							callback:''
 						};
+					}else if(cardInfo.deviceType == 1){//手机写卡
+						left = '';
 					}
-					alert(`left:${JSON.stringify(left)}`);
+					//alert(`left:${JSON.stringify(left)}`);
 					Jsborya.setHeader({
 						title:'随心搜',
 						backgroundColor:'#4b3887',
