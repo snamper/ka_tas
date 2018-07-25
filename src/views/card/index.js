@@ -81,6 +81,7 @@ var vm=new Moon({
 					Jsborya.setHeader({
 						title:'随心搜',
 						backgroundColor:'#4b3887',
+						frontColor:'#ffffff',
 						left:left,
 						right:right
 					});

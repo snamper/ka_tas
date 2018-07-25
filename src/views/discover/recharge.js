@@ -44,6 +44,7 @@ var vm=new Moon({
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			Jsborya.setHeader({
 				title:'手机充值',
+				frontColor:'#ffffff',
 				backgroundColor:'#4b3887',
 				left:{
 					icon:'back_white',
