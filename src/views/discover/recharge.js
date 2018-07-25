@@ -15,17 +15,17 @@ var vm=new Moon({
 			payStatus:1,//0,未支付;1,待支付;2,支付成功;3,支付失败;
 		},
 		faceList:[{
-			fee:1000,discount:10000,status:0
+			fee:1000,discount:1000,status:0
 		},{
-			fee:2000,discount:10000,status:0
+			fee:2000,discount:1000,status:0
 		},{
-			fee:3000,discount:10000,status:0
+			fee:3000,discount:1000,status:0
 		},{
-			fee:5000,discount:10000,status:0
+			fee:5000,discount:1000,status:0
 		},{
-			fee:10000,discount:10000,status:0
+			fee:10000,discount:1000,status:0
 		},{
-			fee:20000,discount:10000,status:0
+			fee:20000,discount:1000,status:0
 		}],
 		deviceType:1,//1,i卡;2,手表;3,eSIM;
 		recharge:{
@@ -60,6 +60,8 @@ var vm=new Moon({
 
 			Jsborya.getUserInfo(function(userInfo){
 				vm.set('userInfo',userInfo);
+				vm.set('recharge.phone',userInfo.phone);
+				vm.callMethod('getPhoneInfo');
 
 				Jsborya.registerMethods('headerRightClick',function(){
 					Jsborya.pageJump({
@@ -74,7 +76,6 @@ var vm=new Moon({
 		            });
 				});
 			});
-			vm.callMethod('pay')
 		}
 	},
 	methods:{
@@ -291,7 +292,7 @@ var vm=new Moon({
 			vm.set('off.payType',payType);
 		},
 		mathDiscount(money,discount){
-			return this.mathCentToYuan(parseInt(money) * discount / 10000);
+			return this.mathCentToYuan(parseInt(money) * discount / 1000);
 		},
 		mathCentToYuan:function(value){
 			return this.mathCentToYuan(value);

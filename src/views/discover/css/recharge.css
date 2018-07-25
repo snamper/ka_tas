@@ -1,3 +1,6 @@
+body{
+    padding-bottom: 0.3rem;
+}
 .m-pay-choose{padding-left: 0.2rem;}
 .m-pay-choose>li:first-child{
     border-bottom: 1px solid #ececec;
@@ -181,8 +184,7 @@
 }
 .m-input-phone>.msg{
     padding-left: 0.1rem;
-    padding-bottom: 5px;
-    height: 0.15rem;
+    height: 0.2rem;
 }
 /**/
 .m-face-box{
@@ -193,7 +195,6 @@
 }
 .m-face-box>ul{
     display: flex;
-    justify-content: center;
     align-items:center;
     flex-wrap:wrap;
     
@@ -263,6 +264,7 @@
     line-height: normal;
     letter-spacing: 1px;
     text-indent: 5px;
+    color:#777;
 }
 .m-input-money>.rt>input::-webkit-input-placeholder { 
   line-height: 1.5em;
