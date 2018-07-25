@@ -77,7 +77,13 @@ var vm=new Moon({
 					}else if(cardInfo.deviceType == 1){//手机写卡
 						left = '';
 					}
-					//alert(`left:${JSON.stringify(left)}`);
+					alert(`setHeader:${JSON.stringify({
+						title:'随心搜',
+						backgroundColor:'#4b3887',
+						frontColor:'#ffffff',
+						left:left,
+						right:right
+					})}`);
 					Jsborya.setHeader({
 						title:'随心搜',
 						backgroundColor:'#4b3887',
