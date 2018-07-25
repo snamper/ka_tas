@@ -51,16 +51,16 @@
 
 		<div class="m-tag">支付方式</div>
 		<ul class="m-pay-choose">
-			<li class="m-form-radio">
-				<div class="clr" m-on:click="shiftPayType(2)">
-					<span class="text u-icon-wechat"></span>
-					<span class="radio fr"><input type="radio" value="2"><span m-literal:class="{active:off.payType==2}"></span></span>
-				</div>
-			</li>
 			<li class="m-form-radio" m-on:click="shiftPayType(3)">
 				<div class="clr">
 					<span class="text u-icon-alipay"></span>
 					<span class="radio fr"><input type="radio" value="3"><span m-literal:class="{active:off.payType==3}"></span></span>
+				</div>
+			</li>
+			<li class="m-form-radio" m-show="deviceType!=3">
+				<div class="clr" m-on:click="shiftPayType(2)">
+					<span class="text u-icon-wechat"></span>
+					<span class="radio fr"><input type="radio" value="2"><span m-literal:class="{active:off.payType==2}"></span></span>
 				</div>
 			</li>
 		</ul>

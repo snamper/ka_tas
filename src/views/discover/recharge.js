@@ -75,6 +75,10 @@ var vm=new Moon({
 		                }
 		            });
 				});
+				Jsborya.registerMethods('payComplete',function(data){
+					alert(`payComplete:${JSON.stringify(data)}`);
+					vm.callMethod('payComplete',[data.status]);
+				});
 			});
 		}
 	},
@@ -132,17 +136,17 @@ var vm=new Moon({
 				city:''
 			});
 			vm.set('faceList',[{
-				fee:1000,discount:10000,status:0
+				fee:1000,discount:1000,status:0
 			},{
-				fee:2000,discount:10000,status:0
+				fee:2000,discount:1000,status:0
 			},{
-				fee:3000,discount:10000,status:0
+				fee:3000,discount:1000,status:0
 			},{
-				fee:5000,discount:10000,status:0
+				fee:5000,discount:1000,status:0
 			},{
-				fee:10000,discount:10000,status:0
+				fee:10000,discount:1000,status:0
 			},{
-				fee:20000,discount:10000,status:0
+				fee:20000,discount:1000,status:0
 			}]);
 		},
 		clickInputMoney(){
