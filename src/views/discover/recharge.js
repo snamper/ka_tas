@@ -74,6 +74,7 @@ var vm=new Moon({
 		            });
 				});
 			});
+			vm.callMethod('pay')
 		}
 	},
 	methods:{
@@ -226,7 +227,7 @@ var vm=new Moon({
 		},
 		pay:function(){//去支付
 			let payType=vm.get('off').payType,
-				recharge = vm.get('recharge').phone,
+				recharge = vm.get('recharge'),
 				deviceType = vm.get('deviceType');
 			let phone = recharge.phone.replace(/\s+/g, "");
 

@@ -82,14 +82,14 @@
 				<img src="../../assets/img/icon_suc_a.png">
 				<p class="green">支付成功</p>
 			</div>
-			<div m-on:click="createSheet" class="btn btny">继续充值</div>
+			<div m-on:click="clearInput" class="btn btny">继续充值</div>
 		</div>
 		<div m-show="off.payStatus==3">
 			<div class="m-pay-status">
 				<img src="../../assets/img/icon_failure.png">
 				<p class="red">支付失败</p>
 			</div>
-			<div m-on:click="jumpToHome" class="btn btnp">继续充值</div>
+			<div m-on:click="pay" class="btn btnp">继续充值</div>
 		</div>
 	</section>
 </div>
