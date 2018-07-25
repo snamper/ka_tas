@@ -132,12 +132,10 @@ var vm=new Moon({
 		},
 		clearInput(){
 			vm.set('recharge',{
-				phone:vm.get('userInfo').phone,
+				phone:'',
 				isp:0,
 				city:''
 			});
-			vm.set('off.payStatus',1);
-			vm.set('off.select',999);
 			vm.set('faceList',[{
 				fee:1000,discount:1000,status:0
 			},{
@@ -151,6 +149,10 @@ var vm=new Moon({
 			},{
 				fee:20000,discount:1000,status:0
 			}]);
+		},
+		continueRecharge(){
+			vm.set('off.payStatus',1);
+			vm.set('off.select',999);
 		},
 		clickInputMoney(){
 			vm.set('off.select',999);
