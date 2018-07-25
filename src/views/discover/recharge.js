@@ -36,6 +36,7 @@ var vm=new Moon({
 		minFee:10,//最小充值金额
 		inputMoney:'',
 		orderId:'',
+		chooseMoney:0,
 	},
 	hooks:{
 		init:function(){
@@ -77,16 +78,15 @@ var vm=new Moon({
 		            });
 				});
 				Jsborya.registerMethods('payComplete',function(data){
-					alert(`payComplete:${JSON.stringify(data)}`);
+					//alert(`payComplete:${JSON.stringify(data)}`);
 					vm.callMethod('payComplete',[data.status]);
 				});
 			});
 		}
 	},
 	methods:{
-		phoneKeydown(e){
-			
-			if(e.keyCode != 8){
+		phoneOnInput(e){
+			if(e.data){
 				setTimeout(function(){
 					let val = vm.get('recharge').phone;
 					if(val.length == 3){
@@ -110,7 +110,11 @@ var vm=new Moon({
 			if(status){
 				if(vm.get('off').select == index){
 					vm.set('off.select',999);
-				}else vm.set('off.select',index);
+					vm.set('chooseMoney',0);
+				}else{
+					vm.set('off.select',index);
+					vm.set('chooseMoney',vm.get('faceList')[index].fee);
+				}
 			}
 			
 		},
@@ -136,6 +140,7 @@ var vm=new Moon({
 				isp:0,
 				city:''
 			});
+			vm.set('chooseMoney',0);
 			vm.set('faceList',[{
 				fee:1000,discount:1000,status:0
 			},{
@@ -153,9 +158,11 @@ var vm=new Moon({
 		continueRecharge(){
 			vm.set('off.payStatus',1);
 			vm.set('off.select',999);
+			vm.set('chooseMoney',0);
 		},
 		clickInputMoney(){
 			vm.set('off.select',999);
+			if(!vm.get('inputMoney'))vm.set('chooseMoney',0);
 		},
 		onInputMoney(){
 			let action = vm.debounce(800,function(){
@@ -179,6 +186,7 @@ var vm=new Moon({
 	                    });
 						return false;
 					}
+					vm.set('chooseMoney',val * 100);
 				}
 			});
 
@@ -234,19 +242,22 @@ var vm=new Moon({
 			
 		},
 		pay:function(){//去支付
-			let payType=vm.get('off').payType,
-				recharge = vm.get('recharge'),
+			let chooseMoney = vm.get('chooseMoney'),
+				payType=vm.get('off').payType,
+				phone = vm.get('recharge').phone.replace(/\s+/g, ""),
+				inputMoney = vm.get('inputMoney'),
 				deviceType = vm.get('deviceType');
-			let phone = recharge.phone.replace(/\s+/g, "");
 
-			if(vm.get('off').select == 999){
+			
+			if(!chooseMoney){
 				layer.open({
-                    content:'请选择面值',
+                    content:'请选择或输入面值',
                     skin: "msg",
                     time: 3
                 });
 				return false;
 			}
+
 
 			if(vm.get('off').load)return false;
 			vm.set('off.load',1);
@@ -256,8 +267,8 @@ var vm=new Moon({
 				params:{
 					phoneNum:phone,
 					payType:payType,
-					rechargeFee:vm.get('faceList')[vm.get('off').select].fee,
-					isp:recharge.isp,
+					rechargeFee:chooseMoney,
+					isp:vm.get('recharge').isp,
 					deviceType:deviceType,
 				}
 			},function(data){
@@ -296,8 +307,11 @@ var vm=new Moon({
 		shiftPayType:function(payType){
 			vm.set('off.payType',payType);
 		},
-		mathDiscount(money,discount){
-			return this.mathCentToYuan(parseInt(money) * discount / 1000);
+		mathDiscount(money){
+			if(money){
+				return this.mathCentToYuan(parseInt(money) * vm.get('faceList')[0].discount / 1000);
+			}else return '';
+			
 		},
 		mathCentToYuan:function(value){
 			return this.mathCentToYuan(value);

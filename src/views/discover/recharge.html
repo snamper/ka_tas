@@ -17,7 +17,7 @@
 <div id="app" m-mask>
 	<div class="m-input-phone">
 		<div class="box yellow">
-			<input type="tel" m-model="recharge.phone" m-on:keydown="phoneKeydown" maxlength="13" placeholder="请输入充值的手机号码">
+			<input type="tel" m-model="recharge.phone" m-on:input="phoneOnInput" maxlength="13" placeholder="请输入充值的手机号码">
 			<i class="u-icon-cancel" m-show="recharge.phone.length" m-on:click="clearInput"></i>
 		</div>
 		<div class="msg">
@@ -39,7 +39,7 @@
 				m-on:click="faceSelect(index)"
 				m-literal:class="{active:off.select == index,noselect:face.status == 0}">
 				<div class="face">{{ mathCentToYuan(face.fee) }}</div>
-				<div class="price f-fts-12">售价：{{ mathDiscount(face.fee,face.discount) }}元</div>
+				<div class="price f-fts-12">售价：{{ mathDiscount(face.fee) }}元</div>
 			</li>
 		</ul>
 	</div>
@@ -65,7 +65,7 @@
 			</li>
 		</ul>
 		<div m-show="off.payStatus == 1" m-on:click="pay" class="btn btng">
-			<span m-show="!off.load">立即充值</span>
+			<span m-show="!off.load">{{ mathDiscount(chooseMoney) }} 立即充值</span>
 			<span m-show="off.load==1">正在支付，请稍候<span class="pay-load">
 				<b class="f1"></b>
 				<b class="f2"></b>
