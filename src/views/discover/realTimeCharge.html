@@ -21,20 +21,20 @@
 <div id="app" m-mask>
 	<div class="m-top-head purple t-a-c"><b>当前号码：{{ phoneFormat(userInfo.phone) }}</b><br>当前实时话费信息如下</div>
 	<ul class="m-realTime-info">
-		<li class="clr"><span>可用余额</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.restFee) }}</span>元</span></li>
-		<li class="clr"><span>未解冻余额</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.freezeFee) }}</span>元</span></li>
-		<li class="clr"><span>当月消费</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.curTotalFee) }}</span>元</span></li>
-		<li class="clr"><span>信用度</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.creditFee) }}</span>元</span></li>
-		<li class="clr"><span>基本月租</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.basicMonthlyFee) }}</span>元</span></li>
-		<li class="clr"><span>套餐外国内语音</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.dVoice) }}</span>元</span></li>
-		<li class="clr"><span>套餐外国内流量</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.dDischarge) }}</span>元</span></li>
-		<li class="clr"><span>国内短信</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.iSMS) }}</span>元</span></li>
-		<li class="clr"><span>国内多方通话</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.dMeeting) }}</span>元</span></li>
-		<li class="clr"><span>国际语音</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.iVoice) }}</span>元</span></li>
-		<li class="clr"><span>国际流量</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.iDischarge) }}</span>元</span></li>
-		<li class="clr"><span>国际短信</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.iSMS) }}</span>元</span></li>
-		<li class="clr"><span>国际多方通话</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.iMeeting) }}</span>元</span></li>
-    <li class="clr"><span>其它</span><span class="fr"><span class="yellow">{{ mathCentToYuan(responseData.other) }}</span>元</span></li>
+		<li class="clr"><span>可用余额</span><span class="fr"><span class="yellow">{{ responseData.restFee }}</span>元</span></li>
+		<li class="clr"><span>未解冻余额</span><span class="fr"><span class="yellow">{{ responseData.freezeFee }}</span>元</span></li>
+		<li class="clr"><span>当月消费</span><span class="fr"><span class="yellow">{{ responseData.curTotalFee }}</span>元</span></li>
+		<li class="clr"><span>信用度</span><span class="fr"><span class="yellow">{{ responseData.creditFee }}</span>元</span></li>
+		<li class="clr"><span>基本月租</span><span class="fr"><span class="yellow">{{ responseData.basicMonthlyFee }}</span>元</span></li>
+		<li class="clr"><span>套餐外国内语音</span><span class="fr"><span class="yellow">{{ responseData.dVoice }}</span>元</span></li>
+		<li class="clr"><span>套餐外国内流量</span><span class="fr"><span class="yellow">{{ responseData.dDischarge }}</span>元</span></li>
+		<li class="clr"><span>国内短信</span><span class="fr"><span class="yellow">{{ responseData.iSMS }}</span>元</span></li>
+		<li class="clr"><span>国内多方通话</span><span class="fr"><span class="yellow">{{ responseData.dMeeting }}</span>元</span></li>
+		<li class="clr"><span>国际语音</span><span class="fr"><span class="yellow">{{ responseData.iVoice }}</span>元</span></li>
+		<li class="clr"><span>国际流量</span><span class="fr"><span class="yellow">{{ responseData.iDischarge }}</span>元</span></li>
+		<li class="clr"><span>国际短信</span><span class="fr"><span class="yellow">{{ responseData.iSMS }}</span>元</span></li>
+		<li class="clr"><span>国际多方通话</span><span class="fr"><span class="yellow">{{ responseData.iMeeting }}</span>元</span></li>
+    <li class="clr"><span>其它</span><span class="fr"><span class="yellow">{{ responseData.other }}</span>元</span></li>
 	</ul>
 	<div class="m-bottom-tips grey">温馨提示:本页数据仅供参考，详细内容请登录信时空官方网站或拨打客户热线10027查询</div>
 </div>
