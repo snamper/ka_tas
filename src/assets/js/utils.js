@@ -99,7 +99,6 @@ export default{
          *@describe 返回号码搜索
          **/
         Moon.prototype.jumpToHome=function(){
-          alert('806');
             Jsborya.pageJump({
               url:'',
               stepCode:'806',
