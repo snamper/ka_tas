@@ -294,6 +294,26 @@ var vm=new Moon({
 	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                }
 	            });
+	            Jsborya.pageJump({
+	                url:'package.html',
+	                stepCode:'999',
+	                depiction:'选择套餐',
+	                destroyed:false,
+	                header:{
+	                    frontColor:'#ffffff',
+	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
+	                }
+	            });
+	            Jsborya.pageJump({
+	                url:'package.html',
+	                stepCode:'999',
+	                depiction:'选择套餐',
+	                destroyed:false,
+	                header:{
+	                    frontColor:'#ffffff',
+	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
+	                }
+	            });
 			}
 			
 		},
