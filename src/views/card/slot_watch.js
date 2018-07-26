@@ -276,6 +276,16 @@ var vm=new Moon({
 		jumpToHome:function(){
 			vm.jumpToHome();
 		},
+		jumpToApp(){
+			Jsborya.pageJump({
+              url:'',
+              stepCode:'807',
+              depiction:'返回APP',
+              data:{
+              	sysOrderId:vm.get('orderInfo').sysOrderId
+              }
+            });
+		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({
 				url:'',

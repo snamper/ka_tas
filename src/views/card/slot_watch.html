@@ -41,7 +41,7 @@
 	<!--未连接-->
 	<section m-show="deviceStatus==4">
 		<div class="m-tips red">提示：当前手机未与手表连接，请点击刷新手表状态。如未连接成功，请返回APP进行设备管理，待连接成功，可继续开卡操作。</div>
-		<div class="btn btnp" m-on:click="jumpToHome">返回APP</div>
+		<div class="btn btnp" m-on:click="jumpToApp">返回APP</div>
 	</section>
 
 	<section m-show="deviceStatus!=4">
@@ -119,7 +119,7 @@
 				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话400-631-5234。</dd>
 			</dl>
 			<div class="m-btn-group" m-show="orderInfo.setPwd==1">
-				<span class="btn btnDefault_dp" m-on:click="jumpToHome">返回APP</span>
+				<span class="btn btnDefault_dp" m-on:click="jumpToApp">返回APP</span>
 				<span class="btn btny" m-on:click="jumpToLogin">登录远特eSIM掌厅</span>
 			</div>
 
@@ -130,7 +130,7 @@
 				<dd>3、如有其它疑问请联系客服：语音自助服务10027 客服电话400-631-5234。</dd>
 			</dl>
 			<div class="m-btn-group" m-show="orderInfo.setPwd==2">
-				<span class="btn btnDefault_dp" m-on:click="jumpToHome">返回APP</span>
+				<span class="btn btnDefault_dp" m-on:click="jumpToApp">返回APP</span>
 				<span class="btn btny" m-on:click="jumpToLogin">登录远特eSIM掌厅</span>
 			</div>
 		</section>

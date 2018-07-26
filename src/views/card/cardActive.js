@@ -110,17 +110,13 @@ var vm=new Moon({
 			});
 		},
 		jumpToHome:function(){
-			Jsborya.pageJump({
-				url:'',
-				stepCode:'806',
-				depiction:'首页',
-			});
+			return this.jumpToHome();
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
 	    },
 		mathDiscount:function(money,discount){
-			return vm.mathDiscount(money,discount);
+			return this.mathDiscount(money,discount);
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);
