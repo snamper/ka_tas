@@ -232,7 +232,7 @@ var vm=new Moon({
                 depiction:todo.next,
                 header:{
                     frontColor:'#ffffff',
-                    backgroundColor:'#00923f',
+                    backgroundColor:'#66B92A',
                 }
             });
 		},

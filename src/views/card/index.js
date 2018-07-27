@@ -80,7 +80,7 @@ var vm=new Moon({
 					//alert(`setHeader:${left}`);
 					Jsborya.setHeader({
 						title:'随心搜',
-						backgroundColor:'#4b3887',
+						backgroundColor:vm.getHeaderColor(cardInfo.deviceType),
 						frontColor:'#ffffff',
 						left:left,
 						right:right

@@ -220,7 +220,7 @@
 }
 .m-card-ul>li>.cr>.number{
 	display: inline-block;
-	font-size: 0.19rem;
+	font-size: 0.18rem;
 	letter-spacing: 1px;
 }
 .m-card-ul>li>.cr>.number .space{
@@ -248,14 +248,14 @@
 	background-size:100%;
 }
 @media screen and (max-width: 340px){
-	.m-card-ul>li>.cr{
-		flex: 4;
-	}
 	.m-card-ul>li>.cr>.number{
-		font-size: 0.17rem
+		font-size: 0.16rem
 	}
 	.m-card-ul>li>.lt{
 		flex: 0.8;
+	}
+	.m-card-ul>li>.rt span{
+		font-size: 0.11rem;
 	}
 	.m-card-ul .u-icon-pretty, .m-card-ul .u-icon-ordinary{
 		margin-top: 0.16rem;

@@ -275,7 +275,7 @@ require('./base64.js');
 			
 		},
 		setHeader:function(json){//设置头部header
-			alert(`setHeader:${JSON.stringify(json)}`);
+			//alert(`setHeader:${JSON.stringify(json)}`);
 			callHandler({
 				name:'setHeader',
 				data:json,
