@@ -61,12 +61,12 @@ body{
 			<span class="left grey">所选号码:</span>
 			<b class="purple f-fts-18">{{ phoneFormat(cardInfo.phone) }}</b>({{cardInfo.cityName}}<b class="yellow" m-show="cardInfo.pretty==1">,靓号</b>)</li>
 		<li class="double-border"></li>
-		<li>
+		<li class="clr">
 			<span class="left grey">+号码占用费</span>
 			<span class="fr right discount">￥{{ mathDiscount(cardInfo.phoneMoney,cardInfo.discount) }}</span>
 			<span class="fr right oldPrice" m-show="cardInfo.discount!=10000">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
 		</li>
-		<li m-show="selectPackage.packageCode">
+		<li class="clr" m-show="selectPackage.packageCode">
 			<span class="left grey">+含预存话费</span>
 			<span class="fr right discount">￥{{ mathDiscount(selectPackage.prestore,selectPackage.discount) }}</span>
 			<span class="fr right oldPrice" m-show="selectPackage.discount!=10000">￥{{ mathCentToYuan(selectPackage.prestore) }}</span>

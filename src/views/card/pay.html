@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>活体识别</title>
+<title>支付</title>
 <style type="text/css">
 [m-mask]{
 	opacity: 0
@@ -51,12 +51,12 @@
 				</li>
 				<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
 				<li class="double-border"></li>
-				<li>
+				<li class="clr">
 					<span class="left grey">+号码占用费</span>
 					<span class="fr right discount">￥{{ mathDiscount(orderInfo.cardMoney,orderInfo.cDiscount) }}</span>
 					<span class="fr right oldPrice" m-show="orderInfo.cDiscount!=10000">￥{{ mathCentToYuan(orderInfo.cardMoney) }}</span>
 				</li>
-				<li>
+				<li class="clr">
 					<span class="left grey">+含预存话费</span>
 					<span class="fr right discount">￥{{ mathDiscount(orderInfo.prestoreMoney,orderInfo.pDiscount) }}</span>
 					<span class="fr right oldPrice" m-show="orderInfo.pDiscount!=10000">￥{{ mathCentToYuan(orderInfo.prestoreMoney) }}</span>
