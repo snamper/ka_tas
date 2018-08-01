@@ -9,7 +9,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败;8,成卡;9,白卡;
+			status:1,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败;8,成卡;9,白卡;
 		},
 		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		cardInfo:{//卡槽信息
@@ -62,7 +62,7 @@ var vm=new Moon({
 			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			Jsborya.registerMethods('headerRightClick',function(){
-				vm.jumpToDeviceManagement();
+				vm.callMethod('jumpToDeviceManagement');
 			});
 			vm.callMethod("readCardICCID");
 		},
@@ -331,7 +331,7 @@ var vm=new Moon({
                 yes:function(){
                 	layer.closeAll();
                 	if(status == 4){
-                		vm.jumpToDeviceManagement();
+                		vm.callMethod('jumpToDeviceManagement');
                 	}
                 }
             });
