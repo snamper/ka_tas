@@ -132,7 +132,7 @@ require('./base64.js');
 			if(!json.hasOwnProperty('destroyed'))json.destroyed=true;//默认是销毁当前视图
 
 			if(isYuanteliCard()){
-				alert('pageJump'+JSON.stringify(json));
+				//alert('pageJump'+JSON.stringify(json));
 				callHandler({
 					name:'pageJump',
 					data:json,
@@ -220,6 +220,7 @@ require('./base64.js');
 		},
 		registerMethods:function(name,cb){//提供APP直接调用的方法注册接口
 			a[name]=function(result){
+				alert(`${name}`)
 				if(result && result!='null')result=JSON.parse(BASE64.decode(result));
 				cb(result);
 			};
