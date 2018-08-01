@@ -132,6 +132,7 @@ require('./base64.js');
 			if(!json.hasOwnProperty('destroyed'))json.destroyed=true;//默认是销毁当前视图
 
 			if(isYuanteliCard()){
+				alert('pageJump'+JSON.stringify(json));
 				callHandler({
 					name:'pageJump',
 					data:json,
@@ -212,7 +213,7 @@ require('./base64.js');
 				name:'readCardICCID',
 				data:json,
 				callback:function(result){
-					//alert('readCardICCID'+JSON.stringify(result));
+					alert('readCardICCID'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -235,7 +236,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:json,
 				callback:function(result){
-					//alert('readCardIMSI'+JSON.stringify(result));
+					alert('readCardIMSI'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -269,7 +270,7 @@ require('./base64.js');
 					name:'readWatchInfo',
 					data:'',
 					callback:function(result){
-						//alert('readWatchInfo'+JSON.stringify(result));
+						alert('readWatchInfo'+JSON.stringify(result));
 						json.complete(result);
 					}
 				});
@@ -281,7 +282,7 @@ require('./base64.js');
 			
 		},
 		setHeader:function(json){//设置头部header
-			//alert(`setHeader:${JSON.stringify(json)}`);
+			alert(`setHeader:${JSON.stringify(json)}`);
 			callHandler({
 				name:'setHeader',
 				data:json,
