@@ -46,58 +46,56 @@ var vm=new Moon({
 			if(cardInfo) vm.set('cardInfo',cardInfo);
 			if(selectCity) vm.set('selectCity',selectCity);
 
-			Jsborya.getGuestInfo({
-				slot:cardInfo ? cardInfo.slot : '-2',
-				complete:function(userInfo){
-					vm.set('userInfo',userInfo);
-
-					let left = {
-							icon:'',
-							value:'',
-							callback:''
-						}, right = {
-							icon:'',
-							value:'',
-							callback:''
-						};
-					if(userInfo.iccid=='666666666666'){
-						vm.set('off.showBtmEntry',false);
-						right = {
-							icon:'',
-							value:'去购卡',
-							callback:'headerRightClick'
-						};
-					}
-					if(cardInfo.deviceType == 3){//eSIM手表
-						left = {
-							icon:'back_white',
-							value:'返回',
-							callback:''
-						};
-					}else if(cardInfo.deviceType == 1){//手机写卡
-						left = {};
-					}
-					//alert(`setHeader:${left}`);
-					Jsborya.setHeader({
-						title:'随心搜',
-						backgroundColor:vm.getHeaderColor(cardInfo.deviceType),
-						frontColor:'#ffffff',
-						left:left,
-						right:right
-					});
-
-					Jsborya.registerMethods('headerRightClick',function(){
-						if(userInfo.iccid=='666666666666'){//无卡找号
-							vm.toBuyHelpPage();
-							return false;
-						}
-					});
-
-					vm.callMethod('setPage');
-					vm.callMethod('getCardList');
-					vm.callMethod('getLableList');
+			let userInfo = vm.getStore("USER_INFO");
+			if(userInfo){
+				vm.set('userInfo',userInfo);
+				
+				let left = {
+						icon:'',
+						value:'',
+						callback:''
+					}, right = {
+						icon:'',
+						value:'',
+						callback:''
+					};
+				if(userInfo.iccid=='666666666666'){
+					vm.set('off.showBtmEntry',false);
+					right = {
+						icon:'',
+						value:'去购卡',
+						callback:'headerRightClick'
+					};
 				}
-			});
+				if(cardInfo.deviceType == 3){//eSIM手表
+					left = {
+						icon:'back_white',
+						value:'返回',
+						callback:''
+					};
+				}else if(cardInfo.deviceType == 1){//手机写卡
+					left = {};
+				}
+				//alert(`setHeader:${left}`);
+				Jsborya.setHeader({
+					title:'随心搜',
+					backgroundColor:vm.getHeaderColor(cardInfo.deviceType),
+					frontColor:'#ffffff',
+					left:left,
+					right:right
+				});
+
+				Jsborya.registerMethods('headerRightClick',function(){
+					if(userInfo.iccid=='666666666666'){//无卡找号
+						vm.toBuyHelpPage();
+						return false;
+					}
+				});
+
+				vm.callMethod('setPage');
+				vm.callMethod('getCardList');
+				vm.callMethod('getLableList');
+			}
 	    },
 	    mounted:function(){
 

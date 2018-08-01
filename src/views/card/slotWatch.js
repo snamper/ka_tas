@@ -9,12 +9,12 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败
+			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败;8,成卡;9,白卡;
 		},
 		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		cardInfo:{//卡槽信息
 			slot:'-1',
-			deviceType:3,//1、手机卡；2、手表卡；3、亿能eSIM
+			deviceType:2,//1、手机卡；2、手表卡；3、亿能eSIM
 			iccid:'--',
 			hasPriPhone:1,//是否有专营号，1是2否 
 		},
@@ -54,13 +54,16 @@ var vm=new Moon({
 					callback:''
 				},
 				right:{
-					icon:'',
+					icon:'wcard_red',
 					value:'',
-					callback:''
+					callback:'headerRightClick'
 				}
 			});
 			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
+			Jsborya.registerMethods('headerRightClick',function(){
+				vm.jumpToDeviceManagement();
+			});
 			vm.callMethod("readCardICCID");
 		},
 		mounted:function(){
@@ -104,7 +107,8 @@ var vm=new Moon({
 								}else{
 									vm.set("load.read",false);
 									vm.callMethod('filterConnectStatus',[result.status]);
-								} 
+								}
+								vm.callMethod('setRightIcon',[result.status]);
 							}
 						});
 					}else{
@@ -112,6 +116,7 @@ var vm=new Moon({
 						if(watchInfo.status == 3) watchInfo.status = 4;
 						vm.callMethod('filterConnectStatus',[watchInfo.status]);
 					}
+					vm.callMethod('setRightIcon',[watchInfo.status]);
 				}
 			})
 			
@@ -174,21 +179,21 @@ var vm=new Moon({
 			if(orderStatusCode==='PACKAGE_SELECTION'){
                 url='certification.html';
                 depiction='已选择套餐';
-                next='号码开通';
+                next='实名认证';
             }else if(orderStatusCode==='CARD_PAY'){
                 if(belongType==1){
                 	url='cardAudit.html';
                 }else url='pay.html';
 
                 depiction='已支付';
-                next='号码开通';
+                next='生成受理单';
             }else if(orderStatusCode==='CARD_AUDIT'){
-                if(belongType==1){
+                if(belongType==1){//专营号
                 	url='cardAudit.html';
                 }else url='pay.html';
                 
                 depiction='已审核';
-                next='号码开通';
+                next='去支付';
             }else if(orderStatusCode==='CREATE_SHEET'){
                 url='createSheet.html';
                 depiction='已生成受理单';
@@ -196,28 +201,28 @@ var vm=new Moon({
             }else if(orderStatusCode==='CARD_IMSI'){
                 url='cardWriting.html';
                 depiction='已获取IMSI';
-                next='号码开通';
+                next='写卡';
             }else if(orderStatusCode==='CARD_WRITING'){
                 url='cardActive.html';
-               	depiction='码号信息写入成功，等待开通结果';
-               	next='号码开通';
+               	depiction='写卡成功，等待开卡结果';
+               	next='申请受理';
             }else if(orderStatusCode==='CARD_ACTIVE'){
             	let orderStatus=vm.get('off').status;
                 url='';
                 next='';
                 if(orderStatus==3){
-                	depiction='开通成功';
+                	depiction='开卡成功';
                 }else if(orderStatus==6){
-                	depiction='开通失败';
+                	depiction='开卡失败';
                 }
             }else if(parseInt(similarity)){
             	url='cardAudit.html';
                 depiction='已上传资料';
-                next='号码开通';
+                next='订单审核';
             }else if(orderStatusCode==='UPLOAD_DATA'){
                 url='faceVerification.html';
                 depiction='已上传资料';
-                next='号码开通';
+                next='活体识别';
             }
             return {url:url,depiction:depiction,next:next};
 		},
@@ -276,18 +281,26 @@ var vm=new Moon({
 		orderCancel:function(){
 			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
 		},
+		setRightIcon(status){
+			let icon = 'wcard_red';
+
+			if(status == 1)icon = 'wcard_green';
+			Jsborya.setHeader({
+				title:'读取卡信息',
+				left:{
+					icon:'back_white',
+					value:'',
+					callback:''
+				},
+				right:{
+					icon:icon,
+					value:'',
+					callback:'headerRightClick'
+				}
+			});
+		},
 		jumpToHome:function(){
 			vm.jumpToHome();
-		},
-		jumpToApp(){
-			Jsborya.pageJump({
-              url:'',
-              stepCode:'807',
-              depiction:'返回APP',
-              data:{
-              	sysOrderId:vm.get('orderInfo').sysOrderId
-              }
-            });
 		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({
@@ -315,7 +328,21 @@ var vm=new Moon({
                 btn:['确定'],
                 shadeClose:false,
                 title:'提示',
+                yes:function(){
+                	layer.closeAll();
+                	if(status == 4){
+                		vm.jumpToDeviceManagement();
+                	}
+                }
             });
+		},
+		jumpToDeviceManagement(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:'803',
+				depiction:'设备管理',
+				destroyed:false,
+			});
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);

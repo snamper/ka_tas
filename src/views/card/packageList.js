@@ -77,13 +77,12 @@ var vm=new Moon({
 				let cardInfo=this.getStore('CARD_INFO');
 				if(cardInfo){
 					vm.set('cardInfo',cardInfo);
-					Jsborya.getGuestInfo({
-					slot:cardInfo.slot||'1',
-						complete:function(userInfo){
-							vm.set('userInfo',userInfo);
-							vm.callMethod('getPackageList');
-						}
-					});
+
+					let userInfo = vm.getStore("USER_INFO");
+					if(userInfo){
+						vm.set('userInfo',userInfo);
+						vm.callMethod('getPackageList');
+					}
 				}else{
 					alert('本地号卡信息丢失');
 				}

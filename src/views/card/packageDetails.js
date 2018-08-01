@@ -79,13 +79,12 @@ var vm=new Moon({
 			if(code&&phoneLevel){
 				var selectPackage=vm.getStore('selectPackage');
 				vm.set('selectPackage',selectPackage);
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
-						vm.callMethod('getPackageInfo',[code,phoneLevel]);
-					}
-				});
+
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					vm.callMethod('getPackageInfo',[code,phoneLevel]);
+				}
 			}else{
 				alert('页面URL参数错误');
 			}

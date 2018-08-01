@@ -74,16 +74,13 @@ var vm=new Moon({
 						callback:'headerRightClick'
 					}
 				});
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
 
-						vm.callMethod('readCardICCID');
-					}
-				});
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					vm.callMethod('readCardICCID');
+				}
 
-				
 
 				Jsborya.registerMethods('headerLeftClick',function(){
 					vm.orderCancel(vm.get('userInfo'),orderInfo.sysOrderId);
@@ -131,37 +128,21 @@ var vm=new Moon({
 												vm.callMethod("filterConnectStatus",[data.status]);
 											}
 
-											let deviceType=cardInfo.deviceType,icon='';
-											if(deviceType==2){
-												if(data.status==1){
-													icon='wcard_green';
-												}else icon='wcard_red';
-												
-												Jsborya.setHeader({
-													title:'写卡',
-													left:{
-														icon:'back_white',
-														value:'',
-														callback:'headerLeftClick'
-													},
-													right:{
-														icon:icon,
-														value:'',
-														callback:'headerRightClick'
-													}
-												});
-											}
+											if(cardInfo.deviceType == 2)vm.callMethod('setRightIcon',[data.status]);
 										}
 									});
 								}else{
 									vm.callMethod("filterConnectStatus",[result.status]);
 								}
+								if(cardInfo.deviceType == 2)vm.callMethod('setRightIcon',[result.status]);
 							}
 						});
 					}else{
 						if(watchInfo.status == 3) watchInfo.status = 4;
 						vm.callMethod('filterConnectStatus',[watchInfo.status]);
 					}
+
+					if(cardInfo.deviceType == 2)vm.callMethod('setRightIcon',[watchInfo.status]);
 				}
 			});
 			
@@ -254,6 +235,24 @@ var vm=new Moon({
 			}else{
 				vm.set("error",{code:999,text:'异常错误'});
 			}
+		},
+		setRightIcon(status){
+			let icon = 'wcard_red';
+
+			if(status == 1)icon = 'wcard_green';
+			Jsborya.setHeader({
+				title:'写卡',
+				left:{
+					icon:'back_white',
+					value:'返回',
+					callback:'headerLeftClick'
+				},
+				right:{
+					icon:icon,
+					value:'',
+					callback:'headerRightClick'
+				}
+			});
 		},
 		jumpToHome:function(){
 			vm.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId);

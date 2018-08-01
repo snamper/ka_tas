@@ -66,16 +66,15 @@ var vm=new Moon({
 						vm.set('off.isPass',true);
 					}
 				}
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
 
-						Jsborya.registerMethods('headerLeftClick',function(){
-							vm.orderCancel(userInfo,orderInfo.sysOrderId);
-						});
-					}
-				});
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					
+					Jsborya.registerMethods('headerLeftClick',function(){
+						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+					});
+				}
 			}else{
 				alert('本地订单信息丢失');
 			}

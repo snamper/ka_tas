@@ -57,44 +57,42 @@ var vm=new Moon({
             if(cardInfo){
                 vm.set('cardInfo',cardInfo);
 
-                Jsborya.getGuestInfo({
-                    slot:cardInfo.slot,
-                    complete:function(userInfo){
-                        vm.set('userInfo',userInfo);
-
-                        let setRight = {
+                let userInfo = vm.getStore("USER_INFO");
+                if(userInfo){
+                    vm.set('userInfo',userInfo);
+                    
+                    let setRight = {
+                        icon:'',
+                        value:'',
+                        callback:'headerRightClick'
+                    };
+                    if(userInfo.iccid=='666666666666'){
+                        setRight={
                             icon:'',
-                            value:'',
+                            value:'购卡指引',
                             callback:'headerRightClick'
                         };
-                        if(userInfo.iccid=='666666666666'){
-                            setRight={
-                                icon:'',
-                                value:'购卡指引',
-                                callback:'headerRightClick'
-                            };
-                        }
-                        
-                        Jsborya.setHeader({
-                            title:'号码搜索',
-                            left:{
-                                icon:'back_white',
-                                value:'返回',
-                                callback:''
-                            },
-                            right:setRight
-                        });
-
-                        vm.callMethod('getPackageInfo');
-
-                        Jsborya.registerMethods('headerRightClick',function(){
-                            if(userInfo.iccid=='666666666666'){
-                                vm.toBuyHelpPage();
-                                return false;
-                            }
-                        });
                     }
-                });
+                    
+                    Jsborya.setHeader({
+                        title:'号码搜索',
+                        left:{
+                            icon:'back_white',
+                            value:'返回',
+                            callback:''
+                        },
+                        right:setRight
+                    });
+
+                    vm.callMethod('getPackageInfo');
+
+                    Jsborya.registerMethods('headerRightClick',function(){
+                        if(userInfo.iccid=='666666666666'){
+                            vm.toBuyHelpPage();
+                            return false;
+                        }
+                    });
+                }
             }else{
                 alert('本地号卡信息错误');
             }

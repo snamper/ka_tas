@@ -218,33 +218,39 @@ var vm=new Moon({
 				deviceType:vm.get('deviceType'),
 			});
 
-			//alert(`cardInfo：{slot:${slot}}`)
+			Jsborya.getGuestInfo({
+				slot:realSlot,
+				complete:function(userInfo){
+					vm.setStore("USER_INFO",userInfo);
+					
+					if(status==1){
+						Jsborya.pageJump({
+			                url:'index.html',
+			                stepCode:'999',
+			                depiction:'随心搜',
+			                header:{
+			                    frontColor:'#ffffff',
+			                    backgroundColor:'#4b3887',
+			                }
+			            });
+					}else{
+						let orderInfo=vm.get('iccidsRes')[slot].orderInfo;
+						orderInfo.status=status;
+						vm.setStore('ORDER_INFO',orderInfo);
 
-			if(status==1){
-				Jsborya.pageJump({
-	                url:'index.html',
-	                stepCode:'999',
-	                depiction:'随心搜',
-	                header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
-	            });
-			}else{
-				let orderInfo=vm.get('iccidsRes')[slot].orderInfo;
-				orderInfo.status=status;
-				vm.setStore('ORDER_INFO',orderInfo);
-
-				Jsborya.pageJump({
-	                url:'slotInfo.html',
-	                stepCode:'999',
-	                depiction:'开卡信息',
-	                header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
-	            });
-			}
+						Jsborya.pageJump({
+			                url:'slotInfo.html',
+			                stepCode:'999',
+			                depiction:'开卡信息',
+			                header:{
+			                    frontColor:'#ffffff',
+			                    backgroundColor:'#4b3887',
+			                }
+			            });
+					}
+				}
+			});
+			
 		},
 		isMiCliet(){
 			let e = navigator.userAgent;

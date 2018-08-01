@@ -64,23 +64,20 @@ var vm=new Moon({
 				vm.set('cardInfo',cardInfo);
 				vm.set('orderInfo',orderInfo);
 				
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					
+					if(!parseInt(orderInfo.setPwd) && orderInfo.status==3){
+						vm.callMethod('intervalGetResult',[true]);
 
-						if(!parseInt(orderInfo.setPwd) && orderInfo.status==3){
+						window.Timer = setInterval(function(){
 							vm.callMethod('intervalGetResult',[true]);
+						},1000*20);
 
-							window.Timer = setInterval(function(){
-								vm.callMethod('intervalGetResult',[true]);
-							},1000*20);
-
-
-						}
 
 					}
-				});
+				}
 			}else{
 				//alert('本地信息错误');
 			}

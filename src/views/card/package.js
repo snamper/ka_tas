@@ -56,44 +56,43 @@ var vm=new Moon({
 				if(selectPackage){
 					vm.set('selectPackage',selectPackage);
 				}
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
 
-						let setRight={
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					
+					let setRight={
+						icon:'',
+						value:'',
+						callback:'headerRightClick'
+					};
+					if(userInfo.iccid=='666666666666'){
+						setRight={
 							icon:'',
-							value:'',
+							value:'去购卡',
 							callback:'headerRightClick'
 						};
-						if(userInfo.iccid=='666666666666'){
-							setRight={
-								icon:'',
-								value:'去购卡',
-								callback:'headerRightClick'
-							};
-						}
-						
-						Jsborya.setHeader({
-							title:'套餐选择',
-							left:{
-								icon:'back_white',
-								value:'返回',
-								callback:''
-							},
-							right:setRight
-						});
-
-						vm.callMethod('getPackageList');
-
-						Jsborya.registerMethods('headerRightClick',function(){
-							if(userInfo.iccid=='666666666666'){
-								vm.toBuyHelpPage();
-								return false;
-							}
-						});
 					}
-				});
+					
+					Jsborya.setHeader({
+						title:'套餐选择',
+						left:{
+							icon:'back_white',
+							value:'返回',
+							callback:''
+						},
+						right:setRight
+					});
+
+					vm.callMethod('getPackageList');
+
+					Jsborya.registerMethods('headerRightClick',function(){
+						if(userInfo.iccid=='666666666666'){
+							vm.toBuyHelpPage();
+							return false;
+						}
+					});
+				}
 			}else{
 				alert('本地号卡信息错误');
 			}
@@ -130,22 +129,8 @@ var vm=new Moon({
                 });
 				return false;
 			}
-			vm.set("off.load",1);
-			Jsborya.readCardIMSI({
-				slot:vm.get('cardInfo').slot,
-				complete:function(data){
-					if(data.status==1){
-						vm.set('imsiInfo',{
-							imsi:data.imsi,
-							smsp:data.smsp
-						});
-						vm.callMethod("iccidCheck",[data.imsi,data.smsp]);
-					}else{
-						vm.set("off.load",false);
-						vm.callMethod("filterConnectStatus",[data.status]);
-					}
-				}
-			});
+
+			vm.callMethod("iccidCheck");
 		},
 		filterConnectStatus:function(status){
 			let text = '';
@@ -166,15 +151,17 @@ var vm=new Moon({
                 title:'提示'
             });
 		},
-		iccidCheck:function(imsi,smsp){//获取订单信息
+		iccidCheck:function(){//获取订单信息
 			const json={
 	  			params:{
-	  				imsi:imsi||'',
-	  				smsp:smsp||'',
+	  				imsi:'',
+	  				smsp:'',
 	  				scanIccid:''
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};
+	  		vm.set("off.load",1);
+	  		
 			vm.AJAX('/tas/w/source/iccidCheck',json,function(data){
 				vm.set("off.load",false);
 				if(data.data.status==1){

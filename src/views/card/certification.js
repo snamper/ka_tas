@@ -87,19 +87,17 @@ var vm=new Moon({
 				vm.set('cardInfo',cardInfo);
 				if(cardInfo.deviceType!=3) vm.set("linkPhone",orderInfo.phoneNum);
 
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
-
-						Jsborya.registerMethods('uploadImgComplete',function(data){//android 上传后回调
-							vm.callMethod("uploadImgComplete",[data]);
-					    });
-						Jsborya.registerMethods('headerLeftClick',function(){
-							vm.orderCancel(userInfo,orderInfo.sysOrderId);
-						});
-					}
-				});
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					
+					Jsborya.registerMethods('uploadImgComplete',function(data){//android 上传后回调
+						vm.callMethod("uploadImgComplete",[data]);
+				    });
+					Jsborya.registerMethods('headerLeftClick',function(){
+						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+					});
+				}
 			}else{
 				alert('本地订单信息丢失');
 			}

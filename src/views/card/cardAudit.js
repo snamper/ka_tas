@@ -71,24 +71,22 @@ var vm=new Moon({
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
 
-						Jsborya.registerMethods('headerLeftClick',function(){
-							vm.orderCancel(userInfo,orderInfo.sysOrderId);
-						});
-						if(orderInfo.orderStatusCode==='CARD_AUDIT'){//已审核通过
-							vm.set('off.step',2);
-							vm.set('off.load',0);
-						}else{
-							window.Timer=setInterval(function(){
-								vm.callMethod('getAuditInfo');
-							},2000);
-						}
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					Jsborya.registerMethods('headerLeftClick',function(){
+						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+					});
+					if(orderInfo.orderStatusCode==='CARD_AUDIT'){//已审核通过
+						vm.set('off.step',2);
+						vm.set('off.load',0);
+					}else{
+						window.Timer=setInterval(function(){
+							vm.callMethod('getAuditInfo');
+						},2000);
 					}
-				});
+				}
 			}else{
 				alert('本地订单信息丢失');
 			}

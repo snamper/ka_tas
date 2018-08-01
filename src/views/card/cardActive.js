@@ -56,13 +56,12 @@ var vm=new Moon({
 			if(orderInfo){
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
-						vm.callMethod("intervalGetResult");
-					}
-				});
+
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					vm.callMethod("intervalGetResult");
+				}
 			}else{
 				alert('本地订单信息丢失');
 			}

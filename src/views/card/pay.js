@@ -70,20 +70,19 @@ var vm=new Moon({
 				vm.set('cardInfo',cardInfo);
 
 				if(orderInfo.orderStatusCode == "CARD_PAY") vm.set("off.payStatus",1);
-				Jsborya.getGuestInfo({
-					slot:cardInfo.slot,
-					complete:function(userInfo){
-						vm.set('userInfo',userInfo);
 
-						Jsborya.registerMethods('headerLeftClick',function(){
-							vm.orderCancel(userInfo,orderInfo.sysOrderId);
-						});
-						Jsborya.registerMethods('payComplete',function(data){
-							// alert(`payComplete:${JSON.stringify(data)}`);
-							vm.callMethod('payComplete',[data.status]);
-						});
-					}
-				});
+				let userInfo = vm.getStore("USER_INFO");
+				if(userInfo){
+					vm.set('userInfo',userInfo);
+					
+					Jsborya.registerMethods('headerLeftClick',function(){
+						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+					});
+					Jsborya.registerMethods('payComplete',function(data){
+						// alert(`payComplete:${JSON.stringify(data)}`);
+						vm.callMethod('payComplete',[data.status]);
+					});
+				}
 			}else{
 				alert('本地订单信息丢失');
 			}

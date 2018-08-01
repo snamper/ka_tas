@@ -37,10 +37,15 @@
 }
 .m-device>.lt{
     flex: 1;
-    background-image:url(../../../assets/img/watch_read_icon.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 80%;
+}
+.m-device>.watch{
+    background-image:url(../../../assets/img/picture_watch.png);
+}
+.m-device>.eSIM{
+    background-image:url(../../../assets/img/watch_read_icon.png);
 }
 .m-device>.rt{
     flex: 2;
@@ -65,7 +70,7 @@
     line-height: 0.2rem;
 }
 .m-device>.info>.name{
-    
+    margin-top: 0.1rem;
 }
 .m-device>.info>.name>.tip{
     color: #777;
@@ -81,8 +86,7 @@
     
 }
 .m-device>.info>.tip{
-    padding: 0.2rem 0;
+    padding: 0.15rem 0;
     font-size: 0.12rem;
-    color: #777;
-    /*color: #6D7BBF;*/
+    color: #6D7BBF;
 }

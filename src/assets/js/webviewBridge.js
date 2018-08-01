@@ -202,7 +202,6 @@ require('./base64.js');
 			});
 		},
 		readCardICCID:function(json){//读取ICCID
-
 			// setTimeout(function(){
 			// 	json.complete({
 			// 		'status':'1',
@@ -259,6 +258,13 @@ require('./base64.js');
 		readWatchInfo:function(json){
 
 			if(json.deviceType!=1){
+				// setTimeout(function(){
+				// 	json.complete({
+				// 		status:1,
+				// 		power:'40',
+				// 		deviceName:'手表'
+				// 	});
+				// },1000);
 				callHandler({
 					name:'readWatchInfo',
 					data:'',

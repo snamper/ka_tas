@@ -67,18 +67,15 @@ var vm=new Moon({
 				}
 			});
 			
-
-			Jsborya.getGuestInfo({
-				slot:cardInfo.slot,
-				complete:function(userInfo){
-					vm.set('userInfo',userInfo);
-
-					if(vm.get('off').type == 0) vm.callMethod('getLableList');//非专营号有标签
+			let userInfo = vm.getStore("USER_INFO");
+			if(userInfo){
+				vm.set('userInfo',userInfo);
+				
+				if(vm.get('off').type == 0) vm.callMethod('getLableList');//非专营号有标签
 					
-		    		vm.callMethod('setPage');
-		    		vm.callMethod('getCardList');
-				}
-			});
+	    		vm.callMethod('setPage');
+	    		vm.callMethod('getCardList');
+			}
 	    },
 	    mounted:function(){
 	    	
