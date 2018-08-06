@@ -114,7 +114,7 @@
 				</div>
 			</div>
 		</div>
-		<div m-show="deviceStatus!=1" class="btn btnp" m-on:click="readCardICCID">重新读取SIM卡信息</div>
+		<div m-show="deviceStatus!=1 || off.status == 4" class="btn btnp" m-on:click="readCardICCID">重新读取SIM卡信息</div>
 	</section>
 
 	<!--订单信息-->
