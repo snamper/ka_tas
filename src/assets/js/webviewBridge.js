@@ -194,6 +194,7 @@ require('./base64.js');
 			// 	'status':'1',
 			// 	'livingId':'20150710',
 			// });
+			alert(`faceVerification:${JSON.stringify(json)}`)
 			callHandler({
 				name:'faceVerification',
 				data:json,
