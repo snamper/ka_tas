@@ -85,16 +85,19 @@ var vm=new Moon({
 					right:right
 				});
 
-				Jsborya.registerMethods('headerRightClick',function(){
-					if(userInfo.iccid=='666666666666'){//无卡找号
-						vm.toBuyHelpPage();
-						return false;
+				vm.callMethod('firstGet');
+			}else{//无卡找号
+				Jsborya.getGuestInfo({
+					slot:'-2',
+					complete:function(userInfo){
+						vm.setStore("USER_INFO",userInfo);
+						vm.callMethod('firstGet');
 					}
 				});
-
-				vm.callMethod('setPage');
-				vm.callMethod('getCardList');
-				vm.callMethod('getLableList');
+				
+				Jsborya.registerMethods('headerRightClick',function(){
+					vm.toBuyHelpPage();
+				});
 			}
 	    },
 	    mounted:function(){
@@ -102,6 +105,11 @@ var vm=new Moon({
 	    }
 	},
 	methods:{
+		firstGet(){
+			vm.callMethod('setPage');
+			vm.callMethod('getCardList');
+			vm.callMethod('getLableList');
+		},
 		setPage:function(){
 			setTimeout(function(){
 
