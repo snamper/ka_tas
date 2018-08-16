@@ -91,10 +91,12 @@ var vm=new Moon({
 					slot:'-2',
 					complete:function(userInfo){
 						vm.setStore("USER_INFO",userInfo);
+						vm.set('userInfo',userInfo);
+						
 						vm.callMethod('firstGet');
 					}
 				});
-				
+
 				Jsborya.registerMethods('headerRightClick',function(){
 					vm.toBuyHelpPage();
 				});
