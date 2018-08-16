@@ -90,17 +90,18 @@ var vm=new Moon({
 				Jsborya.getGuestInfo({
 					slot:'-2',
 					complete:function(userInfo){
+						vm.set('off.showBtmEntry',false);
 						vm.setStore("USER_INFO",userInfo);
 						vm.set('userInfo',userInfo);
-						
+
 						vm.callMethod('firstGet');
 					}
 				});
-
-				Jsborya.registerMethods('headerRightClick',function(){
-					vm.toBuyHelpPage();
-				});
 			}
+
+			Jsborya.registerMethods('headerRightClick',function(){
+				vm.toBuyHelpPage();
+			});
 	    },
 	    mounted:function(){
 
@@ -128,7 +129,7 @@ var vm=new Moon({
 				}
 				
 				otherHeight = parseInt(otherHeight);
-				
+				alert(window_h+'\n'+otherHeight)
 		    	vm.set('boxHt',`height:${ window_h - otherHeight - 2 }px`);
 				vm.set('otherHeight',otherHeight);
 				vm.set('windowHeight',window_h);
