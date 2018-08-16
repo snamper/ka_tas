@@ -92,6 +92,9 @@ export default{
               case 3:
                 color = '#66B92A';
                 break;
+              default :
+                color = '#4b3887';
+                break;
             }
             return color;
         },
