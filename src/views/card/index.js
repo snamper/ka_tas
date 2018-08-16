@@ -129,13 +129,13 @@ var vm=new Moon({
 				}
 				
 				otherHeight = parseInt(otherHeight);
-				alert(window_h+'\n'+otherHeight)
+				alert(document.body.offsetHeight +'\n'+window_h+'\n'+otherHeight)
 
 		    	vm.set('boxHt',`height:${ window_h - otherHeight - 2 }px`);
 
 		    	setTimeout(function(){
 		    		alert(document.getElementById('app').offsetHeight)
-				alert(document.body.offsetHeight)
+					alert(document.body.offsetHeight)
 		    	},300)
 				vm.set('otherHeight',otherHeight);
 				vm.set('windowHeight',window_h);
