@@ -113,7 +113,7 @@ var vm=new Moon({
 	    		let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
 				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
 
-				let otherHeight = 60 + 50 + 30 + 30,
+				let otherHeight = 60 + 50 + 30,
 					btmImgH = window_w * 323/1242,
 					showBtmEntry = vm.get('off').showBtmEntry;
 				if(showBtmEntry)otherHeight += btmImgH;
@@ -124,7 +124,7 @@ var vm=new Moon({
 				
 				otherHeight = parseInt(otherHeight);
 				
-		    	vm.set('boxHt',`height:${ window_h - otherHeight - 2 }px`);
+		    	vm.set('boxHt',`height:${ window_h - otherHeight - 5 }px`);
 				vm.set('otherHeight',otherHeight);
 				vm.set('windowHeight',window_h);
 

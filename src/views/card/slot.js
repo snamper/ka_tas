@@ -53,7 +53,7 @@ var vm=new Moon({
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
 					vm.callMethod('getCheckMachine');
-					vm.callMethod('choiceDeviceType',[1]);
+					vm.callMethod('choiceDeviceType');
 				}
 			});
 			Jsborya.registerMethods('headerRightClick',function(){
@@ -89,28 +89,17 @@ var vm=new Moon({
 				})
 			})
 		},
-		choiceDeviceType(deviceType){
+		choiceDeviceType(){
 
 			if(vm.get('checkMachine').type==1){
 				return false;
 			}
 
-			if(deviceType==2){
-				layer.open({
-	                content:'功能即将推出...<br>敬请期待!',
-	                btn:['确定'],
-	                title:'提示',
-	            });
-				return false;
-			}
 
 			vm.set('off.load',true);
-			if(deviceType){
-				vm.set('deviceType',deviceType);
-			}else deviceType = vm.get('deviceType');
 
 			Jsborya.setDeviceType({
-				deviceType:deviceType,
+				deviceType:'1',
 				complete:function(result){
 					Jsborya.readCardICCID({
 						slot:'-1',
@@ -215,7 +204,7 @@ var vm=new Moon({
 				slot:realSlot,
 				iccid:vm.get('iccid')[slot],
 				hasPriPhone:hasPriPhone,
-				deviceType:vm.get('deviceType'),
+				deviceType:'1',
 			});
 
 			Jsborya.getGuestInfo({
@@ -271,6 +260,8 @@ var vm=new Moon({
 			}else{
 				text='异常错误';
 			}
+			
+			vm.set('off.turn',5);
 			vm.set('off.load',false);
 			layer.open({
                 content:text,
