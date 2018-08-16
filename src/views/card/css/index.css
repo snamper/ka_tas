@@ -5,10 +5,10 @@
 .u-icon-devoted{background-image: url(../../../assets/img/icon_monopoly_number.png);}
 
 #app{
-    display: flex;
+    /*display: flex;
     display: -webkit-flex;
     flex-direction: column;
-    -webkit-flex-direction:column;
+    -webkit-flex-direction:column;*/
     width: 100%;
     
 }
