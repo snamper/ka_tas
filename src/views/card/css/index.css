@@ -267,9 +267,6 @@
 /*底部入口*/
 .m-footer-entry{
 	position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
     width: 100%;
 }
 .m-footer-entry>.item{

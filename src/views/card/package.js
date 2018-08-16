@@ -106,9 +106,9 @@ var vm=new Moon({
 	methods:{
 		setPage:function(){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-			let topH=232 + 20 + 5;
+			let topH=232 + 20 + 10;
 			if(vm.get('selectPackage').packageCode){
-				topH=343 + 20 + 5;
+				topH=343 + 20 + 10;
 			}
 			document.getElementById("packageList").style.maxHeight=window_h-topH+'px';
 		},
