@@ -4,13 +4,16 @@
 .u-icon-rcmd{background-image: url(../../../assets/img/recommend.png);}
 .u-icon-devoted{background-image: url(../../../assets/img/icon_monopoly_number.png);}
 
+body{
+	padding:0 !important;
+	margin:0 !important;
+}
 #app{
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
     -webkit-flex-direction:column;
     width: 100%;
-    
 }
 #app>div{
     flex: 1;
