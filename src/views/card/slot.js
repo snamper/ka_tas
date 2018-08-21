@@ -207,6 +207,13 @@ var vm=new Moon({
 				deviceType:'1',
 			});
 
+			alert('CARD_INFO:'+JSON.stringify({
+				slot:realSlot,
+				iccid:vm.get('iccid')[slot],
+				hasPriPhone:hasPriPhone,
+				deviceType:'1',
+			}))
+
 			Jsborya.getGuestInfo({
 				slot:realSlot,
 				complete:function(userInfo){
