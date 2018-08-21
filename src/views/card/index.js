@@ -46,6 +46,7 @@ var vm=new Moon({
 			if(cardInfo) vm.set('cardInfo',cardInfo);
 			if(selectCity) vm.set('selectCity',selectCity);
 
+			alert('CARD_INFO:' + JSON.stringify(cardInfo))
 
 			Jsborya.getGuestInfo({
 				slot:cardInfo.slot || '-2',
