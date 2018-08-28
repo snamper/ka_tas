@@ -11,18 +11,32 @@
 [m-mask]{
 	opacity: 0
 }
+
 </style>
 </head>
 <body>
 <div id="app" m-mask>
-	<section m-show="!off.turn">
+	<section m-show="!off.turn" class="g-full-box">
 		<header class="m-hd-dp">
-			<h3>远特i卡你&我的开卡工具</h3>
-			<p class="grey">全新自助式开卡体验</p>
-			<p class="grey">开通快捷方便 百万靓号随心搜</p>
+			<h2 class="purple">远特i卡你&我的开卡工具</h2>
 		</header>
 		<div class="m-tag" m-on:click="showInsertCard()"><i class="u-icon-error"></i><span class="red">未检测到卡槽中有卡，查看详情 ></span></div>
-		<div class="m-btn-gp">
+		<div class="m-scan-box">
+			<div class="scan" m-on:click="scanQRcode()">
+				<img src="../../assets/img/ruten_btn_scan.png">
+			</div>
+			<p class="bar blue"><b>点击扫描卡板背面条形码</b></p>
+			<div class="m-tips-m grey">
+				<p>友情提示：</p>
+				<p class="f-fts-12">1、如果开空卡，请退出并把远特sim卡插入手机卡槽，重新启动。<br>2、如果开成卡或白卡，请点击扫码开卡，扫描卡板背面条形码，我们将引导您如何进行开卡。<br>3、扫码时，请注意对准卡面上的条形码。</p>
+			</div>
+			<div class="footer blue">
+				<span m-on:click="jumpToLookArround">随便看看</span>
+				<em></em>
+				<span m-on:click="jumpToLogin">登录掌厅</span>
+			</div>
+		</div>
+		<!-- <div class="m-btn-gp">
 			<div class="row" m-on:click="scanQRcode()">
 				<div class="lt">
 					<div class="scan">扫码开卡</div>
@@ -48,7 +62,7 @@
 				<div class="rt"><img src="../../assets/img/ik_inlet_03.png"></div>
 				<div class="bt green"></div>
 			</div>
-		</div>
+		</div> -->
 	</section>
 
 	<section class="m-insert-card" m-show="off.turn==4 || off.turn==5"><!--无效卡或未插卡-->
@@ -76,7 +90,9 @@
 			<div class="row">
 				<span class="left">卡号</span>
 				<span class="right">
-					<span m-show="iccidsRes[0].status==1" class="green">新卡</span>
+					<span m-show="iccidsRes[0].status==1" class="green">空卡</span>
+					<span m-show="iccidsRes[0].status==8" class="green">成卡</span>
+					<span m-show="iccidsRes[0].status==9" class="green">白卡</span>
 					<span m-show="iccidsRes[0].status==2" class="yellow">开卡进行中</span>
 					<span m-show="iccidsRes[0].status==5" class="yellow">开卡进行中</span>
 				</span>
@@ -91,7 +107,9 @@
 			<div class="row">
 				<span class="left">卡状态</span>
 				<span class="right">
-					<span m-show="iccidsRes[1].status==1" class="green">新卡</span>
+					<span m-show="iccidsRes[1].status==1" class="green">空卡</span>
+					<span m-show="iccidsRes[0].status==8" class="green">成卡</span>
+					<span m-show="iccidsRes[0].status==9" class="green">白卡</span>
 					<span m-show="iccidsRes[1].status==2" class="yellow">开卡进行中</span>
 					<span m-show="iccidsRes[1].status==5" class="yellow">开卡进行中</span>
 				</span>

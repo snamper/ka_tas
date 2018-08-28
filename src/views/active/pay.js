@@ -77,7 +77,7 @@ var vm=new Moon({
 					vm.set('userInfo',userInfo);
 					
 					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						vm.orderCancel(userInfo,orderInfo);
 					});
 					Jsborya.registerMethods('payComplete',function(data){
 						// alert(`payComplete:${JSON.stringify(data)}`);

@@ -83,7 +83,7 @@ var vm=new Moon({
 
 
 				Jsborya.registerMethods('headerLeftClick',function(){
-					vm.orderCancel(vm.get('userInfo'),orderInfo.sysOrderId);
+					vm.orderCancel(vm.get('userInfo'),orderInfo);
 				});
 				Jsborya.registerMethods('headerRightClick',function(){
 					Jsborya.pageJump({
@@ -255,7 +255,7 @@ var vm=new Moon({
 			});
 		},
 		jumpToHome:function(){
-			vm.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId);
+			vm.orderCancel(vm.get('userInfo'),vm.get('orderInfo'));
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);

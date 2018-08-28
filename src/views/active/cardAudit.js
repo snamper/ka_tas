@@ -76,7 +76,7 @@ var vm=new Moon({
 				if(userInfo){
 					vm.set('userInfo',userInfo);
 					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						vm.orderCancel(userInfo,orderInfo);
 					});
 					if(orderInfo.orderStatusCode==='CARD_AUDIT'){//已审核通过
 						vm.set('off.step',2);

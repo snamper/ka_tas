@@ -95,7 +95,7 @@ var vm=new Moon({
 						vm.callMethod("uploadImgComplete",[data]);
 				    });
 					Jsborya.registerMethods('headerLeftClick',function(){
-						vm.orderCancel(userInfo,orderInfo.sysOrderId);
+						vm.orderCancel(userInfo,orderInfo);
 					});
 				}
 			}else{

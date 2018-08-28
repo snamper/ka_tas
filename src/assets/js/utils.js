@@ -133,7 +133,7 @@ export default{
          *@param {String} (sysOrderId) 订单号
          *@param {Boolean} (isJump) 是否跳转到号码搜索
          **/
-        Moon.prototype.orderCancel=function(userInfo,sysOrderId,isJump=true){
+        Moon.prototype.orderCancel=function(userInfo,orderInfo,isJump=true){
             var _self=this;
             layer.open({
                 content:'您要放弃未完成的订单的后续操作么？',
@@ -142,7 +142,7 @@ export default{
                 yes:function(){
                     var json={
                         'params':{
-                            'sysOrderId':sysOrderId,
+                            'sysOrderId':orderInfo.sysOrderId,
                         },
                         'userInfo':userInfo
                     };
@@ -150,7 +150,19 @@ export default{
                         Jsborya.callMessageNotice({
                           iccid:userInfo.iccid
                         });
-                        isJump&&_self.jumpToHome();
+                        if(isJump){
+                          if(orderInfo.bizType == 8 || orderInfo.bizType == 9){
+                            Jsborya.pageJump({
+                                url:'scanInfo.html',
+                                stepCode:'999',
+                                depiction:'卡信息',
+                                header:{
+                                    frontColor:'#ffffff',
+                                    backgroundColor:'#4b3887',
+                                }
+                            });
+                          }else _self.jumpToHome();
+                        }
                     });
                     
                 }
