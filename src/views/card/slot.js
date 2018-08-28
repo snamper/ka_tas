@@ -264,7 +264,7 @@ var vm=new Moon({
 			});
 
 			Jsborya.getGuestInfo({
-				slot:realSlot,
+				slot:slot,
 				iccid:vm.get('iccid')[slot],
 				complete:function(userInfo){
 					vm.setStore("USER_INFO",userInfo);
