@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>支付</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+.m-time-axis-sub>li, .m-time-axis>li{
+	width: 25% !important;
+}
+</style>
+</head>
+<body style="padding-bottom: 0.3rem;">
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.号码详情</div>
+			</li>
+			<li>
+				<div class="title">2.实名认证</div>
+			</li>
+			<li class="active">
+				<div class="title">3.支付</div>
+			</li>
+			<li>
+				<div class="title">4.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<section>
+			<ul class="m-order-info clr grey">
+				<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
+				<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
+				<li>
+					<span class="left">所选号码:</span>
+					<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+					<span>[{{orderInfo.cityName}}]</span>
+				</li>
+				<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
+				<li class="double-border"></li>
+				<li class="clr">
+					<span class="left grey">+号码占用费</span>
+					<span class="fr right discount">￥{{ mathDiscount(orderInfo.cardMoney,orderInfo.cDiscount) }}</span>
+					<span class="fr right oldPrice" m-show="orderInfo.cDiscount!=10000">￥{{ mathCentToYuan(orderInfo.cardMoney) }}</span>
+				</li>
+				<li class="clr">
+					<span class="left grey">+含预存话费</span>
+					<span class="fr right discount">￥{{ mathDiscount(orderInfo.prestoreMoney,orderInfo.pDiscount) }}</span>
+					<span class="fr right oldPrice" m-show="orderInfo.pDiscount!=10000">￥{{ mathCentToYuan(orderInfo.prestoreMoney) }}</span>
+				</li>
+				<li class="clr border"><span class="fr right black">总价:<b class="red font-big">￥{{ mathCentToYuan(orderInfo.totalMoney) }}</b></span></li>
+			</ul>
+
+			<ul class="m-pay-choose">
+				<li m-show="cardInfo.deviceType!=3" class="m-form-radio">
+					<div class="clr" m-on:click="shiftPayType(2)">
+						<span class="text u-icon-wechat"></span>
+						<span class="radio fr"><input type="radio" value="2"><span m-literal:class="{active:off.payType==2}"></span></span>
+					</div>
+				</li>
+				<li class="m-form-radio" m-on:click="shiftPayType(3)">
+					<div class="clr">
+						<span class="text u-icon-alipay"></span>
+						<span class="radio fr"><input type="radio" value="3"><span m-literal:class="{active:off.payType==3}"></span></span>
+					</div>
+				</li>
+			</ul>
+			<div m-show="!off.payStatus" m-on:click="pay" class="btn btng">
+				<span m-show="!off.load">去支付</span>
+				<span m-show="off.load==1">正在支付，请稍候<span class="pay-load">
+					<b class="f1"></b>
+					<b class="f2"></b>
+					<b></b>
+				</span></span>
+				<span m-show="off.load==2">获取支付结果中<span class="pay-load">
+					<b class="f1"></b>
+					<b class="f2"></b>
+					<b></b>
+				</span></span>
+				<span m-show="off.load==3">提交开卡申请中<span class="pay-load">
+					<b class="f1"></b>
+					<b class="f2"></b>
+					<b></b>
+				</span></span>
+			</div>
+			<div m-show="off.payStatus==1">
+				<div class="m-pay-status">
+					<img src="../../assets/img/icon_suc_a.png">
+					<p class="green">支付成功</p>
+				</div>
+				<div m-on:click="submitOrder" m-show="!off.submit" class="btn btny">提交开卡申请</div>
+			</div>
+			<div m-show="off.payStatus==2||off.payStatus==3||off.submit==1">
+				<div class="m-pay-status">
+					<img src="../../assets/img/icon_failure.png">
+					<p class="red" m-show="off.payStatus==2">支付失败</p>
+					<p class="red" m-show="off.payStatus==3">订单关闭</p>
+					<p class="red" m-show="off.submit==1">开卡申请失败</p>
+				</div>
+				<div m-on:click="pay" m-show="off.payStatus==2" class="btn btnp">重新支付</div>
+				<div m-on:click="jumpToHome" m-show="off.payStatus==3" class="btn btnp">返回首页</div>
+				<div m-on:click="submitOrder" m-show="off.submit==1" class="btn btnp">重新提交</div>
+			</div>
+		</section>
+	</div>
+	<iframe id="payIframe" frameborder="0"></iframe>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

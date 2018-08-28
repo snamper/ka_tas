@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>活体识别</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+.m-time-axis-sub>li, .m-time-axis>li{
+	width: 25% !important;
+}
+</style>
+</head>
+<body style="padding-bottom: 0.3rem;">
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.号码详情</div>
+			</li>
+			<li class="active">
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.支付</div>
+			</li>
+			<li>
+				<div class="title">4.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<section m-show="!off.face">
+			<div class="m-verification-box">
+				<div class="inner">
+					<img src="../../assets/img/icon_shibie.png">
+				</div>
+			</div>
+		</section>
+		<div class="tipsBox">
+			<section class="m-verification-box" m-if="!off.face">
+				<div>
+					<p class="f-w">开始人脸拍摄验证身份</p>
+					<p class="grey">请遵守以下要求，以便顺利通过验证</p>
+				</div>
+				<p class="o-tips grey f-tal">1.脸部装扮与身份证照片尽量一致<br>2.确保光线充足<br>3.验证时请将正脸正对屏幕，然后跟随提示完成脸部动作</p>
+				<div>
+					<div href="javascript:void(0)" m-on:click="toFaceVerification" class="btn bgp btnScale">开始识别</div>
+					<div href="javascript:void(0)" m-on:click="jumpToPrev" class="btn btny">上一步</div>
+				</div>
+			</section>
+			<section m-show="off.face"><!--通过人脸识别-->
+				<section m-show="!checkInfoDesc"><!--通过预审结果-->
+					<div class="m-verification-box">
+						<div class="inner">
+							<img src="../../assets/img/icon_shibie.png">
+							<div m-show="off.pass" class="u-icon-success"></div>
+						</div>
+						<div>
+							<p class="f-w red" m-show="!off.pass">人脸识别失败</p>
+							<p class="f-w green" m-show="off.pass">人脸识别通过验证</p>
+							
+							<p class="grey">与证件照片<span class="yellow">{{faceConfirmInfo.similarity}}%</span>相似度</p>
+						</div>
+					</div>
+					<section m-show="!load.checkInfo">
+						<div m-show="!off.pass">
+							<div class="btn btnp" m-on:click="toFaceVerification">重新识别</div>
+							<div class="btn btny" m-on:click="jumpToPrev">取消</div>
+						</div>
+						<div m-show="off.pass">
+							<div class="checkInfo-success"><i class="u-icon-success"></i><span class="text">预审通过</span></div>
+							<!-- <div class="btn btny" m-on:click="uploadMutipleData">提交开卡资料</div> -->
+						</div>
+					</section>
+					<section m-show="load.checkInfo">
+						<div class="m-spin-load">
+							<span class="load"></span>
+							<span class="text">正在获取预审结果</span>
+						</div>
+					</section>
+				</section>
+				<section m-show="checkInfoDesc"><!--预审结果错误-->
+					<div class="m-verification-box">
+						<div class="inner">
+							<img src="../../assets/img/icon_failure.png" style="width: 70%">
+						</div>
+						<div>
+							<p class="f-w red">资料提交失败</p>
+							<p class="grey">失败原因：<span class="red">{{ checkInfoDesc }}</span></p>
+						</div>
+					</div>
+					<div class="btn btny" m-on:click="jumpToPrev">上一步</div>
+				</section>
+			</section>
+		</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

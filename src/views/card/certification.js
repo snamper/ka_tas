@@ -51,6 +51,7 @@ var vm=new Moon({
 	    	devInfo:'--',
 	    },
 	    uploadType:1,//上传图片类型1,正面;2,反面;3,;4,手签名;
+	    uploadTime:'0000-00-00 00:00:00',
 	    imgName:{//上传后返回的图片地址
 	    	a:'',//正面
 	    	b:'',//反面
@@ -156,6 +157,7 @@ var vm=new Moon({
 				apiComplete:'uploadImgComplete',
 				complete:function(data){
 					if(type==3){//正面
+						vm.set('uploadTime',vm.getDateTime()[7]);
 						vm.set('uploadType',1);
 						document.getElementById("photo-front").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";
 					}else if(type==4){//反面

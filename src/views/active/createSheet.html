@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>受理单</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+body{
+	position: absolute;
+    width:100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin:auto;
+}
+.o-sheet{}
+.o-sheet>a{
+    text-align: center;
+    display: block;
+}
+#albumBox{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+
+	transform:translate3d(0,0,0) scale(1) rotate(0deg);
+	-webkit-transform:translate3d(0,0,0) scale(1) rotate(0deg);
+}
+footer{
+	position: fixed;
+	left: 0;
+	bottom:0;
+	width: 100%;
+	background-color: #fff;
+	padding-bottom: 0.3rem;
+}
+#scale{
+	position: fixed;
+	bottom: 1rem;
+	left: 0.2rem;
+	background-color: #000;
+	color: #fff;
+}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<section id="albumBox">
+			<div class="m-slider-box" m-show="orderInfo.images.length">
+				<div class="m-slider-wrapper o-sheet">
+					<a class="slider" m-for="todo in orderInfo.images" href="javascript:;"><img class="imgItem" m-literal:src="todo.imageName" m-literal:style="setImgHeight()"></a>
+				</div>
+				<div class="m-slider-pagination"></div>
+			</div>
+			<div style="height:100%;" m-show="!orderInfo.images.length"></div>
+		</section>
+		<!-- <div id="scale"></div> -->
+		<footer>
+			<div href="javascript:void(0)" m-on:click="submitSheet" class="btny btn">提交受理单</div>
+		</footer>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

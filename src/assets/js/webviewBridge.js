@@ -111,7 +111,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:json,
 				callback:function(result){
-					//alert('getGuestInfo'+JSON.stringify(result))
+					alert('getGuestInfo'+JSON.stringify(result))
 					json.complete(result);
 				}
 			});
@@ -194,11 +194,11 @@ require('./base64.js');
 			// 	'status':'1',
 			// 	'livingId':'20150710',
 			// });
-			//alert(`faceVerification:${JSON.stringify(json)}`)
 			callHandler({
 				name:'faceVerification',
 				data:json,
 				callback:function(result){
+					alert(`faceVerification:${JSON.stringify(result)}`)
 					json.complete(result);
 				}
 			});
@@ -214,7 +214,7 @@ require('./base64.js');
 				name:'readCardICCID',
 				data:json,
 				callback:function(result){
-					//alert('readCardICCID'+JSON.stringify(result));
+					alert('readCardICCID'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -237,7 +237,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:json,
 				callback:function(result){
-					//alert('readCardIMSI'+JSON.stringify(result));
+					alert('readCardIMSI'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -292,12 +292,29 @@ require('./base64.js');
 				}
 			});
 		},
-		setDeviceType:function(json){//设置开卡方式
+		callScanQRCode:function(json){//扫一扫
+			// setTimeout(function(){
+			// 	json.complete({
+			// 		result:'89860117841027577673',
+			// 		status:1
+			// 	});
+			// },1000);
 			callHandler({
-				name:'setDeviceType',
+				name:'callScanQRCode',
 				data:json,
 				callback:function(result){
+					alert('callScanQRCode'+JSON.stringify(result));
 					json.complete(result);
+				}
+			});
+		},
+		callMessageNotice:function(json){
+			alert('callMessageNotice'+JSON.stringify(json));
+			callHandler({
+				name:'callMessageNotice',
+				data:json,
+				callback:function(result){
+					console.log('success');
 				}
 			});
 		},

@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script> -->
+<title>实名认证</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+.m-time-axis-sub>li, .m-time-axis>li{
+	width: 25% !important;
+}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.号码详情</div>
+			</li>
+			<li class="active">
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.支付</div>
+			</li>
+			<li>
+				<div class="title">4.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+
+		<section class="m-all-tag clr">
+			<div class="tag">
+				<i class="u-icon-tag"></i>
+				<span>请上传开卡人的有效身份证照片</span>
+			</div>
+			<div class="m-takePhoto">
+				<div class="box" id="photo-front" m-on:click="takePhotos(3)">
+					<a href="javascript:void(0)" class="u-icon-photo" m-show="!imgName.a"></a>
+					<span m-show="imgName.a" class="m-watermask">办理时间:{{ uploadTime }}<br>办理人:{{ idCardInfo.name }}<br>仅用于远特通信或中国联通移动业务办理</span>
+				</div>
+				<div class="box" id="photo-back" m-on:click="takePhotos(4)">
+					<a href="javascript:void(0)" class="u-icon-photo" m-show="!imgName.b"></a>
+					<span m-show="imgName.b" class="m-watermask">办理时间:{{ uploadTime }}<br>办理人:{{ idCardInfo.name }}<br>仅用于远特通信或中国联通移动业务办理</span>
+				</div>
+			</div>
+			<div class="photo-tag">
+				<div class="item">身份证正面</div>
+				<div class="item">身份证反面</div>
+			</div>
+		</section>
+
+		<section class="m-all-tag clr">
+			<div class="tag" style="margin-bottom:0">
+				<i class="u-icon-tag"></i>
+				<span>开卡人证件信息<span class="f-s-10 grey"><br>（请确保以下信息与身份证信息一致，如有偏差请手动修改）</span></span>
+			</div>
+			<ul class="m-certificate-info o-input">
+				<li class="clr"><span class="fl">姓<b class="space3"></b>名:</span><div><input maxlength="12" type="text" m-model="idCardInfo.name"></div></li>
+				<li class="clr"><span class="fl">证<b class="space1"></b>件<b class="space1"></b>号<b class="space1"></b>码:</span><div><input maxlength="18" type="text" m-model="idCardInfo.number"></div></li>
+				<li class="clr"><span class="fl">证<b class="space1"></b>件<b class="space1"></b>地<b class="space1"></b>址:</span><div><input maxlength="32" type="text" m-model="idCardInfo.address"></div></li>
+				<li class="clr"><span class="fl">证件有效期:</span><div><input maxlength="24" type="text" m-model="idCardInfo.period"></div></li>
+			</ul>
+		</section>
+
+		<section style="padding: 0.1rem;" id="handle-box">
+			<div class="m-form-checkbox">
+				<div>
+					<span m-on:click="agree" m-literal:class="{active:off.agree,checkbox:true,}">
+						<span></span>
+					</span>
+					<span class="text">
+						<span m-on:click="agree">同意</span>
+						<a class="purple" href="javascript:void(0)" m-on:click="skimAgreement">
+							<b>《远特客户入网服务协议》</b>
+						</a>
+					</span>
+				</div>
+			</div>
+		</section>
+
+		<div m-on:click="jump" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">下一步</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

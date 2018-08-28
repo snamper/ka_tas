@@ -1,0 +1,38 @@
+/*上拉加载更多*/
+.u-icon-loading{background-image: url(../img/re.png);}
+
+.m-dragup-loading{
+    width: 100%;
+    bottom:5px;
+    left: 0;
+    text-align: center;
+    position: absolute;
+}
+.m-dragup-loading>span{
+    height: 0.16rem;
+    display: inline-block;
+}
+.m-dragup-loading>.u-icon-loading{
+    position: relative;
+    top: 3px;
+    width: 0.16rem;
+    background-size: 0.16rem;
+    background-repeat: no-repeat;
+    background-position:center;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    animation: loading-rotate .9s linear infinite;
+    -webkit-animation: loading-rotate .9s linear infinite
+}
+.m-dragup-loading>.text{
+    color: #bfbfbf;
+}
+.no-more-data{
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #666;
+    font-size: 0.1rem;
+}

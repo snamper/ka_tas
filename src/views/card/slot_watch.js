@@ -16,7 +16,6 @@ var vm=new Moon({
 			slot:'-1',
 			deviceType:3,//1、手机卡；2、手表卡；3、亿能eSIM
 			iccid:'--',
-			hasPriPhone:1,//是否有专营号，1是2否 
 		},
 		load:{
 			read:false
@@ -131,7 +130,6 @@ var vm=new Moon({
 				vm.set('off.status',data.data.status);
 
 				let cardInfo = vm.get("cardInfo");
-				cardInfo.hasPriPhone = data.data.hasPriPhone;
 				vm.set("cardInfo",cardInfo);
 
 				if(data.data.status == 1){

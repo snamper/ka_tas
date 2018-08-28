@@ -1,0 +1,92 @@
+/*
+    头部模块
+    城市+input+搜索
+*/
+/*header*/
+.m-header-col{
+    display: flex;
+    align-items: center;
+    display: -webkit-flex;
+    -webkit-align-items: center;
+
+    padding:8px;
+    background-color: #EBECEE;
+    font-size: 0.13rem;
+}
+.m-header-col>div{
+    background-color: #fff;
+    border-radius: 5px;
+    height: 0.35rem;
+}
+.m-header-col>.location{
+    flex: 2;
+    -webkit-flex: 2;
+    text-align: center;
+    color: #ECAC17;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 0.37rem;
+}
+.m-header-col>.location>.icon-location{
+    position: relative;
+    display: inline-block;
+    width: 0.15rem;
+    height: 0.15rem;
+    background-size: 0.12rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-top: -2px;
+    margin-right: 2px;
+}
+.m-header-col>.search{
+    position: relative;
+    flex: 6;
+    -webkit-flex: 6;
+    margin:0 0.1rem;
+}
+.m-header-col>.search>input{
+    width: 100%;
+    display: block;
+    border-radius:5px;
+    padding-left: 0.25rem;
+    border:none;
+    font-size: 0.14rem;
+    height: 0.35rem;
+    line-height:normal;
+    background-size: 0.2rem;
+    background-position: 4px center;
+    background-repeat: no-repeat;
+}
+.m-header-col>.search>input::-webkit-input-placeholder { 
+  line-height: 1.5em;
+}
+.m-header-col>.search>input:-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-header-col>.search>input::-moz-placeholder {
+  line-height: 1.5em;
+}
+.m-header-col>.search>input:-ms-input-placeholder {
+  line-height: 1.5em;
+}
+.m-header-col>.search>.u-icon-clear{
+    position: absolute;
+    right: 0;
+    width: 0.35rem;
+    height: 0.35rem;
+    top:0;
+    background-size: 0.2rem;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.m-header-col>.more{
+    position: relative;
+    text-align: center;
+    flex: 2;
+    -webkit-flex: 2;
+    line-height: 0.37rem;
+    transition: all .05s ease-out;
+    -webkit-transition: all .05s ease-out;
+}

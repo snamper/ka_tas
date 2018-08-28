@@ -11,214 +11,45 @@
 [m-mask]{
 	opacity: 0
 }
-.hd-dp{
-	text-align: center;
-	margin:0.3rem auto;
-}
-.hd-dp>h2{
-	color: #212121;
-}
-.hd-dp>p{
-	color: #424242;
-	margin-top:5px;
-}
-.btn-gp{
-	width: 85%;
-	margin:auto;
-}
-.btn-gp>.row{
-	position: relative;
-	display: flex;
-	display: -webkit-flex;
-	background-color: #fff;
-	margin-bottom: 0.4rem;
-	border-radius: 3px;
-	color: #212121;
-	overflow: hidden;
-	box-shadow: 0 0 7px rgba(0,0,0,0.12);
-	transition: transform .25s;
-	-webkit-transition: transform .25s;
-}
-.btn-gp>.row:active{
-	transform: scale(0.9);
-	-webkit-transform: scale(0.9);
-}
-.btn-gp .lt{
-	-webkit-flex: 1.5;
-	flex: 1.5;
-	padding:0.1rem 0 0 0.1rem;
-	font-size: 0.17rem;
-	
-	letter-spacing: 1px;
-}
-.btn-gp .lt>.dp{
-	font-size: 0.12rem;
-}
-.btn-gp .rt{
-	-webkit-flex:1;
-	flex: 1;
-}
-.btn-gp .rt>img{
-	width: 100%;
-	display: block;
-}
-.btn-gp .bt{
-	position: absolute;
-	bottom: 5px;
-	left: 50%;
-	margin-left:-0.52rem;
-}
-.full-load{
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
-	z-index: 9999;
-	background-color: #fff;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-}
-.full-load>.hd{
-	
-	margin-bottom: 0.2rem;
-	margin-top: 50%;
-}
-.full-load>.hd>img{
-	width: 0.4rem;
-}
-.full-load>.ld{
-	position: relative;
-	width: 80%;
-	margin:auto;
-	height: 4px;
-	border-radius: 10px;
-	overflow: hidden;
-	background-color: #F1F1F1;
-}
-.full-load>.ld>span{
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 4px;
-  pointer-events: none;
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
-  z-index: 888;
-  background: #4b3887;
-  
-}
-.full-load>.ld>.ft{
-	left: 0;
-	animation: LoadingBarForward 1.2s linear .2s infinite;
-  -webkit-animation: LoadingBarForward 1.2s linear .2s infinite
-}
-.full-load>.ld>.sd{
-	right: 0;
-	animation: LoadingBarForward 1.2s linear infinite;
-  -webkit-animation: LoadingBarForward 1.2s linear infinite
-}
-@keyframes LoadingBarForward {
-    0% {
-        transform: translateX(-200%)
-    }
-    to {
-        transform: translateX(200%)
-    }
-}
-@-webkit-keyframes LoadingBarForward {
-    0% {
-        -webkit-transform: translateX(-200%);
-    }
-
-    to {
-        -webkit-transform: translateX(200%);
-    }
-}
-.full-load>.grey{
-	margin-top: 0.1rem;
-}
-
-.m-btn-group>.btny{
-	width: 48% !important;
-}
-.m-btn-group>.rt{
-	margin-left: 2.5%;
-}
-@media screen and (max-width: 320px){
-	.btn-gp{
-		width: 90%;
-	}
-}
-
-.m-insert-card{
-    margin:0.1rem;
-    text-align: center;
-    animation: fadeIn .4s ease-in-out;
-}
-.m-top-msg{
-    margin-top: 0.4rem;
-    font-size: 0.14rem;
-}
-.m-top-msg>.ftb{
-    font-size: 0.16rem;
-    margin-bottom: 5px;
-}
-.m-card-box{
-    margin-top: 0.1rem;
-    margin-bottom: 0.3rem;
-}
-.m-inner-box{
-    display: inline-block;
-    position: relative;
-}
-.m-inner-box>img{
-    width: 4rem;
-}
-@media screen and (max-width: 375px){
-    .m-inner-box>img{
-        width:2.2rem; 
-    }
-}
-@media screen and (min-width: 376px) and (max-width: 540px){
-    .m-inner-box>img{
-        width:2.5rem; 
-    }
-}
-@media screen and (min-width: 541px) and (max-width: 640px){
-    .m-inner-box>img{
-        width:3rem; 
-    }
-}
 </style>
 </head>
 <body>
 <div id="app" m-mask>
-	<!-- <section m-show="!off.turn">
-		<header class="hd-dp">
-			<h2>“ 请选择您的开卡方式 ”</h2>
-			<p>根据选择为您提供便捷的开卡服务</p>
+	<section m-show="!off.turn">
+		<header class="m-hd-dp">
+			<h3>远特i卡你&我的开卡工具</h3>
+			<p class="grey">全新自助式开卡体验</p>
+			<p class="grey">开通快捷方便 百万靓号随心搜</p>
 		</header>
-		<div class="btn-gp">
-			<div class="row" m-on:click="choiceDeviceType(1)">
+		<div class="m-tag" m-on:click="showInsertCard()"><i class="u-icon-error"></i><span class="red">未检测到卡槽中有卡，查看详情 ></span></div>
+		<div class="m-btn-gp">
+			<div class="row" m-on:click="scanQRcode()">
 				<div class="lt">
-					<div>手机开卡</div>
-					<div class="dp grey" m-show="checkMachine.type==0">请将SIM卡插入手机卡槽</div>
-					<div class="dp red" m-show="checkMachine.type!=0">{{ checkMachine.desc }}</div>
+					<div class="scan">扫码开卡</div>
+					<div class="dp grey" m-show="!checkMachine.type">扫码远特通信卡板背面的条形码<br>我们将引导您如何进行开卡</div>
+					<div class="dp red" m-show="checkMachine.type">{{ checkMachine.desc }}</div>
 				</div>
-				<div class="rt"><img src="../../assets/img/picture_phone.jpg"></div>
-				<div class="bt purple" m-show="checkMachine.type!=1">点击进入手机开卡</div>
+				<div class="rt"><img src="../../assets/img/ik_inlet_01.png"></div>
+				<div class="bt purple"></div>
 			</div>
-			<div class="row" m-on:click="choiceDeviceType(2)">
+			<div class="row" m-on:click="jumpToLookArround">
 				<div class="lt">
-					<div>手表开卡</div>
-					<div class="dp grey">请将SIM卡插入手表卡槽,<br>打开手机蓝牙与手表连接</div>
+					<div class="look">随便看看</div>
+					<div class="dp grey">随意浏览远特i卡码号资源<br>通过购卡指南获取远特i卡</div>
 				</div>
-				<div class="rt"><img src="../../assets/img/picture_watch.jpg"></div>
-				<div class="bt green">点击进入手表开卡</div>
+				<div class="rt"><img src="../../assets/img/ik_inlet_02.png"></div>
+				<div class="bt green"></div>
+			</div>
+			<div class="row" m-on:click="jumpToLogin">
+				<div class="lt">
+					<div class="login">登录掌厅</div>
+					<div class="dp grey">提供话费充值和查询实时话费等业务</div>
+				</div>
+				<div class="rt"><img src="../../assets/img/ik_inlet_03.png"></div>
+				<div class="bt green"></div>
 			</div>
 		</div>
-	</section> -->
+	</section>
 
 	<section class="m-insert-card" m-show="off.turn==4 || off.turn==5"><!--无效卡或未插卡-->
 		<header class="m-top-msg">
@@ -232,7 +63,7 @@
 			</div>
 		</div>
 		<div class="grey">插入后请点击“确定，SIM卡已插入”按钮</div>
-		<div class="btn btnp" m-on:click="choiceDeviceType()">确定，SIM卡已插入</div>
+		<div class="btn btnp" m-on:click="begin()">确定，SIM卡已插入</div>
 	</section>
 
 	<section m-show="off.turn==1">

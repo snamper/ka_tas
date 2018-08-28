@@ -41,6 +41,10 @@ export default{
          **/
         Moon.prototype.phoneFormat=function(n){
             if(!n)return '--';
+
+            if(n.length==7)n = n.slice(0,7) + '****';
+            if(n.length==8)n = n.slice(0,8) + '***';
+            
             var w=n.split('');
             w.splice(3,0,' ');
             w.splice(8,0,' ');
@@ -143,6 +147,9 @@ export default{
                         'userInfo':userInfo
                     };
                     _self.AJAX('/tas/w/business/orderCancell',json,function(data){
+                        Jsborya.callMessageNotice({
+                          iccid:userInfo.iccid
+                        });
                         isJump&&_self.jumpToHome();
                     });
                     
@@ -208,9 +215,9 @@ export default{
                         shadeClose:false,
                         title:'提示',
                         yes:function(){
-                            window.localStorage.setItem('ORDER_INFO',JSON.stringify(data.data));
+                            _self.setStore('ORDER_INFO',data.data);
                             Jsborya.pageJump({
-                                url:'orderInfo.html',
+                                url:'../card/slotInfo.html',
                                 stepCode:'999',
                                 depiction:'订单详情',
                                 header:{

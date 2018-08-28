@@ -1,5 +1,5 @@
 require('../../public.js');
-require('./css/pay.css');
+require('../card/css/pay.css');
 Jsborya.ready(function(){
 
 
@@ -9,7 +9,8 @@ var vm=new Moon({
 		off:{
 			load:!1,
 			payType:"3",
-			payStatus:0,//0,未支付;1,支付成功;2,支付失败;3,订单关闭;
+			payStatus:0,//0,未支付;1,支付成功;2,支付失败;3,订单关闭;4,开卡申请失败;
+			submit:0,//0,待提交;1，开卡申请失败
 		},
 		orderInfo: {
             "phoneNum":"00000000000",
@@ -69,7 +70,7 @@ var vm=new Moon({
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
 
-				if(orderInfo.orderStatusCode == "CARD_PAY") vm.set("off.payStatus",1);//已经支付了
+				if(orderInfo.orderStatusCode == "CARD_PAY") vm.set("off.payStatus",1);
 
 				let userInfo = vm.getStore("USER_INFO");
 				if(userInfo){
@@ -123,6 +124,7 @@ var vm=new Moon({
 							vm.set('off.payStatus',2);
 						}else if(status==7){
 							vm.set('off.payStatus',1);
+							vm.callMethod('submitOrder');
 						}else if(status==8){
 							vm.set('off.payStatus',3);
 						}
@@ -188,7 +190,7 @@ var vm=new Moon({
 						destroyed:false,
 						header:{
 	                        frontColor:'#ffffff',
-	                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
+	                        backgroundColor:'#4b3887',
 	                    }
 					});
 				}
@@ -197,39 +199,30 @@ var vm=new Moon({
 				vm.set('off.load',false);
 			});
 		},
-		shiftPayType:function(payType){
-			vm.set('off.payType',payType);
-		},
-		createSheet:function(){//生成受理单
-			var orderInfo=vm.get('orderInfo');
-			vm.AJAX('/tas/w/business/acceptance',{//获取受理单图片
-				userInfo:vm.get('userInfo'),
-				params:{
-					sysOrderId:orderInfo.sysOrderId,
+		submitOrder:function(){//开卡申请
+			vm.set('off.load',3);
+			vm.AJAX('/tas/w/business/submitOrder',{
+				'userInfo':vm.get("userInfo"),
+				'params':{
+					sysOrderId:vm.get("orderInfo").sysOrderId,
 				}
 			},function(data){
-				var imgArray=data.data.images;
-				for(let i =0;i<imgArray.length;i++){
-					imgArray[i].imageName=imgArray[i].imageName.replace(/\\/g,"/");
-				}
-
-				Object.assign(orderInfo,{
-					images:imgArray,
-				});
-				
-				vm.setStore('ORDER_INFO',orderInfo);
-
 				Jsborya.pageJump({
-					url:'createSheet.html',
+					url:'cardActive.html',
 					stepCode:'999',
-					depiction:'受理单',
+					depiction:'开卡受理',
 					header:{
                         frontColor:'#ffffff',
-                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
+                        backgroundColor:'#4b3887',
                     }
 				});
-
+			},true,function(){
+				vm.set('off.load',false);
+				vm.set('off.submit',1);
 			});
+		},
+		shiftPayType:function(payType){
+			vm.set('off.payType',payType);
 		},
 		jumpToHome:function(){
 			vm.jumpToHome();

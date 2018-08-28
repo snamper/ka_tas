@@ -1,0 +1,55 @@
+body{
+    padding-bottom: 0.3rem;
+}
+.space1{
+    display: inline-block;
+    width: 6px;
+}
+.space2{
+    display: inline-block;
+    width: 26px;
+}
+
+.g-col-2{
+    background-color: #fff;
+    margin-bottom: 0.2rem;
+}
+.g-col-2>.line{
+    border-bottom: 1px solid #eee;
+}
+.g-col-2>.row{
+    display: flex;
+    display: -webkit-flex;
+    margin-left: 0.1rem;
+    padding:0.1rem 0;
+}
+.g-col-2>.row>span{
+    
+}
+.g-col-2>.row>.left{
+    color: #515151;
+    width: 0.7rem;
+}
+.g-col-2>.row>.right{
+    text-align: right;
+    padding-right: 0.1rem;
+    flex: 1;
+}
+
+.m-tips{
+    font-size: 0.12rem;
+    padding: 0.1rem;
+}
+
+.m-set-empty{
+
+}
+.m-set-empty>p{
+    margin: 0.2rem 0;
+    text-align: center;
+}
+.m-set-empty>img{
+    display: block;
+    width: 60%;
+    margin: auto;
+}

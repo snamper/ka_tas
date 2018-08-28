@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>开成卡--套餐列表</title>
+<style type="text/css">
+	[m-mask]{
+		display: none;
+	}
+	.f-mt-10{
+		margin-top: 0.1rem;
+	}
+	.f-mt-5{
+		margin-top: 5px;
+	}
+	.m-package-prompt{
+		padding: 5px 5px 5px 8px;
+		line-height: 1.65;
+	}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<div class="m-tag"><i class="u-icon-tag"></i>套餐</div>
+		<ul class="m-package">
+			<li 
+				m-for="package,index in packageList"
+				m-literal:title="index"
+				m-literal:class="{active:off.pack==index}"
+				m-on:click="selectPack">{{ package.title }}<span></span></li>
+		</ul>
+		<div class="m-box f-mt-10">
+			<div class="m-col-2">
+				<div class="lt grey">所选套餐</div>
+				<div class="rt">
+					<span class="package">{{ packageList[off.pack].title }}</span>
+					<span class="right blue" m-on:click="selectPackageInfo()">套餐资费说明</span>
+				</div>
+			</div>
+			<div class="m-package-prompt grey" m-html="packageList[off.pack].standard"></div>
+		</div>
+		<div class="m-tag"><i class="u-icon-tag"></i>可选包</div>
+		<ul class="m-package" id="bagUl">
+			
+		</ul>
+		<div class="m-tag"><i class="u-icon-tag"></i>预存话费</div>
+		<ul class="m-package" id="preUl">
+
+		</ul>
+		<div class="m-price-info grey">
+			<div class="lt">
+				<div>已有预存:￥{{ mathCentToYuan(existPrestoreMoney) }}</div>
+				<div class="f-mt-5">总预存:￥{{ mathCentToYuan(totalPrestoreMoney) }}</div>
+			</div>
+			<div class="rt">预存补差价:<b class="black font-bold">￥{{ mathCentToYuan(differenceMoney) }}</b></div>
+		</div>
+		
+		<div class="m-btn-group">
+			<div class="btn btnDefault" m-on:click="cancelChange">放弃变更</div>
+			<div class="btn btny" m-on:click="makeSure">确定</div>
+		</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

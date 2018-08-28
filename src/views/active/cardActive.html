@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>开空卡</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+.order-tips{text-align: center;margin-top: 0.3rem;margin-bottom:0.2rem;}
+.order-tips .success{width: 0.7rem;}
+.order-tips .error{width: 0.7rem;}
+.order-tips .dp>b{font-size: 0.16rem;padding: 0.1rem 0;display: inline-block;font-weight: bold;}
+.order-tips .tips{
+	width: 88%;
+	margin:auto;
+	margin-top:0.1rem;
+}
+.order-tips .tips>dt{
+	margin-bottom:5px;
+}
+.order-tips .tips>dd{
+	margin-bottom:3px;
+}
+
+.o-success{
+	position: relative;
+}
+.o-success>.right{
+	position: absolute;
+	right: 0;
+	top: 5px;
+}
+.o-success>.right>img{
+	width: 0.15rem;
+	vertical-align: middle;
+	position: relative;
+	top: -2px;
+	margin-right: 2px;
+}
+.m-success-set{
+	margin-bottom: 0.1rem;
+}
+.m-success-set>.grey{
+	padding:0.1rem 0.2rem;
+	font-size: 0.12rem;
+	line-height: 1.65;
+}
+.m-success-set>.success{
+	text-align:center;
+	margin:0.2rem 0;
+}
+.m-success-set>.success>img{
+	width:0.7rem;
+}
+.black-lt{
+	color: #424345;
+	font-size:0.12rem;
+}
+.m-time-axis-sub>li, .m-time-axis>li{
+	width: 25% !important;
+}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li>
+				<div class="title">1.号码详情</div>
+			</li>
+			<li>
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.支付</div>
+			</li>
+			<li class="active">
+				<div class="title">4.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li class="active"><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<!-- <ul class="m-order-info clr grey" m-show="cardInfo.deviceType!=3">
+			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
+			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
+			<li class="o-success">
+				<span class="left">所选号码:</span>
+				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
+				<span>[{{orderInfo.cityName}}]</span>
+				<span class="right green" m-show="off.load==2"><img src="../../assets/img/icon_suc_a.png">开卡成功</span>
+			</li>
+			<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
+		</ul> -->
+		<div class="order-tips" m-show="off.load!=2">
+			<div>
+				<img class="success" m-show="off.load==1" src="../../assets/img/icon_suc_a.png">
+				<img class="error" m-show="off.load==3" src="../../assets/img/icon_failure.png">
+			</div>
+			
+			<section m-show="off.load==1">
+				<div>
+					<div class="dp">
+						<b class="green">开卡申请已受理，请等待开卡结果</b>
+					</div>
+					<dl class="tips f-tal grey">
+						<dt>温馨提示:</dt>
+						<dd>1、您可通过手机读卡或扫码卡板条形码查看开通进度及开卡是否成功</dd>
+						<dd>2、开卡结果，我们会用消息弹出的方式告知您，请注意查收</dd>
+						<dd>3、开卡成功，我们将以短信的形式通知机主</dd>
+					</dl>
+				</div>
+			</section>
+			<section m-show="off.load==3">
+				<div>
+					<div class="dp">
+						<b class="red">
+							<span m-show="orderStatus==3">开卡失败</span>
+							<span m-show="orderStatus==4">订单已关闭</span>
+						</b>
+					</div>
+					<dl class="tips f-tal grey">
+						<dt>温馨提示:</dt>
+						<dd class="red">1、失败原因：{{ desc }}</dd>
+						<dd>2、您可以重新扫码卡板，进行开卡。</dd>
+					</dl>
+				</div>
+			</section>
+			
+			<div class="btn btny" m-on:click="jumpToHome" m-show="off.load!=2">确定</div>
+		</div>
+		<div class="m-success-set" m-show="off.load==2">
+			<div class="success">
+				<img src="../../assets/img/icon_suc_a.png">
+				<h3 class="green">
+					<span>开卡成功</span>
+				</h3>
+			</div>
+			<div class="grey">
+				温馨提示：<br>1、恭喜您成为远特用户;<br>2、您可以直接登录“远特i卡”掌上营业厅，可直接进行充值，查询实时话费、我的套餐、套餐余量等业务;<br>3、有疑问请拨打：语音自助服务10027  客服电话400-041-0027
+			</div>
+			
+			<div class="btn btny" m-on:click="jumpToLogin">马上去查查</div>
+		</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

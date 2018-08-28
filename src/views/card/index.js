@@ -15,7 +15,6 @@ var vm=new Moon({
 			slot:'-2',
 			deviceType:1,
 			iccid:'',
-			hasPriPhone:1,//是否有专营号，1是2否 
 		},
 		inputValue:'',//搜索框value
 		selectLabel:{type:0,name:'',tag:''},//选择的标签

@@ -41,6 +41,14 @@
 					<span class="right">{{ orderInfo.sysOrderId }}</span>
 				</div>
 				<div class="row line">
+					<span class="left">订单类型</span>
+					<span class="right blue">
+						<span m-show="orderInfo.bizType == 4">成卡</span>
+						<span m-show="orderInfo.bizType == 5">白卡</span>
+						<span m-show="orderInfo.bizType == 6">空卡</span>
+					</span>
+				</div>
+				<div class="row line">
 					<span class="left">所选号码</span>
 					<span class="right">{{ phoneFormat(orderInfo.phoneNum) }}</span>
 				</div>
@@ -103,7 +111,7 @@
 				<dd>2、支付的金额我们将在24小时内退回到您的账户。</dd>
 				<dd>3、马上联系客服：语音自助服务10027 客服电话400-041-0027。</dd>
 			</dl>
-			<div class="btn btny" m-show="off.status==6" m-on:click="jumpToHome">确定</div>
+			<div class="btn btny" m-show="off.status==6" m-on:click="jumpToSlot">确定</div>
 		</section>
 	</section>
 </div>

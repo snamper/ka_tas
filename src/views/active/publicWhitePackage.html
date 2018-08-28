@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>开白卡-套餐选择</title>
+<style type="text/css">
+	[m-mask]{
+		display: none;
+	}
+	.blue-lt{
+		color:#2196F3;
+	}
+	.pack-standard{
+		padding-left: 0.2rem;
+		padding-right: 0.1rem;
+		line-height: 1.65;
+		font-size: 0.12rem;
+		color: #616161;
+		padding-bottom: 0.1rem;
+	}
+	.pack-title{
+		padding-left: 0.1rem;
+	}
+	.f-mb-10{
+		padding-bottom: 0;
+		margin-bottom: 5px;
+	}
+	.m-shift-flow{
+		position: absolute;
+		right:0.1rem;
+		top: 0;
+	}
+	.m-shift-flow>span{
+		display: inline-block;
+		height: 0.3rem;
+		line-height:0.3rem;
+		padding-bottom: 5px;
+		margin-left:0.1rem;
+		font-size:0.12rem;
+		font-weight: bold;
+	}
+	.m-shift-flow>.active{
+		color: #4b3887;
+	}
+	.m-shift-flow>b{
+		display: inline-block;
+		position: absolute;
+		bottom: 0;
+		left: 0.1rem;
+		width: 0.48rem;
+		height: 2px;
+		background-color:#4b3887;
+		transition: transform .2s;
+		-webkit-transition: transform .2s;
+	}
+	.flow-tips{
+		margin-top:1px !important;
+		margin-left: 0.2rem !important;
+	}
+	.m-time-axis-sub>li, .m-time-axis>li{
+		width: 25% !important;
+	}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li class="active">
+				<div class="title">1.号码详情</div>
+			</li>
+			<li>
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.支付</div>
+			</li>
+			<li>
+				<div class="title">4.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+
+		<div class="m-tag"><i class="u-icon-tag"></i>语音资费</div>
+		<ul class="m-package" id="voicePostage">
+			<li
+				m-for="todo,index in packageInfo.fareList"
+				m-on:click="selectVoice"
+				m-literal:title="index"
+				m-literal:class="{active:off.voice==index}">{{todo.phoneFareVal}}<span></span></li>
+		</ul>
+		
+		<div class="m-tag clr">
+			<i class="u-icon-tag"></i>
+			<span class="fl">流量档位</span>
+			<span class="fl red flow-tips" m-show="off.onlyFlowType==3">省内流量半价优惠喲~</span>
+			<div class="m-shift-flow" m-show="off.onlyFlowType==3">
+				<b :style="{transform:'translate3d('+flowTx+',0,0)'}"></b>
+				<span m-literal:class="{active:off.flowType==2}" m-on:click="shiftFlowType(2)">省内流量</span>
+				<span m-literal:class="{active:off.flowType==1}" m-on:click="shiftFlowType(1)">全国流量</span>
+			</div>
+		</div>
+		<ul class="m-package" id="flowLevel">
+			<li
+				m-for="todo,index in packageInfo.fareList[off.voice].flowList"
+				m-if="off.flowType==todo.flowType"
+				m-on:click="selectFlow"
+				m-literal:title="index"
+				m-literal:class="{active:off.flow==index}">{{todo.phoneFlowVal}}<span></span></li>
+		</ul>
+
+		<section style="background-color: #fff" class="fmt-10">
+			<div class="m-tag clr">
+				<span class="purple">所选套餐</span>
+				<span class="pack-title">{{  packageInfo.fareList[off.voice].flowList[off.flow].packageInfo.title }}</span>
+				<span class="fr blue-lt" m-on:click="selectPackageInfo">套餐资费说明</span>
+			</div>
+			<div class="pack-standard f-mb-10 red" m-html="packageInfo.fareList[off.voice].flowList[off.flow].packageInfo.prompt"></div>
+			<div class="pack-standard" m-html="packageInfo.fareList[off.voice].flowList[off.flow].packageInfo.standard"></div>
+		</section>
+
+		<div class="m-tag"><i class="u-icon-tag"></i>可选包</div>
+		<ul class="m-package" id="bagUl">
+			
+		</ul>
+
+		<div class="m-tag"><i class="u-icon-tag"></i>预存话费</div>
+		<ul class="m-package" id="preUl">
+			
+		</ul>
+		
+		<div class="m-tag"><i class="u-icon-tag"></i>开卡首充<span m-show="packageInfo.addPreDiscount!=10000">（{{ parseFloat(packageInfo.addPreDiscount)/1000 }}折）</span></div>
+		<ul class="m-package">
+			<li 
+				m-for="pre,index in addPrestoreList"
+				m-literal:class="{active:off.addPre==index}"
+				m-on:click="shiftAddPrestore(index)">{{ pre }}元<span></span></li>
+			<li id="addPreInput" m-on:click="shiftAddPrestore(998)" class="o-add-pre"><input m-model="inputAddPre" maxlength="6" m-on:input="inputAddPreChange" type="tel" placeholder="自定义≥30"><span></span></li>
+		</ul>
+
+		<ul class="m-order-info clr grey fmt-10">
+			<li><span class="left">所选号码:</span>
+				<b class="purple">{{ phoneFormat(selectInfo.card) }}</b>
+				<b>({{selectInfo.cityName}})</b>
+			</li>
+			<li class="double-border"></li>
+			<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(selectInfo.faceMoney)}}</span></li>
+			<li m-literal:class="{border:off.addPre==999}"><span class="left">+含预存话费</span><span class="fr right">￥{{prestoreMoney}}</span></li>
+			<li class="border" m-show="off.addPre!=999"><span class="left">+开卡首冲</span><span class="fr right"><em class="line-th f-s-12">￥{{addPreMoney}}</em>￥{{addPreDiscountMoney}}</span></li>
+			<li class="clr"><span class="fr right black"><b>总价:</b><b class="font-16 font-bold">￥{{totalMoney}}</b></span></li>
+			<li class="clr"><span class="fr right black"><b>还需支付:</b><b class="red font-16 font-bold">￥{{payMoney}}</b></span></li>
+		</ul>
+
+		<!-- <div class="m-deduction">
+			<div class="account">充值赠送账户余额：￥<b class="font-bold">{{mathCentToYuan(packageInfo.deductionFee) }}</b></div>
+			<p class="tips font-12">抵扣预存不计入返佣</p>
+			<div class="handle m-form-checkbox">
+				<div m-on:click="mathDeduction">
+					<span class="text">-￥{{deductionMoney}}</span>
+					<span class="checkbox" m-literal:class="{active:off.deductionUsed}">
+						<span></span>
+					</span>
+				</div>
+			</div>
+		</div> -->
+		
+		<div class="btn btn-y" m-on:click="makeSure">下一步</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

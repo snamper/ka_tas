@@ -1,0 +1,82 @@
+/*未完成订单*/
+
+.order-tips>div>p {
+    text-align: center;
+    color: #666;
+    margin-top: .25rem;
+    margin-bottom: .3rem
+}
+
+.order-tips>div>dl>dt {
+    font-size: .3rem;
+    margin-bottom: .15rem;
+    letter-spacing: 1px
+}
+
+.order-tips>div>dl>dt>b {
+    font-size: .12rem
+}
+
+.order-tips>div>dl>dd {
+    margin-bottom: .1rem;
+    margin-left: .05rem
+}
+
+.order-tips>div>dl>dd>label,
+.tips-time>label {
+    color: #666
+}
+
+.order-tips>div>dl>dd>.grey {
+    color: #666;
+    font-size: .14rem
+}
+
+.order-tips>div>dl>dd>.grey>.yellow {
+    font-size: .15rem
+}
+
+.order-tips>div>dl>dd>.red {
+    font-size: .14rem
+}
+
+@media screen and (max-width:319px) {
+    .order-tips>div>dl>dt {
+        font-size: .25rem
+    }
+    .order-tips>div>dl {
+        margin-left: 14%
+    }
+}
+
+@media screen and (min-width:320px) and (max-width:369px) {
+    .order-tips>div>dl>dt {
+        font-size: .26rem
+    }
+    .order-tips>div>dl {
+        margin-left: 15%
+    }
+}
+
+@media screen and (min-width:370px) and (max-width:420px) {
+    .order-tips>div>dl {
+        margin-left: 22%
+    }
+}
+
+@media screen and (min-width:421px) {
+    .order-tips>div>dl {
+        margin-left: 30%
+    }
+}
+
+.tips-time {
+    width: 85%;
+    margin: auto;
+    padding-top: .2rem
+}
+
+.tips-time>time {
+    font-size: .16rem;
+    letter-spacing: 1px
+}

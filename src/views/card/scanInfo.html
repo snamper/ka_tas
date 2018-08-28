@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>卡信息</title>
+<style type="text/css">
+[m-mask]{
+	opacity: 0
+}
+</style>
+</head>
+<body>
+<div id="app" m-mask>
+	<section>
+		<div class="g-col-2">
+			<div class="row line">
+				<span class="left">卡号</span>
+				<span class="right">{{ scanInfo.iccid || '--' }}</span>
+			</div>
+			<div class="row">
+				<span class="left">卡状态</span>
+				<span class="right">
+					<span class="green" m-show="scanInfo.status == 1">空卡</span>
+					<span class="green" m-show="scanInfo.status == 3">激活卡</span>
+					<span class="red" m-show="scanInfo.status == 4">无效卡</span>
+					<span class="blue" m-show="scanInfo.status == 8">卡盟成卡</span>
+					<span class="blue" m-show="scanInfo.status == 9">卡盟白卡</span>
+					<span class="blue" m-show="scanInfo.status == 10">远盟成卡</span>
+					<span class="grey" m-show="scanInfo.status == 11">远盟白卡</span>
+				</span>
+			</div>
+		</div>
+	</section>
+	
+	<section>
+		<section m-show="scanInfo.status == 1"><!--可用的空卡-->
+			<div class="m-set-empty">
+				<p>如需开卡请将远特SIM卡插入手机卡槽，并重新启动app</p>
+				<img src="../../assets/img/picture_phone.png">
+			</div>
+		</section>
+		<section m-show="scanInfo.status == 3"><!--3、激活卡；-->
+			<div class="g-col-2">
+				<div class="row line">
+					<span class="left">激活时间</span>
+					<span class="right">{{ getDateTime(scanInfo.createTime)[6] }}</span>
+				</div>
+				<div class="row line">
+					<span class="left">手机号码</span>
+					<span class="right">{{ phoneFormat(scanInfo.phone) }} <em class="f-fts-12 grey">{{ scanInfo.cityName }}</em></span>
+				</div>
+				<div class="row line">
+					<span class="left">面<em class="space2"></em>值</span>
+					<span class="right">{{ mathCentToYuan(scanInfo.facePrice) }}元</span>
+				</div>
+				<div class="row line">
+					<span class="left">套<em class="space2"></em>餐</span>
+					<span class="right">{{ scanInfo.packageName }}</span>
+				</div>
+				<div class="row">
+					<span class="left">可<em class="space1"></em>选<em class="space1"></em>包</span>
+					<span class="right">
+						<span m-for="opt in scanInfo.optionals">{{ opt.optionalName }},</span>
+					</span>
+				</div>
+			</div>
+			<div class="m-tips red">当期卡板为激活卡，您可登录掌厅进行充值，查询实时话费、我的套餐、套餐余量等业务</div>
+			<div class="btn btny" m-on:click="jumpToLogin">去登录</div>
+		</section>
+		<section m-show="scanInfo.status == 8"><!--8、卡盟成卡；-->
+			<div class="g-col-2">
+				<div class="row line">
+					<span class="left">制卡时间</span>
+					<span class="right">{{ getDateTime(scanInfo.createTime)[6] }}</span>
+				</div>
+				<div class="row line">
+					<span class="left">手机号码</span>
+					<span class="right">{{ phoneFormat(scanInfo.phone) }} <em class="f-fts-12 grey">{{ scanInfo.cityName }}</em></span>
+				</div>
+				<div class="row line">
+					<span class="left">面<em class="space2"></em>值</span>
+					<span class="right">{{ mathCentToYuan(scanInfo.facePrice) }}元</span>
+				</div>
+				<div class="row line">
+					<span class="left">套<em class="space2"></em>餐</span>
+					<span class="right">{{ scanInfo.packageName }}</span>
+				</div>
+				<div class="row">
+					<span class="left">可<em class="space1"></em>选<em class="space1"></em>包</span>
+					<span class="right">
+						<span m-for="opt in scanInfo.optionals">{{ opt.optionalName }},</span>
+					</span>
+				</div>
+			</div>
+			<div class="btn btny" m-on:click="jump(8)">去开卡</div>
+		</section>
+		<section m-show="scanInfo.status == 9"><!--9、卡盟白卡；-->
+			<div class="g-col-2">
+				<div class="row line">
+					<span class="left">制卡时间</span>
+					<span class="right">{{ getDateTime(scanInfo.createTime)[6] }}</span>
+				</div>
+				<div class="row line">
+					<span class="left">所属号段</span>
+					<span class="right">{{ phoneFormat(scanInfo.phone) }} <em class="f-fts-12 grey">{{ scanInfo.cityName }}</em></span>
+				</div>
+				<div class="row line">
+					<span class="left">面<em class="space2"></em>值</span>
+					<span class="right">{{ mathCentToYuan(scanInfo.facePrice) }}元</span>
+				</div>
+				<div class="row line">
+					<span class="left">套<em class="space2"></em>餐</span>
+					<span class="right">{{ scanInfo.packageName }}</span>
+				</div>
+				<div class="row">
+					<span class="left">可<em class="space1"></em>选<em class="space1"></em>包</span>
+					<span class="right">
+						<span m-for="opt in scanInfo.optionals">{{ opt.optionalName }},</span>
+					</span>
+				</div>
+			</div>
+			<div class="btn btny" m-on:click="jump(9)">去开卡</div>
+		</section>
+		<section m-show="scanInfo.status == 10"><!--10、远盟成卡；-->
+			<div class="g-col-2">
+				<div class="row line">
+					<span class="left">手机号码</span>
+					<span class="right">{{ phoneFormat(scanInfo.phone) }} <em class="f-fts-12 grey">{{ scanInfo.cityName }}</em></span>
+				</div>
+				<div class="row line">
+					<span class="left">面<em class="space2"></em>值</span>
+					<span class="right">{{ mathCentToYuan(scanInfo.facePrice) }}元</span>
+				</div>
+				<div class="row line">
+					<span class="left">套<em class="space2"></em>餐</span>
+					<span class="right">{{ scanInfo.packageName }}</span>
+				</div>
+				<div class="row">
+					<span class="left">可<em class="space1"></em>选<em class="space1"></em>包</span>
+					<span class="right">
+						<span m-for="opt in scanInfo.optionals">{{ opt.optionalName }},</span>
+					</span>
+				</div>
+			</div>
+			<div class="m-tips red">抱歉，目前暂未上线“远盟成卡”。功能将在不久后上线。如需开卡，请联系渠道方或使用卡盟App进行开卡操作</div>
+		</section>
+		<section m-show="scanInfo.status == 11"><!--11、远盟白卡-->
+			<div class="m-tips red">抱歉，目前暂不支持“远盟白卡”。如需开卡，请联系渠道方或使用远盟App进行开卡操作</div>
+		</section>
+		<section m-show="scanInfo.status == 4"><!--4、无效卡-->
+			<div class="m-tips red">当期卡板为无效卡。如需继续开卡，请更换有效卡板，重新扫描。</div>
+		</section>
+	</section>
+</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

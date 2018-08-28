@@ -50,9 +50,11 @@
 			<div class="m-takePhoto">
 				<div class="box" id="photo-front" m-on:click="takePhotos(3)">
 					<a href="javascript:void(0)" class="u-icon-photo" m-show="!imgName.a"></a>
+					<span m-show="imgName.a" class="m-watermask">办理时间:{{ uploadTime }}<br>办理人:{{ idCardInfo.name }}<br>仅用于远特通信或中国联通移动业务办理</span>
 				</div>
 				<div class="box" id="photo-back" m-on:click="takePhotos(4)">
 					<a href="javascript:void(0)" class="u-icon-photo" m-show="!imgName.b"></a>
+					<span m-show="imgName.b" class="m-watermask">办理时间:{{ uploadTime }}<br>办理人:{{ idCardInfo.name }}<br>仅用于远特通信或中国联通移动业务办理</span>
 				</div>
 			</div>
 			<div class="photo-tag">

@@ -1,0 +1,152 @@
+/*号码模板*/
+.m-search-tip{
+    padding:2px 5px;
+    font-size: 0.12rem;
+    border-bottom: 1px solid #eee;
+}
+.card-list{
+    position: relative;
+    padding-top: 5px;
+}
+
+.card-list>ul {
+    padding-bottom: 0.25rem;
+    display:-webkit-flex;
+    display: flex;
+    
+    -webkit-flex-wrap:wrap;
+    flex-wrap: wrap;
+    
+    -webkit-align-content:flex-start;
+    align-content:flex-start;
+}
+.card-list li{
+    background-color: #fff;
+    border-bottom: 1px dashed #eee;
+    padding:3px 0 4px 0;
+    position: relative
+}
+.card-list li>.inner{
+    display: block;
+    color: #2b2b2b
+}
+.card-list li.active>.inner, .card-list li.active .clr>.purple, .card-list li.active2>.inner, .card-list li.active2 .clr>.purple{color: #F4F5F5 !important}
+
+
+.card-list li .number {
+    font-size:20px;
+    letter-spacing:1px;
+    display: inline-block;
+    padding:0 15px;
+    height: 42px;
+    position: relative;
+    
+}
+.card-list li .number:before{
+    left: 1px;
+    top: 4px
+}
+.card-list li .number:after{
+    right: 1px;
+    top: 4px
+}
+.card-list li .number:before, .card-list li .number:after{
+    content: '';
+    display: none;
+    width:13px;
+    height:13px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    position: absolute; 
+}
+.card-list li .pretty:before {
+    display: inline-block;
+    background-image: url(../img/sprite_icons.png);
+}
+.card-list li .devoted:after {
+    display: inline-block;
+    background-image: url(../img/search_icon_monopoly_number.png);
+}
+.card-list li .devotedPublic:after {
+    display: inline-block;
+    background-image: url(../img/icon_monopoly_dazhong.png);
+}
+
+
+.card-list li .clr {
+    line-height: 16px;
+}
+.card-list li .clr>.purple {
+    font-size: 14px;
+    float: left
+}
+.card-list li .clr>.fr {
+    color: #777;
+    font-size: 12px;
+}
+.card-list li .clr>.fr>.green {
+    font-size:14px;
+}
+.card-list li .status{
+    text-align: left;
+}
+.card-list li .status>span {
+    position: relative;
+    top: -3px;
+    font-size: 0.1rem;
+    background-color: #FEECD6;
+    border-radius: 2px;
+    padding:2px;
+}
+
+@media screen and (max-width: 469px){
+    .card-list li, .m-panel-svg>dd{width: 50%;}
+    .card-list li:nth-child(2n){
+        text-align: right;
+    }
+}
+@media screen and (min-width:470px) and (max-width: 719px) {
+    .card-list li, .m-panel-svg>dd{width: 33.3333%;}
+    .card-list li:nth-child(3n-1){
+        text-align: center;
+    }
+    .card-list li:nth-child(3n){
+        text-align: right;
+    }
+}
+@media screen and (min-width:720px){
+    .card-list li, .m-panel-svg>dd{width: 25%;}
+    .card-list li:nth-child(4n-2), .card-list li:nth-child(4n-1){
+        text-align: center;
+    }
+    .card-list li:nth-child(4n){
+        text-align: right;
+    }
+}
+
+@media screen and (min-width:470px) and (max-width:539px){
+    .card-list li .number {
+        font-size: 19px;
+        letter-spacing: 0px
+    }
+}
+@media screen and (min-width:351px) and (max-width:374px) {
+    .card-list li .number {
+        font-size: 19px;
+        letter-spacing: 1px
+    }
+}
+@media screen and (min-width:320px) and (max-width:350px) {
+    .card-list li .number {
+        font-size: 17px;
+        letter-spacing: 0
+    }
+}
+
+@media screen and (max-width:319px) {
+    .card-list li .number {
+        font-size:17px;
+        letter-spacing: 0
+    }
+}

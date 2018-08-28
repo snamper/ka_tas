@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>开成卡--选择套餐</title>
+<style type="text/css">
+	[m-mask]{
+		display: none;
+	}
+	.m-tips{
+		font-size: 0.12rem;
+		padding: 0 10px 5px 10px;
+	}
+	.m-safe-code{
+		display: flex;
+		align-items: center;
+		background-color: #fff;
+	}
+	.m-safe-code>.lt{
+		width: 0.8rem;
+		text-align: center;
+		letter-spacing: 2px;
+	}
+	.m-safe-code>.md{
+		flex: 1;
+	}
+	.m-safe-code>.md>input{
+		display: block;
+		width: 100%;
+		border:none;
+		outline: none;
+		height: 0.35rem;
+	}
+	.m-safe-code>.rt{
+		width: 1rem;
+	}
+	.m-safe-code>.rt>.bts{
+		width: 100%;
+		font-size: 0.13rem;
+		border-radius: 0px;
+		
+		
+		margin:0;
+		padding:0px;
+		height: 0.35rem;
+		line-height: 0.35rem;
+		text-align: center;
+		display: block;
+		transition: all .05s ease-out;
+    	-webkit-transition: all .05s ease-out;
+	}
+	.m-safe-code>.rt>.btn-y{
+		background-color: #ffc333;
+		color: #fff;
+	}
+	.m-safe-code>.rt>.btn-default{
+		background-color: #ddd;
+	}
+</style>
+</head>
+<body>
+	<div id="app" m-mask>
+		<ul class="m-time-axis clr">
+			<li class="active">
+				<div class="title">1.号码详情</div>
+			</li>
+			<li>
+				<div class="title">2.实名认证</div>
+			</li>
+			<li>
+				<div class="title">3.签署受理单</div>
+			</li>
+			<li>
+				<div class="title">4.提交开卡申请</div>
+			</li>
+			<li>
+				<div class="title">5.开卡受理</div>
+			</li>
+		</ul>
+		<ol class="m-time-axis-sub clr">
+			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span></span></div></li>
+			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
+		</ol>
+		<div class="m-tag"><i class="u-icon-tag"></i>所选号码</div>
+		<div class="m-col-2">
+			<div class="lt grey">所选号码</div>
+			<div class="rt"><span class="f-fsz-17">{{ phoneFormat(packageInfo.phoneNum) }}</span><span class="f-fsz-12">（{{packageInfo.cityName}}）</span></div>
+		</div>
+
+		<div class="m-tag"><i class="u-icon-tag"></i>号卡详情</div>
+		<div class="m-box">
+			<div class="m-col-2">
+				<div class="lt grey">默认套餐</div>
+				<div class="rt icon-right">
+					<span class="package black" m-show="!changePackageInfo.name">{{ packageInfo.packTitle }}</span>
+					<span class="package line-th" m-show="changePackageInfo.name">{{ packageInfo.packTitle }}</span>
+					<span class="right blue" m-on:click="jumpPackageDetails">套餐详情</span>
+				</div>
+			</div>
+			<div class="m-col-2">
+				<div class="lt grey">号卡面值</div>
+				<div class="rt"><span>{{mathCentToYuan(packageInfo.prestoreMoney)}}元</span></div>
+			</div>
+		</div>
+
+		<div class="m-tag"><i class="u-icon-tag"></i>套餐变更</div>
+		<div class="m-box">
+			<div class="m-col-2">
+				<div class="lt grey">套餐变更</div>
+				<div class="rt icon-right">
+					<span class="package grey" m-show="!changePackageInfo.name">可变更其它套餐进行开卡</span>
+					<span class="package black" m-show="changePackageInfo.name">{{ changePackageInfo.name }}</span>
+					<span class="right blue" m-on:click="jumpChangeList">变更套餐</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="m-right-tip grey" m-show="changePackageInfo.name"><span>预存补差价：<b class="font-bold black">￥{{ differenceMoney }}</b></span></div>
+		<!-- <div class="m-deduction" m-show="changePackageInfo.name">
+			<div class="account">充值赠送账户余额：￥<b class="font-bold">{{ mathCentToYuan(packageInfo.deductionFee) }}</b></div>
+			<p class="tips font-12">抵扣预存不计入返佣</p>
+			<div class="handle m-form-checkbox">
+				<div @click="mathDeduction">
+					<span class="text">-￥{{ deductionMoney }}</span>
+					<span class="checkbox" m-literal:class="{active:off.deductionUsed}">
+						<span></span>
+					</span>
+				</div>
+			</div>
+		</div> -->
+		<div class="m-right-tip grey" m-show="changePackageInfo.name"><span>应付：<b class="font-bold black">￥{{ shouldPayMoney }}</b></span></div>
+
+		<div class="m-tag"><i class="u-icon-tag"></i>开卡首充<span m-show="packageInfo.addPreDiscount!=10000">（{{ mathDiscount(packageInfo.addPreDiscount,1000) }}折）</span></div>
+		<ul class="m-package">
+			<li 
+				m-for="pre,index in addPrestoreList"
+				m-literal:class="{active:off.addPre==index}"
+				m-on:click="shiftAddPrestore(index)">{{ pre }}元<span></span></li>
+			<li id="addPreInput" m-on:click="shiftAddPrestore(998)" class="o-add-pre"><input m-model="inputAddPre" maxlength="6" m-on:input="inputAddPreChange" type="tel" placeholder="自定义≥30"><span></span></li>
+		</ul>
+		
+		<div class="m-math-price" m-show="off.addPre!=999">
+			<div class="row">
+				<div class="lt"></div>
+				<div class="rt">
+					<span>售价：</span>
+					<span class="td-line">￥{{ addPreMoney }}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="lt"></div>
+				<div class="rt">
+					<span>折扣价：</span>
+					<span>￥{{ addPreDiscountMoney }}</span>
+				</div>
+			</div>
+			<div class="double-line"></div>
+			<div class="row pk">
+				<div class="lt"></div>
+				<div class="rt">还需支付：<b class="red">￥{{ payMoney }}</b></div>
+			</div>
+		</div>
+		
+		<section m-show="packageInfo.safeCheck == 1">
+			<div class="m-tag"><i class="u-icon-tag"></i>激活码验证</div>
+			<div class="m-tips grey">如您确认激活此号卡，请点击获取激活码按钮，我们将向渠道方联系人手机{{ addAsterisk(packageInfo.checkPhone,3,7) }}发送激活码，请您向渠道方索取激活码进行激活操作。激活码有效时间{{ checkTime }}分钟。</div>
+			<div class="m-safe-code">
+				<div class="lt">激活码</div>
+				<div class="md"><input m-model="inputSafeCode" type="tel" maxlength="6" placeholder="请向渠道方索要激活码"></div>
+				<div class="rt">
+					<span m-show="!safeCodeCount" m-on:click="getSafeCode" class="bts btn-y">获取激活码</span>
+					<span m-show="safeCodeCount" class="bts btn-default">{{ secondsFormat(safeCodeCount) }}</span>
+				</div>
+			</div>
+		</section>
+
+		<div class="btn btny" m-on:click="makeSure">下一步</div>
+	</div>
+<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+</body>
+</html>

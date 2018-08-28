@@ -14,6 +14,9 @@
 body{
 	padding-bottom: 0.3rem;
 }
+.m-time-axis-sub>li, .m-time-axis>li{
+	width: 25% !important;
+}
 </style>
 </head>
 <body>
@@ -26,19 +29,15 @@ body{
 				<div class="title">2.实名认证</div>
 			</li>
 			<li>
-				<div class="title">3.签署受理单</div>
+				<div class="title">3.支付</div>
 			</li>
 			<li>
-				<div class="title">4.提交申请</div>
-			</li>
-			<li>
-				<div class="title">5.申请受理</div>
+				<div class="title">4.开卡受理</div>
 			</li>
 		</ul>
 		<ol class="m-time-axis-sub clr">
 			<li><div class="sub-line"><b></b><span></span></div></li>
 			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
-			<li><div class="sub-line"><b></b><span></span></div></li>
 			<li><div class="sub-line"><b></b><span></span></div></li>
 			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
@@ -75,12 +74,8 @@ body{
 			</div>
 		</section>
 		
-		<div m-on:click="jumpToPay" m-literal:class="{btny:off.step!=1,btn:true,btnDefault:true}">
-			<span m-show="off.step!=3">
-				<span m-show="orderInfo.belongType==1">生成受理单</span>
-				<span m-show="orderInfo.belongType==0">去支付</span>
-			</span>
-			<span m-show="off.step==3">返回首页</span>
+		<div m-on:click="jumpToPay" m-show="off.step==3" class="btny">
+			<span>返回首页</span>
 		</div>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

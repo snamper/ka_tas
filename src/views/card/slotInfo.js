@@ -35,6 +35,7 @@ var vm=new Moon({
             "packageName":"--",
             "packageCode":"0",
             "setPwd":0,//0、未设置密码；1、设置成功；2、设置失败；
+            "bizType":4,
         },
 	},
 	hooks:{
@@ -90,6 +91,7 @@ var vm=new Moon({
 			let url='',depiction='',next='', orderInfo = vm.get('orderInfo');
 			let orderStatusCode = orderInfo.orderStatusCode,
 				similarity = orderInfo.similarity,
+				bizType = orderInfo.bizType,
 				belongType = orderInfo.belongType;
 
 			if(orderStatusCode==='PACKAGE_SELECTION'){
@@ -97,16 +99,18 @@ var vm=new Moon({
                 depiction='已选择套餐';
                 next='实名认证';
             }else if(orderStatusCode==='CARD_PAY'){
-                if(belongType==1){
-                	url='cardAudit.html';
-                }else url='pay.html';
+            	url='pay.html';
 
-                depiction='已支付';
-                next='生成受理单';
+                if(bizType==6){
+                	depiction='已支付';
+                	next='生成受理单';
+                }else{//成卡，白卡
+                	depiction='已支付';
+                	next='开卡申请';
+                }
+
             }else if(orderStatusCode==='CARD_AUDIT'){
-                if(belongType==1){
-                	url='cardAudit.html';
-                }else url='pay.html';
+                url='pay.html';
                 
                 depiction='已审核';
                 next='支付';
@@ -120,8 +124,15 @@ var vm=new Moon({
                 next='写卡';
             }else if(orderStatusCode==='CARD_WRITING'){
                 url='cardActive.html';
-               	depiction='写卡成功，等待开卡结果';
-               	next='申请受理';
+
+                if(bizType==6){
+                	depiction='写卡成功，等待开卡结果';
+               		next='开卡受理';
+                }else{//成卡，白卡
+                	depiction='开卡申请成功';
+                	next='开卡受理';
+                }
+               	
             }else if(orderStatusCode==='CARD_ACTIVE'){
             	let orderStatus=vm.get('off').status;
                 url='';
@@ -139,6 +150,10 @@ var vm=new Moon({
                 url='faceVerification.html';
                 depiction='已上传资料';
                 next='活体识别';
+            }
+
+            if(bizType != 6){
+            	url = '../active/' + url;
             }
             return {url:url,depiction:depiction,next:next};
 		},
@@ -197,14 +212,14 @@ var vm=new Moon({
 		orderCancel:function(){
 			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
 		},
-		jumpToHome:function(){
+		jumpToSlot:function(){
 			Jsborya.pageJump({
-                url:'index.html',
+                url:'slot.html',
                 stepCode:'999',
-                depiction:'号码搜索',
+                depiction:'',
                 header:{
                     frontColor:'#ffffff',
-                    backgroundColor:'#4b3887',
+                    backgroundColor:'#F8F8F8',
                 }
             });
 		},
