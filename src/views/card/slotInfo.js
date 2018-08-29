@@ -163,7 +163,8 @@ var vm=new Moon({
 
 			orderInfo.iccid=vm.get('cardInfo').iccid;
             vm.setStore('ORDER_INFO',orderInfo);
-            vm.setStore("CARD_INFO",vm.get("cardInfo"));
+
+            alert(`orderInfo:${JSON.stringify(orderInfo)}`)
 
             Jsborya.pageJump({
                 url:todo.url,
@@ -210,7 +211,7 @@ var vm=new Moon({
 			//},2000);
 		},
 		orderCancel:function(){
-			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
+			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo'),true);
 		},
 		jumpToSlot:function(){
 			Jsborya.pageJump({

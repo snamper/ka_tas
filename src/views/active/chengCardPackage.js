@@ -64,22 +64,15 @@ var vm=new Moon({
 
             let type = vm.getUrlParam('type'),
                 cardInfo = vm.getStore('CARD_INFO'),
+                userInfo = vm.setStore("USER_INFO"),
                 changePackageInfo = vm.getStore('CHANGE_PACKAGE_INFO');
             if(cardInfo)vm.set('cardInfo',cardInfo);
+            if(userInfo)vm.set('userInfo',userInfo);
             if(type == 'change' && changePackageInfo){//判断是从变更套餐返回
                 vm.set('changePackageInfo',changePackageInfo);
             }else vm.removeStore('CHANGE_PACKAGE_INFO');//从卡激活扫码进入
 
-            Jsborya.getGuestInfo({
-                slot:'-1',
-                iccid:vm.get('cardInfo').iccid,
-                complete:function(userInfo){
-                    vm.setStore("USER_INFO",userInfo);
-                    vm.set('userInfo',userInfo);
-                    
-                    vm.callMethod('getPackageInfo');
-                }
-            });
+            vm.callMethod('getPackageInfo');
         }
     },
 	methods:{

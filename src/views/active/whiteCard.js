@@ -36,19 +36,12 @@ var vm=new Moon({
         	vm=this;
         	Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			
-			let cardInfo = vm.getStore('CARD_INFO');
+			let cardInfo = vm.getStore('CARD_INFO'),
+				userInfo = vm.setStore("USER_INFO");
             if(cardInfo)vm.set('cardInfo',cardInfo);
+            if(userInfo)vm.set('userInfo',userInfo);
 
-			Jsborya.getGuestInfo({
-                slot:'-1',
-                iccid:vm.get('cardInfo').iccid,
-                complete:function(userInfo){
-                    vm.setStore("USER_INFO",userInfo);
-                    vm.set('userInfo',userInfo);
-                    
-                    vm.callMethod('initPage');
-                }
-            });
+			vm.callMethod('initPage');
 		}
 	},
 	methods:{
