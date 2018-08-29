@@ -8,7 +8,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:false,
+			load:true,
 			turn:0,//0,初始化页面;1,选择卡槽页面;2,继续完成订单页面;3,首页;4,无效卡页面;5,未插卡页面;(2在slotInfo.html)
 			slot:'1',//-1,都可用;0,卡槽1;1,卡槽2;---哪张卡槽可用
 		},
@@ -50,10 +50,10 @@ var vm=new Moon({
 
 			Jsborya.getGuestInfo({
 				slot:'-2',
+				iccid:'',
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
-					//vm.callMethod('getCheckMachine');
-					vm.callMethod('begin');
+					vm.callMethod('getCheckMachine');
 				}
 			});
 			Jsborya.registerMethods('headerRightClick',function(){
@@ -136,9 +136,9 @@ var vm=new Moon({
 		},
 		begin(){
 
-			// if(vm.get('checkMachine').type==1){
-			// 	return false;
-			// }
+			if(vm.get('checkMachine').type==1){
+				return false;
+			}
 
 			vm.set('off.load',true);
 			Jsborya.readCardICCID({

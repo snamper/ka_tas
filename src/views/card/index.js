@@ -53,8 +53,8 @@ var vm=new Moon({
 					vm.setStore("USER_INFO",userInfo);
 				
 					let left = {
-							icon:'',
-							value:'',
+							icon:'back_white',
+							value:'返回',
 							callback:''
 						}, right = {
 							icon:'',
@@ -69,15 +69,16 @@ var vm=new Moon({
 							callback:'headerRightClick'
 						};
 					}
-					if(cardInfo.deviceType == 3){//eSIM手表
-						left = {
-							icon:'back_white',
-							value:'返回',
-							callback:''
-						};
-					}else if(cardInfo.deviceType == 1){//手机写卡
-						left = {};
-					}
+					// if(cardInfo.deviceType == 3){//eSIM手表
+					// 	left = {
+					// 		icon:'back_white',
+					// 		value:'返回',
+					// 		callback:''
+					// 	};
+					// }else
+					// if(cardInfo.deviceType == 1){//手机写卡
+					// 	left = {};
+					// }
 
 					Jsborya.setHeader({
 						title:'随心搜',

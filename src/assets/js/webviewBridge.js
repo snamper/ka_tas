@@ -107,6 +107,7 @@ require('./base64.js');
 			// 	"timestamp":"1525684349889",
 			// 	"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
 			// });
+			alert('getGuestInfo传值:'+JSON.stringify(json))
 			callHandler({
 				name:'getGuestInfo',
 				data:json,
