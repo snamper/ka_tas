@@ -208,7 +208,7 @@ require('./base64.js');
 			// setTimeout(function(){
 			// 	json.complete({
 			// 		'status':'1',
-			// 		'iccid':['89860117841022193963','40112445445141512'],
+			// 		'iccid':['89860117841027577350',''],
 			// 	});
 			// },1000);
 			callHandler({
@@ -296,7 +296,7 @@ require('./base64.js');
 		callScanQRCode:function(json){//扫一扫
 			// setTimeout(function(){
 			// 	json.complete({
-			// 		result:'89860117841027577673',
+			// 		result:'89860117841027577350',
 			// 		status:1
 			// 	});
 			// },1000);

@@ -232,7 +232,7 @@ var vm=new Moon({
 				orderInfo = iccidsRes.otherInfo || {};
 			}else orderInfo = iccidsRes.orderInfo || {};
 			orderInfo.iccid = iccidsRes.scanIccid;
-			
+
 			vm.callMethod('dealJump',[iccidsRes.status,orderInfo,realSlot]);
 			
 		},
@@ -258,7 +258,7 @@ var vm=new Moon({
 				deviceType:'1',
 				bizType:bizType
 			});
-			debugger
+			
 			Jsborya.getGuestInfo({
 				slot:"undefined" == typeof slot ? '-2' : slot,
 				iccid:orderInfo.iccid,
