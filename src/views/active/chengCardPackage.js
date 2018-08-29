@@ -53,6 +53,7 @@ var vm=new Moon({
             bizType:'4',
             faceMoney:'0',
         },
+        userInfo:{},
         inputSafeCode:'',//输入的验证码
         safeCodeCount:0,
         checkTime:0,
@@ -64,7 +65,7 @@ var vm=new Moon({
 
             let type = vm.getUrlParam('type'),
                 cardInfo = vm.getStore('CARD_INFO'),
-                userInfo = vm.setStore("USER_INFO"),
+                userInfo = vm.getStore("USER_INFO"),
                 changePackageInfo = vm.getStore('CHANGE_PACKAGE_INFO');
             if(cardInfo)vm.set('cardInfo',cardInfo);
             if(userInfo)vm.set('userInfo',userInfo);

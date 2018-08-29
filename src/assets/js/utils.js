@@ -153,7 +153,7 @@ export default{
                         if(isJump){
                           if(orderInfo.bizType == 4 || orderInfo.bizType == 5){
                             Jsborya.pageJump({
-                                url:'scanInfo.html',
+                                url:'../card/scanInfo.html',
                                 stepCode:'999',
                                 depiction:'卡信息',
                                 header:{
