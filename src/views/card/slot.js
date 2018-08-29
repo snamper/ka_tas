@@ -244,6 +244,8 @@ var vm=new Moon({
 				bizType = '4';
 			}else if(status == 9){//开白卡
 				bizType = '4';
+			}else if(status == 10){//开远盟成卡
+				bizType = '7';
 			}else{//有进行中的订单
 				bizType = orderInfo.bizType;
 			}
@@ -295,7 +297,7 @@ var vm=new Moon({
 				            });
 							
 						}
-					}else if(status==8 || status==9){//开成卡，开白卡
+					}else if(status==8 || status==9 || status==10){//开成卡，开白卡
 						vm.setStore('SCAN_INFO',orderInfo);
 
 						Jsborya.pageJump({

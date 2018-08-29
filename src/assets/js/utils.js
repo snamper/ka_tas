@@ -150,8 +150,9 @@ export default{
                         Jsborya.callMessageNotice({
                           iccid:userInfo.iccid
                         });
+
                         if(isJump){
-                          if(orderInfo.bizType == 4 || orderInfo.bizType == 5){
+                          if(orderInfo.bizType == 4 || orderInfo.bizType == 5 || orderInfo.bizType == 7){
                             Jsborya.pageJump({
                                 url:'../card/scanInfo.html',
                                 stepCode:'999',
@@ -161,7 +162,14 @@ export default{
                                     backgroundColor:'#4b3887',
                                 }
                             });
-                          }else _self.jumpToHome();
+                          }else{//开卡空卡
+                            if(orderInfo.deviceType == 1){//手机开卡
+                              Jsborya.pageBack({
+                                  url:'../card/index.html',
+                                  isLoad:true
+                              });
+                            }else _self.jumpToHome();
+                          }
                         }
                     });
                     

@@ -157,7 +157,7 @@ var vm=new Moon({
 				apiComplete:'uploadImgComplete',
 				complete:function(data){
 					if(type==3){//正面
-						vm.set('uploadTime',vm.getDateTime()[7]);
+						vm.set('uploadTime',vm.getDateTime()[6]);
 						vm.set('uploadType',1);
 						document.getElementById("photo-front").style.backgroundImage="url(data:image/jpeg;base64,"+data.thumbPic+")";
 					}else if(type==4){//反面

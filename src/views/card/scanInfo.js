@@ -71,6 +71,7 @@ var vm=new Moon({
 	  //           belongType:"0",
 	  //           sourceOrder:"CK18082212000400012"
 	  //       };
+	  alert(JSON.stringify(scanInfo));
 			if(scanInfo)vm.set('scanInfo',scanInfo);
 			
 		},
@@ -96,6 +97,7 @@ var vm=new Moon({
 				bizType:bizType,
 				belongType:scanInfo.belongType,
 				faceMoney:scanInfo.facePrice,
+				isScan:true,//是否是扫码进入
 			});
 			vm.removeStore('CHANGE_PACKAGE_INFO');
 			vm.removeStore('ORDER_INFO');

@@ -3,7 +3,6 @@ require('./css/whitePackage.css');
 
 Jsborya.ready(function(){
 
-
 var vm=new Moon({
 	el:'#app',
 	data:{
@@ -142,9 +141,9 @@ var vm=new Moon({
 				}else if(todo[i].init==2){
 					str+='<li class="active active2"';
 				}else str+='<li';
-				str+=' onclick="app.selectBag(this)" title="'+i+'">'+todo[i].title+'<span></span></li>';
+				str+=' onclick="APP.selectBag(this)" title="'+i+'">'+todo[i].title+'<span></span></li>';
 			}
-			// if(packageInfo.selPackageMore==1)str+='<li onclick="app.more(2)">查看更多</li>';
+
 			if(bagUl) bagUl.innerHTML = str;
 			//渲染预存
 			for(let i=0,todo=packageInfo.prestoreMoneyList;i<todo.length;i++){
@@ -153,7 +152,7 @@ var vm=new Moon({
 					str2+='<li class="active"';
 					vm.set('off.pre',i);
 				}else str2+='<li';
-				str2+=' onclick="app.selectPre(this)" title="'+i+'">'+p_money+'元<span></span></li>';
+				str2+=' onclick="APP.selectPre(this)" title="'+i+'">'+p_money+'元<span></span></li>';
 			}
 			if(preUl) preUl.innerHTML = str2;
 
@@ -566,4 +565,10 @@ var vm=new Moon({
         },
 	}
 });
+window.selectBag=function(e){
+    vm.callMethod("selectBag",[e]);
+};
+window.selectPre=function(e){
+    vm.callMethod("selectPre",[e]);
+};
 });

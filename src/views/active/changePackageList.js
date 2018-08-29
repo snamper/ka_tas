@@ -3,8 +3,6 @@ require('./css/chengPackage.css');
 
 Jsborya.ready(function(){
 
-
-
 var vm=new Moon({
     el:'#app',
     data:{
@@ -131,7 +129,7 @@ var vm=new Moon({
                     }else str+='<li';
                 }
                 
-                str+=' onclick="vm.selectBag(this)" title="'+i+'">'+todo[i].title+'<span></span></li>';
+                str+=' onclick="selectBag(this)" title="'+i+'">'+todo[i].title+'<span></span></li>';
             }
             if(bagUl) bagUl.innerHTML = str;
             //渲染预存
@@ -151,7 +149,7 @@ var vm=new Moon({
                     }else str2+='<li';
                 }
                 
-                str2+=' onclick="vm.selectPre(this)" title="'+i+'">'+parseInt(p_money)/100+'元<span></span></li>';
+                str2+=' onclick="selectPre(this)" title="'+i+'">'+parseInt(p_money)/100+'元<span></span></li>';
             }
             if(preUl) preUl.innerHTML = str2;
             str = '', str2 = '';  
@@ -392,4 +390,12 @@ var vm=new Moon({
         },
     }
 });
+
+window.selectBag=function(e){
+    vm.callMethod("selectBag",[e]);
+};
+window.selectPre=function(e){
+    vm.callMethod("selectPre",[e]);
+};
+
 });
