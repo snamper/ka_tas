@@ -72,7 +72,7 @@ var vm=new Moon({
 				vm.set('cardInfo',cardInfo);
 
 				if(orderInfo.orderStatusCode == "CARD_PAY" || orderInfo.actualMoney == '0'){//已支付
-					vm.set('off.payType',String(orderInfo.oldPayType));
+					vm.set('off.payType',String(orderInfo.oldPayType || 0));
 					vm.set("off.payStatus",1);
 					vm.callMethod('pay');
 				}
