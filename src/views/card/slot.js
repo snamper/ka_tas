@@ -121,7 +121,7 @@ var vm=new Moon({
 							}
 							info.iccid=res.result;
 
-							vm.callMethod('dealJump',[data.data.status,info]);
+							vm.callMethod('dealJump',[status,info]);
 							
 						},function(){
 							vm.set('off.load',false);
@@ -241,7 +241,7 @@ var vm=new Moon({
 			vm.callMethod('dealJump',[status,vm.get('iccidsRes')[slot].orderInfo,realSlot]);	
 			
 		},
-		dealJump(status,orderInfo = {},slot){
+		dealJump(status,orderInfo = {},slot){//当有slot时为从卡槽中读取
 			let bizType;
 			if(status == 1){//开空卡
 				bizType = '6';
@@ -264,8 +264,8 @@ var vm=new Moon({
 			});
 
 			Jsborya.getGuestInfo({
-				slot:slot,
-				iccid:vm.get('iccid')[slot],
+				slot:slot || '-2',
+				iccid:vm.get('iccid')[slot] || orderInfo.iccid,
 				complete:function(userInfo){
 					vm.setStore("USER_INFO",userInfo);
 					
