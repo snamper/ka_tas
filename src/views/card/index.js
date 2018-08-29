@@ -114,7 +114,7 @@ var vm=new Moon({
 				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
 
 				let otherHeight = 60 + 50 + 30,
-					btmImgH = window_w * 323/1242,
+					btmImgH = window_w * 280/1242,
 					showBtmEntry = vm.get('off').showBtmEntry;
 				if(showBtmEntry)otherHeight += btmImgH;
 

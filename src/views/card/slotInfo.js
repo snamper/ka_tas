@@ -160,9 +160,6 @@ var vm=new Moon({
 			let orderInfo=vm.get('orderInfo'),
 				todo=vm.callMethod('filterOrderStatus');
 
-			orderInfo.iccid=vm.get('cardInfo').iccid;
-            vm.setStore('ORDER_INFO',orderInfo);
-
             alert(`orderInfo:${JSON.stringify(orderInfo)}`)
 
             Jsborya.pageJump({

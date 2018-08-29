@@ -65,6 +65,7 @@ var vm=new Moon({
 			var json={
 	  			'params':{
 	  				'phoneTitle':vm.get('cardInfo').phone,
+	  				'sourceOrder':vm.get('cardInfo').sourceOrder,
 	  				'segment':vm.get('searchValue'),
 	  				'belongType':vm.get('cardInfo').belongType,
 	  				'page':page||1,

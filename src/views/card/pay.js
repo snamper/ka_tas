@@ -7,9 +7,10 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:!1,
-			payType:"3",
-			payStatus:0,//0,未支付;1,支付成功;2,支付失败;3,订单关闭;
+			load:0,//0,初始状态;1,正在支付;2,获取支付结果;3,提交受理单
+			payType:"0",//0,未选择支付方式;1,--;2,微信;3,支付宝;
+			payStatus:-1,//-1,未选择支付方式;0,支付中;1,支付成功;2,支付失败;3,订单关闭;
+			submit:0,//0,待提交受理单;1，受理单失败
 		},
 		orderInfo: {
             "phoneNum":"00000000000",
@@ -24,6 +25,7 @@ var vm=new Moon({
             "validTime":0,
             "sysOrderId":"00000000000000000",
             "prestoreMoney":0,
+            "actualMoney":'0',
             "pDiscount":10000,
             "similarity":0,
             "idCardName":"--",
@@ -69,7 +71,11 @@ var vm=new Moon({
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
 
-				if(orderInfo.orderStatusCode == "CARD_PAY") vm.set("off.payStatus",1);//已经支付了
+				if(orderInfo.orderStatusCode == "CARD_PAY" || orderInfo.actualMoney == '0'){//已支付
+					vm.set('off.payType',String(orderInfo.oldPayType));
+					vm.set("off.payStatus",1);
+					vm.callMethod('pay');
+				}
 
 				let userInfo = vm.getStore("USER_INFO");
 				if(userInfo){
@@ -92,7 +98,7 @@ var vm=new Moon({
 		payComplete:function(status){//支付完成
 			
 			layer.closeAll();
-			vm.set('off.load',false);
+			vm.set('off.load',0);
 			if(status==1){//支付成功
 				const json={
 					userInfo:vm.get('userInfo'),
@@ -114,7 +120,7 @@ var vm=new Moon({
 						// 8 订单关闭
 						if(status!=5){
 							clearInterval(window.Timer);
-							vm.set('off.load',false);
+							vm.set('off.load',0);
 						}
 
 						if(status==5){
@@ -122,7 +128,8 @@ var vm=new Moon({
 						}else if(status==6){
 							vm.set('off.payStatus',2);
 						}else if(status==7){
-							vm.set('off.payStatus',1);
+							// vm.set('off.payStatus',1);
+							vm.callMethod('createSheet');
 						}else if(status==8){
 							vm.set('off.payStatus',3);
 						}
@@ -131,7 +138,7 @@ var vm=new Moon({
 					});
 				},2000);
 			}else if(status==2){
-				vm.set('off.load',false);
+				vm.set('off.load',0);
 				layer.open({
 					title:'支付失败',
 					content:'如果您想重新发起支付，请点击【去支付】按钮',
@@ -139,7 +146,7 @@ var vm=new Moon({
 					shadeClose:false,
 				});
 			}else if(status==3){
-				vm.set('off.load',false);
+				vm.set('off.load',0);
 				layer.open({
 					title:'支付取消',
 					content:'您已取消支付，如果想重新发起支付，请点击【去支付】按钮',
@@ -156,8 +163,8 @@ var vm=new Moon({
 			
 		},
 		pay:function(){//去支付
-			var vm=this,payType=vm.get('off').payType;
-			if(vm.get('off').load)return false;
+			var payType=vm.get('off').payType;
+			
 			vm.set('off.load',1);
 			vm.AJAX('/tas/w/business/pay',{
 				userInfo:vm.get('userInfo'),
@@ -202,6 +209,8 @@ var vm=new Moon({
 		},
 		createSheet:function(){//生成受理单
 			var orderInfo=vm.get('orderInfo');
+			vm.set('off.load',3);
+
 			vm.AJAX('/tas/w/business/acceptance',{//获取受理单图片
 				userInfo:vm.get('userInfo'),
 				params:{
@@ -229,7 +238,14 @@ var vm=new Moon({
                     }
 				});
 
+			},true,function(){
+				vm.set('off.load',0);
+				vm.set('off.submit',1);
 			});
+		},
+		shiftPayType:function(payType){
+			vm.set('off.payType',payType);
+			vm.callMethod('pay');
 		},
 		jumpToHome:function(){
 			vm.jumpToHome();

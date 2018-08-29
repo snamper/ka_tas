@@ -175,7 +175,7 @@ var vm=new Moon({
                         	data.data.orderInfo.iccid=vm.get('userInfo').iccid;
                         	vm.setStore('ORDER_INFO',data.data.orderInfo);
 						    Jsborya.pageJump({
-				                url:'orderInfo.html',
+				                url:'slotInfo.html',
 				                stepCode:'999',
 				                depiction:'订单详情',
 				                header:{

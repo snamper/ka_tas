@@ -1,4 +1,32 @@
-.m-pay-choose{padding-left: 0.2rem;}
+.m-pay-choose{
+    padding-left: 0.2rem;
+}
+.m-pay-choose>li{
+    display: flex;
+    align-items: center;
+    padding: 7px 0;
+}
+.m-pay-choose>li>.lt{
+    background-repeat: no-repeat;
+    background-position:left center;
+    background-size:contain;
+    width: 1.2rem;
+    height: 0.3rem;
+}
+.m-pay-choose>li>.rt{
+    flex: 1;
+    text-align: right;
+    padding-right: 0.1rem;
+}
+.m-pay-choose>li>.rt>.u-icon-right, .m-spin-load{
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size:0.15rem;
+    width: 0.3rem;
+    height: 0.3rem;
+}
 .m-pay-choose>li:first-child{
     border-bottom: 1px solid #ececec;
 }
@@ -7,14 +35,13 @@
     border-bottom: 1px solid #ececec;
     background-color: #fff;
 }
-.u-icon-alipay, .u-icon-wechat{
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-position:left center;
-    background-size:contain;
-    width: 1.2rem;
-    vertical-align: middle;
-    height: 0.3rem;
+
+.m-spin-load{
+    background-image: url(../../../assets/img/tail-spin.svg);
+    background-position: center;
+}
+.u-icon-right{
+    background-image: url(../../../assets/img/icon-right.png);
 }
 .u-icon-alipay{
     background-image: url(../../../assets/img/alipay.png);
@@ -22,55 +49,7 @@
 .u-icon-wechat{
     background-image: url(../../../assets/img/wechat_pay.png);
 }
-.m-form-radio{
-    position: relative;
-}
-.m-form-radio>div{
-    position: relative;
-    display:block;
-    padding: 0.1rem 0;
-    white-space: nowrap;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;
-}
-.m-form-radio>div>.text{font-size: 14px;padding-left: 5px;}
-.m-form-radio>div>.radio{
-    white-space: nowrap;
-    outline: none;display: inline-block;
-    position: relative;
-    margin-top: 7px;
-    margin-right: 10px;
-}
-.m-form-radio>div>.radio>span{
-    border: 1px solid #bfcbd9;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    background-color: #fff;
-    position: relative;
-    display: inline-block;
-}
-.m-form-radio>div>.radio>span:active{
-    border-color: #4b3887
-}
-.m-form-radio>div>.radio>span:after{
-    width: 11px;height: 11px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    background-color: #fff;content: "";
-    position: absolute;left: 50%;top: 50%;
-    transform: translate(-50%, -50%) scale(0);transition: transform .15s cubic-bezier(.71, -.46, .88, .6)
-}
-.m-form-radio>div>.radio>input{ 
-    opacity: 0;outline: none;position: absolute;z-index: -1;top: 0;left: 0;right: 0;bottom: 0;margin: 0
-}
-.m-form-radio>div>.radio>.active{
-    border-color: #4b3887
-}
-.m-form-radio>div>.radio>.active:after{
-    background: #4b3887;
-    transform: translate(-50%, -50%) scale(1);-webkit-transform: translate(-50%, -50%) scale(1);
-    -moz-transform: translate(-50%, -50%) scale(1)
-}
+
 #payIframe{
     position: absolute;
     top: 0;
@@ -79,53 +58,6 @@
     height: 100%;
     display: none;
     background-color: #F6F7F9;
-}
-.pay-load{}
-.pay-load>b{
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    background-color:#2CA43A;
-    -webkit-animation: pay-loading 1.4s infinite ease-in-out;
-    animation: pay-loading 1.4s infinite ease-in-out;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both
-}
-.pay-load>b.f1 {
-    margin-left: 0;
-    -webkit-animation-delay: -.32s;
-    animation-delay: -.32s
-}
-
-.pay-load>b.f2 {
-    -webkit-animation-delay: -.16s;
-    animation-delay: -.16s
-}
-@-webkit-keyframes pay-loading {
-    0%,
-    100%,
-    80% {
-        transform: scale(0);
-        -webkit-transform: scale(0)
-    }
-    40% {
-        transform: scale(1);
-        -webkit-transform: scale(1)
-    }
-}
-
-@keyframes pay-loading {
-    0%,
-    100%,
-    80% {
-        transform: scale(0);
-        -webkit-transform: scale(0)
-    }
-    40% {
-        transform: scale(1);
-        -webkit-transform: scale(1)
-    }
 }
 
 .m-pay-status{
@@ -138,4 +70,72 @@
 .m-pay-status>p{
     margin-top: 5px;
     font-size: 0.15rem;
+}
+
+.m-load-box{
+    margin: 0.25rem 0;
+    text-align: center;
+}
+.m-load-box>.status{
+    margin:5px 0;
+    font-size: 0.15rem;
+}
+.m-load-box>.load>.loading{
+    width: 0.6rem;
+    height: 0.6rem;
+    display: inline-block;
+    margin-bottom: 0.1rem;
+}
+.m-load-box>.load>.loading{
+    line-height: 0.57rem;
+    border-radius: 50%;
+    border:2px solid transparent;
+    border-color:#F99B38;
+}
+.m-load-box>.load>.loading i{
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+    display: inline-block;
+    background-color: #F99B38;
+    border-radius: 100%;
+    -webkit-animation: layui-m-anim-loading 1.4s infinite ease-in-out;
+    animation: layui-m-anim-loading 1.4s infinite ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+.m-load-box>.load>.loading i:first-child {
+    margin-left: 0;
+    -webkit-animation-delay: -.32s;
+    animation-delay: -.32s
+}
+
+.m-load-box>.load>.loading i.layui-m-layerload {
+    -webkit-animation-delay: -.16s;
+    animation-delay: -.16s
+}
+@-webkit-keyframes layui-m-anim-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes layui-m-anim-loading {
+    0%,
+    100%,
+    80% {
+        transform: scale(0);
+        -webkit-transform: scale(0)
+    }
+    40% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
 }
