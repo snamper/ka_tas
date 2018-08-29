@@ -71,15 +71,14 @@ var vm=new Moon({
 				vm.set('orderInfo',orderInfo);
 				vm.set('cardInfo',cardInfo);
 
-				if(orderInfo.orderStatusCode == "CARD_PAY" || orderInfo.actualMoney == '0'){//已支付
-					vm.set('off.payType',String(orderInfo.oldPayType || 0));
-					vm.set("off.payStatus",1);
-					vm.callMethod('pay');
-				}
-
 				let userInfo = vm.getStore("USER_INFO");
 				if(userInfo){
 					vm.set('userInfo',userInfo);
+					if(orderInfo.orderStatusCode == "CARD_PAY" || orderInfo.actualMoney == '0'){//已支付
+						vm.set('off.payType',String(orderInfo.oldPayType || 0));
+						vm.set("off.payStatus",1);
+						vm.callMethod('pay');
+					}
 					
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo);
