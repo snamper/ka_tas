@@ -252,6 +252,7 @@ var vm=new Moon({
 			}else{//有进行中的订单
 				bizType = orderInfo.bizType;
 			}
+			orderInfo.status=status;
 
 			vm.removeStore('SCAN_INFO');
 			vm.setStore('CARD_INFO',{
@@ -313,7 +314,6 @@ var vm=new Moon({
 			                }
 			            });
 					}else{//有进行中的订单
-						orderInfo.status=status;
 						vm.setStore('ORDER_INFO',orderInfo);
 
 						Jsborya.pageJump({
