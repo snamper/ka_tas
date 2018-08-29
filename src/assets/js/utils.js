@@ -151,7 +151,7 @@ export default{
                           iccid:userInfo.iccid
                         });
                         if(isJump){
-                          if(orderInfo.bizType == 8 || orderInfo.bizType == 9){
+                          if(orderInfo.bizType == 4 || orderInfo.bizType == 5){
                             Jsborya.pageJump({
                                 url:'scanInfo.html',
                                 stepCode:'999',
