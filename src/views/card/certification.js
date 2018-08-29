@@ -273,6 +273,7 @@ var vm=new Moon({
 			    checkPwd=true;
 			if(!password1.match(/^\d{6}$/))checkPwd=false;
 			if(password1!==password2)checkPwd=false;
+			if(vm.get('cardInfo').deviceType == 1)checkPwd=true;
 			
 			if(!cardInfoCheck.length&&!imgNameCheck.length&&vm.get('off').agree&&checkPwd&&vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{9}$/)){
 				vm.set('off.isJump',true);
@@ -319,7 +320,7 @@ var vm=new Moon({
 			}else if(!vm.get("linkPhone").match(/^1(3|4|5|6|7|8|9)\d{9}$/)){
 				callLayer('手机号码格式错误');
                 return false;
-			}else if(!password1.match(/^\d{6}$/)){
+			}else if(vm.get('cardInfo').deviceType != 1 && !password1.match(/^\d{6}$/)){
 				callLayer('密码格式错误');
                 return false;
 			}else if(password1!=password2){
