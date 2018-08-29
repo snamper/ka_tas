@@ -201,7 +201,7 @@ var vm=new Moon({
 		},
 		submitOrder:function(){//开卡申请
 			vm.set('off.load',3);
-			vm.AJAX('/tas/w/business/submitOrder',{
+			vm.AJAX('/tas/w/active/submitOrder',{
 				'userInfo':vm.get("userInfo"),
 				'params':{
 					sysOrderId:vm.get("orderInfo").sysOrderId,
