@@ -37,7 +37,7 @@ var vm=new Moon({
         	Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			
 			let cardInfo = vm.getStore('CARD_INFO'),
-				userInfo = vm.setStore("USER_INFO");
+				userInfo = vm.getStore("USER_INFO");
             if(cardInfo)vm.set('cardInfo',cardInfo);
             if(userInfo)vm.set('userInfo',userInfo);
 

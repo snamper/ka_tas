@@ -320,7 +320,6 @@ var vm=new Moon({
 						url:'faceVerification.html',
 						stepCode:'999',
 						depiction:'活体识别',
-						destroyed:false,
 						header:{
 	                        frontColor:'#ffffff',
 	                        backgroundColor:'#4b3887',

@@ -136,9 +136,14 @@ var vm=new Moon({
 			});
 		},
 		jumpToPrev:function(){
-			Jsborya.pageBack({
-                url:"certification.html",
-                isLoad:true
+			Jsborya.pageJump({
+                url:'certification.html',
+                stepCode:'999',
+                depiction:'实名认证',
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
             });
 		},
 		intervalCheckInfo:function(){

@@ -9,11 +9,9 @@ var vm=new Moon({
 	data:{
 		off:{
 			load:true,
-			turn:0,//0,初始化页面;1,选择卡槽页面;2,继续完成订单页面;3,首页;4,无效卡页面;5,未插卡页面;(2在slotInfo.html)
-			slot:'1',//-1,都可用;0,卡槽1;1,卡槽2;---哪张卡槽可用
+			turn:0,//0,初始化页面;1,选择卡槽页面;4,无效卡页面;5,未插卡页面;
 		},
 		defaultSlot:false,//是否为默认卡槽
-		iccid:['',''],
 		deviceType:1,//1、手机卡；2、手表卡；3、eSIM手表
 		iccidsRes:[{
 			orderInfo:'',
@@ -80,7 +78,7 @@ var vm=new Moon({
 	    }
 	},
 	methods:{
-		getCheckMachine(iccidsInfo){//获取卡槽中的sim卡的状态
+		getCheckMachine(){
 			const json={
 	  			params:{
 	  				type:1
@@ -145,10 +143,9 @@ var vm=new Moon({
 				slot:'-1',
 				complete(result){
 					if(result.status==1){
-						if(result.iccid.length == 1)vm.set('defaultSlot',true);//默认卡槽
+						if(result.iccid.length == 1)vm.set('defaultSlot',true);//默认卡槽（如果只能读取一个iccid则只能使用默认卡槽，slot传-1）
 
 						if(result.iccid[0]||result.iccid[1]){//读出了一个iccid
-							vm.set('iccid',result.iccid);
 							Jsborya.readCardIMSI({//获取卡槽1，imsi信息
 								slot:'0',
 								complete(_result){
@@ -195,50 +192,48 @@ var vm=new Moon({
 				vm.set('off.load',false);
 			})
 		},
-		choiceTurnTo(simStatus,simStatus_){//卡槽1和卡槽2，状态
-			if([1,2,5,8,9].includes(simStatus)&&[1,2,5,8,9].includes(simStatus_)){
+		choiceTurnTo(simStatus,simStatus_){//卡槽1和卡槽2，状态--处理从卡槽中读取卡信息的逻辑
+			if([1,2,5,8,9,10].includes(simStatus) && [1,2,5,8,9,10].includes(simStatus_)){
+				vm.set('off.turn',1);//去选择卡槽页(本页面)
+			}else if([2,5,6].includes(simStatus) || [2,5,6].includes(simStatus)){
+				//去订单页
 
-				vm.set('off.turn',1);
-				vm.set('off.slot','-1');
+				if([2,5,6].includes(simStatus)){
+					vm.callMethod('choiceSlot',['0']);
+				}else vm.callMethod('choiceSlot',['1']);
+			}else if([8,9,10].includes(simStatus) || [8,9,10].includes(simStatus)){
+				//去扫码页
 
-			}else if( ([4].includes(simStatus)&&[2,3,5].includes(simStatus_)) || ([2,3,5].includes(simStatus)&&[4].includes(simStatus_)) ){
-				vm.set('off.turn',2);
-
-				if([4].includes(simStatus)){
-					vm.set('off.slot','1');
-				}else vm.set('off.slot','0');
-				vm.callMethod('choiceSlot');
-			}else if( ([1].includes(simStatus)&&[3,4,6].includes(simStatus_)) || ([3,4,6].includes(simStatus)&&[1].includes(simStatus_)) ){
-				vm.set('off.turn',3);
+				if([8,9,10].includes(simStatus)){
+					vm.callMethod('choiceSlot',['0']);
+				}else vm.callMethod('choiceSlot',['1']);
+			}else if([1].includes(simStatus) || [1].includes(simStatus)){
+				//去随心搜页
 
 				if([1].includes(simStatus)){
-					vm.set('off.slot','0');
-				}else vm.set('off.slot','1');
-				vm.callMethod('choiceSlot');
-			}else if([4].includes(simStatus)&&[4].includes(simStatus_)){
-				vm.set('off.turn',4);//两张都为无效卡
-			}else if([6].includes(simStatus) || [6].includes(simStatus_)){//有一张为开卡失败的卡
-				if([6].includes(simStatus)){
-					vm.set('off.slot','0');
-				}else vm.set('off.slot','1');
-				vm.callMethod('choiceSlot');
-			}
-			//以上处理开空卡的逻辑
-			else{
-
+					vm.callMethod('choiceSlot',['0']);
+				}else vm.callMethod('choiceSlot',['1']);
+			}else if([4].includes(simStatus) && [4].includes(simStatus)){
+				vm.set('off.turn',4);//去无效卡页(本页面)
 			}
 		},
-		choiceSlot(slot){//选择卡槽--处理开空卡的逻辑
-			if(!slot)slot = vm.get('off').slot;
+		choiceSlot(slot){//选择卡槽--处理从卡槽中读取卡信息的逻辑
+			if(!slot)alert('插槽类型错误');
 
 			slot=parseInt(slot);
 
-			let status = vm.get('iccidsRes')[slot].status,
+			let orderInfo,
+				iccidsRes = vm.get('iccidsRes')[slot],
 				realSlot = vm.get('defaultSlot') ? '-1' : slot;//默认卡槽问题
 
 			if(vm.callMethod('isMiCliet')) realSlot = '-1';//小米手机
 
-			vm.callMethod('dealJump',[status,vm.get('iccidsRes')[slot].orderInfo,realSlot]);	
+			if(iccidsRes.status == 8 || iccidsRes.status == 9 || iccidsRes.status == 10){//成卡，白卡
+				orderInfo = iccidsRes.otherInfo || {};
+			}else orderInfo = iccidsRes.orderInfo || {};
+			orderInfo.iccid = iccidsRes.scanIccid;
+			
+			vm.callMethod('dealJump',[iccidsRes.status,orderInfo,realSlot]);
 			
 		},
 		dealJump(status,orderInfo = {},slot){//当有slot时为从卡槽中读取
@@ -256,23 +251,23 @@ var vm=new Moon({
 
 			vm.removeStore('SCAN_INFO');
 			vm.setStore('CARD_INFO',{
-				slot:slot || '-2',
+				slot:"undefined" == typeof slot ? '-2' : slot,
 				iccid:orderInfo.iccid || '',
 				sourceOrder:orderInfo.sourceOrder || '',
 				belongType:orderInfo.belongType || '0',
 				deviceType:'1',
 				bizType:bizType
 			});
-
+			debugger
 			Jsborya.getGuestInfo({
-				slot:slot || '-2',
-				iccid:vm.get('iccid')[slot] || orderInfo.iccid,
+				slot:"undefined" == typeof slot ? '-2' : slot,
+				iccid:orderInfo.iccid,
 				complete:function(userInfo){
 					vm.setStore("USER_INFO",userInfo);
 					
 					if(status==1){//开空卡
 
-						if(slot){//从卡槽中读取
+						if("undefined" != typeof slot){//从卡槽中读取
 							vm.removeStore('ORDER_INFO');
 
 							Jsborya.pageJump({
@@ -350,6 +345,40 @@ var vm=new Moon({
 		},
 		showInsertCard(){
 			vm.set('off.turn',5);//未插卡
+			Jsborya.registerMethods('headerLeftClick',function(){//点击左上角，触发
+				vm.set('off.turn',0);//初始页面
+				Jsborya.setHeader({
+					title:'',
+					backgroundColor:'#F8F8F8',
+					frontColor:'#000000',
+					left:{
+						icon:'',
+						value:'',
+						callback:''
+					},
+					right:{
+						icon:'',
+						value:'更多',
+						callback:'headerRightClick'
+					}
+				});
+			});
+			//设置app头部
+			Jsborya.setHeader({
+				title:'读取卡信息',
+				backgroundColor:'#4b3887',
+				frontColor:'#FFFFFF',
+				left:{
+					icon:'back_white',
+					value:'返回',
+					callback:'headerLeftClick'
+				},
+				right:{
+					icon:'',
+					value:'更多',
+					callback:'headerRightClick'
+				}
+			});
 		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({

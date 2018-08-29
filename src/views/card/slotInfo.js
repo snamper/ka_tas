@@ -10,7 +10,6 @@ var vm=new Moon({
 		off:{
 			status:4,//1可用卡;2有进行中订单，未写卡;3 开成功的卡;4 无效卡;5 已写卡等待开卡结果;6 已写卡开卡失败
 		},
-		deviceStatus:1,//1、读取成功；2、读取失败；3、未插卡；4、未连接
 		cardInfo:{//卡槽信息
 			slot:0,
 			deviceType:1,
