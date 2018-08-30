@@ -105,6 +105,7 @@ var vm=new Moon({
                 url:url,
                 stepCode:'999',
                 depiction:'开卡',
+                destroyed:false,
                 header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',

@@ -7,6 +7,7 @@
 .card-list{
     position: relative;
     padding-top: 5px;
+    background-color:#fff;
 }
 
 .card-list>ul {
@@ -149,4 +150,18 @@
         font-size:17px;
         letter-spacing: 0
     }
+}
+/*号码骨架图*/
+.m-panel-svg>dd{
+    height: 45px;
+    padding: 2px;
+    float: left;
+}
+.m-panel-svg>dd>div{
+    background-image: url(../img/card_panel.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    margin:2px;
+    height: 100%;
 }

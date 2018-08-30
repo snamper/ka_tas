@@ -20,8 +20,8 @@
 		<header class="m-hd-dp">
 			<h2 class="purple">远特i卡你&我的开卡工具</h2>
 		</header>
-		<div v-show="checkMachine.type!=1" class="m-tag" m-on:click="showInsertCard()"><i class="u-icon-error"></i><span class="red">未检测到卡槽中有卡，查看详情 ></span></div>
-		<div v-show="checkMachine.type==1" class="m-tag"><i class="u-icon-error"></i><span class="red">{{ checkMachine.desc }}</span></div>
+		<div m-show="checkMachine.type!=1" class="m-tag" m-on:click="showInsertCard()"><i class="u-icon-error"></i><span class="red">未检测到卡槽中有卡，查看详情 ></span></div>
+		<div m-show="checkMachine.type==1" class="m-tag"><i class="u-icon-error"></i><span class="red">{{ checkMachine.desc }}</span></div>
 		<div class="m-scan-box">
 			<div class="scan" m-on:click="scanQRcode()">
 				<img src="../../assets/img/ruten_btn_scan.png">
@@ -85,11 +85,11 @@
 		<div class="m-tag"><i class="u-icon-tagnum_1"></i><span>卡槽1</span></div>
 		<div class="g-col-2">
 			<div class="row line">
-				<span class="left">ICCID</span>
+				<span class="left">卡号</span>
 				<span class="right">{{ iccidsRes[0].scanIccid }}</span>
 			</div>
 			<div class="row">
-				<span class="left">卡号</span>
+				<span class="left">卡状态</span>
 				<span class="right">
 					<span m-show="iccidsRes[0].status==1" class="green">空卡</span>
 					<span m-show="iccidsRes[0].status==8" class="green">成卡</span>

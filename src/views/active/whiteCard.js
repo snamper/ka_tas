@@ -46,19 +46,17 @@ var vm=new Moon({
 	},
 	methods:{
 		initPage:function(){
-			const vm=this;
+			setTimeout(function(){
+				let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
+				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
+				//设置页面展现
+				vm.set('boxHeight',`height:${window_h-58}px`);
+				var row=Math.ceil((window_h-58)/50),//行数
+				    col=window_w<=469 ? 2 : window_w<=719 ? 3 : 4;//列数
+				vm.set('pageSize',row*col);//号码数量
 
-			let window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-			let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
-			//设置页面展现
-			
-			vm.set('boxHeight',`height:${window_h-58}px`);
-			var row=Math.ceil((window_h-58)/50),//行数
-			    col=window_w<=469 ? 2 : window_w<=719 ? 3 : 4;//列数
-			vm.set('pageSize',row*col);//号码数量
-
-			vm.callMethod('getCardList');
-			
+				vm.callMethod('getCardList');
+			},0)
 		},
 		getCardList:function(page,closeLoad){//获取首屏号卡数据
 			var vm=this;

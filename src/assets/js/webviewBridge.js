@@ -153,6 +153,7 @@ require('./base64.js');
 		pageBack:function(json){//页面返回
 			json.url=URL+json.url;
 			//window.location.href=json.url;
+			alert('pageBack传值：'+JSON.stringify(json));
 			callHandler({
 				name:'pageBack',
 				data:json,

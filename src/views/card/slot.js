@@ -8,7 +8,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:true,
+			load:0,
 			turn:0,//0,初始化页面;1,选择卡槽页面;4,无效卡页面;5,未插卡页面;
 		},
 		defaultSlot:false,//是否为默认卡槽
