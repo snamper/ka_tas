@@ -216,7 +216,7 @@ var vm=new Moon({
 					vm.callMethod('choiceSlot',['0']);
 				}else vm.callMethod('choiceSlot',['1']);
 			}else if([4].includes(simStatus) && [4].includes(simStatus)){
-				vm.set('off.turn',4);//去无效卡页(本页面)
+				vm.callMethod('showInsertCard',[4]);//去无效卡页(本页面)
 			}
 		},
 		choiceSlot(slot){//选择卡槽--处理从卡槽中读取卡信息的逻辑
