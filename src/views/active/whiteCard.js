@@ -129,7 +129,9 @@ var vm=new Moon({
 	    	}
 	    },
 		phoneClick:function({phoneNum,cityName,faceMoney}){//点击号码生成订单
-			vm.AJAX('/tas/w/searchcard/getOrder',{'userInfo':vm.userInfo},function(data){
+			vm.AJAX('/tas/w/searchcard/getOrder',{
+				'userInfo':vm.get('userInfo')
+			},function(data){
 				if(data.data){
 					vm.set('orderInfo',data.data);
 					vm.callMethod('countDown');

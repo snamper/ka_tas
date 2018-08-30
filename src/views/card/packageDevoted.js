@@ -277,27 +277,9 @@ var vm=new Moon({
             };
             vm.AJAX('/tas/w/business/orderCreate',json,function(data){
                 vm.set("off.load",false);
-                vm.setStore('ORDER_INFO',{
-                    "belongType":1,
-                    "phoneNum":cardInfo.phone,
-                    "numberLevel":cardInfo.phoneLevel,
-                    "cityName":cardInfo.cityName,
-                    "createTime":data.data.createTime,
-                    "cardMoney":cardInfo.phoneMoney,//号码占用费
-                    "cDiscount":cardInfo.discount,
-                    "orderStatusCode":"PACKAGE_SELECTION",
-                    "totalMoney":data.data.totalMoney,
-                    "actualMoney":data.data.actualMoney,
-                    "limitSimilarity":0,
-                    "validTime":0,
-                    "sysOrderId":data.data.sysOrderId,
-                    "packageName":packageInfo.packTitle,
-                    "packageCode":packageInfo.code,
-                    "prestoreMoney":packageInfo.prestoreMoney,//预存价格
-                    "pDiscount":10000,
-                    "similarity":0,
-                    "iccid":vm.get('userInfo').iccid,
-                });
+                data.data.iccid = vm.get('userInfo').iccid;
+                vm.setStore('ORDER_INFO',data.data);
+                
                 Jsborya.pageJump({
                     url:'certification.html',
                     stepCode:'999',
