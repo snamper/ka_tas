@@ -112,7 +112,7 @@ require('./base64.js');
 				name:'getGuestInfo',
 				data:json,
 				callback:function(result){
-					alert('getGuestInfo'+JSON.stringify(result))
+					//alert('getGuestInfo'+JSON.stringify(result))
 					json.complete(result);
 				}
 			});
@@ -153,7 +153,7 @@ require('./base64.js');
 		pageBack:function(json){//页面返回
 			json.url=URL+json.url;
 			//window.location.href=json.url;
-			alert('pageBack传值：'+JSON.stringify(json));
+			//alert('pageBack传值：'+JSON.stringify(json));
 			callHandler({
 				name:'pageBack',
 				data:json,
@@ -305,7 +305,7 @@ require('./base64.js');
 				name:'callScanQRCode',
 				data:json,
 				callback:function(result){
-					alert('callScanQRCode'+JSON.stringify(result));
+					//alert('callScanQRCode'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
