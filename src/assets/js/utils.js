@@ -281,6 +281,13 @@ export default{
                 case 3000:
                     layerOpen('号码已不归属于您，现已将订单关闭，请尝试其他号码');
                     break;
+                case 2000:
+                    Jsborya.pageJump({
+                      url:'',
+                      stepCode:'808',
+                      depiction:''
+                    });
+                    break;
                 default:
                     layer.open({
                         content:data.msg||data,
