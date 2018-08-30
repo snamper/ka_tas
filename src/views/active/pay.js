@@ -75,10 +75,13 @@ var vm=new Moon({
 				if(userInfo){
 					vm.set('userInfo',userInfo);
 
-					if(orderInfo.orderStatusCode == "CARD_PAY" || orderInfo.actualMoney == '0'){//已支付
+					if(orderInfo.orderStatusCode == "CARD_PAY" || orderInfo.actualMoney == '0'){//已支付或支付金额为0
 						vm.set('off.payType',String(orderInfo.oldPayType || 0));
-						vm.set("off.payStatus",1);
 						vm.callMethod('pay');
+					}
+
+					if(orderInfo.orderStatusCode == "CARD_PAY"){//已支付
+						vm.set("off.payStatus",1);
 					}
 					
 					Jsborya.registerMethods('headerLeftClick',function(){
