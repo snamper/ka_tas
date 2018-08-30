@@ -78,7 +78,7 @@ var vm=new Moon({
 	    }
 	},
 	methods:{
-		getCheckMachine(){
+		getCheckMachine(){//机型适配信息
 			const json={
 	  			params:{
 	  				type:1
@@ -90,10 +90,12 @@ var vm=new Moon({
 					type:data.data.dealType,
 					desc:data.data.desc
 				});
-				vm.callMethod('begin');
+				if(data.data.dealType != 1){
+					vm.callMethod('begin');
+				}else vm.set('off.load',0);
 			},true);
 		},
-		scanQRcode(){
+		scanQRcode(){//处理扫码后的逻辑
 			Jsborya.callScanQRCode({
 				type:'1',
 				complete:function(res){
@@ -132,7 +134,7 @@ var vm=new Moon({
 				}
 			})
 		},
-		begin(){
+		begin(){//开始读取卡槽中的信息
 
 			if(vm.get('checkMachine').type==1){
 				return false;
@@ -327,7 +329,7 @@ var vm=new Moon({
 				}
 			});
 		},
-		isMiCliet(){
+		isMiCliet(){//判断是否为小米机型
 			let e = navigator.userAgent;
 			if(e.indexOf('XiaoMi')>-1){
 				return true;

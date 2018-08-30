@@ -243,7 +243,8 @@ var vm=new Moon({
 		            "cardMoney":cardInfo.phoneMoney,//号码占用费
 		            "cDiscount":cardInfo.discount,
 		            "orderStatusCode":"PACKAGE_SELECTION",
-		            "totalMoney":parseFloat(vm.get('totalPrice'))*100,//计算后总价格
+		            "totalMoney":data.data.totalMoney,
+		            "actualMoney":data.data.actualMoney,
 		            "limitSimilarity":0,
 		            "validTime":0,
 		            "sysOrderId":data.data.sysOrderId,

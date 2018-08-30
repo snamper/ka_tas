@@ -20,7 +20,8 @@
 		<header class="m-hd-dp">
 			<h2 class="purple">远特i卡你&我的开卡工具</h2>
 		</header>
-		<div class="m-tag" m-on:click="showInsertCard()"><i class="u-icon-error"></i><span class="red">未检测到卡槽中有卡，查看详情 ></span></div>
+		<div v-show="checkMachine.type!=1" class="m-tag" m-on:click="showInsertCard()"><i class="u-icon-error"></i><span class="red">未检测到卡槽中有卡，查看详情 ></span></div>
+		<div v-show="checkMachine.type==1" class="m-tag"><i class="u-icon-error"></i><span class="red">{{ checkMachine.desc }}</span></div>
 		<div class="m-scan-box">
 			<div class="scan" m-on:click="scanQRcode()">
 				<img src="../../assets/img/ruten_btn_scan.png">
