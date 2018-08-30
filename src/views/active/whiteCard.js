@@ -136,9 +136,8 @@ var vm=new Moon({
 
 			Jsborya.pageJump({
 				url:belongType == 0 ? 'publicWhitePackage.html' : 'devotedWhitePackage.html',
-				stepCode:'1000',
+				stepCode:'999',
 				depiction:"开白卡",
-				destroyed:false,
 				header:{
                     frontColor:'#ffffff',
                     backgroundColor:'#4b3887',
