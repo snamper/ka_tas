@@ -197,7 +197,7 @@ var vm=new Moon({
 		choiceTurnTo(simStatus,simStatus_){//卡槽1和卡槽2，状态--处理从卡槽中读取卡信息的逻辑
 			if([1,2,5,8,9,10].includes(simStatus) && [1,2,5,8,9,10].includes(simStatus_)){
 				vm.set('off.turn',1);//去选择卡槽页(本页面)
-			}else if([2,5,6].includes(simStatus) || [2,5,6].includes(simStatus)){
+			}else if([2,3,5,6].includes(simStatus) || [2,3,5,6].includes(simStatus)){
 				//去订单页
 
 				if([2,5,6].includes(simStatus)){
@@ -312,7 +312,25 @@ var vm=new Moon({
 			                    backgroundColor:'#4b3887',
 			                }
 			            });
-					}else{//有进行中的订单
+					}else if(status == 4){//无效卡
+						if("undefined" != typeof slot){//从卡槽中读取
+							vm.callMethod('showInsertCard',[4]);
+						}else{
+							vm.setStore('SCAN_INFO',orderInfo);
+
+							Jsborya.pageJump({
+				                url:'scanInfo.html',
+				                stepCode:'999',
+				                depiction:'卡信息',
+				                destroyed:false,
+				                header:{
+				                    frontColor:'#ffffff',
+				                    backgroundColor:'#4b3887',
+				                }
+				            });
+						}
+
+					}else{//有进行中的订单(2,3,5,6)
 						vm.setStore('ORDER_INFO',orderInfo);
 
 						Jsborya.pageJump({
@@ -347,8 +365,8 @@ var vm=new Moon({
 				alert('异常错误')
 			}
 		},
-		showInsertCard(){
-			vm.set('off.turn',5);//未插卡
+		showInsertCard(turn){//只能传4,5
+			vm.set('off.turn',turn);//读取卡槽--未插卡和无效卡处理逻辑
 			Jsborya.registerMethods('headerLeftClick',function(){//点击左上角，触发
 				vm.set('off.turn',0);//初始页面
 				Jsborya.setHeader({
