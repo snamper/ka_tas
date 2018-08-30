@@ -52,28 +52,9 @@ var vm=new Moon({
 		mounted:function(){
 
 			let scanInfo=vm.getStore('SCAN_INFO');
-			// let scanInfo={
-			// 	status:'8',
-			// 	iccid:'89860117841027577673',
-	  //           selectPrice:"0",
-	  //           prestorePrice:"0",
-	  //           firstCharge:"0",
-	  //           facePrice:"0",
-	  //           createTime:0,
-	  //           phone:"17080005263",
-	  //           cityName:"--",
-	  //           descStr:"--",
-	  //           packageName:"--",
-	  //           feeDescribe: "--",
-	  //           optionals: [{
-	  //               optionalName: "--"
-	  //           }],
-	  //           belongType:"0",
-	  //           sourceOrder:"CK18082212000400012"
-	  //       };
-	  alert(JSON.stringify(scanInfo));
 			if(scanInfo)vm.set('scanInfo',scanInfo);
-			
+
+			alert('扫码后传输数据：'+JSON.stringify(scanInfo));
 		},
 	},
 	methods:{

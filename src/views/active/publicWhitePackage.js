@@ -52,6 +52,7 @@ var vm=new Moon({
 	                            "internetTime": "0",
 	                            "feeDescribe": "--",
 	                            "isFour": "0",
+	                            "prompt": "",
 	                            "selPackage": [
 	                                {
 	                                    "standard": "--",
@@ -104,8 +105,7 @@ var vm=new Moon({
 	},
 	methods:{
 		getPackageInfo:function(){//获取数据列表
-			var vm=this;
-			var json={
+			const json={
 	  			'params':{
                     sourceOrder:vm.get('cardInfo').sourceOrder,
                     phoneNum:vm.get('cardInfo').phone

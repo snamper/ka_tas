@@ -15,13 +15,7 @@ body{
 }
 .m-hd-dp{
     width: 90%;
-    margin:0.1rem auto;
-}
-.m-hd-dp>h2{
-    margin-bottom:7px;
-}
-.m-hd-dp>p{
-    
+    margin:5px auto;
 }
 .g-full-box{
     position: absolute;
@@ -29,9 +23,6 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-}
-.g-full-box>.m-tag{
-    padding: 0 0.1rem;
 }
 .m-scan-box{
     margin-top: 0.3rem;
@@ -276,14 +267,14 @@ body{
     padding-right: 0.1rem;
 }
 .m-tag{
-    padding: 0.1rem;
+    margin:0 5%;
 }
 .m-tag>i{
     display: inline-block;
     vertical-align: top;
-    width: 0.2rem;
-    height: 0.2rem;
-    margin-right:5px;
+    width: 0.15rem;
+    height: 0.15rem;
+    margin-right:3px;
 
     background-position: center;
     background-repeat: no-repeat;
@@ -292,7 +283,7 @@ body{
 .m-tag>span{
     display: inline-block;
     vertical-align: top;
-    line-height: 0.2rem;
+    line-height: 0.17rem;
 }
 
 .m-btn-group{

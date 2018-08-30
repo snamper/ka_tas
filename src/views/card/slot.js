@@ -10,6 +10,7 @@ var vm=new Moon({
 		off:{
 			load:0,
 			turn:0,//0,初始化页面;1,选择卡槽页面;4,无效卡页面;5,未插卡页面;
+			status:0//只有4,5的处理（0：初始状态；4：无效卡；5：未插卡）
 		},
 		defaultSlot:false,//是否为默认卡槽
 		deviceType:1,//1、手机卡；2、手表卡；3、eSIM手表
@@ -59,17 +60,7 @@ var vm=new Moon({
 					url:'',
 					stepCode:'807',
 					destroyed:false,
-				})
-				// Jsborya.pageJump({
-	   //              url:'https://km.m10027.com/tf/guide.html',
-	   //              stepCode:'800',
-	   //              depiction:'开卡指南',
-	   //              destroyed:false,
-	   //              header:{
-	   //                  frontColor:'#ffffff',
-	   //                  backgroundColor:'#4b3887',
-	   //              }
-	   //          });
+				});
 			});
 		},
 	    mounted:function(){
@@ -173,7 +164,16 @@ var vm=new Moon({
 						}else{
 							vm.set('off.load',false);
 						}
-					}else vm.callMethod('filterConnectStatus',[result.status]);
+					}else{
+						vm.set('off.load',false);
+						if(result.status==2){
+							vm.set('off.status',4);//无效卡
+						}else if(status==3){
+							vm.set('off.status',5);//未插卡
+						}else{
+							alert('异常错误')
+						}
+					}
 				}
 			})
 			
@@ -200,7 +200,7 @@ var vm=new Moon({
 			}else if([2,3,5,6].includes(simStatus) || [2,3,5,6].includes(simStatus)){
 				//去订单页
 
-				if([2,5,6].includes(simStatus)){
+				if([2,3,5,6].includes(simStatus)){
 					vm.callMethod('choiceSlot',['0']);
 				}else vm.callMethod('choiceSlot',['1']);
 			}else if([8,9,10].includes(simStatus) || [8,9,10].includes(simStatus)){
@@ -216,7 +216,7 @@ var vm=new Moon({
 					vm.callMethod('choiceSlot',['0']);
 				}else vm.callMethod('choiceSlot',['1']);
 			}else if([4].includes(simStatus) && [4].includes(simStatus)){
-				vm.callMethod('showInsertCard',[4]);//去无效卡页(本页面)
+				vm.set('off.status',4);//无效卡
 			}
 		},
 		choiceSlot(slot){//选择卡槽--处理从卡槽中读取卡信息的逻辑
@@ -314,7 +314,7 @@ var vm=new Moon({
 			            });
 					}else if(status == 4){//无效卡
 						if("undefined" != typeof slot){//从卡槽中读取
-							vm.callMethod('showInsertCard',[4]);
+							vm.set('off.status',4);//无效卡
 						}else{
 							vm.setStore('SCAN_INFO',orderInfo);
 
@@ -355,18 +355,8 @@ var vm=new Moon({
 				return false;
 			}
 		},
-		filterConnectStatus:function(status){
-			vm.set('off.load',false);
-			if(status==2){
-				vm.set('off.turn',4);//无效卡或者未读取到SIM卡信息
-			}else if(status==3){
-				m.set('off.turn',0);//未插卡
-			}else{
-				alert('异常错误')
-			}
-		},
-		showInsertCard(turn){//只能传4,5
-			vm.set('off.turn',turn);//读取卡槽--未插卡和无效卡处理逻辑
+		showInsertCard(){//只能传4,5
+			vm.set('off.turn',vm.get('off').status);//读取卡槽--未插卡和无效卡处理逻辑
 			Jsborya.registerMethods('headerLeftClick',function(){//点击左上角，触发
 				vm.set('off.turn',0);//初始页面
 				Jsborya.setHeader({

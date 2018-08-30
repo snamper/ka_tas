@@ -112,6 +112,7 @@
 			<li
 				m-for="todo,index in packageInfo.fareList[off.voice].flowList"
 				m-on:click="selectFlow"
+				m-show="off.flowType == todo.flowType"
 				m-literal:title="index"
 				m-literal:class="{active:off.flow==index}">{{todo.phoneFlowVal}}<span></span></li>
 		</ul>
@@ -148,7 +149,7 @@
 		<ul class="m-order-info clr grey fmt-10">
 			<li><span class="left">所选号码:</span>
 				<b class="purple">{{ phoneFormat(cardInfo.phone) }}</b>
-				<b>({{cardInfo.cityName}})</b>
+				<b>({{packageInfo.cityName}})</b>
 			</li>
 			<li class="double-border"></li>
 			<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(cardInfo.faceMoney)}}</span></li>

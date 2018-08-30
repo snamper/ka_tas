@@ -107,7 +107,7 @@ require('./base64.js');
 			// 	"timestamp":"1525684349889",
 			// 	"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
 			// });
-			alert('getGuestInfo传值:'+JSON.stringify(json))
+			//alert('getGuestInfo传值:'+JSON.stringify(json))
 			callHandler({
 				name:'getGuestInfo',
 				data:json,
@@ -200,7 +200,7 @@ require('./base64.js');
 				name:'faceVerification',
 				data:json,
 				callback:function(result){
-					alert(`faceVerification:${JSON.stringify(result)}`)
+					//alert(`faceVerification:${JSON.stringify(result)}`)
 					json.complete(result);
 				}
 			});
@@ -216,7 +216,7 @@ require('./base64.js');
 				name:'readCardICCID',
 				data:json,
 				callback:function(result){
-					alert('readCardICCID'+JSON.stringify(result));
+					//alert('readCardICCID'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -239,7 +239,7 @@ require('./base64.js');
 				name:'readCardIMSI',
 				data:json,
 				callback:function(result){
-					alert('readCardIMSI'+JSON.stringify(result));
+					//alert('readCardIMSI'+JSON.stringify(result));
 					json.complete(result);
 				}
 			});
@@ -311,7 +311,7 @@ require('./base64.js');
 			});
 		},
 		callMessageNotice:function(json){
-			alert('callMessageNotice'+JSON.stringify(json));
+			//alert('callMessageNotice'+JSON.stringify(json));
 			callHandler({
 				name:'callMessageNotice',
 				data:json,

@@ -159,7 +159,7 @@ var vm=new Moon({
 			let orderInfo=vm.get('orderInfo'),
 				todo=vm.callMethod('filterOrderStatus');
 
-            alert(`orderInfo:${JSON.stringify(orderInfo)}`)
+            alert(`订单信息：${JSON.stringify(orderInfo)}`)
 
             Jsborya.pageJump({
                 url:todo.url,
