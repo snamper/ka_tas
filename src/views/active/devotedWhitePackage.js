@@ -285,8 +285,6 @@ var vm=new Moon({
             });
         },
         countDown(count){
-          const vm=this;
-
           vm.set('safeCodeCount',count);
           window.Timer=setInterval(()=>{
             let t=vm.get('safeCodeCount');
@@ -325,9 +323,6 @@ var vm=new Moon({
         phoneFormat:function(phone){
             return this.phoneFormat(phone);
         },
-        mathDiscount:function(price,discount){
-            return this.mathDiscount(price,discount);
-        }
     }
 });
 });

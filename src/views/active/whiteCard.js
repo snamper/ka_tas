@@ -115,7 +115,7 @@ var vm=new Moon({
 		},
 		pullLoad:function(e){//上拉执行
 	    	e.preventDefault();
-	    	var page=vm.vm.get('page'),obj=document.getElementById('cardBox');
+	    	var page=vm.get('page'),obj=document.getElementById('cardBox');
 	    	
 	    	if(vm.get('isPullLoad')&&obj.scrollHeight<=(obj.scrollTop+obj.offsetHeight)&&!vm.get('isHaveMore')){
 	    		vm.set('isPullLoad',false);
@@ -125,16 +125,17 @@ var vm=new Moon({
 	    		vm.set('isHaveMore',false);
 	    	}
 	    },
-		phoneClick:function({phoneNum,cityName,faceMoney}){//点击号码生成订单
+		phoneClick:function({phoneNum,cityName,faceMoney,belongType}){//点击号码生成订单
 			let cardInfo = vm.get('cardInfo');
 			cardInfo.phone = phoneNum;
+			cardInfo.belongType = belongType;
 			cardInfo.faceMoney = faceMoney;
 			vm.setStore('CARD_INFO',cardInfo);
 
 			vm.removeStore('CHANGE_PACKAGE_INFO');
 
 			Jsborya.pageJump({
-				url:cardInfo.belongType == 0 ? 'publicWhitePackage.html' : 'devotedWhitePackage.html',
+				url:belongType == 0 ? 'publicWhitePackage.html' : 'devotedWhitePackage.html',
 				stepCode:'1000',
 				depiction:"开白卡",
 				destroyed:false,

@@ -40,6 +40,7 @@ var vm=new Moon({
 	                        "package": "0",
 	                        "phoneFlowCode": "0",
 	                        "phoneFlowVal": "暂无流量档位",
+	                        "flowType":"1",
 	                        "lowestPay": "0",
 	                        "prompt": "",
 	                        "prettyPrestoreMoney": "0",
@@ -85,7 +86,7 @@ var vm=new Moon({
 	    prestoreMoneyList:[],
 	    selPackage:[],
         userInfo:{},
-        flowTx:'63px',//流量切换偏移x
+        flowTx:'transform:translate3d(63px,0,0)',//流量切换偏移x
 	},
 	hooks:{
         init:function(){
@@ -107,10 +108,11 @@ var vm=new Moon({
 			var json={
 	  			'params':{
                     sourceOrder:vm.get('cardInfo').sourceOrder,
-                    phoneNum:vm.get('cardInfo').card
+                    phoneNum:vm.get('cardInfo').phone
                 },
 	  			'userInfo':vm.get('userInfo')
 	  		};
+
 			vm.AJAX('/tas/w/active/changePackList',json,function(data){
 				for(let i=0,len=data.data.fareList.length;i<len;i++){
 					if(data.data.fareList[i].init==1){
@@ -141,7 +143,7 @@ var vm=new Moon({
 				}else if(todo[i].init==2){
 					str+='<li class="active active2"';
 				}else str+='<li';
-				str+=' onclick="APP.selectBag(this)" title="'+i+'">'+todo[i].title+'<span></span></li>';
+				str+=' onclick="selectBag(this)" title="'+i+'">'+todo[i].title+'<span></span></li>';
 			}
 
 			if(bagUl) bagUl.innerHTML = str;
@@ -152,7 +154,7 @@ var vm=new Moon({
 					str2+='<li class="active"';
 					vm.set('off.pre',i);
 				}else str2+='<li';
-				str2+=' onclick="APP.selectPre(this)" title="'+i+'">'+p_money+'元<span></span></li>';
+				str2+=' onclick="selectPre(this)" title="'+i+'">'+p_money+'元<span></span></li>';
 			}
 			if(preUl) preUl.innerHTML = str2;
 
@@ -162,7 +164,7 @@ var vm=new Moon({
 				vm.set('off.deductionUsed',false);
 			}else vm.get('off.deductionUsed',true);
 			
-			vm.mathDeduction();
+			vm.callMethod('mathDeduction');
 			
 		},
 		mathDeduction:function(e){//计算金额
@@ -499,9 +501,9 @@ var vm=new Moon({
 				vm.callMethod('selectFlow',[{target:firsthild}])
 			},0)
 			if(type==2){
-				vm.set('flowTx',0);
+				vm.set('flowTx',`transform:translate3d(0,0,0)`);
 			}else if(type==1){
-				vm.set('flowTx','63px');
+				vm.set('flowTx',`transform:translate3d(63px,0,0)`);
 			}
 		},
 		siblingC:function(e){//同级元素，class切换
@@ -562,6 +564,15 @@ var vm=new Moon({
                 }
             }
             return true;
+        },
+        mathDiscount:function(money,discount){
+            return vm.mathDiscount(money,discount);
+        },
+        phoneFormat:function(phone){
+            return this.phoneFormat(phone);
+        },
+        mathCentToYuan:function(value){
+            return this.mathCentToYuan(value);
         },
 	}
 });

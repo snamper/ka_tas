@@ -103,7 +103,7 @@
 			<span class="fl">流量档位</span>
 			<span class="fl red flow-tips" m-show="off.onlyFlowType==3">省内流量半价优惠喲~</span>
 			<div class="m-shift-flow" m-show="off.onlyFlowType==3">
-				<b :style="{transform:'translate3d('+flowTx+',0,0)'}"></b>
+				<b m-literal:style="flowTx"></b>
 				<span m-literal:class="{active:off.flowType==2}" m-on:click="shiftFlowType(2)">省内流量</span>
 				<span m-literal:class="{active:off.flowType==1}" m-on:click="shiftFlowType(1)">全国流量</span>
 			</div>
@@ -111,7 +111,6 @@
 		<ul class="m-package" id="flowLevel">
 			<li
 				m-for="todo,index in packageInfo.fareList[off.voice].flowList"
-				m-if="off.flowType==todo.flowType"
 				m-on:click="selectFlow"
 				m-literal:title="index"
 				m-literal:class="{active:off.flow==index}">{{todo.phoneFlowVal}}<span></span></li>
@@ -137,7 +136,7 @@
 			
 		</ul>
 		
-		<div class="m-tag"><i class="u-icon-tag"></i>开卡首充<span m-show="packageInfo.addPreDiscount!=10000">（{{ parseFloat(packageInfo.addPreDiscount)/1000 }}折）</span></div>
+		<div class="m-tag"><i class="u-icon-tag"></i>开卡首充<span m-show="packageInfo.addPreDiscount!=10000">（{{ mathDiscount(packageInfo.addPreDiscount,1000) }}折）</span></div>
 		<ul class="m-package">
 			<li 
 				m-for="pre,index in addPrestoreList"
@@ -148,11 +147,11 @@
 
 		<ul class="m-order-info clr grey fmt-10">
 			<li><span class="left">所选号码:</span>
-				<b class="purple">{{ phoneFormat(selectInfo.card) }}</b>
-				<b>({{selectInfo.cityName}})</b>
+				<b class="purple">{{ phoneFormat(cardInfo.phone) }}</b>
+				<b>({{cardInfo.cityName}})</b>
 			</li>
 			<li class="double-border"></li>
-			<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(selectInfo.faceMoney)}}</span></li>
+			<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(cardInfo.faceMoney)}}</span></li>
 			<li m-literal:class="{border:off.addPre==999}"><span class="left">+含预存话费</span><span class="fr right">￥{{prestoreMoney}}</span></li>
 			<li class="border" m-show="off.addPre!=999"><span class="left">+开卡首冲</span><span class="fr right"><em class="line-th f-s-12">￥{{addPreMoney}}</em>￥{{addPreDiscountMoney}}</span></li>
 			<li class="clr"><span class="fr right black"><b>总价:</b><b class="font-16 font-bold">￥{{totalMoney}}</b></span></li>
@@ -172,7 +171,7 @@
 			</div>
 		</div> -->
 		
-		<div class="btn btn-y" m-on:click="makeSure">下一步</div>
+		<div class="btn btny" m-on:click="makeSure">下一步</div>
 	</div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
 </body>

@@ -134,7 +134,7 @@ export default{
          *@param {Boolean} (isJump) 是否跳转到号码搜索
          **/
         Moon.prototype.orderCancel=function(userInfo,orderInfo,isJump=true){
-            var _self=this, cardInfo = vm.getStore('CARD_INFO');
+            var _self=this, cardInfo = _self.getStore('CARD_INFO');
             layer.open({
                 content:'您要放弃未完成的订单的后续操作么？',
                 btn:['放弃','取消'],
