@@ -75,7 +75,6 @@ var vm=new Moon({
 							vm.callMethod('intervalGetResult',[true]);
 						},1000*20);
 
-
 					}
 				}
 			}else{

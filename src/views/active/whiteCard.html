@@ -29,70 +29,50 @@
 </head>
 <body>
 <div id="app" m-mask>
-	<section class="app-section" m-show="showCardList">
-		<header class="m-header-col">
-			<div class="lt purple">{{ phoneFormat(phoneTitle) }}</div>
-			<div class="search">
-				<input m-show="belongType!=2" m-model="searchValue" m-on:keydown="searchKeydown" m-on:input="searchInputChange" class="icon-search" type="tel" maxlength="4" placeholder="请输入尾号进行搜索">
-				<input m-show="belongType==2" m-model="searchValue" m-on:keydown="searchKeydown" m-on:input="searchInputChange" class="icon-search" type="tel" maxlength="3" placeholder="请输入尾号进行搜索">
-				<span m-show="searchValue.length" m-on:click="clearClick" class="u-icon-clear"></span>
-			</div>
-			<div class="more purple btnScale" m-on:click="searchClick">搜索</div>
-		</header>
-		<div class="card-list">
-			<ul class="f-scroll" id="cardBox" m-literal:style="boxHeight" m-show="cardList.list.length" m-on:scroll="pullLoad">
-				<li m-for="todo in cardList.list">
-					<div class="inner" m-on:click="phoneClick(todo)">
-						<div class="number" m-literal:class="{pretty:todo.pretty==1}">{{phoneFormat(todo.phoneNum)}}
-							<div class="clr">
-								<span class="purple">{{todo.cityName,todo.cityName}}</span>
-								<span class="fr">
-									<em m-if="belongType!=2">￥</em>
-									<b>{{ mathCentToYuan(todo.faceMoney) }}</b>
-									<em m-if="belongType==2">卡</em>
-								</span>
-							</div>
+	<header class="m-header-col">
+		<div class="lt purple">{{ phoneFormat(cardInfo.phone) }}</div>
+		<div class="search">
+			<input m-show="belongType!=2" m-model="searchValue" m-on:keydown="searchKeydown" m-on:input="searchInputChange" class="icon-search" type="tel" maxlength="4" placeholder="请输入尾号进行搜索">
+			<input m-show="belongType==2" m-model="searchValue" m-on:keydown="searchKeydown" m-on:input="searchInputChange" class="icon-search" type="tel" maxlength="3" placeholder="请输入尾号进行搜索">
+			<span m-show="searchValue.length" m-on:click="clearClick" class="u-icon-clear"></span>
+		</div>
+		<div class="more purple btnScale" m-on:click="searchClick">搜索</div>
+	</header>
+	<div class="card-list">
+		<ul class="f-scroll" id="cardBox" m-literal:style="boxHeight" m-show="cardList.list.length" m-on:scroll="pullLoad">
+			<li m-for="todo in cardList.list">
+				<div class="inner" m-on:click="phoneClick(todo)">
+					<div m-literal:class="{pretty:todo.pretty==1,number:true}">{{phoneFormat(todo.phoneNum)}}
+						<div class="clr">
+							<span class="purple">{{todo.cityName,todo.cityName}}</span>
+							<span class="fr">
+								<em m-if="belongType!=2">￥</em>
+								<b>{{ mathCentToYuan(todo.faceMoney) }}</b>
+								<em m-if="belongType==2">卡</em>
+							</span>
 						</div>
 					</div>
-				</li>
-			</ul>
-			<div m-if="!isPullLoad" class="m-dragup-loading">
-				<span class="u-icon-loading"></span>
-				<span class="text">
-					<b>加载中···</b>
-				</span>
-			</div>
-			<dl class="clr m-panel-svg" m-show="firstLoad">
-				<dd m-for="i in pageSize"><div></div></dd>
-			</dl>
-			<div m-show="!firstLoad">
-				<div class="no-data" m-show="cardList.list.length==0">
-					<img src="../../assets/img/pic_tishi.png" alt="">
-					<div>暂无数据</div>
 				</div>
+			</li>
+		</ul>
+		<div m-if="!isPullLoad" class="m-dragup-loading">
+			<span class="u-icon-loading"></span>
+			<span class="text">
+				<b>加载中···</b>
+			</span>
+		</div>
+		<dl class="clr m-panel-svg" m-show="firstLoad">
+			<dd m-for="i in pageSize"><div></div></dd>
+		</dl>
+		<div m-show="!firstLoad">
+			<div class="no-data" m-show="cardList.list.length==0">
+				<img src="../../assets/img/pic_tishi.png" alt="">
+				<div>暂无数据</div>
 			</div>
-			
-			<div class="no-more-data" m-show="isHaveMore">暂无更多</div>
 		</div>
-	</section>
-	<!--未完成订单-->
-	<section class="order-tips" m-show="showOrderTips">
-		<div>
-			<p>（当前有未完成订单，需要先完成订单再进行其他操作）</p>
-			<dl>
-				<dt class="purple">{{orderInfo.phoneNumber}}</dt>
-				<dd><label>归属地：</label><span class="black">{{orderInfo.cityName}}</span></dd>
-				<dd><label>价格：</label><span class="grey">￥<b class="yellow">{{mathCentToYuan(orderInfo.totalMoney)}}</b>（含预存话费{{mathCentToYuan(orderInfo.prestoreMoney)}}元）</span></dd>
-
-				<dd><label>状态：</label><span class="red">{{orderInfo.orderStatus}}</span></dd>
-				
-			</dl>
-			<a href="javascript:void(0)" class="btn bg-p btnScale" m-on:click="continueOrder">继续完成该订单</a>
-			<a href="javascript:void(0)" class="btn btn-r" m-on:click="abandon(orderInfo.sysOrderId)">放弃</a>
-			<div class="tips-time"><label>订单将保留：</label><time class="red">{{orderInfo.validTime}}</time></div>
-			<a href="javascript:void(0)" class="btn bg-y btnScale" m-on:click="backHome">随便看看</a>
-		</div>
-	</section>
+		
+		<div class="no-more-data" m-show="isHaveMore">暂无更多</div>
+	</div>
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
 </body>

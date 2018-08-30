@@ -134,7 +134,7 @@ export default{
          *@param {Boolean} (isJump) 是否跳转到号码搜索
          **/
         Moon.prototype.orderCancel=function(userInfo,orderInfo,isJump=true){
-            var _self=this;
+            var _self=this, cardInfo = vm.getStore('CARD_INFO');
             layer.open({
                 content:'您要放弃未完成的订单的后续操作么？',
                 btn:['放弃','取消'],
@@ -152,7 +152,7 @@ export default{
                         });
 
                         if(isJump){
-                          if(orderInfo.bizType == 4 || orderInfo.bizType == 5 || orderInfo.bizType == 7){
+                          if(cardInfo.isScan){//扫码进入
                             Jsborya.pageJump({
                                 url:'../card/scanInfo.html',
                                 stepCode:'999',
@@ -162,8 +162,8 @@ export default{
                                     backgroundColor:'#4b3887',
                                 }
                             });
-                          }else{//开卡空卡
-                            if(orderInfo.deviceType == 1){//手机开卡
+                          }else{
+                            if(orderInfo.deviceType == 1 && orderInfo.bizType == 6){
                               Jsborya.pageBack({
                                   url:'../card/index.html',
                                   isLoad:true

@@ -13,13 +13,10 @@ var vm=new Moon({
 		isPullLoad:true,//上拉加载开关
 		isHaveMore:0,//是否还有更多号码
 		firstLoad:true,
-		showCardList:true,//首页列表开关
-		showOrderTips:0,//未完成订单开关
-		orderInfo:'',//订单信息
 		pageSize:12,
 		page:1,//当前页数
 		userInfo:'',//用户信息
-		cardList:{'list': [],},//号码列表
+		cardList:{'list':[]},//号码列表
 		searchValue:'',//输入框值
 		cardInfo:{
             iccid:'',
@@ -55,7 +52,7 @@ var vm=new Moon({
 				    col=window_w<=469 ? 2 : window_w<=719 ? 3 : 4;//列数
 				vm.set('pageSize',row*col);//号码数量
 
-				vm.callMethod('getCardList');
+				//vm.callMethod('getCardList');
 			},0)
 		},
 		getCardList:function(page,closeLoad){//获取首屏号卡数据
@@ -129,101 +126,24 @@ var vm=new Moon({
 	    	}
 	    },
 		phoneClick:function({phoneNum,cityName,faceMoney}){//点击号码生成订单
-			vm.AJAX('/tas/w/searchcard/getOrder',{
-				'userInfo':vm.get('userInfo')
-			},function(data){
-				if(data.data){
-					vm.set('orderInfo',data.data);
-					vm.callMethod('countDown');
-					vm.set('showOrderTips',true);
-					vm.set('showCardList',false);
-				}else{
-					let cardInfo = vm.get('cardInfo');
-					cardInfo.phone = phoneNum;
-					cardInfo.faceMoney = faceMoney;
-					vm.setStore('CARD_INFO',cardInfo);
+			let cardInfo = vm.get('cardInfo');
+			cardInfo.phone = phoneNum;
+			cardInfo.faceMoney = faceMoney;
+			vm.setStore('CARD_INFO',cardInfo);
 
-					vm.removeStore('CHANGE_PACKAGE_INFO');
+			vm.removeStore('CHANGE_PACKAGE_INFO');
 
-					Jsborya.pageJump({
-						url:cardInfo.belongType == 0 ? 'publicWhitePackage.html' : 'devotedWhitePackage.html',
-						stepCode:'1000',
-						depiction:"开白卡",
-						destroyed:false,
-						header:{
-		                    frontColor:'#ffffff',
-		                    backgroundColor:'#4b3887',
-		                }
-					});
-				}
+			Jsborya.pageJump({
+				url:cardInfo.belongType == 0 ? 'publicWhitePackage.html' : 'devotedWhitePackage.html',
+				stepCode:'1000',
+				depiction:"开白卡",
+				destroyed:false,
+				header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
 			});
 			
-		},
-		continueOrder:function(){//继续完成订单-按钮
-
-			vm.AJAX('/tas/w/searchcard/getOrder',{'userInfo':vm.userInfo},function(data){
-				if(data.data){
-					window.localStorage.setItem('ORDER_INFO',JSON.stringify(vm.get('orderInfo')));
-					
-					Jsborya.pageJump({
-						url:'',
-						stepCode:vm.orderInfo.orderStatusCode,
-						depiction:'开白卡',
-						data:vm.orderInfo
-					});
-				}else{
-					vm.backHome();
-				}
-			});
-		},
-		abandon:function(sysOrderId){//放弃订单-按钮
-			layer.open({
-				title:'提示',
-				content:'您要放弃未完成的订单的后续操作么？',
-				btn:['放弃','取消'],
-				yes:function(){
-					let json={
-			  			'params':{
-			  				'sysOrderId':sysOrderId,
-			  			},
-			  			'userInfo':vm.get('userInfo')
-			  		};
-					vm.AJAX('/tas/w/searchcard/orderCancel',json,function(data){
-						vm.callMethod('backHome');
-						layer.open({
-							title:'操作成功',
-							content:'订单已取消，若已支付，支付货款将退回至您的账户',
-							btn:['确定'],
-						});
-					});
-				}
-			});
-		},
-		countDown:function(){//倒计时
-	    	var time=parseInt(vm.get('orderInfo').validTime);
-	    	vm.set('orderInfo.validTime','00:00');
-	    	clearInterval(window.Timer);
-	    	var timeFormat=function(t){
-	    		var t_s=t%60,t_m=Math.floor(t/60);
-	    		t_s<=9&&(t_s='0'+t_s);
-	    		t_m<=9&&(t_m='0'+t_m);
-	    		return t_m+':'+t_s;
-	    	}
-	    	window.Timer=setInterval(function(){
-	    		time--;
-	    		if(!time){
-	    			vm.set('orderInfo.validTime','00:00');
-	    			clearInterval(window.Timer);
-	    			window.location.reload();
-	    		}else{
-	    			vm.set('orderInfo.validTime',timeFormat(time));
-	    		}
-	    	},1000);
-	    },
-		backHome:function(){//返回号码列表
-			vm.callMethod('getCardList');
-			vm.set('showCardList',true);
-			vm.set('showOrderTips',false);
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
