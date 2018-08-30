@@ -105,7 +105,7 @@ var vm=new Moon({
 							vm.set('off.load',false);
 							let status = data.data.status, info = {};
 
-							if(status == 2 || status == 5 || status == 6){//有进行中的订单
+							if(status == 2 || status == 3 || status == 5 || status == 6){//有进行中的订单
 								if(data.data.orderInfo)info=data.data.orderInfo;
 							}else{
 								if(data.data.otherInfo)info=data.data.otherInfo;								
