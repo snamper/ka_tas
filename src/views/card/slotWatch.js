@@ -277,7 +277,7 @@ var vm=new Moon({
 			//},2000);
 		},
 		orderCancel:function(){
-			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo').sysOrderId,true);
+			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo'),true);
 		},
 		setRightIcon(status){
 			let icon = 'wcard_red';

@@ -168,7 +168,7 @@ var vm=new Moon({
 						vm.set('off.load',false);
 						if(result.status==2){
 							vm.set('off.status',4);//无效卡
-						}else if(status==3){
+						}else if(result.status==3){
 							vm.set('off.status',5);//未插卡
 						}else{
 							alert('异常错误')
