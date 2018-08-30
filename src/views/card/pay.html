@@ -67,7 +67,7 @@
 				</li>
 			</ul>
 			<ul class="m-pay-choose" m-show="orderInfo.actualMoney != '0'">
-				<li m-on:click="shiftPayType('2')">
+				<li m-on:click="shiftPayType('2')" m-show="cardInfo.deviceType != 3"><!--SDK没有微信支付-->
 					<div class="lt u-icon-wechat"></div>
 					<div class="rt">
 						<div m-show="off.payType == 2"><span class="m-spin-load" m-show="off.load==1"></span></div>
