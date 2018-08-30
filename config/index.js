@@ -63,7 +63,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'assets',
-    assetsPublicPath: '/tasweb/',
+    assetsPublicPath: '/tasweb/2018083001/',
 
     /**
      * Source Maps
