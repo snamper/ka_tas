@@ -52,7 +52,7 @@ var vm=new Moon({
 				    col=window_w<=469 ? 2 : window_w<=719 ? 3 : 4;//列数
 				vm.set('pageSize',row*col);//号码数量
 
-				//vm.callMethod('getCardList');
+				vm.callMethod('getCardList');
 			},0)
 		},
 		getCardList:function(page,closeLoad){//获取首屏号卡数据
