@@ -159,7 +159,7 @@ var vm=new Moon({
 			let orderInfo=vm.get('orderInfo'),
 				todo=vm.callMethod('filterOrderStatus');
 
-            alert(`订单信息：${JSON.stringify(orderInfo)}`)
+            // alert(`订单信息：${JSON.stringify(orderInfo)}`)
 
             Jsborya.pageJump({
                 url:todo.url,
@@ -184,7 +184,7 @@ var vm=new Moon({
 
 					if(status==2){//开卡成功
 						vm.set("off.status",3);
-						vm.set("orderInfo.setPwd",data.data.setPwd);
+						vm.set("orderInfo.setPwd",'1');
 
 						if(!closeLoad){
 							window.Timer = setInterval(function(){
@@ -192,7 +192,7 @@ var vm=new Moon({
 							},1000*20);
 						}
 	
-						if(parseInt(data.data.setPwd))clearInterval(window.Timer);
+						// if(parseInt(data.data.setPwd))clearInterval(window.Timer);
 					}else if(status==3||status==4){
 						vm.set("off.status",6);
 						vm.set("orderInfo.orderDesc",data.data.desc);

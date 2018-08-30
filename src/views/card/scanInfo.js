@@ -54,7 +54,7 @@ var vm=new Moon({
 			let scanInfo=vm.getStore('SCAN_INFO');
 			if(scanInfo)vm.set('scanInfo',scanInfo);
 
-			alert('扫码后传输数据：'+JSON.stringify(scanInfo));
+			// alert('扫码后传输数据：'+JSON.stringify(scanInfo));
 		},
 	},
 	methods:{

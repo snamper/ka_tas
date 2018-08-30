@@ -8,7 +8,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:0,
+			load:true,
 			turn:0,//0,初始化页面;1,选择卡槽页面;4,无效卡页面;5,未插卡页面;
 			status:0//只有4,5的处理（0：初始状态；4：无效卡；5：未插卡）
 		},
