@@ -285,7 +285,8 @@ export default{
                     Jsborya.pageJump({
                       url:'',
                       stepCode:'808',
-                      depiction:''
+                      depiction:'',
+                      data:data.data,
                     });
                     break;
                 default:
