@@ -133,7 +133,7 @@ require('./base64.js');
 			if(!json.hasOwnProperty('destroyed'))json.destroyed=true;//默认是销毁当前视图
 
 			if(isYuanteliCard()){
-				//alert('pageJump'+JSON.stringify(json));
+				alert('pageJump'+JSON.stringify(json));
 				callHandler({
 					name:'pageJump',
 					data:json,

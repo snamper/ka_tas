@@ -47,6 +47,13 @@ var vm=new Moon({
 			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
+			Jsborya.pageJump({
+                      url:'',
+                      stepCode:'808',
+                      depiction:''
+                    });
+			return false;
+
 			Jsborya.getGuestInfo({
 				slot:'-2',
 				iccid:'',
