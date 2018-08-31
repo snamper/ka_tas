@@ -281,7 +281,7 @@ export default{
                 case 3000:
                     layerOpen('号码已不归属于您，现已将订单关闭，请尝试其他号码');
                     break;
-                case 2000:
+                case 2000://版本强制更新
                     Jsborya.pageJump({
                       url:'',
                       stepCode:'808',

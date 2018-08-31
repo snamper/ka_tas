@@ -84,7 +84,9 @@ var vm=new Moon({
 				if(data.data.dealType != 1){
 					vm.callMethod('begin');
 				}else vm.set('off.load',0);
-			},true);
+			},function(){
+				vm.set('off.load',false);
+			});
 		},
 		scanQRcode(){//处理扫码后的逻辑
 			Jsborya.callScanQRCode({
