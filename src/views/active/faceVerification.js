@@ -165,7 +165,7 @@ var vm=new Moon({
 
 					if(flag==1){
 						//预审通过
-						vm.callMethod('uploadMutipleData');
+						//vm.callMethod('uploadMutipleData');
 					}else if(flag==2){
 						vm.set('checkInfoDesc',data.data.desc);
 					}

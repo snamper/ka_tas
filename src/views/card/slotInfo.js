@@ -109,15 +109,9 @@ var vm=new Moon({
 
             }else if(orderStatusCode==='CARD_AUDIT'){
                 
-                if(bizType==7){//远盟成卡
-                	url='cardAudit.html';
-                	depiction='已审核';
-                	next='开卡';
-                }else{
-                	url='pay.html';
-                	depiction='已审核';
-                	next='支付';
-                }
+				url='pay.html';
+				depiction='已审核';
+				next='支付';
                 
                 
             }else if(orderStatusCode==='CREATE_SHEET'){
@@ -182,9 +176,13 @@ var vm=new Moon({
             });
 		},
 		intervalGetResult:function(closeLoad){
+			let url = '',orderInfo = vm.get('orderInfo');
+			if(orderInfo.bizType == 7){//远盟开成卡
+				url = '/tas/w/ymactive/querySubmitStatus';
+			}else url = '/tas/w/business/getResult';
 
 			//window.Timer=setInterval(function(){
-				vm.AJAX('/tas/w/business/getResult',{
+				vm.AJAX(url,{
 					userInfo:vm.get('userInfo'),
 					params:{
 						sysOrderId:vm.get('orderInfo').sysOrderId
@@ -205,7 +203,7 @@ var vm=new Moon({
 						// if(parseInt(data.data.setPwd))clearInterval(window.Timer);
 					}else if(status==3||status==4){
 						vm.set("off.status",6);
-						vm.set("orderInfo.orderDesc",data.data.desc);
+						vm.set("orderInfo.orderDesc",data.data.desc || data.data.reason);
 					}
 
 					if(status!=1){

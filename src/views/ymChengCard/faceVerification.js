@@ -125,13 +125,13 @@ var vm=new Moon({
 			}
 			vm.AJAX('/tas/w/ymactive/materialUpload ',json,function(data){
 				Jsborya.pageJump({
-					url:'cardAudit.html',
+					url:'cardActive.html',
 					stepCode:'999',
-					depiction:'订单审核',
+					depiction:'开卡受理',
 					header:{
-	                    frontColor:'#ffffff',
-	                    backgroundColor:'#4b3887',
-	                }
+                        frontColor:'#ffffff',
+                        backgroundColor:'#4b3887',
+                    }
 				});
 			});
 		},
@@ -165,7 +165,7 @@ var vm=new Moon({
 
 					if(flag==1){
 						//预审通过
-						vm.callMethod('uploadMutipleData');
+						//vm.callMethod('uploadMutipleData');
 					}else if(flag==2){
 						vm.set('checkInfoDesc',data.data.desc);
 					}
