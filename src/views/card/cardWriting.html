@@ -23,7 +23,7 @@
 				<div class="title">2.实名认证</div>
 			</li>
 			<li>
-				<div class="title">3.签署受理单</div>
+				<div class="title">3.支付</div>
 			</li>
 			<li class="active">
 				<div class="title">4.提交申请</div>
@@ -39,61 +39,67 @@
 			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
 			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
-		<ul class="m-order-info clr grey">
-			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
-			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
-			<li>
+
+		<div class="m-all-tag"><i class="u-icon-tag"></i><span>号码套餐</span></div>
+		<div class="g-col-2">
+			<div class="row line">
 				<span class="left">所选号码:</span>
-				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
-				<span>（{{orderInfo.cityName}}）</span>
-			</li>
-			<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
-		</ul>
-		<section class="m-all-tag" m-if="cardInfo.deviceType!=3">
-			<div class="tag purple"><span>SIM卡信息</span></div>
-			<ul class="m-order-info clr grey">
-				<li>
-					<span class="left">开卡卡号:</span>
-					<span class="black">{{ orderInfo.iccid }}</span>
-				</li>
-				<li class="border">
-					<span class="left">卡槽卡号:</span>
-					<span class="black">{{ deviceIccid }}</span>
-				</li>
-				<li>
-					<span class="left">IMSI:</span>
-					<span class="green" m-show="imsi">IMSI获取成功</span>
-					<span class="yellow" m-show="!imsi">
-						<span m-show="error.code!=1">--</span>
-						<span m-show="error.code==1">IMSI获取中···</span>
-					</span>
-				</li>
-			</ul>
-		</section>
+				<span class="right">{{ phoneFormat(orderInfo.phoneNum) }}<span class="grey f-fts-12">（{{orderInfo.cityName}}）</span></span>
+			</div>
+			<div class="row">
+				<span class="left">所选套餐:</span>
+				<span class="right grey">{{ orderInfo.packageName }}</span>
+			</div>
+		</div>
 		
+		<div class="m-all-tag"><i class="u-icon-tag"></i><span>SIM卡信息</span></div>
+		<section m-if="cardInfo.deviceType!=3">
+			<div class="g-col-2" m-if="cardInfo.deviceType!=3">
+				<div class="row line">
+					<span class="left">开卡卡号:</span>
+					<span class="right">{{ orderInfo.iccid }}</span>
+				</div>
+				<div class="row line">
+					<span class="left">卡槽卡号:</span>
+					<span class="right">{{ deviceIccid }}</span>
+				</div>
+				<div class="row">
+					<span class="left">IMSI:</span>
+					<span class="right">
+						<span class="green" m-show="imsi">IMSI获取成功</span>
+						<span class="yellow" m-show="!imsi">
+							<span m-show="error.code!=1">--</span>
+							<span m-show="error.code==1">IMSI获取中···</span>
+						</span>
+					</span>
+				</div>
+			</div>
+		</section>
+
 		<section m-if="cardInfo.deviceType==3">
-			<div class="m-all-tag">
-				<div class="tag purple"><span>SIM卡信息</span></div>
-				<ul class="m-order-info clr grey">
-					<li>
-						<span class="left">手表状态:</span>
+			<div class="g-col-2" m-if="cardInfo.deviceType==3">
+				<div class="row line">
+					<span class="left">手表状态:</span>
+					<span class="right">
 						<span class="green">{{ deviceName }}</span>
 						<span class="green" m-show="error.code!=9">已连接</span>
 						<span class="red" m-show="error.code==9">手机未与手表连接</span>
-					</li>
-					<li class="border">
-						<span class="left">SIM卡号:</span>
-						<span class="black">{{ deviceIccid }}</span>
-					</li>
-					<li>
-						<span class="left">码号信息:</span>
+					</span>
+				</div>
+				<div class="row line">
+					<span class="left">SIM卡号:</span>
+					<span class="right">{{ deviceIccid }}</span>
+				</div>
+				<div class="row">
+					<span class="left">码号信息:</span>
+					<span class="right">
 						<span class="green" m-show="imsi">码号信息获取成功</span>
 						<span class="yellow" m-show="!imsi">
 							<span m-show="error.code!=1">--</span>
 							<span m-show="error.code==1">码号信息获取中···</span>
 						</span>
-					</li>
-				</ul>
+					</span>
+				</div>
 			</div>
 			<div class="m-tips red" m-show="error.code==9">提示：当前手机未与手表连接，请点击刷新手表状态。如未连接成功，请返回APP进行设备管理，待连接成功，可继续开卡操作。</div>
 			<div class="m-btn-group" m-show="error.code==9">

@@ -309,7 +309,7 @@ var vm=new Moon({
 				
 				vm.setStore('ORDER_INFO',orderInfo);
 
-				vm.AJAX('/tas/w/business/checkInfo',json,function(data){
+				vm.AJAX('/tas/w/ymactive/checkInfo',json,function(data){
 					
 					vm.setStore('USER_MUTIPLE_DATA',json.params);
 

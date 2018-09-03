@@ -13,7 +13,7 @@ var vm=new Moon({
 		isPullLoad:true,//上拉加载开关
 		isHaveMore:0,//是否还有更多号码
 		firstLoad:true,
-		pageSize:12,
+		pageSize:24,
 		page:1,//当前页数
 		userInfo:'',//用户信息
 		cardList:{'list':[]},//号码列表
@@ -31,7 +31,21 @@ var vm=new Moon({
 	hooks:{
         init:function(){
         	vm=this;
+        	Jsborya.setHeader({
+				title:'选择号码',
+				left:{
+					icon:'back_white',
+					value:'返回',
+					callback:''
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
         	Jsborya.webviewLoading({isLoad:false});//关闭app加载层
+        	
 			
 			let cardInfo = vm.getStore('CARD_INFO'),
 				userInfo = vm.getStore("USER_INFO");
@@ -48,12 +62,12 @@ var vm=new Moon({
 				let window_w=document.documentElement.clientWidth||window.innerWidth||document.body.clientWidth;
 				//设置页面展现
 				vm.set('boxHeight',`height:${window_h-58}px`);
-				var row=Math.ceil((window_h-58)/50),//行数
+				var row=Math.ceil((window_h-58)/45),//行数
 				    col=window_w<=469 ? 2 : window_w<=719 ? 3 : 4;//列数
 				vm.set('pageSize',row*col);//号码数量
 
 				vm.callMethod('getCardList');
-			},0)
+			},300)
 		},
 		getCardList:function(page,closeLoad){//获取首屏号卡数据
 			var vm=this;

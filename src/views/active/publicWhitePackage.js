@@ -92,6 +92,19 @@ var vm=new Moon({
 	hooks:{
         init:function(){
         	vm=this;
+        	Jsborya.setHeader({
+				title:'选择套餐',
+				left:{
+					icon:'back_white',
+					value:'返回',
+					callback:''
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
 	        Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 	        vm.callMethod('renderList');
 
@@ -295,7 +308,7 @@ var vm=new Moon({
 			})
 		},
 		selectPre:function(e){//预存切换
-			vm.set('off.pre',e.target.title);
+			vm.set('off.pre',e.title);
 			vm.callMethod('siblingC',[e]);
 			vm.callMethod('mathDeduction');
 		},

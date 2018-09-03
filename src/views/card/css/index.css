@@ -1,8 +1,10 @@
 @charset "utf-8";
 .u-icon-search{background-image: url(../../../assets/img/icon_search.png);}
-.u-icon-clear{background-image: url(../../../assets/img/icon_search_lable_clear.png);}
 .u-icon-rcmd{background-image: url(../../../assets/img/recommend.png);}
-.u-icon-devoted{background-image: url(../../../assets/img/icon_monopoly_number.png);}
+.u-icon-cancel{background-image: url(../../../assets/img/cancel.png);}
+.u-icon-pretty{background-image: url(../../../assets/img/icon_beautiful.png);}
+.u-icon-ordinary{background-image: url(../../../assets/img/icon_common.png);}
+/*.u-icon-devoted{background-image: url(../../../assets/img/icon_monopoly_number.png);}*/
 
 body{
 	padding:0 !important;

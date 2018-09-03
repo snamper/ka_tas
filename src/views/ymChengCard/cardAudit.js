@@ -1,5 +1,5 @@
 require('../../public.js');
-require('./css/cardAudit.css');
+require('../card/css/cardAudit.css');
 Jsborya.ready(function(){
 
 
@@ -7,7 +7,8 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			step:1,//1,订单审核中;2,审核成功;3,审核失败
+			step:1,//1,获取订单审核结果;2,提交开卡申请;
+			errorStatus:0,//0,无失败状态;1,审核失败;2,提交开卡申请失败;
 			load:1
 		},
 		cardInfo:{//开卡信息
@@ -79,8 +80,7 @@ var vm=new Moon({
 						vm.orderCancel(userInfo,orderInfo);
 					});
 					if(orderInfo.orderStatusCode==='CARD_AUDIT'){//已审核通过
-						vm.set('off.step',2);
-						vm.set('off.load',0);
+						vm.callMethod('submitOrder');
 					}else{
 						window.Timer=setInterval(function(){
 							vm.callMethod('getAuditInfo');
@@ -100,30 +100,20 @@ var vm=new Moon({
 					sysOrderId:vm.get('orderInfo').sysOrderId
 				}
 			};
-			vm.AJAX('/tas/w/business/payLaterStatus',json,function(data){
+			vm.AJAX('/tas/w/ymactive/queryAuditStatus',json,function(data){
 				var status=data.data.status;
 				// 1 等待审核结果
-				// 2 审核失败
-				// 3 审核成功，待支付 
-				// 4 事后审核，待支付 
-				// 5 等待支付结果
-				// 6 支付失败
-				// 7 支付成功
-				// 8 订单关闭
+				// 2 审核成功
+				// 3 审核失败
 				if(status!=1){
 					clearInterval(window.Timer);
-					vm.set('off.load',false);
 				}
 
-				if(status==3||status==4){
-					vm.set('off.step',2);
-				}else if(status==1){
-					//---
-				}else{
-					vm.set('off.step',3);
-
-					// let title='';
-					// status==8 ? title='订单已关闭' : status==2 ? title='非常抱歉！审核未通过' : '未知错误';
+				if(status==2){
+					vm.callMethod('submitOrder');
+				}else if(status==3){
+					vm.set('off.load',0);
+					vm.set('off.errorStatus',1);
 					vm.set('errorMsg','非常抱歉！审核未通过');
 
 					let text='<p><span>原因：</span>'+data.data.reason+'</p>';
@@ -132,81 +122,38 @@ var vm=new Moon({
 				}
 			},true);
 		},
-		jumpDeal:function(){
-			let step=vm.get('off').step, belongType = vm.get('orderInfo').belongType;
-			if(step==2){
-
-				if(belongType==1){//专营号码,不需要支付
-					vm.callMethod('submitSheet');
-				}else{
-					Jsborya.pageJump({
-						url:'pay.html',
-						stepCode:'999',
-						depiction:'支付',
-						header:{
-		                    frontColor:'#ffffff',
-		                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
-		                }
-					});
-				}
-				
-			}else if(step==3){
-				vm.jumpToHome();
-			}
-		},
-		createSheet:function(){//生成受理单
-			var orderInfo=vm.get('orderInfo');
-
-			vm.AJAX('/tas/w/business/pay',{
-				userInfo:vm.get('userInfo'),
-				params:{
-					sysOrderId:orderInfo.sysOrderId,
-					payType:1
+		submitOrder:function(){//开卡申请
+			vm.set('off.step',2);
+			vm.set('off.load',1);
+			vm.AJAX('/tas/w/ymactive/orderSubmit',{
+				'userInfo':vm.get("userInfo"),
+				'params':{
+					sysOrderId:vm.get("orderInfo").sysOrderId,
 				}
 			},function(data){
-
-				vm.AJAX('/tas/w/business/acceptance',{//获取受理单图片
-					userInfo:vm.get('userInfo'),
-					params:{
-						sysOrderId:orderInfo.sysOrderId,
-					}
-				},function(data){
-
-					var imgArray=data.data.images;
-					for(let i =0;i<imgArray.length;i++){
-						imgArray[i].imageName=imgArray[i].imageName.replace(/\\/g,"/");
-					}
-
-					Object.assign(orderInfo,{
-						images:imgArray,
-					});
-					
-					vm.setStore('ORDER_INFO',orderInfo);
-
-					Jsborya.pageJump({
-						url:'createSheet.html',
-						stepCode:'999',
-						depiction:'受理单',
-						header:{
-	                        frontColor:'#ffffff',
-	                        backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
-	                    }
-					});
-
+				Jsborya.pageJump({
+					url:'cardActive.html',
+					stepCode:'999',
+					depiction:'开卡受理',
+					header:{
+                        frontColor:'#ffffff',
+                        backgroundColor:'#4b3887',
+                    }
 				});
-
-			});	
-		},
-		submitSheet:function(){
-			Jsborya.pageJump({
-				url:'cardWriting.html',
-				stepCode:'999',
-				depiction:'写卡',
-				header:{
-                    frontColor:'#ffffff',
-                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
-                }
+			},true,function(){
+				vm.set('off.errorStatus',2);
 			});
+		},
+		jumpBegin(){
+			Jsborya.pageJump({
+                url:'../card/scanInfo.html',
+                stepCode:'999',
+                depiction:'卡信息',
+                header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:'#4b3887',
+                }
+            });
 		},
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);

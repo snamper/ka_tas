@@ -57,7 +57,7 @@ var vm=new Moon({
 				title:'活体识别',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:'headerLeftClick'
 				},
 				right:{

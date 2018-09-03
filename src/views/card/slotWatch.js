@@ -49,7 +49,7 @@ var vm=new Moon({
 				title:'读取卡信息',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:''
 				},
 				right:{
@@ -287,7 +287,7 @@ var vm=new Moon({
 				title:'读取卡信息',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:''
 				},
 				right:{

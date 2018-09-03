@@ -74,7 +74,7 @@
 				<div class="title">2.实名认证</div>
 			</li>
 			<li>
-				<div class="title">3.签署受理单</div>
+				<div class="title">3.支付</div>
 			</li>
 			<li>
 				<div class="title">4.提交申请</div>
@@ -90,17 +90,6 @@
 			<li><div class="sub-line"><b></b><span></span></div></li>
 			<li class="active"><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
-		<ul class="m-order-info clr grey" m-show="cardInfo.deviceType!=3">
-			<li><span class="left">订单号码:</span>{{ orderInfo.sysOrderId }}</li>
-			<li class="border"><span class="left">生成时间:</span>{{ getDateTime(orderInfo.createTime)[6] }}</li>
-			<li class="o-success">
-				<span class="left">所选号码:</span>
-				<b class="purple f-fts-18">{{ phoneFormat(orderInfo.phoneNum) }}<i m-show="orderInfo.numberLevel==1" class="u-icon-pretty"></i></b>
-				<span>（{{orderInfo.cityName}}）</span>
-				<!-- <span class="right green" m-show="off.load==2"><img src="../../assets/img/icon_suc_a.png">开卡成功</span> -->
-			</li>
-			<li><span class="left">所选套餐:</span>{{ orderInfo.packageName }}</li>
-		</ul>
 		<div class="order-tips" m-show="off.load!=2">
 			<div>
 				<img class="success" m-show="off.load==1" src="../../assets/img/icon_suc_a.png">

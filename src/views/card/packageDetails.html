@@ -19,10 +19,9 @@ body{
 </head>
 <body>
 <div id="app" m-mask>
-	<section class="m-all-tag" style="padding-bottom: 0.1rem;">
-		<div class="tag"><b class="purple">{{ packageInfo.title }}</b></div>
+	<section>
+		<div class="m-all-tag"><i class="u-icon-tag"></i><span>套餐标准</span></div>
 		<div class="details f-scroll">
-			<div class="details-header">套餐标准</div>
 			<table>
 				<tbody>
 					<tr>
@@ -76,8 +75,9 @@ body{
 			<div class="details-content" m-html="packageInfo.feeDescribe"></div>
 		</div>
 	</section>
-	<section class="m-all-tag" m-show="packageInfo.selPackage.length">
-		<div class="tag">可选包</div>
+	
+	<section m-show="packageInfo.selPackage.length">
+		<div class="m-all-tag"><i class="u-icon-tag"></i><span>可选包</span></div>
 		<ul class="m-col-double clr" id="selPackageUl">
 			<li
 				m-for="todo,index in packageInfo.selPackage"
@@ -86,8 +86,8 @@ body{
 				m-on:click="shiftSelPackage">{{ todo.title }}</li>
 		</ul>
 	</section>
-	<section class="m-all-tag">
-		<div class="tag">预存话费</div>
+	<section>
+		<div class="m-all-tag"><i class="u-icon-tag"></i><span>预存话费</span></div>
 		<ul class="m-col-double clr">
 			<li
 				m-for="todo,index in packageInfo.prestoreMoneyList"
@@ -96,6 +96,7 @@ body{
 				m-on:click="shiftPrestore">{{ mathCentToYuan(todo.prestoreMoney) }}元</li>
 		</ul>
 	</section>
+	
 	<div m-on:click="makeSure" class="btn btny">确定</div>
 </div>
 <script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>

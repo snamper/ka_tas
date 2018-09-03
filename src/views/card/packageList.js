@@ -93,7 +93,7 @@ var vm=new Moon({
 				title:title,
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:''
 				},
 				right:{

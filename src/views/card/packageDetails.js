@@ -61,7 +61,7 @@ var vm=new Moon({
 				title:'套餐详情',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:''
 				},
 				right:{

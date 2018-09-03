@@ -54,7 +54,7 @@ var vm=new Moon({
 				title:'订单审核',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:'headerLeftClick'
 				},
 				right:{
@@ -117,14 +117,11 @@ var vm=new Moon({
 
 				if(status==3||status==4){
 					vm.set('off.step',2);
-					vm.callMethod('jumpToPay');
+					vm.callMethod('jumpDeal');
 				}else if(status==1){
 					//---
 				}else{
 					vm.set('off.step',3);
-
-					// let title='';
-					// status==8 ? title='订单已关闭' : status==2 ? title='非常抱歉！审核未通过' : '未知错误';
 					vm.set('errorMsg','非常抱歉！审核未通过');
 
 					let text='<p><span>原因：</span>'+data.data.reason+'</p>';
@@ -133,7 +130,7 @@ var vm=new Moon({
 				}
 			},true);
 		},
-		jumpToPay:function(){
+		jumpDeal:function(){
 			let step=vm.get('off').step;
 			if(step==2){
 

@@ -2,7 +2,8 @@
 /*.u-icon-shift{background-image:url(../../../assets/img/shift.png);}*/
 
 .m-recommend-ul{
-    padding-bottom: 0.1rem;
+    padding: 0.1rem 0;
+    background-color: #fff;
 }
 .m-recommend-ul>li{
     width: 22%;
@@ -63,6 +64,7 @@
 }
 
 #packageList{
+    background-color: #fff;
     position: relative;
     max-height: 3rem;
     min-height: 0.5rem;

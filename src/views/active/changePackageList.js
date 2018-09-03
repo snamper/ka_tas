@@ -66,6 +66,19 @@ var vm=new Moon({
     hooks:{
         init:function(){
             vm=this;
+            Jsborya.setHeader({
+                title:'变更套餐',
+                left:{
+                    icon:'back_white',
+                    value:'返回',
+                    callback:''
+                },
+                right:{
+                    icon:'',
+                    value:'',
+                    callback:''
+                }
+            });
             Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
             let userInfo = vm.getStore('USER_INFO'),

@@ -53,7 +53,7 @@ var vm=new Moon({
 				title:'支付',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:'headerLeftClick'
 				},
 				right:{
@@ -131,7 +131,7 @@ var vm=new Moon({
 							vm.set('off.payStatus',2);
 						}else if(status==7){
 							// vm.set('off.payStatus',1);
-							vm.callMethod('createSheet');
+							vm.callMethod('submitSheet');
 						}else if(status==8){
 							vm.set('off.payStatus',3);
 						}
@@ -243,6 +243,17 @@ var vm=new Moon({
 			},true,function(){
 				vm.set('off.load',0);
 				vm.set('off.submit',1);
+			});
+		},
+		submitSheet:function(){
+			Jsborya.pageJump({
+				url:'cardWriting.html',
+				stepCode:'999',
+				depiction:'写卡',
+				header:{
+                    frontColor:'#ffffff',
+                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
+                }
 			});
 		},
 		shiftPayType:function(payType){

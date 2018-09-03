@@ -46,7 +46,7 @@ var vm=new Moon({
 				title:'确认受理单',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:'headerLeftClick'
 				},
 				right:{

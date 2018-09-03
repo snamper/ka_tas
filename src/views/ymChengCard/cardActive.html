@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>开空卡</title>
+<title>开卡</title>
 <style type="text/css">
 [m-mask]{
 	opacity: 0
@@ -68,33 +68,13 @@
 </head>
 <body>
 	<div id="app" m-mask>
-		<ul class="m-time-axis clr">
-			<li>
-				<div class="title">1.号码详情</div>
-			</li>
-			<li>
-				<div class="title">2.实名认证</div>
-			</li>
-			<li>
-				<div class="title">3.支付</div>
-			</li>
-			<li class="active">
-				<div class="title">4.开卡受理</div>
-			</li>
-		</ul>
-		<ol class="m-time-axis-sub clr">
-			<li><div class="sub-line"><b></b><span></span></div></li>
-			<li><div class="sub-line"><b></b><span></span></div></li>
-			<li><div class="sub-line"><b></b><span></span></div></li>
-			<li class="active"><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
-		</ol>
-		<div class="order-tips" m-show="off.load!=2">
+		<div class="order-tips" m-show="off.status!=2">
 			<div>
-				<img class="success" m-show="off.load==1" src="../../assets/img/icon_suc_a.png">
-				<img class="error" m-show="off.load==3" src="../../assets/img/icon_failure.png">
+				<img class="success" m-show="off.status==1" src="../../assets/img/icon_suc_a.png">
+				<img class="error" m-show="off.status==3" src="../../assets/img/icon_failure.png">
 			</div>
 			
-			<section m-show="off.load==1">
+			<section m-show="off.status==1">
 				<div>
 					<div class="dp">
 						<b class="green">开卡申请已受理，请等待开卡结果</b>
@@ -107,13 +87,10 @@
 					</dl>
 				</div>
 			</section>
-			<section m-show="off.load==3">
+			<section m-show="off.status==3">
 				<div>
 					<div class="dp">
-						<b class="red">
-							<span m-show="orderStatus==3">开卡失败</span>
-							<span m-show="orderStatus==4">订单已关闭</span>
-						</b>
+						<b class="red">开卡失败</b>
 					</div>
 					<dl class="tips f-tal grey">
 						<dt>温馨提示:</dt>
@@ -123,9 +100,9 @@
 				</div>
 			</section>
 			
-			<div class="btn btny" m-on:click="jumpToHome" m-show="off.load!=2">确定</div>
+			<div class="btn btny" m-on:click="jumpToHome">确定</div>
 		</div>
-		<div class="m-success-set" m-show="off.load==2">
+		<div class="m-success-set" m-show="off.status==2">
 			<div class="success">
 				<img src="../../assets/img/icon_suc_a.png">
 				<h3 class="green">

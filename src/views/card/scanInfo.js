@@ -29,6 +29,7 @@ var vm=new Moon({
             belongType:"0",
             sourceOrder:""
         },
+        userInfo:{}
 	},
 	hooks:{
 		init:function(){
@@ -51,8 +52,10 @@ var vm=new Moon({
 		},
 		mounted:function(){
 
-			let scanInfo=vm.getStore('SCAN_INFO');
+			let scanInfo = vm.getStore('SCAN_INFO'),
+				userInfo = vm.getStore("USER_INFO");
 			if(scanInfo)vm.set('scanInfo',scanInfo);
+			if(userInfo)vm.set('userInfo',userInfo);
 
 			// alert('扫码后传输数据：'+JSON.stringify(scanInfo));
 		},
@@ -67,6 +70,9 @@ var vm=new Moon({
 			}else if(type == 9){
 				url = '../active/whiteCard.html';
 				bizType = '5';
+			}else if(type == 10){
+				url = '';
+				bizType = '7';
 			}
 
 			let scanInfo = vm.get('scanInfo');
@@ -82,7 +88,10 @@ var vm=new Moon({
 			});
 			vm.removeStore('CHANGE_PACKAGE_INFO');
 			vm.removeStore('ORDER_INFO');
-			Jsborya.pageJump({
+
+			if(type == 10){//开远盟成卡
+				vm.callMethod('ymChengCardOrderCreate');
+			}else Jsborya.pageJump({
                 url:url,
                 stepCode:'999',
                 depiction:'开卡',
@@ -92,6 +101,25 @@ var vm=new Moon({
                     backgroundColor:'#4b3887',
                 }
             });
+			
+		},
+		ymChengCardOrderCreate(){//远盟开成卡生成订单
+			vm.AJAX('/tas/w/ymactive/generateOrder',{
+	  			params:'',
+	  			userInfo:vm.get('userInfo')
+	  		},function(data){
+				vm.setStore('ORDER_INFO',data.data);
+
+                Jsborya.pageJump({
+                    url:'../ymChengCard/certification.html',
+                    stepCode:'999',
+                    depiction:'实名认证',
+                    header:{
+                        frontColor:'#ffffff',
+                        backgroundColor:'#4b3887',
+                    }
+                });
+			});
 		},
 		jumpToLogin:function(){
 			Jsborya.pageJump({

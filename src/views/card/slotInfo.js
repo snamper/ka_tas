@@ -44,7 +44,7 @@ var vm=new Moon({
 				title:'读取卡信息',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:''
 				},
 				right:{
@@ -108,10 +108,18 @@ var vm=new Moon({
                 }
 
             }else if(orderStatusCode==='CARD_AUDIT'){
-                url='pay.html';
                 
-                depiction='已审核';
-                next='支付';
+                if(bizType==7){//远盟成卡
+                	url='cardAudit.html';
+                	depiction='已审核';
+                	next='开卡';
+                }else{
+                	url='pay.html';
+                	depiction='已审核';
+                	next='支付';
+                }
+                
+                
             }else if(orderStatusCode==='CREATE_SHEET'){
                 url='createSheet.html';
                 depiction='已生成受理单';
@@ -150,8 +158,10 @@ var vm=new Moon({
                 next='活体识别';
             }
 
-            if(bizType != 6){
+            if(bizType == 4 || bizType == 5){
             	url = '../active/' + url;
+            }else if(bizType == 7){
+            	url = '../ymChengCard/' + url;
             }
             return {url:url,depiction:depiction,next:next};
 		},

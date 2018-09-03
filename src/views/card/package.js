@@ -106,9 +106,9 @@ var vm=new Moon({
 	methods:{
 		setPage:function(){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-			let topH=232 + 20 + 10;
+			let topH=247 + 78 - 41;
 			if(vm.get('selectPackage').packageCode){
-				topH=343 + 20 + 10;
+				topH=247 + 157;
 			}
 			document.getElementById("packageList").style.maxHeight=window_h-topH+'px';
 		},
@@ -305,11 +305,11 @@ var vm=new Moon({
 				vm.set('off.loadPackage',false);
 			});
 		},
-		jumpToPackageDetails:function(code){
+		jumpToPackageDetails:function(packageInfo){
 			Jsborya.pageJump({
-				url:'packageDetails.html?code='+code+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
+				url:'packageDetails.html?code='+packageInfo.code+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
 				stepCode:'999',
-				depiction:'套餐详情',
+				depiction:packageInfo.title,
 				destroyed:false,
 				header:{
                     frontColor:'#ffffff',

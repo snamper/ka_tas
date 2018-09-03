@@ -11,29 +11,7 @@ body{
 }
 
 .g-col-2{
-    background-color: #fff;
     margin-bottom: 0.2rem;
-}
-.g-col-2>.line{
-    border-bottom: 1px solid #eee;
-}
-.g-col-2>.row{
-    display: flex;
-    display: -webkit-flex;
-    margin-left: 0.1rem;
-    padding:0.1rem 0;
-}
-.g-col-2>.row>span{
-    
-}
-.g-col-2>.row>.left{
-    color: #515151;
-    width: 0.7rem;
-}
-.g-col-2>.row>.right{
-    text-align: right;
-    padding-right: 0.1rem;
-    flex: 1;
 }
 
 .m-tips{

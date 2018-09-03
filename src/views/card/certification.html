@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script> -->
 <title>上传资料</title>
 <style type="text/css">
 [m-mask]{
@@ -25,7 +25,7 @@
 				<div class="title">2.实名认证</div>
 			</li>
 			<li>
-				<div class="title">3.签署受理单</div>
+				<div class="title">3.支付</div>
 			</li>
 			<li>
 				<div class="title">4.提交申请</div>
@@ -42,10 +42,9 @@
 			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
 		</ol>
 
-		<section class="m-all-tag clr">
-			<div class="tag">
-				<i class="u-icon-tag"></i>
-				<span>请上传开卡人的有效身份证照片</span>
+		<section>
+			<div class="m-all-tag">
+				<i class="u-icon-tag"></i><span>请上传开卡人的有效二代身份证照片</span>
 			</div>
 			<div class="m-takePhoto">
 				<div class="box" id="photo-front" m-on:click="takePhotos(3)">
@@ -63,10 +62,10 @@
 			</div>
 		</section>
 
-		<section class="m-all-tag clr">
-			<div class="tag" style="margin-bottom:0">
-				<i class="u-icon-tag"></i>
-				<span>开卡人证件信息<span class="f-s-10 grey"><br>（请确保以下信息与身份证信息一致，如有偏差请手动修改）</span></span>
+		<section>
+			<div class="m-all-tag">
+				<i class="u-icon-tag"></i><span>开卡人证件信息</span>
+				<p class="f-s-10 grey">（请确保以下信息与身份证信息一致，如有偏差请手动修改）</p>
 			</div>
 			<ul class="m-certificate-info o-input">
 				<li class="clr"><span class="fl">姓<b class="space3"></b>名:</span><div><input maxlength="12" type="text" m-model="idCardInfo.name"></div></li>
@@ -75,6 +74,7 @@
 				<li class="clr"><span class="fl">证件有效期:</span><div><input maxlength="24" type="text" m-model="idCardInfo.period"></div></li>
 			</ul>
 		</section>
+
 		<section m-show="cardInfo.deviceType==3">
 			<div class="m-all-tag">
 				<div class="tag">
@@ -112,7 +112,6 @@
 		</section>
 
 		<section style="padding: 0.1rem;" id="handle-box">
-			<!-- <div class="red o-tips2">本人证实上述资料属实，并已阅读及同意本受理单内容和相关协议。</div> -->
 			<div class="m-form-checkbox">
 				<div>
 					<span m-on:click="agree" m-literal:class="{active:off.agree,checkbox:true,}">
@@ -126,13 +125,13 @@
 					</span>
 				</div>
 			</div>
-			<div class="m-sign clr">
+			<!-- <div class="m-sign clr">
 				<div class="fl grey">注：点击右侧签名框添加/修改手签名照片</div>
 				<div id="signatureImg" class="fr" m-on:click="doSignature(1)"></div>
-			</div>
+			</div> -->
 		</section>
 
-		<section id="signatureBox" m-literal:class="{active:off.signature}">
+		<!-- <section id="signatureBox" m-literal:class="{active:off.signature}">
 			<div class="mask" m-on:touchmove.prevent m-on:click="doSignature(0)"></div>
 			<div class="inner">
 				<div class="title clr">
@@ -146,7 +145,7 @@
 					<a href="javascript:void(0)" m-on:click="doSignature(0)">关闭</a>
 				</div>
 			</div>
-		</section>
+		</section> -->
 
 		<div m-on:click="jump" m-literal:class="{btny:off.isJump,btn:true,btnDefault:true}">下一步</div>
 	</div>

@@ -170,6 +170,9 @@ textarea {
 .f-tal{
     text-align: left !important;
 }
+.f-tar{
+    text-align: right;
+}
 .f-fts-12{
     font-size: 0.12rem;
 }
@@ -185,10 +188,7 @@ textarea {
     background-color: rgba(0,0,0,0.5);
 }
 /*icon*/
-.u-icon-pretty{background-image: url(../img/icon_beautiful.png);}
-.u-icon-ordinary{background-image: url(../img/icon_common.png);}
 .u-icon-tag{background-image: url(../img/shiming_title_icon.png);}
-.u-icon-cancel{background-image: url(../img/cancel.png);}
 /*layer-loading*/
 .m-loading-ka{
     width: 0.5rem;
@@ -284,71 +284,49 @@ textarea {
 }
 
 .m-all-tag{
-    background-color: #fff;
-    margin-bottom: 0.15rem;
-    padding-bottom: 2px;
-}
-.m-all-tag>.tag{
-    margin-left: 0.2rem;
-    margin-bottom: 0.1rem;
-    padding:8px 0 6px 0;
-    padding-right: 0.1rem;
-    border-bottom: 1px solid #EEEFF2;
+    padding:7px 0 7px 20px;
     position: relative;
 }
-.m-all-tag>.tag>.u-icon-tag{
+.m-all-tag>.u-icon-tag{
     position: absolute;
     display: inline-block;
     width: 0.15rem;
     height: 0.15rem;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 0.13rem;
-    top: 9px;
-    left: -0.17rem;
+    background-size: 0.1rem;
+    top: 7px;
+    left: 3px;
 }
-.m-order-info{
+
+.g-col-2{
     background-color: #fff;
-    padding-top: 5px;
-    padding-bottom: 2px;
 }
-.m-order-info>li{
-    margin:5px 0.1rem;
+.g-col-2>.line{
+    border-bottom: 1px solid #eee;
 }
-.m-order-info>.double-border{
-    margin:0 0.1rem;
-    border-top: 2px solid #EEEFF2;
-    height: 6px;
-    border-bottom:1px solid #EEEFF2;
+.g-col-2>.row{
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+
+    margin-left: 0.1rem;
+    padding:0.1rem 0;
 }
-.m-order-info .font-big{
-    font-size: 0.16rem;
+.g-col-2>.row>span{
+    
 }
-.m-order-info .u-icon-pretty{
-    padding:0.1rem 0.12rem;
-    background-size: 0.2rem;
-    background-position: center;
-    background-repeat: no-repeat;
+.g-col-2>.row>.left{
+    color: #515151;
+    width: 0.7rem;
 }
-.m-order-info>li>.left{
-    margin-right: 5px;
-    font-size: 0.12rem;
+.g-col-2>.row>.right{
+    padding-right: 0.1rem;
+    flex: 1;
+    -webkit-flex:1;
 }
-.m-order-info>li>.right{
-    text-align: right;
-}
-.m-order-info>.border{
-     border-bottom:1px solid #EEEFF2;
-     padding-bottom: 8px;
-}
-.m-order-info>li>.f-btn{
-    color: #656565;
-    border:1px solid #929293;
-    border-radius: 2px;
-    font-size: 0.12rem;
-    padding: 2px 5px;
-    margin-left:0.1rem;
-}
+
 .oldPrice{
     text-decoration:line-through;
     color: #717171;

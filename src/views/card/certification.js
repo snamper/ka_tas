@@ -56,7 +56,7 @@ var vm=new Moon({
 	    	a:'',//正面
 	    	b:'',//反面
 	    	c:'--',//手持
-	    	d:''//手签名
+	    	d:'--'//手签名
 	    },
 	    password1:'',
 		password2:'',
@@ -69,7 +69,7 @@ var vm=new Moon({
 				title:'实名认证',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:'headerLeftClick'
 				},
 				right:{
@@ -326,10 +326,12 @@ var vm=new Moon({
 			}else if(password1!=password2){
 				callLayer('两次输入密码不一致');
                 return false;
-			}else if(!imgName.d){
-				callLayer('请添加手签名照片');
-                return false;
-			}else if(!vm.get('off').agree){
+			}
+			// else if(!imgName.d){
+			// 	callLayer('请添加手签名照片');
+   //              return false;
+			// }
+			else if(!vm.get('off').agree){
 				callLayer('请先同意入网服务协议');
                 return false;
 			}else{
@@ -396,7 +398,7 @@ var vm=new Moon({
 				this.set('off.agree',false);
 			}else{
 				this.set('off.agree',true);
-				this.callMethod("doSignature",[1]);
+				//this.callMethod("doSignature",[1]);
 			}
 			this.callMethod("checkIsJump");
 		},

@@ -11,35 +11,10 @@
 [m-mask]{
 	opacity: 0
 }
-
 </style>
 </head>
 <body style="padding-bottom: 0.3rem;">
 	<div id="app" m-mask>
-		<ul class="m-time-axis clr">
-			<li>
-				<div class="title">1.号码详情</div>
-			</li>
-			<li class="active">
-				<div class="title">2.实名认证</div>
-			</li>
-			<li>
-				<div class="title">3.支付</div>
-			</li>
-			<li>
-				<div class="title">4.提交申请</div>
-			</li>
-			<li>
-				<div class="title">5.申请受理</div>
-			</li>
-		</ul>
-		<ol class="m-time-axis-sub clr">
-			<li><div class="sub-line"><b></b><span></span></div></li>
-			<li class="active"><div class="sub-line"><b></b><span></span></div></li>
-			<li><div class="sub-line"><b></b><span></span></div></li>
-			<li><div class="sub-line"><b></b><span></span></div></li>
-			<li><div class="sub-line"><b></b><span class="set-w-5"></span></div></li>
-		</ol>
 		<section m-show="!off.face">
 			<div class="m-verification-box">
 				<div class="inner">
@@ -74,9 +49,14 @@
 						</div>
 					</div>
 					<section m-show="!load.checkInfo">
-						<div class="btn btnp" m-show="!off.pass" m-on:click="toFaceVerification">重新识别</div>
-						<div class="checkInfo-success"><i class="u-icon-success"></i><span class="text">预审通过，请提交开卡资料</span></div>
-						<div class="btn btny" m-show="off.pass" m-on:click="uploadMutipleData">提交开卡资料</div>
+						<div m-show="!off.pass">
+							<div class="btn btnp" m-on:click="toFaceVerification">重新识别</div>
+							<div class="btn btny" m-on:click="jumpToPrev">取消</div>
+						</div>
+						<div m-show="off.pass">
+							<div class="checkInfo-success"><i class="u-icon-success"></i><span class="text">预审通过</span></div>
+							<!-- <div class="btn btny" m-on:click="uploadMutipleData">提交开卡资料</div> -->
+						</div>
 					</section>
 					<section m-show="load.checkInfo">
 						<div class="m-spin-load">

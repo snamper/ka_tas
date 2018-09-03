@@ -171,7 +171,7 @@ var vm=new Moon({
 				title:'选择城市',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:''
 				},
 				right:{

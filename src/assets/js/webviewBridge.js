@@ -99,13 +99,11 @@ require('./base64.js');
 		},
 		getGuestInfo:function(json){//获取新用户信息
 			// json.complete({
-			// 	"imsi":"460010147813210",
-			// 	"smsp":"",
-			// 	"applicationID":"TF-1525683312942-1325751751",
-			// 	"iccid":"89860117841022193963",
+			// 	"applicationID":"864600035504846",
+			// 	"iccid":"89860117841022194433",
 			// 	"packageName":"com.yuantel.common.lite",
-			// 	"timestamp":"1525684349889",
-			// 	"token":"pFbDsAdsmLokAb/bsR3g7jEYjyYvh7iOHe7X8aFhPyQNnpKOJ8hSjNPuz5EGex6+A0veY/PlbmY1UECAwue26Ck9TXCb0JAUE7tVN1/nXRmVZOZMtHQdGSnStzfR0pZH"
+			// 	"timestamp":"1535965693974",
+			// 	"token":"i7duKWjMHCjKYWR3pylt1Dh5JjdCpwhZIeY/CH5HC2c1xhUXFNARVhPxcYaZJfs0Ak1GUII8ix+miXtf1LgJTPg5gdHGTtgJCy4KirirMW71P5lTB7OUAOalE2fN4a9g"
 			// });
 			//alert('getGuestInfo传值:'+JSON.stringify(json))
 			callHandler({
@@ -209,7 +207,7 @@ require('./base64.js');
 			// setTimeout(function(){
 			// 	json.complete({
 			// 		'status':'1',
-			// 		'iccid':['89860117841027577350',''],
+			// 		'iccid':['89860117841022194433',''],
 			// 	});
 			// },1000);
 			callHandler({

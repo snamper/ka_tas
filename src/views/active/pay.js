@@ -53,7 +53,7 @@ var vm=new Moon({
 				title:'支付',
 				left:{
 					icon:'back_white',
-					value:'',
+					value:'返回',
 					callback:'headerLeftClick'
 				},
 				right:{
