@@ -12,7 +12,7 @@ var vm=new Moon({
 			pass:!1,
 		},
 		load:{
-			checkInfo:false,//获取预提交结果
+			checkInfo:true,//获取预提交结果
 		},
 		checkInfoDesc:'',//检查预提交错误描述
 		cardInfo:{//开卡信息

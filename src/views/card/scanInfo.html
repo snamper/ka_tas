@@ -162,13 +162,13 @@
 						<span m-for="opt in scanInfo.optionals">{{ opt.optionalName }},</span>
 					</span>
 				</div>
-				<div class="btn btny" m-on:click="jump(10)">去开卡</div>
 			</div>
-			<div class="m-img-box">
+			<div class="btn btny" m-on:click="jump(10)">去开卡</div>
+			<!-- <div class="m-img-box">
 				<p class="m-tips">如需开卡请关注“远微商城”公众号<br>通过“号卡激活”进行开卡操作</p>
 				<img src="../../assets/img/pic_code_yuanweishangcheng.png">
 				<div>远微商城公众号<br>微信号：YuanWeStore</div>
-			</div>
+			</div> -->
 		</section>
 		<section m-show="scanInfo.status == 11"><!--11、远盟白卡-->
 			<div class="m-tips red">抱歉，目前暂不支持“远盟白卡”。如需开卡，请联系渠道方或使用远盟App进行开卡操作</div>

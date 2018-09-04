@@ -186,7 +186,7 @@ var vm=new Moon({
 	  			params:{
 	  				iccidsInfo:iccidsInfo
 	  			},
-	  			userInfo:{}
+	  			userInfo:vm.get('userInfo')
 	  		};
 			vm.AJAX('/tas/w/source/iccidsCheck',json,function(data){
 				vm.set('off.load',false);

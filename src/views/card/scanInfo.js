@@ -90,7 +90,7 @@ var vm=new Moon({
 			vm.removeStore('ORDER_INFO');
 
 			if(type == 10){//开远盟成卡
-				vm.callMethod('ymChengCardOrderCreate');
+				vm.callMethod('ymChengCardOrderCreate',[scanInfo]);
 			}else Jsborya.pageJump({
                 url:url,
                 stepCode:'999',
@@ -103,9 +103,15 @@ var vm=new Moon({
             });
 			
 		},
-		ymChengCardOrderCreate(){//远盟开成卡生成订单
+		ymChengCardOrderCreate(scanInfo){//远盟开成卡生成订单
 			vm.AJAX('/tas/w/ymactive/generateOrder',{
-	  			params:'',
+	  			params:{
+	  				sysOrderId:scanInfo.sourceOrder,//远盟平台生成的订单号
+					createTime:scanInfo.createTime,//远盟平台生成的订单号时间
+					iccid:scanInfo.iccid,
+					phoneNumber:scanInfo.phone,
+					bizType:'7'
+	  			},
 	  			userInfo:vm.get('userInfo')
 	  		},function(data){
 				vm.setStore('ORDER_INFO',data.data);

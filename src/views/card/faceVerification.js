@@ -12,7 +12,7 @@ var vm=new Moon({
 			pass:!1,
 		},
 		load:{
-			checkInfo:false,//获取预提交结果
+			checkInfo:0,//0,初始状态;1,获取预提交结果中;2,提交开卡申请中;
 		},
 		checkInfoDesc:'',//检查预提交错误描述
 		cardInfo:{//开卡信息
@@ -115,6 +115,8 @@ var vm=new Moon({
 			});
 		},
 		uploadMutipleData(){
+			vm.set('load.checkInfo',2);
+
 			const json={
 				userInfo:vm.get('userInfo'),
 				params:Object.assign(vm.getStore('USER_MUTIPLE_DATA'),{
@@ -133,6 +135,8 @@ var vm=new Moon({
 	                    backgroundColor:vm.getHeaderColor(vm.get('cardInfo').deviceType),
 	                }
 				});
+			},true,function(){
+				vm.set('load.checkInfo',0);
 			});
 		},
 		jumpToPrev:function(){
@@ -148,7 +152,7 @@ var vm=new Moon({
 		},
 		intervalCheckInfo:function(){
 			clearInterval(window.Timer);
-			vm.set('load.checkInfo',true);
+			vm.set('load.checkInfo',1);
 
 			window.Timer=setInterval(function(){
 				const json={
@@ -160,17 +164,18 @@ var vm=new Moon({
 
 					if(flag!=0){
 						clearInterval(window.Timer);
-						vm.set('load.checkInfo',false);
+						vm.set('load.checkInfo',0);
 					}
 
 					if(flag==1){
 						//预审通过
+						vm.callMethod('uploadMutipleData');
 					}else if(flag==2){
 						vm.set('checkInfoDesc',data.data.desc);
 					}
 				},true,function(){
 					clearInterval(window.Timer);
-					vm.set('load.checkInfo',false);
+					vm.set('load.checkInfo',0);
 				});
 			},2000);
 		}

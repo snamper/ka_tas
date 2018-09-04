@@ -293,12 +293,10 @@ require('./base64.js');
 			});
 		},
 		callScanQRCode:function(json){//扫一扫
-			// setTimeout(function(){
-			// 	json.complete({
-			// 		result:'89860117841027577350',
-			// 		status:1
-			// 	});
-			// },1000);
+			// json.complete({
+			// 	result:'8986011484100114274',
+			// 	status:1
+			// });
 			callHandler({
 				name:'callScanQRCode',
 				data:json,
