@@ -169,8 +169,9 @@ var vm=new Moon({
 					}else if(flag==2){
 						vm.set('checkInfoDesc',data.data.desc);
 					}
-				},true,function(){
+				},true,function(error){
 					clearInterval(window.Timer);
+					vm.set('checkInfoDesc',error ? error.msg : '服务器异常');
 					vm.set('load.checkInfo',false);
 				});
 			},2000);
