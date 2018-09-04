@@ -82,7 +82,7 @@
 						<div class="btn btny" m-show="off.pass" m-on:click="uploadMutipleData">提交开卡资料</div>
 					</section> -->
 					<section m-show="load.checkInfo">
-						<div class="m-spin-load">
+						<div class="m-spin-load" m-show="off.pass">
 							<span class="load"></span>
 							<span class="text" m-show="load.checkInfo == 1">正在获取预审结果</span>
 							<span class="text" m-show="load.checkInfo == 2">提交开卡资料中</span>
