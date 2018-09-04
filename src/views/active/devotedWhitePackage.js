@@ -130,7 +130,7 @@ var vm=new Moon({
             let addPre = 0;
             if(vm.get('off').addPre == 998){
                 addPre = vm.get('inputAddPre') ? vm.get('inputAddPre') * 100 : 0;
-            }else if(vm.off.addPre != 999){
+            }else if(vm.get('off').addPre != 999){
                 addPre = vm.get('addPrestoreList')[vm.get('off').addPre]*100;
             }
 
@@ -150,7 +150,7 @@ var vm=new Moon({
                     'imsi':'',
                     'smsp':'',
                 },
-                'userInfo':vm.userInfo
+                'userInfo':vm.get('userInfo')
             };
 
             vm.AJAX('/tas/w/active/setCardInfo',json,function(data){
@@ -216,13 +216,13 @@ var vm=new Moon({
         },
         inputAddPreChange(){
             setTimeout(()=>{
-                this.checkAddPre();
-                this.mathDeduction();
+                vm.callMethod('checkAddPre');
+                vm.callMethod('mathDeduction');
             },800)
         },
         checkAddPre(){
-            let val = this.inputAddPre.toString();
-            if(val.length>0 && this.off.addPre == 998){
+            let val = vm.get('inputAddPre').toString();
+            if(val.length>0 && vm.get('off').addPre == 998){
                 val = parseInt(val);
 
                 // if(val % 10 != 0){
@@ -284,8 +284,6 @@ var vm=new Moon({
             });
         },
         getSafeCode(){
-            const vm=this;
-
             let json={
                 params:{
                     adultOrder:vm.get('cardInfo').sourceOrder,
@@ -331,7 +329,7 @@ var vm=new Moon({
             return this.mathCentToYuan(value);
         },
         mathDiscount:function(money,discount){
-            return vm.mathDiscount(money,discount);
+            return this.mathDiscount(money,discount);
         },
         phoneFormat:function(phone){
             return this.phoneFormat(phone);

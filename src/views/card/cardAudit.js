@@ -117,6 +117,7 @@ var vm=new Moon({
 
 				if(status==3||status==4){
 					vm.set('off.step',2);
+					vm.callMethod('jumpDeal');
 				}else if(status==1){
 					//---
 				}else{
