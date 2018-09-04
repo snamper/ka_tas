@@ -131,8 +131,8 @@ var vm=new Moon({
 						}else if(status==6){
 							vm.set('off.payStatus',2);
 						}else if(status==7){
-							// vm.set('off.payStatus',1);
-							vm.callMethod('submitOrder');
+							vm.set('off.payStatus',1);
+							// vm.callMethod('submitOrder');
 						}else if(status==8){
 							vm.set('off.payStatus',3);
 						}

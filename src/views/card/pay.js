@@ -130,8 +130,8 @@ var vm=new Moon({
 						}else if(status==6){
 							vm.set('off.payStatus',2);
 						}else if(status==7){
-							// vm.set('off.payStatus',1);
-							vm.callMethod('submitSheet');
+							vm.set('off.payStatus',1);
+							// vm.callMethod('submitSheet');
 						}else if(status==8){
 							vm.set('off.payStatus',3);
 						}

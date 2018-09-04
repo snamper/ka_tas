@@ -114,14 +114,14 @@
 				<img src="../../assets/img/icon_suc_a.png">
 				<p class="green">支付成功</p>
 			</div>
-			<div m-on:click="createSheet" m-show="!off.submit" class="btn btny">生成受理单</div>
+			<div m-on:click="submitSheet" m-show="!off.submit" class="btn btny">下一步</div>
 		</div>
 		<div m-show="off.payStatus==2||off.payStatus==3">
 			<div class="m-pay-status">
 				<img src="../../assets/img/icon_failure.png">
 				<p class="red" m-show="off.payStatus==2">支付失败</p>
 				<p class="red" m-show="off.payStatus==3">订单关闭</p>
-				<p class="red" m-show="off.submit==1">开卡申请失败</p>
+				<p class="red" m-show="off.submit==1">生成受理单失败</p>
 			</div>
 			<div m-on:click="changePayType" m-show="off.payStatus==2" class="btn btny">更换支付方式</div>
 			<div m-on:click="jumpToHome" m-show="off.payStatus==3" class="btn btny">返回首页</div>

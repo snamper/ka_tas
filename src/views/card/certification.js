@@ -55,8 +55,8 @@ var vm=new Moon({
 	    imgName:{//上传后返回的图片地址
 	    	a:'',//正面
 	    	b:'',//反面
-	    	c:'--',//手持
-	    	d:'--'//手签名
+	    	//c:'',//手持
+	    	//d:''//手签名
 	    },
 	    password1:'',
 		password2:'',
@@ -185,9 +185,9 @@ var vm=new Moon({
 					vm.set('imgName.b',data.data.imgName);
 					vm.set('idCardInfo.period',data.data.period);
 				}else if(index==3){
-					vm.set('imgName.c',data.data.imgName);
+					//vm.set('imgName.c',data.data.imgName);
 				}else if(index==4){
-					vm.set('imgName.d',data.data.imgName);
+					//vm.set('imgName.d',data.data.imgName);
 				}
 				
 				vm.callMethod("checkIsJump");
@@ -349,7 +349,7 @@ var vm=new Moon({
 						backImageName:imgName.b,//反面照片
 						pwd:password2,//密码
 						// 'handImageName':vm.get('imgName').c,//手持照片
-						signImageName:imgName.d,//手签名
+						signImageName:'',//手签名
 						sysOrderId:orderInfo.sysOrderId,
 						linkPhone:vm.get("linkPhone")
 					}

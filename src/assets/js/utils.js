@@ -145,8 +145,12 @@ export default{
                             'sysOrderId':orderInfo.sysOrderId,
                         },
                         'userInfo':userInfo
-                    };
-                    _self.AJAX('/tas/w/business/orderCancell',json,function(data){
+                    },url = '';
+                    if(orderInfo.bizType == 7){//远盟开成卡
+                      url = '/tas/w/ymactive/cancel';
+                    }else url = '/tas/w/business/orderCancell';
+
+                    _self.AJAX(url,json,function(data){
                         Jsborya.callMessageNotice({
                           iccid:userInfo.iccid
                         });
