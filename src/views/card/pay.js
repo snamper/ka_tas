@@ -7,10 +7,9 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:0,//0,初始状态;1,正在支付;2,获取支付结果;3,提交受理单
+			load:0,//0,初始状态;1,正在支付;2,获取支付结果中;3,支付成功，待生成受理单;4,生成受理单中;
 			payType:"0",//0,未选择支付方式;1,--;2,微信;3,支付宝;
-			payStatus:-1,//-1,未选择支付方式;0,支付中;1,支付成功;2,支付失败;3,订单关闭;
-			submit:0,//0,待提交受理单;1，受理单失败
+			errorStatus:0,//0,无错误;1,支付失败;2,订单关闭;3,生成受理单失败;
 		},
 		orderInfo: {
             "phoneNum":"00000000000",
@@ -80,7 +79,7 @@ var vm=new Moon({
 					}
 
 					if(orderInfo.orderStatusCode == "CARD_PAY"){//已支付
-						vm.set("off.payStatus",1);
+						vm.set("off.load",3);
 					}
 					
 					Jsborya.registerMethods('headerLeftClick',function(){
@@ -98,9 +97,7 @@ var vm=new Moon({
 	},
 	methods:{
 		payComplete:function(status){//支付完成
-			
 			layer.closeAll();
-			vm.set('off.load',0);
 			if(status==1){//支付成功
 				const json={
 					userInfo:vm.get('userInfo'),
@@ -122,18 +119,19 @@ var vm=new Moon({
 						// 8 订单关闭
 						if(status!=5){
 							clearInterval(window.Timer);
-							vm.set('off.load',0);
 						}
 
 						if(status==5){
 							//---
 						}else if(status==6){
-							vm.set('off.payStatus',2);
+							vm.set('off.errorStatus',1);
+							vm.set('off.load',0);
 						}else if(status==7){
-							//vm.set('off.payStatus',1);
+							// vm.set('off.load',3);
 							vm.callMethod('submitSheet');
 						}else if(status==8){
-							vm.set('off.payStatus',3);
+							vm.set('off.errorStatus',2);
+							vm.set('off.load',0);
 						}
 					},function(){
 
@@ -141,6 +139,7 @@ var vm=new Moon({
 				},2000);
 			}else if(status==2){
 				vm.set('off.load',0);
+				vm.set('off.payType','0');
 				layer.open({
 					title:'支付失败',
 					content:'如果您想重新发起支付，请点击【去支付】按钮',
@@ -149,6 +148,7 @@ var vm=new Moon({
 				});
 			}else if(status==3){
 				vm.set('off.load',0);
+				vm.set('off.payType','0');
 				layer.open({
 					title:'支付取消',
 					content:'您已取消支付，如果想重新发起支付，请点击【去支付】按钮',
@@ -156,6 +156,8 @@ var vm=new Moon({
 					shadeClose:false,
 				});
 			}else if(status==-1){
+				vm.set('off.load',0);
+				vm.set('off.payType','0');
 				let payType=vm.get('off').payType;
 				if(payType==2)alert('请先安装【微信】客户端');
 				if(payType==3)alert('请先安装【支付宝】客户端');
@@ -203,7 +205,8 @@ var vm=new Moon({
 				}
 					
 			},function(){
-				vm.set('off.load',false);
+				vm.set('off.load',0);
+				vm.set('off.payType','0');
 			});
 		},
 		shiftPayType:function(payType){
@@ -211,7 +214,7 @@ var vm=new Moon({
 		},
 		createSheet:function(){//生成受理单
 			var orderInfo=vm.get('orderInfo');
-			vm.set('off.load',3);
+			vm.set('off.load',4);
 
 			vm.AJAX('/tas/w/business/acceptance',{//获取受理单图片
 				userInfo:vm.get('userInfo'),
@@ -241,8 +244,8 @@ var vm=new Moon({
 				});
 
 			},true,function(){
-				vm.set('off.load',0);
-				vm.set('off.submit',1);
+				vm.set('off.load',3);
+				vm.set('off.errorStatus',3);
 			});
 		},
 		submitSheet:function(){
@@ -259,6 +262,13 @@ var vm=new Moon({
 		shiftPayType:function(payType){
 			vm.set('off.payType',payType);
 			vm.callMethod('pay');
+		},
+		changePayType(){
+			vm.set('off',{
+				load:0,
+				payType:"0",
+				errorStatus:0,
+			});
 		},
 		jumpToHome:function(){
 			vm.jumpToHome();

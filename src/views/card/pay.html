@@ -76,29 +76,29 @@
 		
 		<div class="m-all-tag"><i class="u-icon-tag"></i><span>选择支付方式</span></div>
 		<ul class="m-pay-choose" m-show="orderInfo.actualMoney != '0'">
-			<li m-on:click="shiftPayType('2')" m-show="cardInfo.deviceType != 3"><!--SDK没有微信支付-->
+			<li m-on:click="shiftPayType('2')">
 				<div class="lt u-icon-wechat"></div>
 				<div class="rt">
-					<div m-show="off.payType == 2"><span class="m-spin-load" m-show="off.load==1"></span></div>
-					<span class="u-icon-right" m-show="off.payType == '0'"></span>
-					<span m-show="off.load!=1">
-						<span class="red" m-show="off.payType == 2">已选择</span>
-					</span>
+					<div m-show="off.payType == 2">
+						<span class="m-spin-load" m-show="off.load==1"></span>
+						<span class="red" m-show="off.load!=1">已选择</span>
+					</div>
+					<span m-show="off.payType == '0'" class="u-icon-right"></span>
 				</div>
 			</li>
 			<li m-on:click="shiftPayType('3')">
 				<div class="lt u-icon-alipay"></div>
 				<div class="rt">
-					<div m-show="off.payType == 3"><span class="m-spin-load" m-show="off.load==1"></span></div>
-					<span class="u-icon-right" m-show="off.payType == '0'"></span>
-					<span m-show="off.load!=1">
-						<span class="red" m-show="off.payType == 3">已选择</span>
-					</span>
+					<div m-show="off.payType == 3">
+						<span class="m-spin-load" m-show="off.load==1"></span>
+						<span class="red" m-show="off.load!=1">已选择</span>
+					</div>
+					<span m-show="off.payType == '0'" class="u-icon-right"></span>
 				</div>
 			</li>
 		</ul>
 
-		<div class="m-load-box" m-show="off.load==2 || off.load==3">
+		<div class="m-load-box" m-show="off.load==2 || off.load==4">
 			<div class="load">
 				<div class="loading">
 					<i></i><i class="layui-m-layerload"></i><i></i>
@@ -108,24 +108,25 @@
 			<p class="status yellow" m-show="off.load==2">获取支付结果中</p>
 			<p class="status yellow" m-show="off.load==3">生成受理单中</p>
 		</div>
-
-		<div m-show="off.payStatus==1">
+		
+		<div m-show="off.load==3">
 			<div class="m-pay-status">
 				<img src="../../assets/img/icon_suc_a.png">
 				<p class="green">支付成功</p>
 			</div>
-			<div m-on:click="submitSheet" m-show="!off.submit" class="btn btny">下一步</div>
+			<div m-on:click="submitSheet" class="btn btny">下一步</div>
 		</div>
-		<div m-show="off.payStatus==2||off.payStatus==3">
+		
+		<div m-show="off.errorStatus">
 			<div class="m-pay-status">
 				<img src="../../assets/img/icon_failure.png">
-				<p class="red" m-show="off.payStatus==2">支付失败</p>
-				<p class="red" m-show="off.payStatus==3">订单关闭</p>
-				<p class="red" m-show="off.submit==1">生成受理单失败</p>
+				<p class="red" m-show="off.errorStatus==1">支付失败</p>
+				<p class="red" m-show="off.errorStatus==2">订单关闭</p>
+				<p class="red" m-show="off.errorStatus==3">生成受理单失败</p>
 			</div>
-			<div m-on:click="changePayType" m-show="off.payStatus==2" class="btn btny">更换支付方式</div>
-			<div m-on:click="jumpToHome" m-show="off.payStatus==3" class="btn btny">返回首页</div>
-			<div m-on:click="createSheet" m-show="off.submit==1" class="btn btny">重新提交</div>
+			<div m-on:click="changePayType" m-show="off.errorStatus==1" class="btn btny">更换支付方式</div>
+			<div m-on:click="jumpToHome" m-show="off.errorStatus==2" class="btn btny">返回首页</div>
+			<div m-on:click="createSheet" m-show="off.errorStatus==3" class="btn btny">重新提交</div>
 		</div>
 	</div>
 	<iframe id="payIframe" frameborder="0"></iframe>

@@ -47,7 +47,19 @@ var vm=new Moon({
 	hooks:{
 		init:function(){
 			vm=this;
-
+			Jsborya.setHeader({
+				title:'开卡受理',
+				left:{
+					icon:'back_white',
+					value:'返回',
+					callback:''
+				},
+				right:{
+					icon:'',
+					value:'',
+					callback:''
+				}
+			});
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 
 			let orderInfo=vm.getStore('ORDER_INFO'),
