@@ -97,27 +97,31 @@ var vm=new Moon({
                 depiction='已选择套餐';
                 next='实名认证';
             }else if(orderStatusCode==='CARD_PAY'){
-            	url='pay.html';
-
+            	
                 if(bizType==6){
                 	depiction='已支付';
-                	next='生成受理单';
+                	next='写卡';
+                	url='cardWriting.html';
                 }else{//成卡，白卡
                 	depiction='已支付';
                 	next='开卡申请';
+                	url='pay.html';
                 }
 
             }else if(orderStatusCode==='CARD_AUDIT'){
-                
 				url='pay.html';
 				depiction='已审核';
 				next='支付';
-                
-                
             }else if(orderStatusCode==='CREATE_SHEET'){
-                url='createSheet.html';
-                depiction='已生成受理单';
-                next='确认受理单';
+            	if(bizType==6){
+                	url='cardWriting.html';
+	                depiction='已生成受理单';
+	                next='写卡';
+                }else{//成卡，白卡
+                	depiction='已支付';
+                	next='开卡申请';
+                	url='pay.html';
+                }
             }else if(orderStatusCode==='CARD_IMSI'){
                 url='cardWriting.html';
                 depiction='已获取IMSI';
