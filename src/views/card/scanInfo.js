@@ -110,8 +110,8 @@ var vm=new Moon({
 					iccid:scanInfo.iccid,
 					phoneNumber:scanInfo.phone,
 					bizType:'7',
-					pkgName:scanInfo.packageName,
-					pkgCode:scanInfo.packageCode,
+					pkgName:scanInfo.packageName || '',
+					pkgCode:scanInfo.packageCode || '',
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		},function(data){
