@@ -103,13 +103,15 @@ var vm=new Moon({
 			
 		},
 		ymChengCardOrderCreate(scanInfo){//远盟开成卡生成订单
-			vm.AJAX('/tas/w/ymactive/generateOrder',{
+			vm.AJAX('/tas/w/ymactive/orderCreate',{
 	  			params:{
 	  				sysOrderId:scanInfo.sourceOrder,//远盟平台生成的订单号
 					createTime:scanInfo.createTime,//远盟平台生成的订单号时间
 					iccid:scanInfo.iccid,
 					phoneNumber:scanInfo.phone,
-					bizType:'7'
+					bizType:'7',
+					packageName:scanInfo.packageName,
+					packageCode:scanInfo.packageCode,
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		},function(data){
