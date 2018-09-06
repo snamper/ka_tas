@@ -8,8 +8,8 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			face:!1,
-			pass:!1,
+			face:1,
+			pass:1,
 		},
 		load:{
 			checkInfo:0,//0,初始状态;1,获取预提交结果中;2,提交开卡申请中;
@@ -78,7 +78,7 @@ var vm=new Moon({
 				let userInfo = vm.getStore("USER_INFO");
 				if(userInfo){
 					vm.set('userInfo',userInfo);
-					
+					vm.callMethod('intervalCheckInfo');
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo);
 					});
