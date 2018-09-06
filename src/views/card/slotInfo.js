@@ -194,7 +194,13 @@ var vm=new Moon({
 				},function(data){
 					var status=data.data.orderStatus;
 
-					if(status==2){//开卡成功
+					if(status == 1){
+						layer.open({
+	                        content:'该订单正在处理中，请耐心等待...',
+	                        skin: "msg",
+	                        time: 3
+	                    });
+					}else if(status==2){//开卡成功
 						vm.set("off.status",3);
 						vm.set("orderInfo.setPwd",'1');
 
