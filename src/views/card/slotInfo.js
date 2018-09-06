@@ -142,7 +142,10 @@ var vm=new Moon({
                 url='';
                 next='';
                 if(orderStatus==3){
-                	depiction='开卡成功';
+                	if(bizType == 7){
+                		depiction='已激活';
+                	}else depiction='开卡成功';
+                	
                 }else if(orderStatus==6){
                 	depiction='开卡失败';
                 }
