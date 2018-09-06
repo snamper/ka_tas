@@ -196,6 +196,9 @@ var vm=new Moon({
 							vm.set("error",{code:3,text:'卡槽未插卡，请将SIM卡插入卡槽'});
 							break;
 						case 4:
+							vm.set("error",{code:4,text:'未连接设备，请确定设备是否已连接'});
+							break;
+						case 5:
 							vm.set("error",{code:4,text:'当前SIM卡与获取ICCID不一致，请重新插入对应SIM卡'});
 							break;
 						default:

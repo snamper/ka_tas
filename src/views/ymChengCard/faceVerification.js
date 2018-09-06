@@ -8,8 +8,8 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			face:!1,
-			pass:!1,
+			face:1,
+			pass:1,
 		},
 		load:{
 			checkInfo:true,//获取预提交结果
@@ -82,6 +82,7 @@ var vm=new Moon({
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo);
 					});
+					vm.callMethod('intervalCheckInfo');
 				}
 			}else{
 				alert('本地订单信息丢失');
