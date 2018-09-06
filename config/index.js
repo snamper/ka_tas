@@ -61,9 +61,9 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist/2018083001/'),
+    assetsRoot: path.resolve(__dirname, '../dist/2018090600/'),
     assetsSubDirectory: 'assets',
-    assetsPublicPath: '/tasweb/2018083001/',
+    assetsPublicPath: '/tasweb/2018090600/',
 
     /**
      * Source Maps
