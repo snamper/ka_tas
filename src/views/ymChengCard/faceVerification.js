@@ -46,7 +46,7 @@ var vm=new Moon({
         },
         userInfo:'',//用户信息
         faceConfirmInfo:{//活体认证信息
-        	'livingImageName':'',
+        	'livingImageName':'--',
         	'similarity':'0',
         }
 	},
