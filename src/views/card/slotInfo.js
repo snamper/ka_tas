@@ -227,14 +227,9 @@ var vm=new Moon({
 			return this.orderCancel(vm.get('userInfo'),vm.get('orderInfo'),true);
 		},
 		jumpToSlot:function(){
-			Jsborya.pageJump({
+			Jsborya.pageBack({
                 url:'slot.html',
-                stepCode:'999',
-                depiction:'',
-                header:{
-                    frontColor:'#ffffff',
-                    backgroundColor:'#F8F8F8',
-                }
+                isLoad:false
             });
 		},
 		jumpToLogin:function(){
