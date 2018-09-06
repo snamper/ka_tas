@@ -117,7 +117,12 @@ var vm=new Moon({
 							slot:cardInfo.slot,
 							complete:function(result){
 								if(result.status==1){
-									vm.set("deviceIccid",result.iccid[0]);
+									if(result.iccid.length == 1){
+										vm.set("deviceIccid",result.iccid[0]);
+									}else if(result.iccid.length == 2){
+										vm.set("deviceIccid",result.iccid[1]);
+									}
+									
 
 									Jsborya.readCardIMSI({//读取imsi
 										slot:cardInfo.slot,
@@ -183,7 +188,7 @@ var vm=new Moon({
 				slot:vm.get('cardInfo').slot,
 				imsi:vm.get('imsi'),
 				smsp:vm.get('smsp'),
-				iccid:vm.get('deviceIccid'),
+				iccid:vm.get('cardInfo').iccid,
 				complete:function(data){
 					switch(parseInt(data.status)){
 						case 1:
