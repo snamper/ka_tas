@@ -46,7 +46,7 @@ var vm=new Moon({
         },
         userInfo:'',//用户信息
         faceConfirmInfo:{//活体认证信息
-        	'livingImageName':'--',
+        	'livingImageName':'',
         	'similarity':'0',
         }
 	},
@@ -78,11 +78,10 @@ var vm=new Moon({
 				let userInfo = vm.getStore("USER_INFO");
 				if(userInfo){
 					vm.set('userInfo',userInfo);
-					
+					vm.callMethod('intervalCheckInfo');
 					Jsborya.registerMethods('headerLeftClick',function(){
 						vm.orderCancel(userInfo,orderInfo);
 					});
-					vm.callMethod('intervalCheckInfo');
 				}
 			}else{
 				alert('本地订单信息丢失');
