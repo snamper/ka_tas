@@ -96,7 +96,7 @@ var vm=new Moon({
 					// 2 成功
 					// 3 失败
 					vm.set('off.status',status);
-					vm.set('desc',data.data.desc);
+					vm.set('desc',data.data.reason);
 					// if(status!=1){
 					// 	clearInterval(window.Timer);
 					// }
