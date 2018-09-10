@@ -270,10 +270,11 @@ var vm=new Moon({
 			}else if(idCardInfo.period==''){
 				callLayer('请输入证件有效期');
                 return false;
-			}else if(null==idCardInfo.period.match(/^(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})-(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})$/)){
-				callLayer('证件有效期格式错误');
-                return false;
 			}
+			// else if(null==idCardInfo.period.match(/^(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})-(\d{4})(.|\/)(\d{1,2})\2(\d{1,2})$/)){
+			// 	callLayer('证件有效期格式错误');
+   //              return false;
+			// }
 			// else if(!imgName.d){
 			// 	callLayer('请添加手签名照片');
    //              return false;
