@@ -79,9 +79,9 @@
 	</div>
 
 	<div class="m-all-tag"><i class="u-icon-tag"></i><span>套餐选择</span></div>
-	<ul class="m-recommend-ul clr">
+	<!-- <ul class="m-recommend-ul clr">
 		<li m-for="todo,index in recommendList" m-on:click="shiftRcmd(index)" m-literal:class="{active:off.packageType==index}">{{ todo.name }}</li>
-	</ul>
+	</ul> -->
 	<div id="packageList" class="f-scroll">
 		<ul class="m-packageList" m-show="!off.loadPackage">
 			<li m-for="todo,index in packageList" m-on:click="jumpToPackageDetails(todo)" m-literal:class="{active:!todo.info}">

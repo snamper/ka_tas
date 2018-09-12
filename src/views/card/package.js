@@ -106,9 +106,9 @@ var vm=new Moon({
 	methods:{
 		setPage:function(){
 			const window_h=document.documentElement.clientHeight||window.innerHeight||document.body.clientHeight;
-			let topH=247 + 78 - 41;
+			let topH=196 + 78 - 41;
 			if(vm.get('selectPackage').packageCode){
-				topH=247 + 157;
+				topH=196 + 157;
 			}
 			document.getElementById("packageList").style.maxHeight=window_h-topH+'px';
 		},
@@ -272,7 +272,7 @@ var vm=new Moon({
 			let cardInfo=vm.get('cardInfo');
 			const json={
 	  			params:{
-	  				type:vm.get('recommendList')[vm.get('off').packageType].type,
+	  				type:'1',
 	  				cityCode:cardInfo.cityCode,
 	  				phoneNum:cardInfo.phone,
 	  				size:20
