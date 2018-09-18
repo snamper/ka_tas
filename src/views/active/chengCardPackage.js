@@ -80,6 +80,7 @@ var vm=new Moon({
                 cardInfo = vm.getStore('CARD_INFO'),
                 userInfo = vm.getStore("USER_INFO"),
                 changePackageInfo = vm.getStore('CHANGE_PACKAGE_INFO');
+            alert(`changePackageInfo:${JSON.stringify(changePackageInfo)}`)
             if(cardInfo)vm.set('cardInfo',cardInfo);
             if(userInfo)vm.set('userInfo',userInfo);
             if(type == 'change' && changePackageInfo){//判断是从变更套餐返回
