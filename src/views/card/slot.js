@@ -8,7 +8,7 @@ var vm=new Moon({
 	el:'#app',
 	data:{
 		off:{
-			load:true,
+			load:false,
 			turn:0,//0,初始化页面;1,选择卡槽页面;4,无效卡页面;5,未插卡页面;
 			status:0//只有4,5的处理（0：初始状态；4：无效卡；5：未插卡）
 		},
@@ -69,7 +69,17 @@ var vm=new Moon({
 	    }
 	},
 	methods:{
+		getUserAgent(){
+			var e = navigator.userAgent,
+			t = (navigator.appVersion, e.indexOf("Android") > -1 || e.indexOf("Linux") > -1),
+			n = !!e.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+			return t ? 1 : n ? 2 : void 0//1:andriod,2:ios
+		},
 		getCheckMachine(){//机型适配信息
+			if(vm.callMethod('getUserAgent') == 2){
+				vm.set('off.load',false);
+				return false;
+			}
 			const json={
 	  			params:{
 	  				type:1
