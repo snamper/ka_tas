@@ -52,7 +52,12 @@ var vm=new Moon({
 				iccid:'',
 				complete:function(userInfo){
 					vm.set('userInfo',userInfo);
-					vm.callMethod('getCheckMachine');
+
+					let isScan = vm.getUrlParam('isScan');
+					if(isScan){
+						vm.set('off.load',false);
+					}else vm.callMethod('getCheckMachine');
+					
 				}
 			});
 			Jsborya.registerMethods('headerRightClick',function(){
@@ -69,17 +74,7 @@ var vm=new Moon({
 	    }
 	},
 	methods:{
-		getUserAgent(){
-			var e = navigator.userAgent,
-			t = (navigator.appVersion, e.indexOf("Android") > -1 || e.indexOf("Linux") > -1),
-			n = !!e.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-			return t ? 1 : n ? 2 : void 0//1:andriod,2:ios
-		},
 		getCheckMachine(){//机型适配信息
-			if(vm.callMethod('getUserAgent') == 2){
-				vm.set('off.load',false);
-				return false;
-			}
 			const json={
 	  			params:{
 	  				type:1
