@@ -9,6 +9,7 @@ var vm=new Moon({
 	data:{
 		off:{
 			load:false,
+			isScan:false,
 			turn:0,//0,初始化页面;1,选择卡槽页面;4,无效卡页面;5,未插卡页面;
 			status:0//只有4,5的处理（0：初始状态；4：无效卡；5：未插卡）
 		},
@@ -56,6 +57,7 @@ var vm=new Moon({
 					let isScan = vm.getUrlParam('isScan');
 					if(isScan){
 						vm.set('off.load',false);
+						vm.set('off.isScan',true);
 					}else vm.callMethod('getCheckMachine');
 					
 				}
