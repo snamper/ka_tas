@@ -204,27 +204,27 @@ var vm=new Moon({
 			})
 		},
 		choiceTurnTo(simStatus,simStatus_){//卡槽1和卡槽2，状态--处理从卡槽中读取卡信息的逻辑
-			if([1,2,5,8,9,10].includes(simStatus) && [1,2,5,8,9,10].includes(simStatus_)){
+			if(Array.includes([1,2,5,8,9,10],simStatus) && Array.includes([1,2,5,8,9,10],simStatus_)){
 				vm.set('off.turn',1);//去选择卡槽页(本页面)
-			}else if([1].includes(simStatus) || [1].includes(simStatus_)){
+			}else if(Array.includes([1],simStatus) || Array.includes([1],simStatus_)){
 				//去随心搜页
 
-				if([1].includes(simStatus)){
+				if(Array.includes([1],simStatus)){
 					vm.callMethod('choiceSlot',['0']);
 				}else vm.callMethod('choiceSlot',['1']);
-			}else if([2,3,5,6].includes(simStatus) || [2,3,5,6].includes(simStatus_)){
+			}else if(Array.includes([2,3,5,6],simStatus) || Array.includes([2,3,5,6],simStatus_)){
 				//去订单页
 
-				if([2,3,5,6].includes(simStatus)){
+				if(Array.includes([2,3,5,6],simStatus)){
 					vm.callMethod('choiceSlot',['0']);
 				}else vm.callMethod('choiceSlot',['1']);
-			}else if([8,9,10].includes(simStatus) || [8,9,10].includes(simStatus_)){
+			}else if(Array.includes([8,9,10],simStatus) || Array.includes([8,9,10],simStatus_)){
 				//去扫码页
 
-				if([8,9,10].includes(simStatus)){
+				if(Array.includes([8,9,10],simStatus)){
 					vm.callMethod('choiceSlot',['0']);
 				}else vm.callMethod('choiceSlot',['1']);
-			}else if([4].includes(simStatus) && [4].includes(simStatus_)){
+			}else if(Array.includes([4],simStatus) && Array.includes([4],simStatus_)){
 				vm.set('off.status',4);//无效卡
 			}
 		},
