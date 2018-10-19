@@ -46,7 +46,7 @@
 	<section m-show="recharge.city">
 		<div class="m-input-money">
 			<div class="lt">其他金额</div>
-			<div class="rt"><input type="tel" m-model="inputMoney" m-on:click="clickInputMoney" m-on:input="onInputMoney" maxlength="5" placeholder="请输入充值金额"></div>
+			<div class="rt"><input type="tel" m-model="inputMoney" m-on:blur="clickInputMoney" m-on:click="clickInputMoney" m-on:input="onInputMoney" maxlength="5" placeholder="请输入充值金额"></div>
 		</div>
 
 		<div class="m-tag">支付方式</div>
@@ -93,6 +93,6 @@
 		</div>
 	</section>
 </div>
-<script src="https://cdn.bootcss.com/moonjs/0.11.0/moon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moonjs@0.11.0/dist/moon.min.js"></script>
 </body>
 </html>
