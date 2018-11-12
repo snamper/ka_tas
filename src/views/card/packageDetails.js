@@ -74,6 +74,7 @@ var vm=new Moon({
 
 			let code=vm.getUrlParam('code'),
 				phoneLevel=vm.getUrlParam('phoneLevel'),
+				phoneNum=vm.getUrlParam('phoneNum'),
 				cardInfo=vm.getStore('CARD_INFO');
 				
 			if(code&&phoneLevel){
@@ -83,7 +84,7 @@ var vm=new Moon({
 				let userInfo = vm.getStore("USER_INFO");
 				if(userInfo){
 					vm.set('userInfo',userInfo);
-					vm.callMethod('getPackageInfo',[code,phoneLevel]);
+					vm.callMethod('getPackageInfo',[code,phoneLevel,phoneNum]);
 				}
 			}else{
 				alert('页面URL参数错误');
@@ -95,7 +96,8 @@ var vm=new Moon({
 			const json={
 	  			params:{
 	  				packageCode:code,
-	  				numberLevel:phoneLevel
+	  				numberLevel:phoneLevel,
+	  				phoneNum:phoneNum
 	  			},
 	  			userInfo:vm.get('userInfo')
 	  		};

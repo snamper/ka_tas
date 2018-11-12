@@ -306,8 +306,10 @@ var vm=new Moon({
 			});
 		},
 		jumpToPackageDetails:function(packageInfo){
+			let cardInfo = vm.get('cardInfo');
+			
 			Jsborya.pageJump({
-				url:'packageDetails.html?code='+packageInfo.code+'&phoneLevel='+vm.get('cardInfo').phoneLevel,
+				url:`packageDetails.html?code=${packageInfo.code}&phoneLevel=${cardInfo.phoneLevel}&phoneNum=${cardInfo.phone}`,
 				stepCode:'999',
 				depiction:packageInfo.title,
 				destroyed:false,
