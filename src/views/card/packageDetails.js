@@ -92,7 +92,7 @@ var vm=new Moon({
 	    },
 	},
 	methods:{
-		getPackageInfo:function(code,phoneLevel){//
+		getPackageInfo:function(code,phoneLevel,phoneNum){//
 			const json={
 	  			params:{
 	  				packageCode:code,
