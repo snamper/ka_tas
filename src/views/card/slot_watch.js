@@ -61,6 +61,10 @@ var vm=new Moon({
 			
 			Jsborya.webviewLoading({isLoad:false});//关闭app加载层
 			vm.callMethod("readCardICCID");
+			
+			Jsborya.registerMethods('headerRightClick',function(){
+				vm.callMethod('jumpToDeviceManagement');
+			});
 		},
 		mounted:function(){
 			
@@ -312,8 +316,22 @@ var vm=new Moon({
                 content:text,
                 btn:['确定'],
                 shadeClose:false,
-                title:'提示',
+				title:'提示',
+				yes:function(){
+                	layer.closeAll();
+                	if(status == 4){
+                		vm.callMethod('jumpToDeviceManagement');
+                	}
+                }
             });
+		},
+		jumpToDeviceManagement(){
+			Jsborya.pageJump({
+				url:'',
+				stepCode:'803',
+				depiction:'设备管理',
+				destroyed:false,
+			});
 		},
 		mathCentToYuan:function(value){
 	    	return this.mathCentToYuan(value);
