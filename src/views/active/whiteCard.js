@@ -139,11 +139,12 @@ var vm=new Moon({
 	    		vm.set('isHaveMore',false);
 	    	}
 	    },
-		phoneClick:function({phoneNum,cityName,faceMoney,belongType}){//点击号码生成订单
+		phoneClick:function({phoneNum,faceMoney,belongType,initialMoney}){//点击号码生成订单
 			let cardInfo = vm.get('cardInfo');
 			cardInfo.phone = phoneNum;
 			cardInfo.belongType = belongType;
 			cardInfo.faceMoney = faceMoney;
+			cardInfo.initialMoney = initialMoney;
 			vm.setStore('CARD_INFO',cardInfo);
 
 			vm.removeStore('CHANGE_PACKAGE_INFO');

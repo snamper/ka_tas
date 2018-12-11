@@ -8,7 +8,11 @@
 .u-icon-act{
 	background-image: url(../../../assets/img/hint_ic_zhe.png);
 }
-
+html{
+	max-width: 960px;
+	min-width: 300px;
+    margin: auto;
+}
 body{
 	padding:0 !important;
 	margin:0 !important;
@@ -260,12 +264,15 @@ body{
 		margin: 0 2px;
 	}
 	.m-card-ul>li>.rt span{
-		font-size: 0.11rem;
+		font-size: 0.1rem;
 	}
 	.m-card-ul .u-icon-pretty, .m-card-ul .u-icon-ordinary{
 		margin-top: 0.16rem;
-		width: 0.18rem;
-		height: 0.18rem;
+		width: 0.15rem;
+		height: 0.15rem;
+	}
+	.m-card-ul>li>.cr>.number .space{
+		padding-right:5px;
 	}
 }
 

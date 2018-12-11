@@ -82,7 +82,8 @@ var vm=new Moon({
             phone:'',
             belongType:'0',
             bizType:'4',
-            faceMoney:'0',
+			faceMoney:'0',
+			initialMoney:'0'
         },
 	    prestoreMoneyList:[],
 	    selPackage:[],

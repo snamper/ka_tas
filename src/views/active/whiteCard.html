@@ -42,13 +42,20 @@
 		<ul class="f-scroll" id="cardBox" m-literal:style="boxHeight" m-show="cardList.list.length" m-on:scroll="pullLoad">
 			<li m-for="todo in cardList.list">
 				<div class="inner" m-on:click="phoneClick(todo)">
-					<div m-literal:class="{pretty:todo.pretty==1,number:true}">{{phoneFormat(todo.phoneNum)}}
+					<div m-literal:class="{
+						pretty:todo.pretty==1,number:true,
+						discount:todo.initialMoney!=todo.faceMoney}">{{phoneFormat(todo.phoneNum)}}
 						<div class="clr">
 							<span class="purple">{{todo.cityName,todo.cityName}}</span>
 							<span class="fr">
-								<em m-if="belongType!=2">￥</em>
-								<b>{{ mathCentToYuan(todo.faceMoney) }}</b>
-								<em m-if="belongType==2">卡</em>
+								<b>{{ parseInt(todo.faceMoney)/100 }}</b>
+								<em v-if="todo.belongType==2 || todo.belongType == 3">卡</em>
+								<em v-else>元</em>
+							</span>
+							<span class="fr f-tdl" v-if="todo.initialMoney!=todo.faceMoney">
+								<b>{{ parseInt(todo.initialMoney)/100 }}</b>
+								<em v-if="todo.belongType==2 || todo.belongType == 3">卡</em>
+								<em v-else>元</em>
 							</span>
 						</div>
 					</div>

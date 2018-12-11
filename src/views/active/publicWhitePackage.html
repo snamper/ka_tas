@@ -152,7 +152,11 @@
 				<b>({{packageInfo.cityName}})</b>
 			</li>
 			<li class="double-border"></li>
-			<li><span class="left">+号码占用费</span><span class="fr right">￥{{mathCentToYuan(cardInfo.faceMoney)}}</span></li>
+			<li>
+				<span class="left">+号码占用费</span>
+				<span class="fr right">￥{{ mathCentToYuan(cardInfo.faceMoney) }}</span>
+				<span class="fr right f-tdl" v-if="cardInfo.initialMoney!=cardInfo.faceMoney">￥{{ mathCentToYuan(cardInfo.initialMoney) }}</span>
+			</li>
 			<li m-literal:class="{border:off.addPre==999}"><span class="left">+含预存话费</span><span class="fr right">￥{{prestoreMoney}}</span></li>
 			<li class="border" m-show="off.addPre!=999"><span class="left">+开卡首冲</span><span class="fr right"><em class="line-th f-s-12">￥{{addPreMoney}}</em>￥{{addPreDiscountMoney}}</span></li>
 			<li class="clr"><span class="fr right black"><b>总价:</b><b class="font-16 font-bold">￥{{totalMoney}}</b></span></li>
