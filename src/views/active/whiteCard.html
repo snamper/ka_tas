@@ -49,13 +49,13 @@
 							<span class="purple">{{todo.cityName,todo.cityName}}</span>
 							<span class="fr">
 								<b>{{ parseInt(todo.faceMoney)/100 }}</b>
-								<em v-if="todo.belongType==2 || todo.belongType == 3">卡</em>
-								<em v-else>元</em>
+								<em m-if="todo.belongType==2 || todo.belongType == 3">卡</em>
+								<em m-else>元</em>
 							</span>
 							<span class="fr f-tdl" v-if="todo.initialMoney!=todo.faceMoney">
 								<b>{{ parseInt(todo.initialMoney)/100 }}</b>
-								<em v-if="todo.belongType==2 || todo.belongType == 3">卡</em>
-								<em v-else>元</em>
+								<em m-if="todo.belongType==2 || todo.belongType == 3">卡</em>
+								<em m-else>元</em>
 							</span>
 						</div>
 					</div>
