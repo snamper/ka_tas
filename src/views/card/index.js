@@ -264,6 +264,7 @@ var vm=new Moon({
 			let phoneData=vm.get('cardData').list[parseInt(index)];
 			vm.setStore('CARD_INFO',Object.assign(vm.get('cardInfo'),{
 				phone:phoneData.phoneNum,
+				initialMoney:phoneData.initialMoney,
 				cityName:phoneData.cityName,
 				cityCode:phoneData.cityCode,
 				pretty:phoneData.pretty,

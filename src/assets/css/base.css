@@ -179,6 +179,10 @@ textarea {
 .f-fts-18{
     font-size: 0.18rem;
 }
+.f-tdl{
+    text-decoration: line-through;
+    margin: 0 5px;
+}
 .u-mask{
     position: absolute;
     top: 0;

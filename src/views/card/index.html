@@ -50,19 +50,26 @@
 				</div>
 			</div>
 			<ul id="cardBox" class="m-card-ul f-scroll" m-literal:style="boxHt" m-on:scroll="pullLoad">
-				<li m-for="todo,index in cardData.list" m-on:click="jumpPackage(index)">
+				<li
+					m-for="todo,index in cardData.list"
+					m-on:click="jumpPackage(index)">
 					<div class="lt">
-						<span class="u-icon-pretty" m-show="todo.pretty==1"></span>
-						<span class="u-icon-ordinary" m-show="todo.pretty==2"></span>
+						<span class="u-icon-pretty" m-if="todo.pretty==1"></span>
+						<span class="u-icon-ordinary" m-if="todo.pretty==2"></span>
 					</div>
 					<div class="cr">
 						<span class="number" m-html="filterNumber(todo.phoneNum)"></span>
-						<span class="city grey">{{ todo.cityName }}<i class="u-icon-devoted" m-show="todo.belongType==1"></i></span>
+						<span class="city grey">
+							<span>{{ todo.cityName }}</span>
+							<i class="u-icon-devoted" m-if="todo.belongType==1"></i>
+							<i class="u-icon-act" m-if="todo.initialMoney!=todo.cardMoney"></i>
+						</span>
 					</div>
 					<div class="rt yellow">
+						<span class="oldPrice" m-if="todo.cardMoney!=todo.initialMoney">{{ mathCentToYuan(todo.initialMoney) }}</span>
 						<span>{{ mathCentToYuan(todo.cardMoney) }}</span>
-						<em class="f-fts-12" m-show="todo.belongType=='0'">元</em>
-						<em class="f-fts-12" m-show="todo.belongType==1">卡</em>
+						<em class="f-fts-12" m-if="todo.belongType=='0'">元</em>
+						<em class="f-fts-12" m-if="todo.belongType==1">卡</em>
 					</div>
 				</li>
 			</ul>

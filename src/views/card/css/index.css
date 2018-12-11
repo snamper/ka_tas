@@ -5,6 +5,9 @@
 .u-icon-pretty{background-image: url(../../../assets/img/icon_beautiful.png);}
 .u-icon-ordinary{background-image: url(../../../assets/img/icon_common.png);}
 /*.u-icon-devoted{background-image: url(../../../assets/img/icon_monopoly_number.png);}*/
+.u-icon-act{
+	background-image: url(../../../assets/img/hint_ic_zhe.png);
+}
 
 body{
 	padding:0 !important;
@@ -210,15 +213,13 @@ body{
 	line-height: 0.4rem;
 }
 .m-card-ul>li>.lt{
-	flex: 1;
-	text-align: center;
+	margin: 0 5px;
 }
 .m-card-ul>li>.cr{
-	flex: 5;
+	flex: 1;
 }
 .m-card-ul>li>.rt{
-	flex: 2;
-	text-align: right;
+	
 }
 .m-card-ul>li>.rt span{
 	font-size: 0.15rem;
@@ -234,15 +235,14 @@ body{
 .m-card-ul>li>.cr>.city{
 	
 }
-.m-card-ul .u-icon-devoted{
+.m-card-ul .u-icon-devoted, .m-card-ul .u-icon-act{
 	display: inline-block;
-	margin-left: 0.1rem;
 
 	width: 0.15rem;
 	height: 0.15rem;
 	background-size:0.15rem;
 	position: relative;
-	top:2px;
+	top:3px;
 }
 .m-card-ul .u-icon-pretty, .m-card-ul .u-icon-ordinary{
 	display: inline-block;
@@ -254,10 +254,10 @@ body{
 }
 @media screen and (max-width: 340px){
 	.m-card-ul>li>.cr>.number{
-		font-size: 0.16rem
+		font-size: 0.15rem
 	}
 	.m-card-ul>li>.lt{
-		flex: 0.8;
+		margin: 0 2px;
 	}
 	.m-card-ul>li>.rt span{
 		font-size: 0.11rem;

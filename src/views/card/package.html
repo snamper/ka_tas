@@ -59,7 +59,8 @@
 		<div class="row line">
 			<span class="left">号码占用费:</span>
 			<span class="right f-tar">
-				<span class="oldPrice" m-show="cardInfo.discount!=10000">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
+				<span class="oldPrice" m-if="cardInfo.cardMoney!=cardInfo.initialMoney">￥{{ mathCentToYuan(cardInfo.initialMoney) }}</span>
+				<span class="oldPrice" m-if="cardInfo.discount!=10000">￥{{ mathCentToYuan(cardInfo.phoneMoney) }}</span>
 				<span class="discount">￥{{ mathDiscount(cardInfo.phoneMoney,cardInfo.discount) }}</span>
 			</span>
 		</div>
