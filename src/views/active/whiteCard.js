@@ -160,8 +160,8 @@ var vm=new Moon({
 			});
 			
 		},
-		mathCentToYuan:function(value){
-	    	return this.mathCentToYuan(value);
+		mathPrice:function(value){
+	    	return value ? parseInt(value)/100 : 0;
 	    },
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);

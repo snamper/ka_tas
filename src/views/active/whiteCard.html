@@ -48,12 +48,12 @@
 						<div class="clr">
 							<span class="purple">{{todo.cityName,todo.cityName}}</span>
 							<span class="fr">
-								<i>{{ mathCentToYuan(todo.faceMoney) }}</i>
+								<i>{{ mathPrice(todo.faceMoney) }}</i>
 								<em m-if="todo.belongType==2 || todo.belongType == 3">卡</em>
 								<em m-else>元</em>
 							</span>
-							<span class="fr f-tdl" m-if="todo.initialMoney!=todo.faceMoney">
-								<i>{{ mathCentToYuan(todo.initialMoney) }}</i>
+							<span class="fr f-tdl">
+								<i>{{ mathPrice(todo.initialMoney) }}</i>
 								<em m-if="todo.belongType==2 || todo.belongType == 3">卡</em>
 								<em m-else>元</em>
 							</span>
