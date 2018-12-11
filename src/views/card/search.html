@@ -53,6 +53,7 @@
 			<ul id="cardBox" class="m-card-ul f-scroll" m-literal:style="boxHt" m-on:scroll="pullLoad">
 				<li
 					m-for="todo,index in cardData.list"
+					m-literal:class="{act:todo.cardMoney!=todo.initialMoney}"
 					m-on:click="jumpPackage(index)">
 					<div class="lt">
 						<span class="u-icon-pretty" m-if="todo.pretty==1"></span>
