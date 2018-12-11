@@ -73,6 +73,10 @@
     display: inline-block;
     background-image: url(../img/icon_monopoly_dazhong.png);
 }
+.card-list li .discount:after {
+    display: inline-block;
+    background-image: url(../img/hint_ic_zhe.png);
+}
 
 
 .card-list li .clr {

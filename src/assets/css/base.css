@@ -334,7 +334,7 @@ textarea {
 .oldPrice{
     text-decoration:line-through;
     color: #717171;
-    font-size:0.12rem;
+    font-size:0.12rem !important;
     margin-top:2px;
 }
 .discount{
