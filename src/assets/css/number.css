@@ -31,7 +31,7 @@
     display: block;
     color: #2b2b2b
 }
-.card-list li.active>.inner, .card-list li.active .clr>.purple, .card-list li.active2>.inner, .card-list li.active2 .clr>.purple{color: #F4F5F5 !important}
+.card-list li.active>.inner, .card-list li.active .dp>.purple, .card-list li.active2>.inner, .card-list li.active2 .dp>.purple{color: #F4F5F5 !important}
 
 
 .card-list li .number {
@@ -39,7 +39,7 @@
     letter-spacing:1px;
     display: inline-block;
     padding:0 15px;
-    height: 42px;
+    /* height: 42px; */
     position: relative;
     
 }
@@ -79,17 +79,26 @@
 }
 
 
-.card-list li .clr {
+.card-list li .dp {
     line-height: 16px;
+    display: flex;
+    align-items: center;
+
+    -webkit-display: flex;
+    -webkit-align-items: center;
 }
-.card-list li .clr>.purple {
-    float: left
+.card-list li .dp>.purple {
+    font-size: 10px;
 }
-.card-list li .clr>.fr {
+.card-list li .dp>.rt {
     color: #777;
     font-size: 12px;
+    flex: 1;
+    -webkit-flex: 1;
+    text-align: right;
+    word-break: keep-all;
 }
-.card-list li .clr>.fr>.green {
+.card-list li .dp>.rt>.green {
     font-size:14px;
 }
 .card-list li .status{

@@ -67,7 +67,8 @@
 						</span>
 					</div>
 					<div class="rt yellow">
-						<span class="oldPrice" m-if="todo.cardMoney!=todo.initialMoney">{{ mathCentToYuan(todo.initialMoney) }}</span>
+						<span class="oldPrice" m-if="todo.cardMoney!=todo.initialMoney">{{ mathCentToYuan(todo.initialMoney) }}<em class="f-fts-12" m-if="todo.belongType=='0'">元</em>
+							<em class="f-fts-12" m-if="todo.belongType==1">卡</em></span>
 						<span>{{ mathCentToYuan(todo.cardMoney) }}</span>
 						<em class="f-fts-12" m-show="todo.belongType=='0'">元</em>
 						<em class="f-fts-12" m-show="todo.belongType==1">卡</em>
