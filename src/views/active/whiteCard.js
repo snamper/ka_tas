@@ -161,7 +161,8 @@ var vm=new Moon({
 			
 		},
 		mathPrice:function(value){
-	    	return value ? parseInt(value)/100 : 0;
+			value = parseInt(value);
+	    	return value ? value/100 : 0;
 	    },
 	    phoneFormat:function(phone){
 			return this.phoneFormat(phone);

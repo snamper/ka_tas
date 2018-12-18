@@ -49,10 +49,14 @@
 							<div class="purple">{{todo.cityName}}</div>
 							<div class="rt">
 								<span class="f-tdl" m-if="todo.phoneStatus != 4">
-									<span m-if="todo.initialMoney!=todo.faceMoney">{{ mathPrice(todo.initialMoney) }}{{ todo.belongType==2 || todo.belongType == 3 ? '卡' : '元' }}</span>
+									<span m-if="todo.initialMoney!=todo.faceMoney">
+										<i>{{ mathPrice(todo.initialMoney) }}</i>
+										<i>{{ todo.belongType==2 || todo.belongType == 3 ? '卡' : '元' }}</i>
+									</span>
 								</span>
 								<span m-if="todo.phoneStatus != 4">
-									{{ mathPrice(todo.faceMoney) }}{{ todo.belongType==2 || todo.belongType == 3 ? '卡' : '元' }}
+									<i>{{ mathPrice(todo.faceMoney) }}</i>
+									<i>{{ todo.belongType==2 || todo.belongType == 3 ? '卡' : '元' }}</i>
 								</span>
 							</div>
 						</div>
