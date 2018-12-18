@@ -231,6 +231,19 @@ textarea {
     margin-right: 0.1rem;
 }
 
+.no-data {
+    padding: .1rem 0;
+    color: #717171;
+    text-align: center;
+    width: 70%;
+    margin:auto;
+}
+.no-data>img{
+    margin-top: 35%;
+    margin-bottom:5px;
+    width: 1.2rem;
+}
+
 /*时间轴*/
 .m-time-axis{
     padding-top: 0.1rem;
