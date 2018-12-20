@@ -47,7 +47,7 @@
 						discount:todo.initialMoney!=todo.faceMoney}">{{phoneFormat(todo.phoneNum)}}
 						<div class="dp">
 							<div class="purple">{{todo.cityName}}</div>
-							<div class="rt">
+							<div class="rt" m-if="todo.phoneStatus != 2">
 								<span class="f-tdl" m-if="todo.phoneStatus != 4">
 									<span m-if="todo.initialMoney!=todo.faceMoney">
 										<i>{{ mathPrice(todo.initialMoney) }}</i>
