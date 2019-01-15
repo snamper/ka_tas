@@ -71,7 +71,7 @@ var vm=new Moon({
 	  			},
 	  			'userInfo':userInfo
 	  		};
-			vm.AJAX('/tas/w/searchcard/getPhoneCitys',json,function(data){
+			vm.AJAX('/tas/w/source/getPhoneCitys',json,function(data){
 				let letterList = data.data.list,
 					keys = Object.keys(data.data.list);
 				
