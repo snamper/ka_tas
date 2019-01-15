@@ -37,6 +37,7 @@
 	<ul class="search-box" m-if="!isShowCitySearch">
 		<li class="icon-search" m-for="todo in filteredData()" m-on:click="selectCity(todo.cityCode,todo.cityName)">{{todo.cityName}}</li>
 	</ul>
+	<div class="m-no-city grey" m-show="isShowNoCity">暂无该城市信息</div>
 	<div class="letter-fix"
 		m-if="isShowCitySearch"
 		m-on:touchstart="letterTouchStart"

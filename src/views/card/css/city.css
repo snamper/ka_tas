@@ -67,6 +67,10 @@ body{
 .city-box>dl>dd{
 
 }
+.m-no-city{
+    padding-top: 0.2rem;
+    text-align: center;
+}
 .city-box>dl {
     padding:5px 0 0 10px;
     margin-right:30px;
